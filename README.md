@@ -1,6 +1,8 @@
-![alt Banner](http://www.dirkwhoffmann.de/vAMIGA/pics/vats1.png)
-
 # vAmiga Test Suite
+
+<p align="center">
+  <img src="http://www.dirkwhoffmann.de/vAMIGA/pics/vats1.png" height="100">
+</p>
 
 ## Overview
 
@@ -16,5 +18,5 @@ https://github.com/alpine9000/amiga_examples
 
 | Test          | vAmiga Result   | Remark                              | 
 | ------------- | --------------- | ----------------------------------- |
-| bpuoff        | Nearly passing  |   DMA fine, Denise reacts too late  | 
+| bpuoff        | Nearly passing  | DMA fine, Denise reacts too late    | 
 | bpuon         | Passing         |                                     |
