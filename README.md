@@ -16,7 +16,8 @@ https://github.com/alpine9000/amiga_examples
 
 ### Denise
 
-| Test          | vAmiga Result   | Remark                              | 
-| ------------- | --------------- | ----------------------------------- |
-| bpu1          | Passing         |                                     |
-| bpu2          | Nearly passing  | DMA fine, Denise reacts too late    | 
+| Module  | Test          | vAmiga Result   | Remark                              | 
+| ------- | ------------- | --------------- | ----------------------------------- |
+| BPLCON0 | bpu1          | Passing         |                                     |
+|         | bpu2          | Nearly passing  | DMA fine, Denise reacts too late    | 
+| DIW     | diw1          | Failing         |                                     | 
