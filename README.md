@@ -18,5 +18,5 @@ https://github.com/alpine9000/amiga_examples
 
 | Test          | vAmiga Result   | Remark                              | 
 | ------------- | --------------- | ----------------------------------- |
-| bpuoff        | Nearly passing  | DMA fine, Denise reacts too late    | 
-| bpuon         | Passing         |                                     |
+| bpu1          | Passing         |                                     |
+| bpu2          | Nearly passing  | DMA fine, Denise reacts too late    | 
