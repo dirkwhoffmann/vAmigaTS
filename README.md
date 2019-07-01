@@ -12,12 +12,6 @@ Most tests are modifications of Alpine9000's Amiga examples that can be found he
 
 https://github.com/alpine9000/amiga_examples
 
-## vAmiga results 
+## Where to go from here?
 
-### Denise
-
-| Module  | Test          | vAmiga Result   | Remark                              | 
-| ------- | ------------- | --------------- | ----------------------------------- |
-| BPLCON0 | bpu1          | Passing         |                                     |
-|         | bpu2          | Nearly passing  | DMA fine, Denise reacts too late    | 
-| DIW     | diw1          | Failing         |                                     | 
+- [vAmiga Emulator](https://github.com/dirkwhoffmann/vAmiga)
