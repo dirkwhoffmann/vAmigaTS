@@ -64,8 +64,9 @@ copper:
  	include	"out/image-copper-list.s"
 
 
-    ; Set number of bitplanes to 4, so Copper cannot be blocked by bitplane DMA.
-	dc.w	BPLCON0,(4<<12)|$200
+    ; Reduce number of bitplanes, so Copper cannot be blocked by bitplane DMA.
+	;dc.w	BPLCON0,(4<<12)|$200
+	dc.w	BPLCON0,(1<<12)|$200
 
     ; First color block
 	dc.w	$3001,$FFFE  ; WAIT 
@@ -162,23 +163,23 @@ copper:
 	; Third color block
 	dc.w    $B801,$FFFE  ; WAIT
 	dc.w	COLOR00, $F00
-	dc.w    $B8E1,$FFFE  ; WAIT
+	dc.w    $B8D5,$FFFE  ; WAIT
 	dc.w	BPL1MOD,SCREEN_WIDTH_BYTES*SCREEN_BIT_DEPTH-SCREEN_WIDTH_BYTES+2
 	dc.w	COLOR00, $000
-	dc.w    $B901,$FFFE  ; WAIT
+	dc.w    $B9D3,$FFFE  ; WAIT
 	dc.w	BPL1MOD,SCREEN_WIDTH_BYTES*SCREEN_BIT_DEPTH-SCREEN_WIDTH_BYTES
 
 	dc.w    $C001,$FFFE  ; WAIT
 	dc.w	COLOR00, $F00
-	dc.w    $C0DF,$FFFE  ; WAIT
+	dc.w    $C0D3,$FFFE  ; WAIT
 	dc.w	BPL1MOD,SCREEN_WIDTH_BYTES*SCREEN_BIT_DEPTH-SCREEN_WIDTH_BYTES+2
 	dc.w	COLOR00, $000
-	dc.w    $C101,$FFFE  ; WAIT
+	dc.w    $C1D3,$FFFE  ; WAIT
 	dc.w	BPL1MOD,SCREEN_WIDTH_BYTES*SCREEN_BIT_DEPTH-SCREEN_WIDTH_BYTES
 
 	dc.w    $C801,$FFFE  ; WAIT
 	dc.w	COLOR00, $F00
-	dc.w    $C8DD,$FFFE  ; WAIT
+	dc.w    $C8D1,$FFFE  ; WAIT
 	dc.w	BPL1MOD,SCREEN_WIDTH_BYTES*SCREEN_BIT_DEPTH-SCREEN_WIDTH_BYTES+2
 	dc.w	COLOR00, $000
 	dc.w    $C9D3,$FFFE  ; WAIT
@@ -186,33 +187,34 @@ copper:
 
 	dc.w    $D001,$FFFE  ; WAIT
 	dc.w	COLOR00, $F00
-	dc.w    $D0DB,$FFFE  ; WAIT
+	dc.w    $D0D5,$FFFE  ; WAIT
 	dc.w	BPL1MOD,SCREEN_WIDTH_BYTES*SCREEN_BIT_DEPTH-SCREEN_WIDTH_BYTES+2
 	dc.w	COLOR00, $000
-	dc.w    $D1D1,$FFFE  ; WAIT
+	dc.w    $D1D5,$FFFE  ; WAIT
 	dc.w	BPL1MOD,SCREEN_WIDTH_BYTES*SCREEN_BIT_DEPTH-SCREEN_WIDTH_BYTES
 
 	dc.w    $D801,$FFFE  ; WAIT
 	dc.w	COLOR00, $F00
-	dc.w    $D8D9,$FFFE  ; WAIT
+	dc.w    $D8D3,$FFFE  ; WAIT
 	dc.w	BPL1MOD,SCREEN_WIDTH_BYTES*SCREEN_BIT_DEPTH-SCREEN_WIDTH_BYTES+2
 	dc.w	COLOR00, $000
-	dc.w    $D901,$FFFE  ; WAIT
+	dc.w    $D9D5,$FFFE  ; WAIT
 	dc.w	BPL1MOD,SCREEN_WIDTH_BYTES*SCREEN_BIT_DEPTH-SCREEN_WIDTH_BYTES
 
 	dc.w    $E001,$FFFE  ; WAIT
 	dc.w	COLOR00, $F00
-	dc.w    $E0D7,$FFFE  ; WAIT
+	dc.w    $E0D1,$FFFE  ; WAIT
 	dc.w	BPL1MOD,SCREEN_WIDTH_BYTES*SCREEN_BIT_DEPTH-SCREEN_WIDTH_BYTES+2
 	dc.w	COLOR00, $000
-	dc.w    $E101,$FFFE  ; WAIT
+	dc.w    $E1D5,$FFFE  ; WAIT
 	dc.w	BPL1MOD,SCREEN_WIDTH_BYTES*SCREEN_BIT_DEPTH-SCREEN_WIDTH_BYTES
 
 	dc.w    $E801,$FFFE  ; WAIT
 	dc.w	COLOR00, $F00
-	dc.w    $E8D5,$FFFE  ; WAIT
+	dc.w    $E8C9,$FFFE  ; WAIT
 	dc.w	BPL1MOD,SCREEN_WIDTH_BYTES*SCREEN_BIT_DEPTH-SCREEN_WIDTH_BYTES+2
 	dc.w	COLOR00, $000
+	dc.w    $E901,$FFFE  ; WAIT
 	dc.w	BPL1MOD,SCREEN_WIDTH_BYTES*SCREEN_BIT_DEPTH-SCREEN_WIDTH_BYTES
 
 	dc.w    $ffdf,$fffe ; Cross vertical boundary
