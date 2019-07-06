@@ -1,6 +1,7 @@
 ## Objective
 
-This test modifies BPLMOD1 and BPLMOD2
+This test modifies BPLMOD1 and BPLMOD2. Bitplane depth is set to 1.
+
 
 ### Color section 1
 
