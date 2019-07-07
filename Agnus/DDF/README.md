@@ -26,11 +26,11 @@ DDFSTRT is decremented continously. DDFSTOP is aligned at $D0 and not changing.
 
 DDFSTRT is decremented continously. DDFSTOP is misaligned at $D3 and not changing.
 
-### ddf4
+#### ddf4
 
 DDFSTRT is aligned at $38 and not changing. DDFSTOP is decremented continously. 
 
-### ddf4m
+#### ddf4m
 
 DDFSTRT is misaligned at $3B and not changing. DDFSTOP is decremented continously. 
 
