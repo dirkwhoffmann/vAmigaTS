@@ -4,11 +4,15 @@ The DDF tests use the Copper to modify DDFSTART and DDSTOP in various ways.
 
 #### ddf1
 
-DDFSTRT is incremented continously. DDFSTOP is aligned at $D0 and not changing.
+DDFSTRT is incremented continously at the end of certain rasterlines. DDFSTOP is aligned at $D0 and not changing.
+
+#### ddf1b
+
+DDFSTRT is incremented continously at the beginning of certain rasterlines. DDFSTOP is aligned at $D0 and not changing.
 
 #### ddf1m
 
-DDFSTRT is incremented continously. DDFSTOP is misaligned at $D3 and not changing.
+DDFSTRT is incremented continously at the end of certain rasterlines. DDFSTOP is misaligned at $D3 and not changing.
 
 #### ddf2 
 
