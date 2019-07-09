@@ -38,5 +38,16 @@ DDFSTRT is aligned at $38 and not changing. DDFSTOP is decremented continously.
 
 DDFSTRT is misaligned at $3B and not changing. DDFSTOP is decremented continously. 
 
+#### ddf5
+
+Various combinations of DIWSTRT and DIWSTOP. Some combinations cross the hardware stop boundaries.
+
+#### ddf6
+
+Mores test combinations around the hardware stops.
+
+#### ddf7
+
+Modifying DDFSTRT and DDFSTOP around the specified start and specfied stop positions.
 
 Dirk Hoffmann, 2019
