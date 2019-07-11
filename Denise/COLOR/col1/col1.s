@@ -114,8 +114,6 @@ copper:
 	dc.w	COLOR00, $FFF
 	dc.w	COLOR00, $4F4
 	dc.w	COLOR00, $000
-
-	dc.w	$6143,$FFFE  ; WAIT 
 	dc.w	COLOR00, $FFF
 	dc.w	COLOR00, $4F4
 	dc.w	COLOR00, $F00
@@ -126,8 +124,6 @@ copper:
 	dc.w	COLOR00, $4F4
 	dc.w	COLOR00, $F00
 	dc.w	COLOR00, $000
-
-	dc.w	$6245,$FFFE  ; WAIT 
 	dc.w	COLOR00, $F00
 	dc.w	COLOR00, $FFF
 	dc.w	COLOR00, $4F4
@@ -138,8 +134,6 @@ copper:
 	dc.w	COLOR00, $FFF
 	dc.w	COLOR00, $4F4
 	dc.w	COLOR00, $000
-
-	dc.w	$6345,$FFFE  ; WAIT 
 	dc.w	COLOR00, $FFF
 	dc.w	COLOR00, $4F4
 	dc.w	COLOR00, $F00
@@ -150,8 +144,6 @@ copper:
 	dc.w	COLOR00, $4F4
 	dc.w	COLOR00, $F00
 	dc.w	COLOR00, $000
-
-	dc.w	$6447,$FFFE  ; WAIT 
 	dc.w	COLOR00, $F00
 	dc.w	COLOR00, $FFF
 	dc.w	COLOR00, $4F4
@@ -162,8 +154,6 @@ copper:
 	dc.w	COLOR00, $FFF
 	dc.w	COLOR00, $4F4
 	dc.w	COLOR00, $000
-
-	dc.w	$6547,$FFFE  ; WAIT 
 	dc.w	COLOR00, $FFF
 	dc.w	COLOR00, $4F4
 	dc.w	COLOR00, $F00
