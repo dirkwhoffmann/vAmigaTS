@@ -4,7 +4,7 @@ This test suite verifies some Copper timing properties.
 
 #### copstrt1 and copstrt2
 
-Both tests verify the first possible trigger coordinate by using a SKIP statement.
+Verify the first possible trigger coordinate by using a SKIP statement.
 
 First two instructions of the copstrt1 Copper list: 
 
@@ -18,6 +18,11 @@ First two instructions of the copstrt2 Copper list:
 
 The reference images reveal that the video beam counter is greater or equal than $000B, but less than $000D when the Copper processes the first instruction. 
 
+#### copstrt3
+
+Checks the behaviour of a SKIP command followed by a MOVE command and a WAIT command. 
+
+The reference image reveals that only MOVE commands can skipped. 
 
 
 Dirk Hoffmann, 2019
