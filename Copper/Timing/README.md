@@ -24,5 +24,9 @@ Checks the behaviour of a SKIP command followed by a MOVE command and a WAIT com
 
 The reference image reveals that only MOVE commands can skipped. 
 
+#### copwait1 and copwait2
+
+Checks the behaviour of the WAIT command with waiting positions near it's own execution cycle. copwait1 enables 4 bitplanes while copwait2 enables 5. 
+
 
 Dirk Hoffmann, 2019
