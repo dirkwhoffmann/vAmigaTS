@@ -26,7 +26,15 @@ The reference image reveals that only MOVE commands can skipped.
 
 #### copwait1 and copwait2
 
-Checks the behaviour of the WAIT command with waiting positions near it's own execution cycle. copwait1 enables 4 bitplanes while copwait2 enables 5. 
+Checks the behaviour of the WAIT command with waiting positions near it's own execution cycle. 
+
+#### copwait3 and copwait4
+
+Same as copwait1 and copwait2 with a fifth bitplane enabled.
+
+#### copwait5 and copwait6
+
+Checks the WAIT command with horizontal positions around 0 and $E2, respectively. 
 
 
 Dirk Hoffmann, 2019
