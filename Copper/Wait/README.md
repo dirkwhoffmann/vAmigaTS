@@ -14,5 +14,9 @@ Same as copwait1 and copwait2 with a fifth bitplane enabled.
 
 Checks the WAIT command with horizontal positions around 0 and $E2, respectively. 
 
+#### copwait7 and copwait8
+
+Same as copwait7 and copwait8 with a fifth bitplane enabled.
+
 
 Dirk Hoffmann, 2019
