@@ -18,5 +18,8 @@ Checks the WAIT command with horizontal positions around 0 and $E2, respectively
 
 Same as copwait7 and copwait8 with a fifth bitplane enabled.
 
+#### mask1
+
+Applies the WAIT command with varying comparison masks
 
 Dirk Hoffmann, 2019
