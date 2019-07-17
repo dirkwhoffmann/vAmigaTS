@@ -22,5 +22,8 @@ Switches back and forth between valid and invalid bpu values.
 
 Switches back and forth between hires and lowres mode.
 
+#### hires4 
+
+Switches back and forth between dual-playfield and single-playfield mode.
 
 Dirk Hoffmann, 2019
