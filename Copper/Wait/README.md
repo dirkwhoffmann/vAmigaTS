@@ -22,4 +22,9 @@ Same as copwait7 and copwait8 with a fifth bitplane enabled.
 
 Applies the WAIT command with varying comparison masks
 
+#### crossing1 and crossing2
+
+Tries to cross the vertical boundary. crossing1 triggers at $ffdb which is too early. crossing2 triggers at $ffdd which is just in time to cross.
+
+
 Dirk Hoffmann, 2019
