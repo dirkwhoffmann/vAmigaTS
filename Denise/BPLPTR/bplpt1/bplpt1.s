@@ -164,36 +164,50 @@ copper:
 	dc.w	COLOR00, $F00
 	dc.w    $B8D9,$FFFE  ; WAIT
 	dc.w	COLOR00, $000
+	dc.w    $B9C9,$FFFE 
+	dc.w    BPL1PTL,$5AC2
 
 	dc.w    $C001,$FFFE  ; WAIT
 	dc.w	COLOR00, $F00
 	dc.w    $C0D9,$FFFE  ; WAIT
 	dc.w	COLOR00, $000
+	dc.w    $C1CB,$FFFE 
+	dc.w    BPL1PTL,$5AC2
 
 	dc.w    $C801,$FFFE  ; WAIT
 	dc.w	COLOR00, $F00
 	dc.w    $C8D9,$FFFE  ; WAIT
 	dc.w	COLOR00, $000
+	dc.w    $C9CD,$FFFE 
+	dc.w    BPL1PTL,$5AC2
 
 	dc.w    $D001,$FFFE  ; WAIT
 	dc.w	COLOR00, $F00
 	dc.w    $D0D9,$FFFE  ; WAIT
 	dc.w	COLOR00, $000
+	dc.w    $D1CF,$FFFE 
+	dc.w    BPL1PTL,$5AC2
 
 	dc.w    $D801,$FFFE  ; WAIT
 	dc.w	COLOR00, $F00
 	dc.w    $D8D9,$FFFE  ; WAIT
 	dc.w	COLOR00, $000
+	dc.w    $D9D1,$FFFE 
+	dc.w    BPL1PTL,$5AC2
 
 	dc.w    $E001,$FFFE  ; WAIT
 	dc.w	COLOR00, $F00
 	dc.w    $E0D9,$FFFE  ; WAIT
 	dc.w	COLOR00, $000
+	dc.w    $E1D3,$FFFE 
+	dc.w    BPL1PTL,$5AC2
 
 	dc.w    $E801,$FFFE  ; WAIT
 	dc.w	COLOR00, $F00
 	dc.w    $E8D9,$FFFE  ; WAIT
 	dc.w	COLOR00, $000
+	dc.w    $E9D5,$FFFE 
+	dc.w    BPL1PTL,$5AC2
 
 	dc.w    $ffdf,$fffe ; Cross vertical boundary
 
@@ -202,31 +216,43 @@ copper:
 	dc.w	COLOR00, $F00
 	dc.w    $00D9,$FFFE  ; WAIT
 	dc.w	COLOR00, $000
+	dc.w    $01D7,$FFFE 
+	dc.w    BPL1PTL,$5AC2
 
 	dc.w    $0801,$FFFE  ; WAIT
 	dc.w	COLOR00, $F00
 	dc.w    $08D9,$FFFE  ; WAIT
 	dc.w	COLOR00, $000
+	dc.w    $09D9,$FFFE 
+	dc.w    BPL1PTL,$5AC2
 
 	dc.w    $1001,$FFFE  ; WAIT
 	dc.w	COLOR00, $F00
 	dc.w    $10D9,$FFFE  ; WAIT
 	dc.w	COLOR00, $000
+	dc.w    $11DB,$FFFE 
+	dc.w    BPL1PTL,$5AC2
 
 	dc.w    $1801,$FFFE  ; WAIT
 	dc.w	COLOR00, $F00
 	dc.w    $18D9,$FFFE  ; WAIT
 	dc.w	COLOR00, $000
+	dc.w    $19DD,$FFFE 
+	dc.w    BPL1PTL,$5AC2
 
 	dc.w    $2001,$FFFE  ; WAIT
 	dc.w	COLOR00, $F00
 	dc.w    $20D9,$FFFE  ; WAIT
 	dc.w	COLOR00, $000
+	dc.w    $21DF,$FFFE 
+	dc.w    BPL1PTL,$5AC2
 
 	dc.w    $2801,$FFFE  ; WAIT
 	dc.w	COLOR00, $F00
 	dc.w    $28D9,$FFFE  ; WAIT
 	dc.w	COLOR00, $000
+	dc.w    $29E1,$FFFE 
+	dc.w    BPL1PTL,$5AC2
 
 	dc.w    DDFSTRT,$0038 ; Reset normal values
 	dc.w	DDFSTOP,$00D0
