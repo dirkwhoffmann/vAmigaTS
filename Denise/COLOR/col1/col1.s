@@ -313,6 +313,17 @@ copper:
 	dc.w    DDFSTRT,$0038 ; Reset normal values
 	dc.w	DDFSTOP,$00D0
 
+	dc.w    $3201,$FFFE  ; WAIT
+	dc.w	COLOR00, $F00
+	dc.w    $3301,$FFFE  ; WAIT
+	dc.w	COLOR00, $FF0
+	dc.w    $3401,$FFFE  ; WAIT
+	dc.w	COLOR00, $00F
+	dc.w    $3501,$FFFE  ; WAIT
+	dc.w	COLOR00, $F0F
+	dc.w    $3601,$FFFE  ; WAIT
+	dc.w	COLOR00, $FFF
+
 	dc.l	$fffffffe
 
 bitplanes:
