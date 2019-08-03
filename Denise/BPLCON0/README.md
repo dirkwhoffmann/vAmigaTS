@@ -6,6 +6,10 @@ The tests in this test suite modify register BPLCON0 in various ways.
 
 Modifies the BPU bits (bitplanes in use)
 
+#### dual1
+
+Toggles between single-playfield mode and dual-playfield mode at certain DMA cycle positions. 
+
 #### hires1
 
 Draws an image in hires mode and reduces the number of bitplanes after each color block.
