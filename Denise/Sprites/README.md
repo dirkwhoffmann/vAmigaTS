@@ -6,9 +6,9 @@ This test suite verfies some basic sprite properties.
 
 Draws two columns of attached sprites (sprites with the AT bit set).
 
-#### collision1
+#### collision1 to collision7
 
-This tests draws two overlapping sprites. One of the two sprites overlaps a portion of the playfield, too. During vBlank, the CLXDAT register is read and split into four 4-bit chunks. After that, the chunks are written into color registers 0 to 3 to make the bit-pattern visible.
+This tests draws two overlapping sprites. One of the two sprites overlaps a portion of the playfield, too. During vBlank, the CLXDAT register is read and split into four 4-bit chunks. After that, the chunks are written into color registers 0 to 3 to make the bit-pattern visible. The test is carried out with different sprite numbers and different values in CLXCON. 
 
 #### sprites1 to sprites4
 
