@@ -138,47 +138,30 @@ copper:
 	dc.w    DIWSTRT,$2c81
 	dc.w	DIWSTOP,$2cc1
 
-    ; Second color block: Set DIWSTRT and DIWSTOP to min and max values
-	dc.w    $6FC9,$FFFE  ; WAIT
-	dc.w    DIWSTRT,$2c00
-	dc.w    DIWSTOP,$2cFF
+    ; Second color block: Skip matches with DIWSTOP
+	dc.w    $6Fb1,$FFFE  ; WAIT
+	dc.w    DIWSTOP,$2ca1
 	dc.w	COLOR00, $F00
-	dc.w	$7101,$FFFE  ; WAIT 
-	dc.w	COLOR00, $000
 
-	dc.w    $7801,$FFFE  ; WAIT (restore old values) 
-	dc.w    DIWSTRT,$2c81 
-	dc.w	DIWSTOP,$2cc1
+	dc.w    $7091,$FFFE  ; WAIT
+	dc.w    DIWSTOP,$2c81
+	dc.w	COLOR00, $0F0
 
-	dc.w    $7FC9,$FFFE  ; WAIT
-	dc.w    DIWSTRT,$2c00
-	dc.w    DIWSTOP,$2c00
-	dc.w	COLOR00, $F00
-	dc.w	$8101,$FFFE  ; WAIT 
-	dc.w	COLOR00, $000
-	dc.w    $8801,$FFFE  ; WAIT (restore old values) 
-	dc.w    DIWSTRT,$2c81 
-	dc.w	DIWSTOP,$2cc1
+	dc.w    $7171,$FFFE  ; WAIT
+	dc.w    DIWSTOP,$2c61
+	dc.w	COLOR00, $00F
 
-	dc.w    $8FC9,$FFFE  ; WAIT
-	dc.w    DIWSTRT,$2cFF
-	dc.w    DIWSTOP,$2c00
-	dc.w	COLOR00, $F00
-	dc.w	$9101,$FFFE  ; WAIT 
-	dc.w	COLOR00, $000
-	dc.w    $9801,$FFFE  ; WAIT (restore old values) 
-	dc.w    DIWSTRT,$2c81 
-	dc.w	DIWSTOP,$2cc1
+	dc.w    $7251,$FFFE  ; WAIT
+	dc.w    DIWSTOP,$2c41
+	dc.w	COLOR00, $FF0
 
-	dc.w    $9FC9,$FFFE  ; WAIT
-	dc.w    DIWSTRT,$2cFF
-	dc.w    DIWSTOP,$2cFF
-	dc.w	COLOR00, $F00
-	dc.w	$A101,$FFFE  ; WAIT 
-	dc.w	COLOR00, $000
-	dc.w    $A801,$FFFE  ; WAIT (restore old values) 
-	dc.w    DIWSTRT,$2c81 
-	dc.w	DIWSTOP,$2cc1
+	dc.w    $7231,$FFFE  ; WAIT
+	dc.w    DIWSTOP,$2c21
+	dc.w	COLOR00, $0FF
+
+	dc.w    $7311,$FFFE  ; WAIT
+	dc.w    DIWSTOP,$2c01
+	dc.w	COLOR00, $888
 
   ; Third color block: Test smallest DISSTRT and largest DIWSTOP that take effect
 	dc.w    $B7C9,$FFFE  ; WAIT
