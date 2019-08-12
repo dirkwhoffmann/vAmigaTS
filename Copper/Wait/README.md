@@ -18,6 +18,10 @@ Checks the WAIT command with horizontal positions around 0 and $E2, respectively
 
 Same as copwait7 and copwait8 with a fifth bitplane enabled.
 
+#### copwait9
+
+Chains together multiple Waits with the same trigger coordinate.
+
 #### mask1
 
 Applies the WAIT command with varying comparison masks
