@@ -65,70 +65,70 @@ copper:
 
     ; First color block: Shrink the visible area by modifying DIWSTRT and DIWSTOP
 	dc.w	$3801,$FFFE  ; WAIT 
-	dc.w    DIWSTRT,$2cA1
+	dc.w    DIWSTRT,$2c94
 	dc.w    DIWSTOP,$2cA1
 	dc.w	COLOR00, $F00
 	dc.w	$3901,$FFFE  ; WAIT 
 	dc.w	COLOR00, $000
 
 	dc.w	$3B01,$FFFE  ; WAIT 
-	dc.w    DIWSTRT,$2cA2
+	dc.w    DIWSTRT,$2c95
 	dc.w    DIWSTOP,$2cA0
 	dc.w	COLOR00, $F00
 	dc.w	$3C01,$FFFE  ; WAIT 
 	dc.w	COLOR00, $000
 
 	dc.w	$3E01,$FFFE  ; WAIT 
-	dc.w    DIWSTRT,$2cA3
+	dc.w    DIWSTRT,$2c96
 	dc.w    DIWSTOP,$2c9F
 	dc.w	COLOR00, $F00
 	dc.w	$3F01,$FFFE  ; WAIT 
 	dc.w	COLOR00, $000
 
 	dc.w	$4101,$FFFE  ; WAIT 
-	dc.w    DIWSTRT,$2cA4
+	dc.w    DIWSTRT,$2c97
 	dc.w    DIWSTOP,$2c9E
 	dc.w	COLOR00, $F00
 	dc.w	$4201,$FFFE  ; WAIT 
 	dc.w	COLOR00, $000
 
 	dc.w	$4401,$FFFE  ; WAIT 
-	dc.w    DIWSTRT,$2cA5
+	dc.w    DIWSTRT,$2c98
 	dc.w    DIWSTOP,$2c9D
 	dc.w	COLOR00, $F00
 	dc.w	$4501,$FFFE  ; WAIT 
 	dc.w	COLOR00, $000
 
 	dc.w	$4701,$FFFE  ; WAIT 
-	dc.w    DIWSTRT,$2cA6
+	dc.w    DIWSTRT,$2c99
 	dc.w    DIWSTOP,$2c9C
 	dc.w	COLOR00, $F00
 	dc.w	$4801,$FFFE  ; WAIT 
 	dc.w	COLOR00, $000
 
 	dc.w	$4A01,$FFFE  ; WAIT 
-	dc.w    DIWSTRT,$2cA7
+	dc.w    DIWSTRT,$2c9A
 	dc.w    DIWSTOP,$2c9B
 	dc.w	COLOR00, $F00
 	dc.w	$4B01,$FFFE  ; WAIT 
 	dc.w	COLOR00, $000
 
 	dc.w	$4D01,$FFFE  ; WAIT 
-	dc.w    DIWSTRT,$2cA8
+	dc.w    DIWSTRT,$2c9B
 	dc.w    DIWSTOP,$2c9A
 	dc.w	COLOR00, $F00
 	dc.w	$4E01,$FFFE  ; WAIT 
 	dc.w	COLOR00, $000
 
 	dc.w	$5001,$FFFE  ; WAIT 
-	dc.w    DIWSTRT,$2cA9
+	dc.w    DIWSTRT,$2c9C
 	dc.w    DIWSTOP,$2c99
 	dc.w	COLOR00, $F00
 	dc.w	$5101,$FFFE  ; WAIT 
 	dc.w	COLOR00, $000
 
 	dc.w	$5301,$FFFE  ; WAIT 
-	dc.w    DIWSTRT,$2cAA
+	dc.w    DIWSTRT,$2c9E
 	dc.w    DIWSTOP,$2c98
 	dc.w	COLOR00, $F00
 	dc.w	$5401,$FFFE  ; WAIT 
