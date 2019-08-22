@@ -2,10 +2,6 @@
 
 The tests in this test suite modify register BPLCON0 in various ways.
 
-#### bpu1 and bpu2
-
-Modifies the BPU bits (bitplanes in use)
-
 #### dual1
 
 Toggles between single-playfield mode and dual-playfield mode at certain DMA cycle positions. 
