@@ -6,7 +6,7 @@
 
 ## Overview
 
-This repo contains various Amiga example programs that have been developed for testing the vAmiga emulator. Each test consists of a disk image in ADF format and a reference image recorded with SAE. 
+This repo contains various Amiga example programs that have been developed for testing the vAmiga emulator. Each test consists of a disk image in ADF format and a reference image recorded with SAE. Some tests come with an additional screenshot taken from a real A500. 
 
 Most tests are modifications of the Amiga example programs written by Alpine9000.
 
