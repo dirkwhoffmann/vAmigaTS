@@ -10,4 +10,8 @@ All three tests start timer CIAA::B in the vsync handler. When the timer underfl
 
 This test doesn't start the timer. It triggers the level 2 interrupt by writing into INTREQ via the Copper. The test shows that the IRQ is triggered even if the CIA's ICR register has the corresponding IRQ bit set to 0.
 
+#### timer5
+
+This test is a slight modification of timer3. To acknowledge the interrupt, it first writes into INTREQ and then writes into the ICR. The test image shows that the interrupt is not acknowledged in the first call to the interrupt handler. The interrupt retriggers. When the interrupt handler is invoked the second time, the interrupt does get acknowledged, because the ICR is already cleared and the write to INTREQ takes effect. Conclusion: Clearing the bit in INTREQ only makes sense if the ICR bit has been cleared. As long as the CIA's interrupt line is held low, the INTREQ bit is reset to 1 immediately. 
+
 Dirk Hoffmann, 2019
