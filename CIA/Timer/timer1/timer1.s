@@ -16,12 +16,11 @@ entry:
  	move.l	a3,LVL3_INT_VECTOR
 
 	;; install copper list and enable DMA
-	lea 	CUSTOM,a1
+	lea CUSTOM,a1
 	lea	copper(pc),a0
 	move.l	a0,COP1LC(a1)
 	move.w  COPJMP1(a1),d0
 	move.w  #(DMAF_SETCLR!DMAF_COPPER!DMAF_RASTER!DMAF_MASTER),dmacon(a1)
-	; move.w #$88,intena(a1)
 	
 .mainLoop:
 	bra.b	.mainLoop
@@ -32,20 +31,17 @@ level2InterruptHandler:
 .checkLv2:
 	lea	CUSTOM,a5
 	move.w  #$F00,COLOR00(a5) 
+		
+	; Try to acknowledge the IRQ by deleting the flag in INTREQ
+	move.w	#$8,INTREQ(a5)
 
-	move.w	#$8,INTREQ(a5)	; clear interrupt bit	
-	move.b  $BFEC01,d0 ; acknowledge IRQ by reading the CIA ICR reg
+	; Purpose of this test is to show that this won't work. Because we don't clear the 
+	; interrupt bit in the ICR register of CIA A, it will still be 1. Thus, the interrupt will
+	; retrigger immediately and produce the white and red stripes on the screen. 
+
+	; move.b  $BFED01,d0 ; acknowledge IRQ by reading the CIA ICR reg
 
 	move.w  #$FFF,COLOR00(a5) 
-
-	;move.w	INTREQR(a5),d0
-	;and.w	#$8,d0	
-	;beq.s	.lv2InterruptComplete
-
-;.portsInterrupt:
-;	move.w  #$FFF,COLOR00(a5) 
-;	move.w	#$8,INTREQ(a5)	; clear interrupt bit	
-;	move.b  $BFEC01,d0 ; clear interrupt bits by reading ICR
 	
 .lv2InterruptComplete:
 	movem.l	(sp)+,d0-a6
@@ -62,23 +58,17 @@ level3InterruptHandler:
 	beq.w	.checkCopper
 
 .verticalBlank:
-	move.w	#INTF_VERTB,INTREQ(a5)	; clear interrupt bit	
+	move.w	#INTF_VERTB,INTREQ(a5)	; Clear interrupt bit	
+	move.w  #$0F0,COLOR00(a5)       ; Clear background color
+	move.w	#$2000,INTENA(a5)       ; Disable CIA B interrupts
+	move.w  #$8008,INTENA(a5)       ; Enable CIA A interrupts
 
-	move.w  #$0F0,COLOR00(a5) ; Clear background color
-	move.w #$8008,$9A(a5) ; INTENA
-
-	;; Start CIA A timer A
-	lea $bfe001,a0 ; CIA A address 
-	;move.b $f00(a0),d0 ; CRB register 
-	;andi.b #$c0,d0 ; mask unused bits 
-	;ori.b #9,d0 ; mode one-shot 
-	;move.b d0,$f00(a0) ; write back
-	; move.b #$10,$600(a0) ; TALO
-	move.b #$10,$700(a0) ; TBHI  3740 white, 3780 green, green = value too large
-	move.b #$60,$600(a0) ; TBLO   
-	move.b #$82,$C00(a0) ; enable timer interrupt
-	move.b #$09,$F00(a0) ; CRB
-
+	;; Perform a timer test
+	lea $bfe001,a0                  ; CIA A base address 
+	move.b #$10,$700(a0)            ; TBHI 
+	move.b #$60,$600(a0)            ; TBLO   
+	move.b #$82,$C00(a0)            ; Enable CIA timer interrupt
+	move.b #$09,$F00(a0)            ; CRB (Start timer in one shot mode)
 
 .resetBitplanePointers:
 	lea	bitplanes(pc),a1
@@ -92,18 +82,17 @@ level3InterruptHandler:
 	
 .checkCopper:
 	lea	CUSTOM,a5
+	move.w  #$123,COLOR00(a5)
 	move.w	INTREQR(a5),d0
 	and.w	#INTF_COPER,d0	
 	beq.s	.interruptComplete
 .copperInterrupt:
+	move.w  #$456,COLOR00(a5)
 	move.w	#INTF_COPER,INTREQ(a5)	; clear interrupt bit	
 	
 .interruptComplete:
 	movem.l	(sp)+,d0-a6
 	rte
-
-RGB: 
-	DC.W    $F00, $0F0, $00F, $FF0, $0FF, $F0F, $800, $080, $008, $880, $088, $808, $444, $AAA, $400, $FFF  
 
 copper:
 	dc.w    DIWSTRT,$2c81
@@ -114,14 +103,7 @@ copper:
  
  	include	"image-copper-list-cropped.s"
 
-    ; Switch off biplanes in Copper cycle 00 and on again in cycle 80
-	;dc.w	$4001,$FFFE  ; WAIT 
-	;dc.w    BPLCON0, $200 ; Bitplanes off
-	;dc.w	$4081,$FFFE  ; WAIT 
-	;dc.w    BPLCON0, (SCREEN_BIT_DEPTH<<12)|$200 ; Bitplanes on
-
 	dc.w	$ffdf,$fffe ; Cross vertical boundary
-
 	dc.l	$fffffffe
 
 bitplanes:
