@@ -35,11 +35,11 @@ level2InterruptHandler:
 	move.w  #$F00,COLOR00(a5) 
 		
 	; In this test, we try to acknowledge the interrupt only by clearing the corresponding IRQ bit in
-	; INTREQ. The test shows that this is not enough. The interrupt retriggers 
+	; the CIA's ICR register. The test shows that this is not enough. The interrupt retriggers 
 	; immediately, thus producing white and red stripes on the screen. 
 
 	; Acknowledge the IRQ by reading the CIA ICR reg
-	; move.b  $BFED01,d0 
+	move.b  $BFED01,d0 
 
     ; Acknowledge the IRQ by clearing the IRQ bit in INTREQ
 	move.w	#$8,INTREQ(a5)
@@ -66,13 +66,6 @@ level3InterruptHandler:
 	move.w  #$0F0,COLOR00(a5)       ; Clear background color
 	move.w	#$2000,INTENA(a5)       ; Disable CIA B interrupts
 	move.w  #$8008,INTENA(a5)       ; Enable CIA A interrupts
-
-	;; Perform a timer test
-	lea $bfe001,a0                  ; CIA A base address 
-	move.b #$10,$700(a0)            ; TBHI 
-	move.b #$60,$600(a0)            ; TBLO   
-	move.b #$82,$C00(a0)            ; Enable CIA timer interrupt
-	move.b #$09,$F00(a0)            ; CRB (Start timer in one shot mode)
 
 .resetBitplanePointers:
 	lea	bitplanes(pc),a1
@@ -108,6 +101,10 @@ copper:
  	include	"image-copper-list-cropped.s"
 
 	dc.w	$ffdf,$fffe ; Cross vertical boundary
+
+	; Trigger a level 2 interrupt via the Copper by writing into INTREQ
+	; This works although the ICR register in CIA A has the IRQ bit cleared
+	dc.w    INTREQ,$8008
 	dc.l	$fffffffe
 
 bitplanes:

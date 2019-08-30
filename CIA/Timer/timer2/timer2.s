@@ -35,14 +35,14 @@ level2InterruptHandler:
 	move.w  #$F00,COLOR00(a5) 
 		
 	; In this test, we try to acknowledge the interrupt only by clearing the corresponding IRQ bit in
-	; INTREQ. The test shows that this is not enough. The interrupt retriggers 
+	; the CIA's ICR register. The test shows that this is not enough. The interrupt retriggers 
 	; immediately, thus producing white and red stripes on the screen. 
 
 	; Acknowledge the IRQ by reading the CIA ICR reg
-	; move.b  $BFED01,d0 
+	move.b  $BFED01,d0 
 
     ; Acknowledge the IRQ by clearing the IRQ bit in INTREQ
-	move.w	#$8,INTREQ(a5)
+	; move.w	#$8,INTREQ(a5)
 
 	; Change the background color again
 	move.w  #$FFF,COLOR00(a5) 
