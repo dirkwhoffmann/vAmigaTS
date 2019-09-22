@@ -44,7 +44,7 @@ Various combinations of DIWSTRT and DIWSTOP. Some combinations cross the hardwar
 
 #### ddf6
 
-Mores test combinations around the hardware stops.
+Mores test combinations around the hardware stops (flickers in UAE).
 
 #### ddf7
 
