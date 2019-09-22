@@ -18,8 +18,16 @@ Like collosion5 without toggling between single-playfield and dual-playfield mod
 
 Draws sprite 0, 2, 4, and 6 in a distinct column each. Each sprite is repeated 4 times. In the bitplane area, the Copper is used to switch between single-playfield and dual-playfield mode. The test differ in the priority values written to BPLCON2. Inspect the reference pictures carefully. There a subtle differences which are hard to see at first glance. 
 
-#### sprites5
+#### sprites5 to sprites7
 
-Sets the BPU value in BPLCON0 to 0 around the sprite DMA cycles. 
+Similar, with the playfield priority bits set to illegal values.
+
+#### sprbpu1 and sprbpu2
+
+Varies BPLCON0::BPU around the coordinates where the sprites are drawn. 
+
+#### sprclip1 and sprclip2
+
+Tests basic sprite clipping properties in lores and hires mode.
 
 Dirk Hoffmann, 2019
