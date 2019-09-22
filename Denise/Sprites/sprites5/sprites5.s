@@ -119,66 +119,57 @@ copper:
 	DC.W    SPR6PTL,$8000
 	DC.W    SPR7PTH,$0003 ;Sprite 7 pointer = $30000
 	DC.W    SPR7PTL,$0000
-	DC.W    COLOR17,$066F 
-	DC.W    COLOR18,$0444 
-	DC.W    COLOR19,$0F00 
-	DC.W    COLOR21,$06F6 
-	DC.W    COLOR22,$0444 
-	DC.W    COLOR23,$0F00 
 	DC.W    COLOR25,$0FF0 
 	DC.W    COLOR26,$0444 
 	DC.W    COLOR27,$0F00 
-	DC.W    COLOR29,$0CCC 
-	DC.W    COLOR30,$0444 
-	DC.W    COLOR31,$0F00 
 
 	;dc.w	$4501,$FFFE  ; WAIT 
 	;dc.w    BPLCON0, (SCREEN_BIT_DEPTH<<12)|$600  ; Enable dual playfield mode
 
-	dc.w    BPLCON2, $59
+	dc.w    BPLCON2, $2D
 	
    ; First color block
 	dc.w	$3001,$FFFE  ; WAIT 
 	dc.w	COLOR00, $F00
 	dc.w	$30D9,$FFFE  ; WAIT 
 	dc.w	COLOR00, $000
-	dc.w	$3113,$FFFE  ; WAIT 
-	dc.w    BPLCON0, (0<<12)|$200 
+	dc.w	$3151,$FFFE  ; WAIT 
+	dc.w    BPLCON0, (SCREEN_BIT_DEPTH<<12)|$600  ; Dual playfields on
 
 	dc.w	$3801,$FFFE  ; WAIT 
 	dc.w	COLOR00, $F00
 	dc.w	$38D9,$FFFE  ; WAIT 
 	dc.w	COLOR00, $000
 	dc.w	$3961,$FFFE  ; WAIT 
-	dc.w    BPLCON0, (SCREEN_BIT_DEPTH<<12)|$200 
+	dc.w    BPLCON0, (SCREEN_BIT_DEPTH<<12)|$200  ; Dual playfields off
 
 	dc.w	$4001,$FFFE  ; WAIT 
 	dc.w	COLOR00, $F00
 	dc.w	$40D9,$FFFE  ; WAIT 
 	dc.w	COLOR00, $000
 	dc.w	$4171,$FFFE  ; WAIT 
-	dc.w    BPLCON0, (SCREEN_BIT_DEPTH<<12)|$200 
+	dc.w    BPLCON0, (SCREEN_BIT_DEPTH<<12)|$600  ; Dual playfields on
 
 	dc.w	$4801,$FFFE  ; WAIT 
 	dc.w	COLOR00, $F00
 	dc.w	$48D9,$FFFE  ; WAIT 
 	dc.w	COLOR00, $000
 	dc.w	$4981,$FFFE  ; WAIT 
-	dc.w    BPLCON0, (SCREEN_BIT_DEPTH<<12)|$200
+	dc.w    BPLCON0, (SCREEN_BIT_DEPTH<<12)|$200  ; Dual playfields off
 
 	dc.w	$5001,$FFFE  ; WAIT 
 	dc.w	COLOR00, $F00
 	dc.w	$50D9,$FFFE  ; WAIT 
 	dc.w	COLOR00, $000
 	dc.w	$5191,$FFFE  ; WAIT 
-	dc.w    BPLCON0, (SCREEN_BIT_DEPTH<<12)|$200
+	dc.w    BPLCON0, (SCREEN_BIT_DEPTH<<12)|$600  ; Dual playfields on
 
 	dc.w	$5801,$FFFE  ; WAIT 
 	dc.w	COLOR00, $F00
 	dc.w	$58D9,$FFFE  ; WAIT 
 	dc.w	COLOR00, $000
 	dc.w	$59A1,$FFFE  ; WAIT 
-	dc.w    BPLCON0, (SCREEN_BIT_DEPTH<<12)|$200 
+	dc.w    BPLCON0, (SCREEN_BIT_DEPTH<<12)|$200  ; Dual playfields off
 
   ; Second color block
 	dc.w	$7001,$FFFE  ; WAIT 
@@ -186,42 +177,42 @@ copper:
 	dc.w	$70D9,$FFFE  ; WAIT 
 	dc.w	COLOR00, $000
 	dc.w	$71B1,$FFFE  ; WAIT 
-	dc.w    BPLCON0, (SCREEN_BIT_DEPTH<<12)|$200 
+	dc.w    BPLCON0, (SCREEN_BIT_DEPTH<<12)|$600  ; Dual playfields on
 
 	dc.w	$7801,$FFFE  ; WAIT 
 	dc.w	COLOR00, $F00
 	dc.w	$78D9,$FFFE  ; WAIT 
 	dc.w	COLOR00, $000
 	dc.w	$79C1,$FFFE  ; WAIT 
-	dc.w    BPLCON0, (SCREEN_BIT_DEPTH<<12)|$200
+	dc.w    BPLCON0, (SCREEN_BIT_DEPTH<<12)|$200  ; Dual playfields off
 
 	dc.w	$8001,$FFFE  ; WAIT 
 	dc.w	COLOR00, $F00
 	dc.w	$80D9,$FFFE  ; WAIT 
 	dc.w	COLOR00, $000
-	dc.w	$8143,$FFFE  ; WAIT 
-	dc.w    BPLCON0, (0<<12)|$200 
+	dc.w	$81D1,$FFFE  ; WAIT 
+	dc.w    BPLCON0, (SCREEN_BIT_DEPTH<<12)|$600  ; Dual playfields on
 
 	dc.w	$8801,$FFFE  ; WAIT 
 	dc.w	COLOR00, $F00
 	dc.w	$88D9,$FFFE  ; WAIT 
 	dc.w	COLOR00, $000
 	dc.w	$88E1,$FFFE  ; WAIT 
-	dc.w    BPLCON0, (SCREEN_BIT_DEPTH<<12)|$200
+	dc.w    BPLCON0, (SCREEN_BIT_DEPTH<<12)|$200  ; Dual playfields off
 
 	dc.w	$9001,$FFFE  ; WAIT 
 	dc.w	COLOR00, $F00
 	dc.w	$90D9,$FFFE  ; WAIT 
 	dc.w	COLOR00, $000
 	dc.w	$9101,$FFFE  ; WAIT 
-	dc.w    BPLCON0, (SCREEN_BIT_DEPTH<<12)|$200 
+	dc.w    BPLCON0, (SCREEN_BIT_DEPTH<<12)|$600  ; Dual playfields on
 
 	dc.w	$9801,$FFFE  ; WAIT 
 	dc.w	COLOR00, $F00
 	dc.w	$98D9,$FFFE  ; WAIT 
 	dc.w	COLOR00, $000
 	dc.w	$9901,$FFFE  ; WAIT 
-	dc.w    BPLCON0, (SCREEN_BIT_DEPTH<<12)|$200 
+	dc.w    BPLCON0, (SCREEN_BIT_DEPTH<<12)|$200  ; Dual playfields off
 
 	; Third color block
 	dc.w    $B801,$FFFE  ; WAIT
@@ -229,42 +220,42 @@ copper:
 	dc.w    $B8D9,$FFFE  ; WAIT
 	dc.w	COLOR00, $000
 	dc.w    $B951,$FFFE  ; WAIT
-	dc.w    BPLCON0, (SCREEN_BIT_DEPTH<<12)|$200 
+	dc.w    BPLCON0, (5<<12)|$600  ; Dual playfields on
 
 	dc.w    $C001,$FFFE  ; WAIT
 	dc.w	COLOR00, $F00
 	dc.w    $C0D9,$FFFE  ; WAIT
 	dc.w	COLOR00, $000
-	dc.w    $C173,$FFFE  ; WAIT
-	dc.w    BPLCON0, (0<<12)|$200  
+	dc.w    $C151,$FFFE  ; WAIT
+	dc.w    BPLCON0, (5<<12)|$200  ; Dual playfields off
 
 	dc.w    $C801,$FFFE  ; WAIT
 	dc.w	COLOR00, $F00
 	dc.w    $C8D9,$FFFE  ; WAIT
 	dc.w	COLOR00, $000
 	dc.w    $C951,$FFFE  ; WAIT
-	dc.w    BPLCON0, (SCREEN_BIT_DEPTH<<12)|$200 
+	dc.w    BPLCON0, (4<<12)|$600  ; Dual playfields on
 
 	dc.w    $D001,$FFFE  ; WAIT
 	dc.w	COLOR00, $F00
 	dc.w    $D0D9,$FFFE  ; WAIT
 	dc.w	COLOR00, $000
 	dc.w    $D151,$FFFE  ; WAIT
-	dc.w    BPLCON0, (SCREEN_BIT_DEPTH<<12)|$200 
+	dc.w    BPLCON0, (4<<12)|$200  ; Dual playfields off
 
 	dc.w    $D801,$FFFE  ; WAIT
 	dc.w	COLOR00, $F00
 	dc.w    $D8D9,$FFFE  ; WAIT
 	dc.w	COLOR00, $000
 	dc.w    $D951,$FFFE  ; WAIT
-	dc.w    BPLCON0, (SCREEN_BIT_DEPTH<<12)|$200
+	dc.w    BPLCON0, (3<<12)|$600  ; Dual playfields on
 
 	dc.w    $E001,$FFFE  ; WAIT
 	dc.w	COLOR00, $F00
 	dc.w    $E0D9,$FFFE  ; WAIT
 	dc.w	COLOR00, $000
 	dc.w    $E151,$FFFE  ; WAIT
-	dc.w    BPLCON0, (SCREEN_BIT_DEPTH<<12)|$200
+	dc.w    BPLCON0, (3<<12)|$200  ; Dual playfields off
 
 	dc.w    $E801,$FFFE  ; WAIT
 	dc.w	COLOR00, $F00
@@ -280,42 +271,42 @@ copper:
 	dc.w    $00D9,$FFFE  ; WAIT
 	dc.w	COLOR00, $000
 	dc.w    $0151,$FFFE  ; WAIT
-	dc.w    BPLCON0, (SCREEN_BIT_DEPTH<<12)|$200 
+	dc.w    BPLCON0, (2<<12)|$600  ; Dual playfields on
 
 	dc.w    $0801,$FFFE  ; WAIT
 	dc.w	COLOR00, $F00
 	dc.w    $08D9,$FFFE  ; WAIT
 	dc.w	COLOR00, $000
 	dc.w    $0951,$FFFE  ; WAIT
-	dc.w    BPLCON0, (SCREEN_BIT_DEPTH<<12)|$200 
+	dc.w    BPLCON0, (2<<12)|$200  ; Dual playfields off
 
 	dc.w    $1001,$FFFE  ; WAIT
 	dc.w	COLOR00, $F00
 	dc.w    $10D9,$FFFE  ; WAIT
 	dc.w	COLOR00, $000
 	dc.w    $1151,$FFFE  ; WAIT
-	dc.w    BPLCON0, (SCREEN_BIT_DEPTH<<12)|$200 
+	dc.w    BPLCON0, (1<<12)|$600  ; Dual playfields on
 
 	dc.w    $1801,$FFFE  ; WAIT
 	dc.w	COLOR00, $F00
 	dc.w    $18D9,$FFFE  ; WAIT
 	dc.w	COLOR00, $000
 	dc.w    $1951,$FFFE  ; WAIT
-	dc.w    BPLCON0, (SCREEN_BIT_DEPTH<<12)|$200 
+	dc.w    BPLCON0, (1<<12)|$200  ; Dual playfields off
 
 	dc.w    $2001,$FFFE  ; WAIT
 	dc.w	COLOR00, $F00
 	dc.w    $20D9,$FFFE  ; WAIT
 	dc.w	COLOR00, $000
-	dc.w    $21A3,$FFFE  ; WAIT
-	dc.w    BPLCON0, (0<<12)|$200 
+	dc.w    $2151,$FFFE  ; WAIT
+	dc.w    BPLCON0, (0<<12)|$200  ; Dual playfields on
 
 	dc.w    $2801,$FFFE  ; WAIT
 	dc.w	COLOR00, $F00
 	dc.w    $28D9,$FFFE  ; WAIT
 	dc.w	COLOR00, $000
 	dc.w    $2951,$FFFE  ; WAIT
-	dc.w    BPLCON0, (SCREEN_BIT_DEPTH<<12)|$200 
+	dc.w    BPLCON0, (6<<12)|$200  ; Dual playfields off
 
 	dc.l	$fffffffe
 
