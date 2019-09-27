@@ -166,35 +166,35 @@ copper:
 	dc.w	COLOR00, $F00
 	dc.w    $B8D9,$FFFE  ; WAIT
 	dc.w    DDFSTRT,$001A 
-	dc.w	DDFSTOP,$0098
+	dc.w	DDFSTOP,$0098 ; diff = $7E = 126 = 15 * 8 + 6
 	dc.w	COLOR00, $000
 
 	dc.w    $C001,$FFFE  ; WAIT
 	dc.w	COLOR00, $F00
 	dc.w    $C0D9,$FFFE  ; WAIT
 	dc.w    DDFSTRT,$001C 
-	dc.w	DDFSTOP,$0098
+	dc.w	DDFSTOP,$0098 ; diff = $7C = 124 = 15 * 8 + 4
 	dc.w	COLOR00, $000
 
 	dc.w    $C801,$FFFE  ; WAIT
 	dc.w	COLOR00, $F00
 	dc.w    $C8D9,$FFFE  ; WAIT
 	dc.w    DDFSTRT,$001E 
-	dc.w	DDFSTOP,$0098
+	dc.w	DDFSTOP,$0098 ; diff = $7A = 122 = 15 * 8 + 2
 	dc.w	COLOR00, $000
 
 	dc.w    $D001,$FFFE  ; WAIT
 	dc.w	COLOR00, $F00
 	dc.w    $D0D9,$FFFE  ; WAIT
 	dc.w    DDFSTRT,$0020 
-	dc.w	DDFSTOP,$0098
+	dc.w	DDFSTOP,$0098  ; diff = $7A = 120 = 15 * 8
 	dc.w	COLOR00, $000
 
 	dc.w    $D801,$FFFE  ; WAIT
 	dc.w	COLOR00, $F00
 	dc.w    $D8D9,$FFFE  ; WAIT
-	dc.w    DDFSTRT,$0022 
-	dc.w	DDFSTOP,$0098
+	dc.w    DDFSTRT,$0022  
+	dc.w	DDFSTOP,$0098  ; diff = $78 = 118 = 14 * 8 + 6
 	dc.w	COLOR00, $000
 
 	dc.w    $E001,$FFFE  ; WAIT

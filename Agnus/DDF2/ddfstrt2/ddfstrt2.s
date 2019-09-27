@@ -72,35 +72,35 @@ copper:
 	dc.w	COLOR00, $F00
 	dc.w	$30D9,$FFFE  ; WAIT 
 	dc.w    DDFSTRT,$0030 
-	dc.w	DDFSTOP,$00C8
+	dc.w	DDFSTOP,$0098
 	dc.w	COLOR00, $000
 
 	dc.w	$3801,$FFFE  ; WAIT 
 	dc.w	COLOR00, $F00
 	dc.w	$38D9,$FFFE  ; WAIT 
 	dc.w    DDFSTRT,$0032 
-	dc.w	DDFSTOP,$00C8
+	dc.w	DDFSTOP,$0098
 	dc.w	COLOR00, $000
 
 	dc.w	$4001,$FFFE  ; WAIT 
 	dc.w	COLOR00, $F00
 	dc.w	$40D9,$FFFE  ; WAIT 
 	dc.w    DDFSTRT,$0034 
-	dc.w	DDFSTOP,$00C8
+	dc.w	DDFSTOP,$0098
 	dc.w	COLOR00, $000
 
 	dc.w	$4801,$FFFE  ; WAIT 
 	dc.w	COLOR00, $F00
 	dc.w	$48D9,$FFFE  ; WAIT 
 	dc.w    DDFSTRT,$0036 
-	dc.w	DDFSTOP,$00C8
+	dc.w	DDFSTOP,$0098
 	dc.w	COLOR00, $000
 
 	dc.w	$5001,$FFFE  ; WAIT 
 	dc.w	COLOR00, $F00
 	dc.w	$50D9,$FFFE  ; WAIT 
 	dc.w    DDFSTRT,$0038 
-	dc.w	DDFSTOP,$00C8
+	dc.w	DDFSTOP,$0098
 	dc.w	COLOR00, $000
 	dc.w	$5101,$FFFE  ; WAIT 
 
@@ -108,7 +108,7 @@ copper:
 	dc.w	COLOR00, $F00
 	dc.w	$58D9,$FFFE  ; WAIT 
 	dc.w    DDFSTRT,$003A 
-	dc.w	DDFSTOP,$00C8
+	dc.w	DDFSTOP,$0098
 	dc.w	COLOR00, $000
 
 	; Second color block
@@ -116,49 +116,49 @@ copper:
 	dc.w	COLOR00, $F00
     dc.w    $70D9,$FFFE  ; WAIT
   	dc.w    DDFSTRT,$003C 
-	dc.w	DDFSTOP,$00C8
+	dc.w	DDFSTOP,$0098
 	dc.w	COLOR00, $000
 
 	dc.w    $7801,$FFFE  ; WAIT
 	dc.w	COLOR00, $F00
     dc.w    $78D9,$FFFE  ; WAIT
   	dc.w    DDFSTRT,$003E 
-	dc.w	DDFSTOP,$00C8
+	dc.w	DDFSTOP,$0098
 	dc.w	COLOR00, $000
 
 	dc.w    $8001,$FFFE  ; WAIT
 	dc.w	COLOR00, $F00
     dc.w    $80D9,$FFFE  ; WAIT
  	dc.w    DDFSTRT,$0040 
-	dc.w	DDFSTOP,$00C8
+	dc.w	DDFSTOP,$0098
 	dc.w	COLOR00, $000
 
 	dc.w    $8801,$FFFE  ; WAIT
 	dc.w	COLOR00, $F00
     dc.w    $88D9,$FFFE  ; WAIT
     dc.w    DDFSTRT,$0042 
-	dc.w	DDFSTOP,$00C8
+	dc.w	DDFSTOP,$0098
 	dc.w	COLOR00, $000
 
 	dc.w    $9001,$FFFE  ; WAIT
 	dc.w	COLOR00, $F00
     dc.w    $90D9,$FFFE  ; WAIT
     dc.w    DDFSTRT,$0044 
-	dc.w	DDFSTOP,$00C8
+	dc.w	DDFSTOP,$0098
 	dc.w	COLOR00, $000
 
 	dc.w    $9801,$FFFE  ; WAIT
 	dc.w	COLOR00, $F00
     dc.w    $98D9,$FFFE  ; WAIT
     dc.w    DDFSTRT,$0046 
-	dc.w	DDFSTOP,$00C8
+	dc.w	DDFSTOP,$0098
 	dc.w	COLOR00, $000
 
 	dc.w    $A001,$FFFE  ; WAIT
 	dc.w	COLOR00, $F00
     dc.w    $A0D9,$FFFE  ; WAIT
     dc.w    DDFSTRT,$0048 
-	dc.w	DDFSTOP,$00C8
+	dc.w	DDFSTOP,$0098
 	dc.w	COLOR00, $000
 
 	; Third color block
@@ -166,49 +166,49 @@ copper:
 	dc.w	COLOR00, $F00
 	dc.w    $B8D9,$FFFE  ; WAIT
 	dc.w    DDFSTRT,$004A 
-	dc.w	DDFSTOP,$00C8
+	dc.w	DDFSTOP,$0098
 	dc.w	COLOR00, $000
 
 	dc.w    $C001,$FFFE  ; WAIT
 	dc.w	COLOR00, $F00
 	dc.w    $C0D9,$FFFE  ; WAIT
 	dc.w    DDFSTRT,$004C 
-	dc.w	DDFSTOP,$00C8
+	dc.w	DDFSTOP,$0098
 	dc.w	COLOR00, $000
 
 	dc.w    $C801,$FFFE  ; WAIT
 	dc.w	COLOR00, $F00
 	dc.w    $C8D9,$FFFE  ; WAIT
 	dc.w    DDFSTRT,$004E 
-	dc.w	DDFSTOP,$00C8
+	dc.w	DDFSTOP,$0098
 	dc.w	COLOR00, $000
 
 	dc.w    $D001,$FFFE  ; WAIT
 	dc.w	COLOR00, $F00
 	dc.w    $D0D9,$FFFE  ; WAIT
 	dc.w    DDFSTRT,$0050 
-	dc.w	DDFSTOP,$00C8
+	dc.w	DDFSTOP,$0098
 	dc.w	COLOR00, $000
 
 	dc.w    $D801,$FFFE  ; WAIT
 	dc.w	COLOR00, $F00
 	dc.w    $D8D9,$FFFE  ; WAIT
 	dc.w    DDFSTRT,$0052 
-	dc.w	DDFSTOP,$00C8
+	dc.w	DDFSTOP,$0098
 	dc.w	COLOR00, $000
 
 	dc.w    $E001,$FFFE  ; WAIT
 	dc.w	COLOR00, $F00
 	dc.w    $E0D9,$FFFE  ; WAIT
 	dc.w    DDFSTRT,$0054 
-	dc.w	DDFSTOP,$00C8
+	dc.w	DDFSTOP,$0098
 	dc.w	COLOR00, $000
 
 	dc.w    $E801,$FFFE  ; WAIT
 	dc.w	COLOR00, $F00
 	dc.w    $E8D9,$FFFE  ; WAIT
 	dc.w    DDFSTRT,$0056 
-	dc.w	DDFSTOP,$00C8
+	dc.w	DDFSTOP,$0098
 	dc.w	COLOR00, $000
 
 	dc.w    $ffdf,$fffe ; Cross vertical boundary
@@ -218,42 +218,42 @@ copper:
 	dc.w	COLOR00, $F00
 	dc.w    $00D9,$FFFE  ; WAIT
 	dc.w    DDFSTRT,$0058 
-	dc.w	DDFSTOP,$00C8
+	dc.w	DDFSTOP,$0098
 	dc.w	COLOR00, $000
 
 	dc.w    $0801,$FFFE  ; WAIT
 	dc.w	COLOR00, $F00
 	dc.w    $08D9,$FFFE  ; WAIT
 	dc.w    DDFSTRT,$005A 
-	dc.w	DDFSTOP,$00C8
+	dc.w	DDFSTOP,$0098
 	dc.w	COLOR00, $000
 
 	dc.w    $1001,$FFFE  ; WAIT
 	dc.w	COLOR00, $F00
 	dc.w    $10D9,$FFFE  ; WAIT
 	dc.w    DDFSTRT,$005C 
-	dc.w	DDFSTOP,$00C8
+	dc.w	DDFSTOP,$0098
 	dc.w	COLOR00, $000
 
 	dc.w    $1801,$FFFE  ; WAIT
 	dc.w	COLOR00, $F00
 	dc.w    $18D9,$FFFE  ; WAIT
 	dc.w    DDFSTRT,$005E 
-	dc.w	DDFSTOP,$00C8
+	dc.w	DDFSTOP,$0098
 	dc.w	COLOR00, $000
 
 	dc.w    $2001,$FFFE  ; WAIT
 	dc.w	COLOR00, $F00
 	dc.w    $20D9,$FFFE  ; WAIT
 	dc.w    DDFSTRT,$0060 
-	dc.w	DDFSTOP,$00C8
+	dc.w	DDFSTOP,$0098
 	dc.w	COLOR00, $000
 
 	dc.w    $2801,$FFFE  ; WAIT
 	dc.w	COLOR00, $F00
 	dc.w    $28D9,$FFFE  ; WAIT
 	dc.w    DDFSTRT,$0062 
-	dc.w	DDFSTOP,$00C8
+	dc.w	DDFSTOP,$0098
 	dc.w	COLOR00, $000
 
 	dc.w    DDFSTRT,$0038 ; Reset normal values
