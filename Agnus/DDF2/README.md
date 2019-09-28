@@ -22,6 +22,10 @@ Sets DDFSTRT and DDFSTOP to values close to the hardware stops.
 
 Tests some combinations where DDFTOP is outside the valid range (i.e., values that are larger than the upper hardware stop and larger than the highest DMA cycle number).
 
+#### ddfinv5
+
+DDFSTOP is set to $E2. DDFSTRT varies. 
+
 #### ddfskip1
 
 Changes DDFSTRT near the trigger position.
