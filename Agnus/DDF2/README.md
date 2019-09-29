@@ -6,9 +6,9 @@ The DDF tests use the Copper to modify DDFSTART and DDSTOP in various ways.
 
 DDFSTRT is incremented continously at the end of certain rasterlines. DDFSTOP remains at a fixed position. Test cases with the 'h' suffix run in hires modes, all others in lores mode.
 
-#### ddfstrt10 to ddfstrt12, ddfstrt10h to ddfstrt12h
+#### ddfstrt10 to ddfstrt15, ddfstrt10h to ddfstrt15h
 
-Same as ddfstrt1 to ddfstrt3 (ddfstrt1h to ddfstrt3h), but with swapped values for DDFSTRT and DDFSTOP. Hence, DDFSTRT is greater than DDFSTOP in all cases. 
+Same as ddfstrt1 to ddfstrt6 (ddfstrt1h to ddfstrt6h), but with swapped values for DDFSTRT and DDFSTOP. Hence, DDFSTRT is greater than DDFSTOP in all cases. 
 
 #### ddfinv1
 

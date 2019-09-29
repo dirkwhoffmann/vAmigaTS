@@ -75,49 +75,56 @@ copper:
 	dc.w	$3001,$FFFE  ; WAIT 
 	dc.w	COLOR00, $F00
 	dc.w	$3101,$FFFE  ; WAIT 
+    dc.w    DDFSTOP,$00D0
 	dc.w    DDFSTRT,$0038 
-	dc.w	DDFSTOP,$00D0
 	dc.w	COLOR00, $000
 
     ; 
 	dc.w	$3801,$FFFE  ; WAIT 
 	dc.w	COLOR00, $F00
 	dc.w	$39A1,$FFFE  ; WAIT 
-	dc.w    DDFSTRT,$0038 
-	dc.w	DDFSTOP,$00A8
-	dc.w	COLOR00, $000
+    dc.w    DDFSTOP,$00A8
+	dc.w    DDFSTRT,$0038
+    dc.w    $39C1,$FFFE  ; WAIT
+    dc.w    DDFSTOP,$00D8 ; Emergency stop
+    dc.w    COLOR00, $000
 
 	; 
 	dc.w	$4001,$FFFE  ; WAIT 
 	dc.w	COLOR00, $F00
 	dc.w	$4101,$FFFE  ; WAIT
-	dc.w    DDFSTRT,$0038 
-	dc.w	DDFSTOP,$00D0
+    dc.w    DDFSTOP,$00D0
+	dc.w    DDFSTRT,$0038
 	dc.w	COLOR00, $000
 
 	; 
 	dc.w	$4801,$FFFE  ; WAIT 
 	dc.w	COLOR00, $F00
 	dc.w	$49A3,$FFFE  ; WAIT
-	dc.w    DDFSTRT,$0038 
-	dc.w	DDFSTOP,$00A8
-	dc.w	COLOR00, $000
+    dc.w    DDFSTOP,$00A8
+	dc.w    DDFSTRT,$0038
+    dc.w    $49C1,$FFFE  ; WAIT
+    dc.w    DDFSTOP,$00D8 ; Emergency stop
+    dc.w    COLOR00, $000
 
 	; 
 	dc.w	$5001,$FFFE  ; WAIT 
 	dc.w	COLOR00, $F00
 	dc.w	$5101,$FFFE  ; WAIT
-	dc.w    DDFSTRT,$0038 
-	dc.w	DDFSTOP,$00D0
+    dc.w    DDFSTOP,$00D0
+	dc.w    DDFSTRT,$0038
 	dc.w	COLOR00, $000
 
 	; 
 	dc.w	$5801,$FFFE  ; WAIT 
 	dc.w	COLOR00, $F00
 	dc.w	$59A5,$FFFE  ; WAIT
-	dc.w    DDFSTRT,$0038 
-	dc.w	DDFSTOP,$00A8
-	dc.w	COLOR00, $111
+    dc.w    DDFSTOP,$00A8
+	dc.w    DDFSTRT,$0038
+    dc.w    $59C1,$FFFE  ; WAIT
+    dc.w    DDFSTOP,$00D8 ; Emergency stop
+    dc.w    COLOR00, $000
+
 
 	;
 	; Second color block (similar to first block, but DDFSTRT not dividable by 4)
@@ -126,50 +133,57 @@ copper:
 	dc.w    $7001,$FFFE  ; WAIT
 	dc.w	COLOR00, $F00
     dc.w    $7101,$FFFE  ; WAIT
-  	dc.w    DDFSTRT,$0038 
-	dc.w	DDFSTOP,$00D0
+    dc.w    DDFSTOP,$00D0
+  	dc.w    DDFSTRT,$0038
 	dc.w	COLOR00, $000
 	
 	dc.w    $7801,$FFFE  ; WAIT
 	dc.w	COLOR00, $F00
-    dc.w    $78A7,$FFFE  ; WAIT
-  	dc.w    DDFSTRT,$0038 
-	dc.w	DDFSTOP,$00A8
-	dc.w	COLOR00, $000
+    dc.w    $79A7,$FFFE  ; WAIT
+    dc.w    DDFSTOP,$00A8
+  	dc.w    DDFSTRT,$0038
+    dc.w    $79C1,$FFFE  ; WAIT
+    dc.w    DDFSTOP,$00D8 ; Emergency stop
+    dc.w    COLOR00, $000
+
 
 	dc.w    $8001,$FFFE  ; WAIT
 	dc.w	COLOR00, $F00
     dc.w    $8101,$FFFE  ; WAIT
- 	dc.w    DDFSTRT,$0038 
-	dc.w	DDFSTOP,$00D0
+    dc.w    DDFSTOP,$00D0
+ 	dc.w    DDFSTRT,$0038
 	dc.w	COLOR00, $000
 
 	dc.w    $8801,$FFFE  ; WAIT
 	dc.w	COLOR00, $F00
     dc.w    $89A9,$FFFE  ; WAIT
-    dc.w    DDFSTRT,$0038 
-	dc.w	DDFSTOP,$00A8
-	dc.w	COLOR00, $000
+    dc.w    DDFSTOP,$00A8
+    dc.w    DDFSTRT,$0038
+    dc.w    $89C1,$FFFE  ; WAIT
+    dc.w    DDFSTOP,$00D8 ; Emergency stop
+    dc.w    COLOR00, $000
 
 	dc.w    $9001,$FFFE  ; WAIT
 	dc.w	COLOR00, $F00
     dc.w    $9101,$FFFE  ; WAIT
-    dc.w    DDFSTRT,$0038 
-	dc.w	DDFSTOP,$00D0
+    dc.w    DDFSTOP,$00D0
+    dc.w    DDFSTRT,$0038
 	dc.w	COLOR00, $000
 
 	dc.w    $9801,$FFFE  ; WAIT
 	dc.w	COLOR00, $F00
     dc.w    $99A1,$FFFE  ; WAIT
-    dc.w    DDFSTRT,$0038 
-	dc.w	DDFSTOP,$00AA
-	dc.w	COLOR00, $000
+    dc.w    DDFSTOP,$00AA
+    dc.w    DDFSTRT,$0038
+    dc.w    $99C1,$FFFE  ; WAIT
+    dc.w    DDFSTOP,$00D8 ; Emergency stop
+    dc.w    COLOR00, $000
 
 	dc.w    $A001,$FFFE  ; WAIT
 	dc.w	COLOR00, $F00
     dc.w    $A101,$FFFE  ; WAIT
-    dc.w    DDFSTRT,$0038 
-	dc.w	DDFSTOP,$00D0
+    dc.w    DDFSTOP,$00D0
+    dc.w    DDFSTRT,$0038
 	dc.w	COLOR00, $000
 
 	;	
@@ -179,51 +193,59 @@ copper:
 	dc.w    $B801,$FFFE  ; WAIT
 	dc.w	COLOR00, $F00
 	dc.w    $B9A3,$FFFE  ; WAIT
-	dc.w    DDFSTRT,$0038 
-	dc.w	DDFSTOP,$00AA
-	dc.w	COLOR00, $000
+    dc.w    DDFSTOP,$00AA
+	dc.w    DDFSTRT,$0038
+    dc.w    $B9C1,$FFFE  ; WAIT
+    dc.w    DDFSTOP,$00D8 ; Emergency stop
+    dc.w    COLOR00, $000
 
 	dc.w    $C001,$FFFE  ; WAIT
 	dc.w	COLOR00, $F00
 	dc.w    $C101,$FFFE  ; WAIT
-	dc.w    DDFSTRT,$0038 
-	dc.w	DDFSTOP,$00D0
+    dc.w    DDFSTOP,$00D0
+	dc.w    DDFSTRT,$0038
 	dc.w	COLOR00, $000
 
 	dc.w    $C801,$FFFE  ; WAIT
 	dc.w	COLOR00, $F00
 	dc.w    $C9A5,$FFFE  ; WAIT
-	dc.w    DDFSTRT,$0038 
-	dc.w	DDFSTOP,$00AA
-	dc.w	COLOR00, $000
+    dc.w    DDFSTOP,$00AA
+	dc.w    DDFSTRT,$0038
+    dc.w    $C9C1,$FFFE  ; WAIT
+    dc.w    DDFSTOP,$00D8 ; Emergency stop
+    dc.w    COLOR00, $000
 
 	dc.w    $D001,$FFFE  ; WAIT
 	dc.w	COLOR00, $F00
 	dc.w    $D101,$FFFE  ; WAIT
-	dc.w    DDFSTRT,$0038 
-	dc.w	DDFSTOP,$00D0
+    dc.w    DDFSTOP,$00D0
+	dc.w    DDFSTRT,$0038
 	dc.w	COLOR00, $000
 
 	dc.w    $D801,$FFFE  ; WAIT
 	dc.w	COLOR00, $F00
 	dc.w    $D9A7,$FFFE  ; WAIT
-	dc.w    DDFSTRT,$0038 
-	dc.w	DDFSTOP,$00AA
-	dc.w	COLOR00, $000
+    dc.w    DDFSTOP,$00AA
+	dc.w    DDFSTRT,$0038
+    dc.w    $D9C1,$FFFE  ; WAIT
+    dc.w    DDFSTOP,$00D8 ; Emergency stop
+    dc.w    COLOR00, $000
 
 	dc.w    $E001,$FFFE  ; WAIT
 	dc.w	COLOR00, $F00
 	dc.w    $E101,$FFFE  ; WAIT
-	dc.w    DDFSTRT,$0038 
-	dc.w	DDFSTOP,$00D0
+    dc.w    DDFSTOP,$00D0
+	dc.w    DDFSTRT,$0038
 	dc.w	COLOR00, $000
 
 	dc.w    $E801,$FFFE  ; WAIT
 	dc.w	COLOR00, $F00
 	dc.w    $E9A9,$FFFE  ; WAIT
-	dc.w    DDFSTRT,$0038 
-	dc.w	DDFSTOP,$00AA
-	dc.w	COLOR00, $000
+    dc.w    DDFSTOP,$00AA
+	dc.w    DDFSTRT,$0038
+    dc.w    $E9C1,$FFFE  ; WAIT
+    dc.w    DDFSTOP,$00D8 ; Emergency stop
+    dc.w    COLOR00, $000
 
 	dc.w    $ffdf,$fffe ; Cross vertical boundary
 
@@ -231,44 +253,50 @@ copper:
 	dc.w    $0001,$FFFE  ; WAIT
 	dc.w	COLOR00, $F00
 	dc.w    $0101,$FFFE  ; WAIT
-	dc.w    DDFSTRT,$0038 
-	dc.w	DDFSTOP,$00D0
+    dc.w    DDFSTOP,$00D0
+	dc.w    DDFSTRT,$0038
 	dc.w	COLOR00, $000
 
 	dc.w    $0801,$FFFE  ; WAIT
 	dc.w	COLOR00, $F00
 	dc.w    $09AB,$FFFE  ; WAIT
-	dc.w    DDFSTRT,$0038 
-	dc.w	DDFSTOP,$00AA
-	dc.w	COLOR00, $000
+    dc.w    DDFSTOP,$00AA
+	dc.w    DDFSTRT,$0038
+    dc.w    $09C1,$FFFE  ; WAIT
+    dc.w    DDFSTOP,$00D8 ; Emergency stop
+    dc.w    COLOR00, $000
 
 	dc.w    $1001,$FFFE  ; WAIT
 	dc.w	COLOR00, $F00
 	dc.w    $1101,$FFFE  ; WAIT
-	dc.w    DDFSTRT,$0038 
-	dc.w	DDFSTOP,$00D0
+    dc.w    DDFSTOP,$00D0
+	dc.w    DDFSTRT,$0038
 	dc.w	COLOR00, $000
 
 	dc.w    $1801,$FFFE  ; WAIT
 	dc.w	COLOR00, $F00
-	dc.w    $18AB,$FFFE  ; WAIT
-	dc.w    DDFSTRT,$0038 
-	dc.w	DDFSTOP,$00B1
-	dc.w	COLOR00, $000
+	dc.w    $19AB,$FFFE  ; WAIT
+    dc.w    DDFSTOP,$00B1
+	dc.w    DDFSTRT,$0038
+    dc.w    $19C1,$FFFE  ; WAIT
+    dc.w    DDFSTOP,$00D8 ; Emergency stop
+    dc.w    COLOR00, $000
 
 	dc.w    $2001,$FFFE  ; WAIT
 	dc.w	COLOR00, $F00
 	dc.w    $2101,$FFFE  ; WAIT
-	dc.w    DDFSTRT,$0038 
-	dc.w	DDFSTOP,$00D0
+    dc.w    DDFSTOP,$00D0
+	dc.w    DDFSTRT,$0038
 	dc.w	COLOR00, $000
 
 	dc.w    $2801,$FFFE  ; WAIT
 	dc.w	COLOR00, $F00
 	dc.w    $29AB,$FFFE  ; WAIT
-	dc.w    DDFSTRT,$0038 
-	dc.w	DDFSTOP,$00B2
-	dc.w	COLOR00, $000
+    dc.w    DDFSTOP,$00B2
+	dc.w    DDFSTRT,$0038
+    dc.w    $29C9,$FFFE  ; WAIT
+    dc.w    DDFSTOP,$00D8 ; Emergency stop
+    dc.w    COLOR00, $000
 
 	dc.w    DDFSTRT,$0038 ; Reset normal values
 	dc.w	DDFSTOP,$00D0
