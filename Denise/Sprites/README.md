@@ -2,6 +2,10 @@
 
 This test suite verfies some basic sprite properties.
 
+#### sprdma1 and sprdma2
+
+Toggles the SPRDMA bit in DMACON at certain positions.
+
 #### attached1
 
 Draws two columns of attached sprites (sprites with the AT bit set).
@@ -29,5 +33,14 @@ Varies BPLCON0::BPU around the coordinates where the sprites are drawn.
 #### sprclip1 and sprclip2
 
 Tests basic sprite clipping properties in lores and hires mode.
+
+#### reenable
+
+This test uses unusual coordinates letting the VSTOP match twice without letting VSTRT match in between.
+
+#### multiplex1
+
+Display the same sprite twice horizontally. Same trick as in R-Type II.
+
 
 Dirk Hoffmann, 2019
