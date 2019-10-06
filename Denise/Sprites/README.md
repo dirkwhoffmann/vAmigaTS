@@ -42,5 +42,12 @@ This test uses unusual coordinates letting the VSTOP match twice without letting
 
 Display the same sprite twice horizontally. Same trick as in R-Type II.
 
+#### invcoord
+
+Contais a couple of POS/CTL pairs with VSTRT unreachable and VSTRT > VSTOP.
+
+#### termination1
+
+Shows that Sprite DMA doesn't terminate on $0000/$0000 even if some books claim this.
 
 Dirk Hoffmann, 2019
