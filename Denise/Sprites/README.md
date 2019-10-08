@@ -2,7 +2,7 @@
 
 This test suite verfies some basic sprite properties.
 
-#### sprdma1 and sprdma2
+#### sprdma1 to sprdma3
 
 Toggles the SPRDMA bit in DMACON at certain positions.
 
@@ -49,5 +49,9 @@ Contais a couple of POS/CTL pairs with VSTRT unreachable and VSTRT > VSTOP.
 #### termination1
 
 Shows that Sprite DMA doesn't terminate on $0000/$0000 even if some books claim this.
+
+#### manual1 and manual2
+
+Draws sprites without enabling DMA by writing directly into POS, CTL, DATA, and DATB.
 
 Dirk Hoffmann, 2019
