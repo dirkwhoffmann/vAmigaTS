@@ -10,6 +10,10 @@ Toggles the SPRDMA bit in DMACON at certain positions.
 
 Draws two columns of attached sprites (sprites with the AT bit set).
 
+#### attached2
+
+Draws attached sprites with both matching and unmatching horizontal coordinates.
+
 #### collision1 to collision7
 
 This tests draws two overlapping sprites. One of the two sprites overlaps a portion of the playfield, too. During vBlank, the CLXDAT register is read and split into four 4-bit chunks. After that, the chunks are written into color registers 0 to 3 to make the bit-pattern visible. The test is carried out with different sprite numbers and different values in CLXCON. 
