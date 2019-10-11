@@ -10,7 +10,7 @@ Toggles the SPRDMA bit in DMACON at certain positions.
 
 Draws two columns of attached sprites (sprites with the AT bit set).
 
-#### attached2
+#### attached2 to attached4
 
 Draws attached sprites with both matching and unmatching horizontal coordinates.
 

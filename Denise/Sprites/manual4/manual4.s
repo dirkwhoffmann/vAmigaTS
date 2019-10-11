@@ -42,6 +42,16 @@ entry:
 	MOVE.W  #$0FFF,COLOR20(a0) ;
 	MOVE.W  #$088F,COLOR21(a0) ;
 	MOVE.W  #$0F88,COLOR22(a0) ;
+	MOVE.W  #$0FFF,COLOR23(a0) ;
+	MOVE.W  #$0884,COLOR24(a0) ;
+	MOVE.W  #$08F4,COLOR25(a0) ;
+	MOVE.W  #$0448,COLOR26(a0) ;
+	MOVE.W  #$0808,COLOR27(a0) ;
+	MOVE.W  #$0F08,COLOR28(a0) ;
+	MOVE.W  #$080F,COLOR29(a0) ;
+	MOVE.W  #$0A0A,COLOR30(a0) ;
+	MOVE.W  #$0AA0,COLOR31(a0) ;
+
 	;;
 	;;  Move Copper list to $20000.
 	;;
