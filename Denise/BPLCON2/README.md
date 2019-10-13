@@ -14,7 +14,7 @@ Single-playfield mode, PF2PRI = 0, PF2P has an illegal value
 
 Single-playfield mode, PF2PRI = 0, both PF1P and PF2P have an illegal value
 
-Observation: Setting both PF1P and PF2P to illegal values in single-playfield mode lets the video output to break down. 
+Observation: Setting both PF1P and PF2P to illegal values in single-playfield mode causes the video output to break down. 
 
 #### pri4 to pri6
 
