@@ -2,10 +2,6 @@
 
 This test suite verfies some basic sprite properties.
 
-#### sprdma1 to sprdma3
-
-Toggles the SPRDMA bit in DMACON at certain positions.
-
 #### attached1
 
 Draws two columns of attached sprites (sprites with the AT bit set).
