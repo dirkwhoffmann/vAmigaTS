@@ -34,5 +34,9 @@ Rewrites the current values of SPRxPOS and SPRxCTL by the Copper. For the first 
 
 Draws sprites via DMA and uses the Copper to interfere. The SPRxCTL and SPRxPOS are written manually at certain locations to see how DMA is affected by the manual writes. 
 
+#### sprdma11
+
+Sprite DMA is on all the time. The Copper is utilized to change SPRxPOS and SPRxCTL at various locations.
+
 
 Dirk Hoffmann, 2019
