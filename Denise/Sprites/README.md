@@ -54,4 +54,9 @@ Shows that Sprite DMA doesn't terminate on $0000/$0000 even if some books claim 
 
 Draws sprites without enabling DMA by writing directly into POS, CTL, DATA, and DATB.
 
+#### sprdat1 and sprdat2
+
+Draws sprites via DMA. Utilizes the Copper to modify SPR4DATA and SPR4DATB before resp. after the sprite has been drawn. 
+
+
 Dirk Hoffmann, 2019
