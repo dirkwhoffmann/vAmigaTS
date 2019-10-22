@@ -38,5 +38,9 @@ Draws sprites via DMA and uses the Copper to interfere. The SPRxCTL and SPRxPOS 
 
 Sprite DMA is on all the time. The Copper is utilized to change SPRxPOS and SPRxCTL at various locations.
 
+#### sprdma12
+
+Modified SPRxCTL at the end of a rasterline, just before the next control word pair would be read. 
+
 
 Dirk Hoffmann, 2019
