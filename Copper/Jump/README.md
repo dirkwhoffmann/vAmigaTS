@@ -2,9 +2,9 @@
 
 This test suite verfies particular aspects of the JUMP command (by writing into strobe registers COPJMPx).
 
-#### jump1
+#### jump1 and jump1b
 
-At a certain position, Copper list 1 jumps to Copper list 2 which repeats itself. To visualize timing, the background color is alternated continously in the second Copper list.
+At a certain position, Copper list 1 jumps to Copper list 2. Copper list 2 implements an infinite loop that changes the background color twice and repeats itself by writing to COP2JMP. The tests run in lores mode and enable 4 or 5 bitplanes, respectively.
 
 #### jump2 and jump3, jump3a
 
