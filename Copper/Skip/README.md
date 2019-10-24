@@ -32,5 +32,15 @@ Checks the behaviour of a SKIP command followed by a MOVE command and a WAIT com
 
 The reference image reveals that only MOVE commands can skipped. 
 
+#### copskip4
+
+    dc.w    COLOR00, $0F0
+    dc.w    $6241,$FFFF  ; Skip the next command
+    dc.w    $003E,$0000  ; Illegal write (Copper stops)
+    dc.w    COLOR00, $FF0
+    dc.w    COLOR00, $F00
+    
+This test skips an illegal write. Although the write is omitted, the resulting image shows that the Copper still stops (as it would if the SKIP command wouldn't be there).
+
 
 Dirk Hoffmann, 2019
