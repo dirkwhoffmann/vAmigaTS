@@ -6,6 +6,10 @@ This test suite verfies particular aspects of the JUMP command (by writing into 
 
 At a certain position, Copper list 1 jumps to Copper list 2. Copper list 2 implements an infinite loop that changes the background color twice and repeats itself by writing to COP2JMP. The tests run in lores mode and enable 4 or 5 bitplanes, respectively.
 
+#### jump1c
+
+Same as jump1, but without any wait statement. This test can used to verify at which cycle the Copper starts when a new frame begins.
+
 #### jump2 and jump3, jump3a
 
 Test jump2 triggers a Copper interrupt and executes a WAIT command afterwards. In the interrupt handler, the Copper location register (COP1LC) is written to. The test image reveals that writing to this register doesn't wake up the Copper nor does it affect the Copper's program counter. To let the change take effect, COPJMP1 needs to be written to which is done in jump3.
