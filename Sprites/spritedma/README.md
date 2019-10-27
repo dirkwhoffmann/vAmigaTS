@@ -42,5 +42,9 @@ Sprite DMA is on all the time. The Copper is utilized to change SPRxPOS and SPRx
 
 Modified SPRxCTL at the end of a rasterline, just before the next control word pair would be read. 
 
+#### sprdma18
+
+Shows that sprite DMA can be switched off manually by writing into SPRxCTL under certain conditions.
+
 
 Dirk Hoffmann, 2019
