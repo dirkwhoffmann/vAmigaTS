@@ -46,5 +46,9 @@ Modified SPRxCTL at the end of a rasterline, just before the next control word p
 
 Shows that sprite DMA can be switched off manually by writing into SPRxCTL under certain conditions.
 
+#### sprdma19
+
+Enables sprite DMA manually by writing into SPRxCTL with a matching vertical value.
+
 
 Dirk Hoffmann, 2019
