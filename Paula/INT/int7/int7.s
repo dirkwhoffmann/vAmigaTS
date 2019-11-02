@@ -82,12 +82,10 @@ level4InterruptHandler:
 	nop
 	move.w  #$0F0,$DFF180 
 	nop
-	nop
 	move.w  #$00F,$DFF180 
 	nop
-	nop
-	nop
 	move.w  #$000,$DFF180 
+	move.w  #$0080,$DFF09C ; Acknowledge level 4 interrupt
 	rte
 
 level5InterruptHandler:
@@ -95,12 +93,10 @@ level5InterruptHandler:
 	nop
 	move.w  #$FFF,$DFF180 
 	nop
-	nop
 	move.w  #$F00,$DFF180 
 	nop
-	nop
-	nop
 	move.w  #$000,$DFF180 
+	move.w  #$0800,$DFF09C ; Acknowledge level 5 interrupt
 	rte
 
 level6InterruptHandler:
@@ -108,12 +104,10 @@ level6InterruptHandler:
 	nop
 	move.w  #$0F0,$DFF180 
 	nop
-	nop
 	move.w  #$0FF,$DFF180 
 	nop
-	nop
-	nop
 	move.w  #$000,$DFF180 
+	move.w  #$2000,$DFF09C  ; Acknowledge level 6 interrupt
 	rte
 
 copper:
@@ -165,139 +159,118 @@ copper:
 	dc.w    COLOR00,$0F0
 	dc.w    COLOR00,$000
 
+	dc.w	INTENA,$A880         ; Enable level 4, level 5, level 6 interrupts
+
 	dc.w    $3139, $FFFE         ; Wait
 	dc.w    COLOR00,$AAA
-	dc.w	INTENA,$8880         ; Enable level 4 and level 5 interrupts
-	dc.w 	INTREQ,$8080         ; Issue level 4 interrupt
-	dc.w 	INTREQ,$0080         ; Acknowledge
-	dc.w	INTENA,$0880         ; Disable interrupts
+	dc.w 	INTREQ,$8880         ; Trigger level 4 + level 5 interrupt
+	dc.w 	INTREQ,$0800         ; Delete level 5 interrupt
 	dc.w    COLOR00,$000
 
-	dc.w    $4139, $FFFE         ; Wait
+	dc.w    $413B, $FFFE         ; Wait
 	dc.w    COLOR00,$AAA
-	dc.w	INTENA,$8880         ; Enable level 4 and level 5 interrupts
-	dc.w 	INTREQ,$8080         ; Issue level 4 interrupt
-	dc.w    $01FE, $FFFE         ; NOP
-	dc.w 	INTREQ,$0080         ; Acknowledge
-	dc.w	INTENA,$0880         ; Disable interrupts
+	dc.w 	INTREQ,$8880         ; Trigger level 4 + level 5 interrupt
+	dc.w 	INTREQ,$0800         ; Delete level 5 interrupt
 	dc.w    COLOR00,$000
 
-	dc.w    $5139, $FFFE         ; Wait
+	dc.w    $513D, $FFFE         ; Wait
 	dc.w    COLOR00,$AAA
-	dc.w	INTENA,$8880         ; Enable level 4 and level 5 interrupts
-	dc.w 	INTREQ,$8080         ; Issue level 4 interrupt
-	dc.w    $01FE, $FFFE         ; NOP
-	dc.w    $01FE, $FFFE         ; NOP
-	dc.w 	INTREQ,$0080         ; Acknowledge
-	dc.w	INTENA,$0880         ; Disable interrupts
+	dc.w 	INTREQ,$8880         ; Trigger level 4 + level 5 interrupt
+	dc.w 	INTREQ,$0800         ; Delete level 5 interrupt
 	dc.w    COLOR00,$000
 
 	dc.w    $6139, $FFFE         ; Wait
 	dc.w    COLOR00,$AAA
-	dc.w	INTENA,$8880         ; Enable level 4 and level 5 interrupts
-	dc.w 	INTREQ,$8080         ; Issue level 4 interrupt
-	dc.w    $01FE, $FFFE         ; NOP
-	dc.w    $01FE, $FFFE         ; NOP
-	dc.w    $01FE, $FFFE         ; NOP
-	dc.w 	INTREQ,$0080         ; Acknowledge
-	dc.w	INTENA,$0880         ; Disable interrupts
+	dc.w 	INTREQ,$8880         ; Trigger level 4 + level 5 interrupt
+	dc.w 	INTREQ,$0080         ; Delete level 4 interrupt
 	dc.w    COLOR00,$000
 
-	dc.w    $7139, $FFFE         ; Wait
+	dc.w    $713B, $FFFE         ; Wait
 	dc.w    COLOR00,$AAA
-	dc.w	INTENA,$8880         ; Enable level 4 and level 5 interrupts
-	dc.w 	INTREQ,$8080         ; Issue level 4 interrupt
-	dc.w    $01FE, $FFFE         ; NOP
-	dc.w    $01FE, $FFFE         ; NOP
-	dc.w    $01FE, $FFFE         ; NOP
-	dc.w    $01FE, $FFFE         ; NOP
-	dc.w 	INTREQ,$0080         ; Acknowledge
-	dc.w	INTENA,$0880         ; Disable interrupts
+	dc.w 	INTREQ,$8880         ; Trigger level 4 + level 5 interrupt
+	dc.w 	INTREQ,$0080         ; Delete level 4 interrupt
 	dc.w    COLOR00,$000
 
-	dc.w    $8139, $FFFE         ; Wait
+	dc.w    $813D, $FFFE         ; Wait
 	dc.w    COLOR00,$AAA
-	dc.w	INTENA,$8880         ; Enable level 4 and level 5 interrupts
-	dc.w 	INTREQ,$8080         ; Issue level 4 interrupt
-	dc.w    $01FE, $FFFE         ; NOP
-	dc.w    $01FE, $FFFE         ; NOP
-	dc.w    $01FE, $FFFE         ; NOP
-	dc.w    $01FE, $FFFE         ; NOP
-	dc.w    $01FE, $FFFE         ; NOP
-	dc.w 	INTREQ,$0080         ; Acknowledge
-	dc.w	INTENA,$0880         ; Disable interrupts
+	dc.w 	INTREQ,$8880         ; Trigger level 4 + level 5 interrupt
+	dc.w 	INTREQ,$0080         ; Delete level 4 interrupt
 	dc.w    COLOR00,$000
 
 	dc.w    $9139, $FFFE         ; Wait
 	dc.w    COLOR00,$AAA
-	dc.w	INTENA,$8880         ; Enable level 4 and level 5 interrupts
-	dc.w 	INTREQ,$8080         ; Issue level 4 interrupt
-	dc.w 	INTREQ,$8800         ; Issue level 5 interrupt
-	dc.w 	INTREQ,$0880         ; Acknowledge
-	dc.w	INTENA,$0880         ; Disable interrupts
+	dc.w 	INTREQ,$8080         ; Trigger level 4 interrupt
+	dc.w 	INTREQ,$8800         ; Trigger level 5 interrupt
+	dc.w 	INTREQ,$0800         ; Delete level 5 interrupt
 	dc.w    COLOR00,$000
 
-	dc.w    $A139, $FFFE         ; Wait
+	dc.w    $A13B, $FFFE         ; Wait
 	dc.w    COLOR00,$AAA
-	dc.w	INTENA,$8880         ; Enable level 4 and level 5 interrupts
-	dc.w 	INTREQ,$8080         ; Issue level 4 interrupt
-	dc.w    $01FE, $FFFE         ; NOP
-	dc.w 	INTREQ,$8800         ; Issue level 5 interrupt
-	dc.w 	INTREQ,$0880         ; Acknowledge
-	dc.w	INTENA,$0880         ; Disable interrupts
+	dc.w 	INTREQ,$8080         ; Trigger level 4 interrupt
+	dc.w 	INTREQ,$8800         ; Trigger level 5 interrupt
+	dc.w 	INTREQ,$0800         ; Delete level 5 interrupt
 	dc.w    COLOR00,$000
 
-	dc.w    $B139, $FFFE         ; Wait
+	dc.w    $B13D, $FFFE         ; Wait
 	dc.w    COLOR00,$AAA
-	dc.w	INTENA,$8880         ; Enable level 4 and level 5 interrupts
-	dc.w 	INTREQ,$8080         ; Issue level 4 interrupt
-	dc.w    $01FE, $FFFE         ; NOP
-	dc.w    $01FE, $FFFE         ; NOP
-	dc.w 	INTREQ,$8800         ; Issue level 5 interrupt
-	dc.w 	INTREQ,$0880         ; Acknowledge
-	dc.w	INTENA,$0880         ; Disable interrupts
+	dc.w 	INTREQ,$8080         ; Trigger level 4 interrupt
+	dc.w 	INTREQ,$8800         ; Trigger level 5 interrupt
+	dc.w 	INTREQ,$0800         ; Delete level 5 interrupt
 	dc.w    COLOR00,$000
 
 	dc.w    $C139, $FFFE         ; Wait
 	dc.w    COLOR00,$AAA
-	dc.w	INTENA,$8880         ; Enable level 4 and level 5 interrupts
-	dc.w 	INTREQ,$8080         ; Issue level 4 interrupt
-	dc.w    $01FE, $FFFE         ; NOP
-	dc.w    $01FE, $FFFE         ; NOP
-	dc.w    $01FE, $FFFE         ; NOP
-	dc.w 	INTREQ,$8800         ; Issue level 5 interrupt
-	dc.w 	INTREQ,$0880         ; Acknowledge
-	dc.w	INTENA,$0880         ; Disable interrupts
+	dc.w 	INTREQ,$8080         ; Trigger level 4 interrupt
+	dc.w 	INTREQ,$8800         ; Trigger level 5 interrupt
+	dc.w 	INTREQ,$A000         ; Trigger level 6 interrupt
+	dc.w 	INTREQ,$A880         ; Delete all interrupt
 	dc.w    COLOR00,$000
 
 	dc.w    $D139, $FFFE         ; Wait
 	dc.w    COLOR00,$AAA
-	dc.w	INTENA,$8880         ; Enable level 4 and level 5 interrupts
-	dc.w 	INTREQ,$8080         ; Issue level 4 interrupt
-	dc.w    $01FE, $FFFE         ; NOP
-	dc.w    $01FE, $FFFE         ; NOP
-	dc.w    $01FE, $FFFE         ; NOP
-	dc.w    $01FE, $FFFE         ; NOP
-	dc.w 	INTREQ,$8800         ; Issue level 5 interrupt
-	dc.w 	INTREQ,$0880         ; Acknowledge
-	dc.w	INTENA,$0880         ; Disable interrupts
+	dc.w 	INTREQ,$8800         ; Trigger level 5 interrupt
+	dc.w 	INTREQ,$8080         ; Trigger level 4 interrupt
+	dc.w 	INTREQ,$A000         ; Trigger level 6 interrupt
+	dc.w 	INTREQ,$A880         ; Delete all interrupt
 	dc.w    COLOR00,$000
 
 	dc.w    $E139, $FFFE         ; Wait
 	dc.w    COLOR00,$AAA
-	dc.w	INTENA,$8880         ; Enable level 4 and level 5 interrupts
-	dc.w 	INTREQ,$8080         ; Issue level 4 interrupt
-	dc.w    $01FE, $FFFE         ; NOP
-	dc.w    $01FE, $FFFE         ; NOP
-	dc.w    $01FE, $FFFE         ; NOP
-	dc.w    $01FE, $FFFE         ; NOP
-	dc.w    $01FE, $FFFE         ; NOP
-	dc.w 	INTREQ,$8800         ; Issue level 5 interrupt
-	dc.w 	INTREQ,$0880         ; Acknowledge
-	dc.w	INTENA,$0880         ; Disable interrupts
+	dc.w 	INTREQ,$A000         ; Trigger level 6 interrupt
+	dc.w 	INTREQ,$8800         ; Trigger level 5 interrupt
+	dc.w 	INTREQ,$2000         ; Delete level 6 interrupt
+	dc.w 	INTREQ,$8080         ; Trigger level 4 interrupt
+	
+	dc.w    COLOR00,$000
+
+	dc.w    $F139, $FFFE         ; Wait
+	dc.w    COLOR00,$AAA
+	dc.w 	INTREQ,$A000         ; Trigger level 6 interrupt
+	dc.w 	INTREQ,$8800         ; Trigger level 5 interrupt	
+	dc.w 	INTREQ,$2000         ; Delete level 6 interrupt
+	dc.w 	INTREQ,$0800         ; Delete level 5 interrupt
 	dc.w    COLOR00,$000
 
 	dc.w	$ffdf,$fffe          ; Cross vertical boundary
+
+	dc.w    $0139, $FFFE         ; Wait
+	dc.w    COLOR00,$AAA
+	dc.w 	INTREQ,$A000         ; Trigger level 6 interrupt
+	dc.w 	INTREQ,$8800         ; Trigger level 5 interrupt
+	dc.w 	INTREQ,$8080         ; Trigger level 4 interrupt
+	dc.w    COLOR00,$000
+
+	dc.w    $1139, $FFFE         ; Wait
+	dc.w    COLOR00,$AAA
+	dc.w    COLOR00,$000
+
+	dc.w    $2139, $FFFE         ; Wait
+	dc.w    COLOR00,$AAA
+	dc.w    COLOR00,$000
+
+	dc.w    $3139, $FFFE         ; Wait
+	dc.w    COLOR00,$AAA
+	dc.w    COLOR00,$000
 
 	dc.w	INTENA,$2880         ; Disable interrupts
 	dc.w    COLOR00,$000
