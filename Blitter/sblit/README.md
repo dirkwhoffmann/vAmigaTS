@@ -8,5 +8,9 @@ Performs simple blits with all 16 bit combinations of USEA/USEB/USEC/USED in BLT
 
 In the lower part, you can spot four additional short lines. In these lines, blits of size 1x1, 1x2, 2x1, and 2x2 are performed to get a glimpse of the ramp up and ramp down timing.
 
+#### sblit*n*f and sblit*n*f2
+
+Runs the test in exclusive and inclusive fill mode, respectively.
+
 
 Dirk Hoffmann, 2019
