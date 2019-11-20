@@ -12,5 +12,9 @@ In the lower part, you can spot four additional short lines. In these lines, bli
 
 Runs the test in exclusive and inclusive fill mode, respectively.
 
+#### sline1
+
+Runs the Line Blitter instead of the Copy Blitter.
+
 
 Dirk Hoffmann, 2019

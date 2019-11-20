@@ -10,5 +10,9 @@ Performs several small blits with all 16 bit combinations of USEA/USEB/USEC/USED
 
 Runs the test in exclusive and inclusive fill mode, respectively.
 
+#### timing1l
+
+Runs the Line Blitter instead of the Copy Blitter.
+
 
 Dirk Hoffmann, 2019
