@@ -127,6 +127,10 @@ prepareblit:
 	move.l #emoji,BLTBPTH(a6)	        ; bob bitplane
 	move.l #bitplanes+BOB_XPOS_BYTES+(SCREEN_WIDTH_BYTES*SCREEN_BIT_DEPTH*BOB_YPOS),BLTCPTH(a6) ; background top left corner
 	move.l #bitplanes+BOB_XPOS_BYTES+(SCREEN_WIDTH_BYTES*SCREEN_BIT_DEPTH*BOB_YPOS),BLTDPTH(a6) ; destination top left corner
+	move.l #$ff,BLTADAT(a6)
+	move.l #$ff,BLTBDAT(a6)
+	move.l #$ff,BLTCDAT(a6)
+	move.l #$ff,BLTDDAT(a6)
 	movem.l (sp)+,d0-a6
 	rts
 

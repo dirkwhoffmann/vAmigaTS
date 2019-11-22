@@ -12,7 +12,7 @@ BLIT_SRCC	    	equ $200
 BLIT_SRCB	    	equ $400
 BLIT_SRCA	    	equ $800
 BLIT_ASHIFTSHIFT	equ 12
-BLIT_BLTCON1		equ $08 // Inclusive fill
+BLIT_BLTCON1		equ $10 // Exclusive fill
 
 LVL3_INT_VECTOR		equ $6c
 LVL4_INT_VECTOR		equ $70
@@ -83,17 +83,6 @@ entry:
 	; bsr.s	 waitRaster
 	bra.s	.mainLoop
 
-;waitRaster:	;wait for rasterline d0.w. Modifies d0-d2/a0.
-;	move.l #$1ff00,d2
-;	lsl.l #8,d0
-;	and.l d2,d0
-;	lea $dff004,a0
-;.wr:	move.l (a0),d1
-;	and.l d2,d1
-;	cmp.l d1,d0
-;	bne.s .wr
-;	rts	
-
 blitWait:
 	tst DMACONR(a6)		;for compatibility
 .waitblit:
@@ -127,6 +116,10 @@ prepareblit:
 	move.l #emoji,BLTBPTH(a6)	        ; bob bitplane
 	move.l #bitplanes+BOB_XPOS_BYTES+(SCREEN_WIDTH_BYTES*SCREEN_BIT_DEPTH*BOB_YPOS),BLTCPTH(a6) ; background top left corner
 	move.l #bitplanes+BOB_XPOS_BYTES+(SCREEN_WIDTH_BYTES*SCREEN_BIT_DEPTH*BOB_YPOS),BLTDPTH(a6) ; destination top left corner
+	move.l #$ff,BLTADAT(a6)
+	move.l #$ff,BLTBDAT(a6)
+	move.l #$ff,BLTCDAT(a6)
+	move.l #$ff,BLTDDAT(a6)
 	movem.l (sp)+,d0-a6
 	rts
 

@@ -102,7 +102,7 @@ prepareblit:
 	move.w #$11,BLTCON1(a6)
 	move.w #$8000,BLTADAT(a6)
 	move.w #$FFFF,BLTBDAT(a6)
-	move.w #$FFFF,BLTAFWM(a6)
+	move.l #$FFFFFFFF,BLTAFWM(a6)
 
 	movem.l (sp)+,d0-a6
 	rts
