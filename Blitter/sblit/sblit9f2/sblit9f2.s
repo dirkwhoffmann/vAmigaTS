@@ -12,7 +12,7 @@ BLIT_SRCC	    	equ $200
 BLIT_SRCB	    	equ $400
 BLIT_SRCA	    	equ $800
 BLIT_ASHIFTSHIFT	equ 12
-BLIT_BLTCON1		equ $10 // Exclusive fill
+BLIT_BLTCON1		equ $08 // Inclusive fill
 
 LVL3_INT_VECTOR		equ $6c
 LVL4_INT_VECTOR		equ $70
@@ -82,6 +82,17 @@ entry:
 	; move.w 	#$02a,d0		;wait for EOFrame
 	; bsr.s	 waitRaster
 	bra.s	.mainLoop
+
+;waitRaster:	;wait for rasterline d0.w. Modifies d0-d2/a0.
+;	move.l #$1ff00,d2
+;	lsl.l #8,d0
+;	and.l d2,d0
+;	lea $dff004,a0
+;.wr:	move.l (a0),d1
+;	and.l d2,d1
+;	cmp.l d1,d0
+;	bne.s .wr
+;	rts	
 
 blitWait:
 	tst DMACONR(a6)		;for compatibility
