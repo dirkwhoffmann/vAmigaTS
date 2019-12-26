@@ -4,7 +4,7 @@ Verify properties of the NBCD intruction.
 
 #### nbcd1
 
-Draws two 16 x 16 squares. In each square, the NBCD command is run for all 256 possible source values. The left square has the X flag cleared and the right square set. Each 8 x 8 pixel box shows the bit pattern of value computed by instruction under test.
+Draws two 16 x 16 squares. In each square, the NBCD command is run for all 256 possible source values. The left square has the X flag cleared and the right square set. Each 8 x 8 pixel box shows the bit pattern of value computed by the instruction under test.
 
 #### nbcd2 
 
