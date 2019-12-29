@@ -46,6 +46,7 @@ entry:
 .loopd3:
     move.l (a3)+,d5            ; (8)
 	move.l #$FFFFFFFF,d6
+	and  #0,CCR
 	divs d4,d5                 ; (9)  The actual test
 	bvs .vflagset              ; Test V flag
 	move.l #$AAAAAAAA,d6   
@@ -70,6 +71,7 @@ entry:
 .loopd3b:
     move.l (a3)+,d5            ; (8)
 	move.l #$FFFFFFFF,d6
+	and  #0,CCR
 	divs d4,d5                 ; (9)  The actual test
 	bmi .nflagset              ; Test N flag
 	move.l #$AAAAAAAA,d6   
