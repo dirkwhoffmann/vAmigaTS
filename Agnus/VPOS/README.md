@@ -2,12 +2,20 @@
 
 Visualize the value of the position registers 
 
-#### vpos1 (deprecated)
-
-During vBlank, VPOSR is read and split into four 4-bit chunks. After that, the chunks are written into color registers 0 to 3 to make the bit-pattern visible. The color values exhibit the identification bits of Agnus and Denise that are part of this register.
-
 #### vpos2
 
-This test visualizes the contents of VPOSR in form of color bars. It makes vpos1 obsolete.
+During vBlank, VPOSR is read. The contents is visualized in form of color bars.
+
+#### vhposr1
+
+This test triggers four interrupts per frame. The first interrupt syncs the CPU to get reproducable results. The other three handlers read VHPOSR and visualize the lower 4 bits in form of different colors.
+
+#### vhposr2
+
+Similar to vhposr1. In addition to the color bars drawn in vhposr1, the bit pattern of the value read by handler 1 is drawn on the screen. This test contains a bug, because the Copper changes the bg color too early for bit 0. I kept the test, because it creates a nice interference between the Copper and the CPU and the test is currently failing in vAmiga.
+
+#### vhposr3
+
+Similar to vhposr1. In addition to the color bars drawn in vhposr1, the bit pattern of the value read by handler 1 is drawn on the screen. Bug in vhposr3 has been fixed.
 
 Dirk Hoffmann, 2019
