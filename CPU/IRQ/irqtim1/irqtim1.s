@@ -41,11 +41,10 @@ entry:
 
 	; Enable DMA
 	move.w  #(DMAF_SETCLR!DMAF_COPPER!DMAF_MASTER),dmacon(a1)
-	
+
+	lea     mainLoop(pc),a3	
 mainLoop:
-	bra.s	mainLoop
-	bra.s	mainLoop
-	bra.s	mainLoop
+	jmp     (a3)          ; 8 cycles
 
 level1InterruptHandler:
 
@@ -87,6 +86,7 @@ level3InterruptHandler:
 	move.w  #$000,$DFF182
 	move.w  #$000,$DFF184
 
+	; move.l  bitplanes(pc),a7   ; Redirect stack pointer to an unused area
 	move.l  #$DFF186,a7   ; Redirect stack pointer to color registers
 		                  ; Causes level1InterruptHandler to write SR into DFF180
 	move    #$F,SR        ; Restore SR manually  
@@ -94,14 +94,17 @@ level3InterruptHandler:
 
 level4InterruptHandler:
 
-	move.w  #$F00,$DFF180
-	move.w  #$3FFF,$DFF09C ; Acknowledge
-
+	move.w  #$F0F,$DFF180
+	lea     $DFF006,a4
+sync:
+	andi.w  #$7,(a4)      ; 16 cycles
+	bne     sync          ; 10 cycles
 	move.w  #$000,$DFF180
-	move.w  #$000,$DFF182
-	move.w  #$000,$DFF184
-	move.w  #$000,$DFF186
-	rte
+	move.w  #$3FFF,$DFF09C ; Acknowledge
+	move.l  #$DFF186,a7   ; Redirect stack pointer to color registers
+		                  ; Causes level1InterruptHandler to write SR into DFF180
+	move    #$F,SR        ; Restore SR manually  
+	bra 	mainLoop      ; Exit IRQ handler manually				  
 
 level5InterruptHandler:
 
@@ -173,14 +176,18 @@ copper:
 	dc.w	INTENA,$E89C         ; Enable interrupts
 
 	dc.w    $4139, $FFFE         ; Wait
-	dc.w    COLOR00,$0F0
-	dc.w 	INTREQ,$8004         ; Level 1 interrupt
+	;dc.w    COLOR00,$0F0
+	dc.w 	INTREQ,$8080         ; Level 4 interrupt (Sync CPU)
 
 	dc.w    $4339, $FFFE         ; Wait
 	dc.w    COLOR00,$0F0
-	dc.w 	INTREQ,$8008         ; Level 2 interrupt
+	dc.w 	INTREQ,$8004         ; Level 1 interrupt
 
 	dc.w    $4539, $FFFE         ; Wait
+	dc.w    COLOR00,$0F0
+	dc.w 	INTREQ,$8008         ; Level 2 interrupt
+
+	dc.w    $4739, $FFFE         ; Wait
 	dc.w    COLOR00,$0F0
 	dc.w 	INTREQ,$8010         ; Level 3 interrupt
 
