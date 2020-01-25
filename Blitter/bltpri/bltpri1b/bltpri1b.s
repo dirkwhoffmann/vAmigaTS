@@ -47,15 +47,13 @@ entry:
 	;; Set up playfield
 	move.w  #(RASTER_Y_START<<8)|RASTER_X_START,DIWSTRT(a6)
 	move.w	#((RASTER_Y_STOP-256)<<8)|(RASTER_X_STOP-256),DIWSTOP(a6)
-
 	move.w	#(RASTER_X_START/2-SCREEN_RES),DDFSTRT(a6)
 	move.w	#(RASTER_X_START/2-SCREEN_RES)+(8*((SCREEN_WIDTH/16)-1)),DDFSTOP(a6)
-	
 	move.w	#(SCREEN_BIT_DEPTH<<12)|$200,BPLCON0(a6)
 	move.w	#SCREEN_WIDTH_BYTES*SCREEN_BIT_DEPTH-SCREEN_WIDTH_BYTES,BPL1MOD(a6)
 	move.w	#SCREEN_WIDTH_BYTES*SCREEN_BIT_DEPTH-SCREEN_WIDTH_BYTES,BPL2MOD(a6)
 
-	;; poke bitplane pointers
+	;; Set bitplane pointers
 	lea	bitplanes(pc),a1
 	lea     copper(pc),a2
 	moveq	#SCREEN_BIT_DEPTH-1,d0
@@ -68,15 +66,10 @@ entry:
 	addq	#8,a2
 	dbra	d0,.bitplaneloop
 
-	; bsr waitBlitIdle
-
-	;bsr delayLoop
-
 	;; install copper list, then enable dma and selected interrupts
 	lea	copper(pc),a0
 	move.w  #$8003,COPCON(a6) ; Allow Copper to write Blitter registers
 	move.l	a0,COP1LC(a6)
- 	;move.w  COPJMP1(a6),d0
 	move.w	#$87C0,DMACON(a6) ; Set BLTPRI, DMAEN, BPLEN, COPEN, BLTEN
 	
 .mainLoop:
@@ -94,14 +87,7 @@ waitBlitIdle:
 	bne.s waitBlitIdle
 	rts
 
-delayLoop:
-	move.l #$010000,D5
-.delay:
-	subq.l #1,D5
-	bne.s .delay
-	rts
-
-;; BLTCON? configuration
+;; BLTCON0 configuration
 ;; http://amigadev.elowar.com/read/ADCD_2.1/Hardware_Manual_guide/node011C.html
 ;; blitter logic function minterm truth table
 ;; fill in D column for desired function
@@ -130,31 +116,32 @@ BLIT_ABCD           equ 15
 
 doblit:	
 	
+	move.w  #$44F,$DFF180 
 	bsr blitWait
 	move.w  #$F0F,$DFF180 
 	move.w #(BLIT_ABCD<<8|BLIT_LF_MINTERM|BLIT_A_SOURCE_SHIFT<<BLIT_ASHIFTSHIFT),BLTCON0(A6)
-	move.w  #$333,$DFF180 
+	move.w  #$44F,$DFF180 
 	move.w #BLIT_BLTCON1,BLTCON1(a6) 
 	move.w  #$F0F,$DFF180 
 	move.l #$ffffffff,BLTAFWM(a6) 	; no masking of first/last word
-	move.w  #$333,$DFF180 
+	move.w  #$44F,$DFF180 
 	move.w #0,BLTAMOD(a6)	      	; A modulo=bytes to skip between lines
 	move.w  #$F0F,$DFF180 
 	move.w #0,BLTBMOD(a6)	      	; B modulo=bytes to skip between lines
-	move.w  #$333,$DFF180 
+	move.w  #$44F,$DFF180 
 	move.w #SCREEN_WIDTH_BYTES-BOB_WIDTH_BYTES,BLTCMOD(a6)	;C modulo
 	move.w  #$F0F,$DFF180 
 	move.w #SCREEN_WIDTH_BYTES-BOB_WIDTH_BYTES,BLTDMOD(a6)	;D modulo
-	move.w  #$333,$DFF180 
+	move.w  #$44F,$DFF180 
 	move.l #emojiMask,BLTAPTH(a6)	; mask bitplane
 	move.w  #$F0F,$DFF180 
 	move.l #emoji,BLTBPTH(a6)	; bob bitplane
-	move.w  #$333,$DFF180 
+	move.w  #$44F,$DFF180 
 	move.l #bitplanes+BOB_XPOS_BYTES+(SCREEN_WIDTH_BYTES*SCREEN_BIT_DEPTH*BOB_YPOS),BLTCPTH(a6) ;background top left corner
 	move.w  #$F0F,$DFF180 
 	move.l #bitplanes+BOB_XPOS_BYTES+(SCREEN_WIDTH_BYTES*SCREEN_BIT_DEPTH*BOB_YPOS),BLTDPTH(a6) ;destination top left corner
 	move.w  #$888,$DFF180 
-	move.w #(BOB_HEIGHT*SCREEN_BIT_DEPTH)<<6|(BOB_WIDTH_WORDS),BLTSIZE(a6)	;rectangle size, starts blit
+	move.w #2<<6|(BOB_WIDTH_WORDS),BLTSIZE(a6)	;rectangle size, starts blit
 	rts
 
 ;.bltcount:
@@ -172,114 +159,11 @@ sync:
 	rte
 
 level4InterruptHandler:
+	move.w  #$F00,$DFF180 
 	move.w  #$0080,$DFF09C ; Acknowledge level 4 interrupt
+	move.w  #$FFF,$DFF180 
 	jsr doblit
 	move.w  #$FF0,$DFF180 
-	move.w  #$F00,$DFF180 
-	move.w  #$FF0,$DFF180 
-	move.w  #$F00,$DFF180 
-	move.w  #$FF0,$DFF180 
-	move.w  #$F00,$DFF180 
-	move.w  #$FF0,$DFF180 
-	move.w  #$F00,$DFF180 
-	move.w  #$FF0,$DFF180 
-	move.w  #$F00,$DFF180 
-	move.w  #$FF0,$DFF180 
-	move.w  #$F00,$DFF180 
-	move.w  #$FF0,$DFF180 
-	move.w  #$F00,$DFF180 
-	move.w  #$FF0,$DFF180 
-	move.w  #$F00,$DFF180 
-	move.w  #$FF0,$DFF180 
-	move.w  #$F00,$DFF180 
-	move.w  #$FF0,$DFF180 
-	move.w  #$F00,$DFF180 
-	move.w  #$FF0,$DFF180 
-	move.w  #$F00,$DFF180 
-	move.w  #$FF0,$DFF180 
-	move.w  #$F00,$DFF180 
-	move.w  #$FF0,$DFF180 
-	move.w  #$F00,$DFF180 
-	move.w  #$FF0,$DFF180 
-	move.w  #$F00,$DFF180 
-	move.w  #$FF0,$DFF180 
-	move.w  #$F00,$DFF180 
-	move.w  #$FF0,$DFF180 
-	move.w  #$F00,$DFF180 
-	move.w  #$FF0,$DFF180 
-	move.w  #$F00,$DFF180 
-	move.w  #$FF0,$DFF180 
-	move.w  #$F00,$DFF180 
-	move.w  #$FF0,$DFF180 
-	move.w  #$F00,$DFF180 
-	move.w  #$FF0,$DFF180 
-	move.w  #$F00,$DFF180 
-	move.w  #$FF0,$DFF180 
-	move.w  #$F00,$DFF180 
-	move.w  #$FF0,$DFF180 
-	move.w  #$F00,$DFF180 
-	move.w  #$FF0,$DFF180 
-	move.w  #$F00,$DFF180 
-	move.w  #$FF0,$DFF180 
-	move.w  #$F00,$DFF180 
-	move.w  #$FF0,$DFF180 
-	move.w  #$F00,$DFF180 
-	move.w  #$FF0,$DFF180 
-	move.w  #$F00,$DFF180 
-	move.w  #$FF0,$DFF180 
-	move.w  #$F00,$DFF180 
-	move.w  #$FF0,$DFF180 
-	move.w  #$F00,$DFF180 
-	move.w  #$FF0,$DFF180 
-	move.w  #$F00,$DFF180 
-	move.w  #$FF0,$DFF180 
-	move.w  #$F00,$DFF180 
-	move.w  #$FF0,$DFF180 
-	move.w  #$F00,$DFF180 
-	move.w  #$FF0,$DFF180 
-	move.w  #$F00,$DFF180 
-	move.w  #$FF0,$DFF180 
-	move.w  #$F00,$DFF180 
-	move.w  #$FF0,$DFF180 
-	move.w  #$F00,$DFF180 
-	move.w  #$FF0,$DFF180 
-	move.w  #$F00,$DFF180 
-	move.w  #$FF0,$DFF180 
-	move.w  #$F00,$DFF180 
-	move.w  #$FF0,$DFF180 
-	move.w  #$F00,$DFF180 
-	move.w  #$FF0,$DFF180 
-	move.w  #$F00,$DFF180 
-	move.w  #$FF0,$DFF180 
-	move.w  #$F00,$DFF180 
-	move.w  #$FF0,$DFF180 
-	move.w  #$F00,$DFF180 
-	move.w  #$FF0,$DFF180 
-	move.w  #$F00,$DFF180 
-	move.w  #$FF0,$DFF180 
-	move.w  #$F00,$DFF180 
-	move.w  #$FF0,$DFF180 
-	move.w  #$F00,$DFF180 
-	move.w  #$FF0,$DFF180 
-	move.w  #$F00,$DFF180 
-	move.w  #$FF0,$DFF180 
-	move.w  #$F00,$DFF180 
-	move.w  #$FF0,$DFF180 
-	move.w  #$F00,$DFF180 
-	move.w  #$FF0,$DFF180 
-	move.w  #$F00,$DFF180 
-	move.w  #$FF0,$DFF180 
-	move.w  #$F00,$DFF180 
-	move.w  #$FF0,$DFF180 
-	move.w  #$F00,$DFF180 
-	move.w  #$FF0,$DFF180 
-	move.w  #$F00,$DFF180 
-	move.w  #$FF0,$DFF180 
-	move.w  #$F00,$DFF180 
-	move.w  #$FF0,$DFF180 
-	move.w  #$F00,$DFF180 
-
-	move.w  #$000,$DFF180 
 	rte
 
 copper:
@@ -353,7 +237,13 @@ copper:
 	dc.w    $5051,$7FFE  ; WAIT until Blitter is finished (BFD = 0)
 	dc.w    COLOR00,$0F0
 	dc.w    INTREQ, $8080 ; Level 4 interrupt
-	; dc.w    $5051,$7FFE  ; WAIT until Blitter is finished (BFD = 0)
+
+	dc.w    $5231,$FFFE  ; WAIT until the blit has started
+	dc.w    $5231,$7FFE  ; WAIT until Blitter is finished (BFD = 0)
+	dc.w    COLOR00,$00F
+	dc.w    COLOR00,$FFF
+	dc.w    COLOR00,$F00
+	dc.w    COLOR00,$000
 
     ; Enable all bitplanes (to show the emoji)
 	dc.w    $C001,$FFFE ; WAIT
