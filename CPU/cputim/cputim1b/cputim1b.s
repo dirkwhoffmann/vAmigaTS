@@ -49,8 +49,8 @@ synccpu2:
 synccpu3:
 	andi.w  #$FF,(a3)      ; 16 cycles
 	nop                    ;  4 cycles
-	beq     synced         ; 10 cycles
-	bra.s   synccpu3
+	beq     synced         ;  8 cycles (if not taken)
+	bra.s   synccpu3       ; 10 cycles
 synced:
 
 	; Sync vertically
