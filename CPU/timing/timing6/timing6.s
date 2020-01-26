@@ -68,25 +68,31 @@ entry:
 
 	; Enable Copper DMA
 	move.w  #(DMAF_SETCLR!DMAF_COPPER!DMAF_MASTER),DMACON(a1)
+	
+	; Enable Bitplane DMA
+	move.w  #(DMAF_SETCLR!DMAF_RASTER!DMAF_MASTER),DMACON(a1)
 
 	; Enable interrupts
-	move.w  #$C004,INTENA(a1)
+	; move.w  #$C004,INTENA(a1)
 
 ;
 ; Main loop
 ;
 
 main: 
-	jsr synccpu
+   	move.w  #400,d3
 
-   	move.w  #812,d2
+	jsr     synccpu
+
 .loop1:
-	dbra    d2,.loop1
-   	move.w  #2000,d2
+	dbra    d3,.loop1
+   	move.w  #1500,d3
+	;move.w  #$888,d4
+	;move.w  #$000,d5
 loop2:
 	move.w  #$888,$DFF180
 	move.w  #$000,$DFF180
-    dbra    d2,loop2
+    dbra    d3,loop2
 	bra.s   main
 
 ;
@@ -145,13 +151,14 @@ irq6:
 	rte
 
 synccpu:
-	lea     VHPOSR(a1),a3     ; VHPOSR     
+	move.w  #$8200,BPLCON0(a1)  ; Disable all bitplanes
+	lea     VHPOSR(a1),a3       ; VHPOSR     
 
-	; Wait until we have reached the top of a frame
+	; Wait until we have reached the middle of a frame
 .loop 
 	move.w  (a3),d2     
 	and     #$FF00,d2
-	cmp.w   #$3000,d2
+	cmp.w   #$A000,d2
 	bne     .loop
 	and     #1,VPOSR(a1)
 	bne     .loop
@@ -174,7 +181,7 @@ synccpu:
 	bne     .synccpu3         ; 10 cycles (if taken)
 
 	; Adust horizontally
-  	moveq #10,d2
+  	moveq   #10,d2
 .adjust:
     dbra d2,.adjust
 
@@ -186,9 +193,10 @@ synccpu:
 	move.w  (a3),d2     
 	move.w  #$F0F,COLOR00(a1)  
 	and     #$FF00,d2
-	cmp.w   #$4000,d2
+	cmp.w   #$B000,d2
 	bne     .synccpu4
 	move.w  #$000,COLOR00(a1)  
+	move.w  #$B200,BPLCON0(a1)  ; Reenable bitplanes (3 planes hires)
 	rts
 
 ;
@@ -211,9 +219,9 @@ synccpu:
 	dc.w	DIWSTOP,$2cc1
 	dc.w	BPL1MOD,$0 
 	dc.w	BPL2MOD,$0
-	dc.w	BPLCON0,(0<<12)|$200 ; Disable all bitplanes
+	; dc.w	BPLCON0,(0<<12)|$200 ; Disable all bitplanes
 
-	dc.w    $5039, $FFFE         ; WAIT
+	dc.w    $9039, $FFFE         ; WAIT
 	dc.w    COLOR00,$F00
 	dc.w    COLOR00,$000
 	dc.w    COLOR00,$FFF
@@ -254,9 +262,6 @@ synccpu:
 	dc.w    COLOR00,$000
 	dc.w    COLOR00,$0F0
 	dc.w    COLOR00,$000
-
-	dc.w    $7039, $FFFE
-	dc.w 	INTREQ,$8004         ; Level 1 interrupt
 
 	dc.w	$ffdf,$fffe          ; Cross vertical boundary
 
