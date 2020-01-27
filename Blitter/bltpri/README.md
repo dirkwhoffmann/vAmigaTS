@@ -1,17 +1,14 @@
 ## Objective
 
-Verfies the BLTPRI bit
+Verifying the BLTPRI bit
 
 #### bltpri1
 
-Triggers a Blitter operation with BLTPRI = 1. The CPU is blocked until the Blitter has finished.
-
-#### bltpri2
-
 Triggers a Blitter operation with BLTPRI = 0. The Blitter and the CPU run side by side.
 
-#### bltpri3
+#### bltpri2, bltpri3
 
-Same as bltpri2, but with 5 bitplanes enabled all the time.
+Triggers a Blitter operation with BLTPRI = 1. The CPU is blocked until the Blitter has finished.
+
 
 Dirk Hoffmann, 2019
