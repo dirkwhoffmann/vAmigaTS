@@ -201,7 +201,7 @@ copper:
 	dc.w    COLOR00,$0F0
 	dc.w    COLOR00,$000
 
-    ;
+     ;
     ; Perform blits with different sizes
 	;
 	dc.w	$3039,$FFFE  ; WAIT 
@@ -307,113 +307,332 @@ copper:
 	dc.w    COLOR00, $000
 
   ;
-  ; Enable 5 bitplanes
+  ; Enable 2 bitplanes
   ;
 
-	dc.w    BPLCON0, (SCREEN_BIT_DEPTH<<12)|$200
+	dc.w    BPLCON0, (2<<12)|$200
 
-	dc.w	$7039,$FFFE  ; WAIT 
+	dc.w	$6039,$FFFE  ; WAIT 
 	dc.w	COLOR00, $F00
 	dc.w    BLTSIZE, (1)<<6|(1)
 	dc.w    $0001,$7FFE  ; WAIT
 	dc.w    COLOR00, $000
 
-	dc.w	$7239,$FFFE ; WAIT 
+	dc.w	$6239,$FFFE ; WAIT 
 	dc.w	COLOR00, $F00
 	dc.w    BLTSIZE, (1)<<6|(2)
 	dc.w    $0001,$7FFE  ; WAIT
 	dc.w    COLOR00, $000
 
-	dc.w	$7439,$FFFE  ; WAIT 
+	dc.w	$6439,$FFFE  ; WAIT 
 	dc.w	COLOR00, $F00
 	dc.w    BLTSIZE, (2)<<6|(1)
 	dc.w    $0001,$7FFE  ; WAIT
 	dc.w    COLOR00, $000
 
- 	dc.w	$7639,$FFFE  ; WAIT 
+ 	dc.w	$6639,$FFFE  ; WAIT 
 	dc.w	COLOR00, $F00
 	dc.w    BLTSIZE, (2)<<6|(2)
 	dc.w    $0001,$7FFE  ; WAIT
 	dc.w    COLOR00, $000
 	
-	dc.w	$7839,$FFFE  ; WAIT 
+	dc.w	$6839,$FFFE  ; WAIT 
 	dc.w	COLOR00, $F00
 	dc.w    BLTSIZE, (2)<<6|(3)
 	dc.w    $0001,$7FFE  ; WAIT
 	dc.w    COLOR00, $000
 	
-	dc.w	$7A39,$FFFE  ; WAIT 
+	dc.w	$6A39,$FFFE  ; WAIT 
 	dc.w	COLOR00, $F00
 	dc.w    BLTSIZE, (3)<<6|(2)
 	dc.w    $0001,$7FFE  ; WAIT
 	dc.w    COLOR00, $000
 
-	dc.w	$7C39,$FFFE  ; WAIT 
+	dc.w	$6C39,$FFFE  ; WAIT 
 	dc.w	COLOR00, $F00
 	dc.w    BLTSIZE, (3)<<6|(3)
 	dc.w    $0001,$7FFE  ; WAIT
 	dc.w    COLOR00, $000
 
-	dc.w	$7E39,$FFFE  ; WAIT 
+	dc.w	$6E39,$FFFE  ; WAIT 
 	dc.w	COLOR00, $F00
 	dc.w    BLTSIZE, (3)<<6|(4)
 	dc.w    $0001,$7FFE  ; WAIT
 	dc.w    COLOR00, $000
 	
-	dc.w	$8039,$FFFE  ; WAIT 
+	dc.w	$7039,$FFFE  ; WAIT 
 	dc.w	COLOR00, $F00
 	dc.w    BLTSIZE, (4)<<6|(3)
 	dc.w    $0001,$7FFE  ; WAIT
 	dc.w    COLOR00, $000
 
-	dc.w	$8239,$FFFE  ; WAIT 
+	dc.w	$7239,$FFFE  ; WAIT 
 	dc.w	COLOR00, $F00
 	dc.w    BLTSIZE, (4)<<6|(4)
 	dc.w    $0001,$7FFE  ; WAIT
 	dc.w    COLOR00, $000
 
-	dc.w	$8439,$FFFE  ; WAIT 
+	dc.w	$7439,$FFFE  ; WAIT 
 	dc.w	COLOR00, $F00
 	dc.w    BLTSIZE, (4)<<6|(5)
 	dc.w    $0001,$7FFE  ; WAIT
 	dc.w    COLOR00, $000
 
-	dc.w	$8639,$FFFE  ; WAIT 
+	dc.w	$7639,$FFFE  ; WAIT 
 	dc.w	COLOR00, $F00
 	dc.w    BLTSIZE, (5)<<6|(4)
 	dc.w    $0001,$7FFE  ; WAIT
 	dc.w    COLOR00, $000
 
-	dc.w	$8839,$FFFE  ; WAIT 
+	dc.w	$7839,$FFFE  ; WAIT 
 	dc.w	COLOR00, $F00
 	dc.w    BLTSIZE, (5)<<6|(5)
 	dc.w    $0001,$7FFE  ; WAIT
 	dc.w    COLOR00, $000
 
-	dc.w	$8A39,$FFFE  ; WAIT 
+	dc.w	$7A39,$FFFE  ; WAIT 
 	dc.w	COLOR00, $F00
 	dc.w    BLTSIZE, (5)<<6|(6)
 	dc.w    $0001,$7FFE  ; WAIT
 	dc.w    COLOR00, $000
 
-	dc.w	$8C39,$FFFE  ; WAIT 
+	dc.w	$7C39,$FFFE  ; WAIT 
 	dc.w	COLOR00, $F00
 	dc.w    BLTSIZE, (6)<<6|(5)
 	dc.w    $0001,$7FFE  ; WAIT
 	dc.w    COLOR00, $000
 
-	dc.w	$8E39,$FFFE  ; WAIT 
+	dc.w	$7E39,$FFFE  ; WAIT 
 	dc.w	COLOR00, $F00
 	dc.w    BLTSIZE, (6)<<6|(6)
 	dc.w    $0001,$7FFE  ; WAIT
 	dc.w    COLOR00, $000
 
-	dc.w	$9039,$FFFE  ; WAIT 
+	dc.w	$8039,$FFFE  ; WAIT 
 	dc.w	COLOR00, $F00
 	dc.w    BLTSIZE, (6)<<6|(7)
 	dc.w    $0001,$7FFE  ; WAIT
 	dc.w    COLOR00, $000
 
+
+   ;
+   ; Enable 3 bitplanes
+   ;
+
+	dc.w    BPLCON0, (3<<12)|$200
+
+	dc.w	$9039,$FFFE  ; WAIT 
+	dc.w	COLOR00, $F0F
+	dc.w    BLTSIZE, (1)<<6|(1)
+	dc.w    $0001,$7FFE  ; WAIT
+	dc.w    COLOR00, $000
+
+	dc.w	$9239,$FFFE ; WAIT 
+	dc.w	COLOR00, $F0F
+	dc.w    BLTSIZE, (1)<<6|(2)
+	dc.w    $0001,$7FFE  ; WAIT
+	dc.w    COLOR00, $000
+
+	dc.w	$9439,$FFFE  ; WAIT 
+	dc.w	COLOR00, $F0F
+	dc.w    BLTSIZE, (2)<<6|(1)
+	dc.w    $0001,$7FFE  ; WAIT
+	dc.w    COLOR00, $000
+
+ 	dc.w	$9639,$FFFE  ; WAIT 
+	dc.w	COLOR00, $F0F
+	dc.w    BLTSIZE, (2)<<6|(2)
+	dc.w    $0001,$7FFE  ; WAIT
+	dc.w    COLOR00, $000
+	
+	dc.w	$9839,$FFFE  ; WAIT 
+	dc.w	COLOR00, $F0F
+	dc.w    BLTSIZE, (2)<<6|(3)
+	dc.w    $0001,$7FFE  ; WAIT
+	dc.w    COLOR00, $000
+	
+	dc.w	$9A39,$FFFE  ; WAIT 
+	dc.w	COLOR00, $F0F
+	dc.w    BLTSIZE, (3)<<6|(2)
+	dc.w    $0001,$7FFE  ; WAIT
+	dc.w    COLOR00, $000
+
+	dc.w	$9C39,$FFFE  ; WAIT 
+	dc.w	COLOR00, $F0F
+	dc.w    BLTSIZE, (3)<<6|(3)
+	dc.w    $0001,$7FFE  ; WAIT
+	dc.w    COLOR00, $000
+
+	dc.w	$9E39,$FFFE  ; WAIT 
+	dc.w	COLOR00, $F0F
+	dc.w    BLTSIZE, (3)<<6|(4)
+	dc.w    $0001,$7FFE  ; WAIT
+	dc.w    COLOR00, $000
+	
+	dc.w	$A039,$FFFE  ; WAIT 
+	dc.w	COLOR00, $F0F
+	dc.w    BLTSIZE, (4)<<6|(3)
+	dc.w    $0001,$7FFE  ; WAIT
+	dc.w    COLOR00, $000
+
+	dc.w	$A239,$FFFE  ; WAIT 
+	dc.w	COLOR00, $F0F
+	dc.w    BLTSIZE, (4)<<6|(4)
+	dc.w    $0001,$7FFE  ; WAIT
+	dc.w    COLOR00, $000
+
+	dc.w	$A439,$FFFE  ; WAIT 
+	dc.w	COLOR00, $F0F
+	dc.w    BLTSIZE, (4)<<6|(5)
+	dc.w    $0001,$7FFE  ; WAIT
+	dc.w    COLOR00, $000
+
+	dc.w	$A639,$FFFE  ; WAIT 
+	dc.w	COLOR00, $F0F
+	dc.w    BLTSIZE, (5)<<6|(4)
+	dc.w    $0001,$7FFE  ; WAIT
+	dc.w    COLOR00, $000
+
+	dc.w	$A839,$FFFE  ; WAIT 
+	dc.w	COLOR00, $F0F
+	dc.w    BLTSIZE, (5)<<6|(5)
+	dc.w    $0001,$7FFE  ; WAIT
+	dc.w    COLOR00, $000
+
+	dc.w	$AA39,$FFFE  ; WAIT 
+	dc.w	COLOR00, $F0F
+	dc.w    BLTSIZE, (5)<<6|(6)
+	dc.w    $0001,$7FFE  ; WAIT
+	dc.w    COLOR00, $000
+
+	dc.w	$AC39,$FFFE  ; WAIT 
+	dc.w	COLOR00, $F0F
+	dc.w    BLTSIZE, (6)<<6|(5)
+	dc.w    $0001,$7FFE  ; WAIT
+	dc.w    COLOR00, $000
+
+	dc.w	$AE39,$FFFE  ; WAIT 
+	dc.w	COLOR00, $F0F
+	dc.w    BLTSIZE, (6)<<6|(6)
+	dc.w    $0001,$7FFE  ; WAIT
+	dc.w    COLOR00, $000
+
+	dc.w	$B039,$FFFE  ; WAIT 
+	dc.w	COLOR00, $F0F
+	dc.w    BLTSIZE, (6)<<6|(7)
+	dc.w    $0001,$7FFE  ; WAIT
+	dc.w    COLOR00, $000
+
+  ;
+   ; Enable some bitplanes
+   ;
+
+	dc.w    BPLCON0, (5<<12)|$200
+
+	dc.w    BPLCON0, (SCREEN_BIT_DEPTH<<12)|$200
+
+	dc.w	$C039,$FFFE  ; WAIT 
+	dc.w	COLOR00, $0FF
+	dc.w    BLTSIZE, (1)<<6|(1)
+	dc.w    $0001,$7FFE  ; WAIT
+	dc.w    COLOR00, $000
+
+	dc.w	$C239,$FFFE ; WAIT 
+	dc.w	COLOR00, $0FF
+	dc.w    BLTSIZE, (1)<<6|(2)
+	dc.w    $0001,$7FFE  ; WAIT
+	dc.w    COLOR00, $000
+
+	dc.w	$C439,$FFFE  ; WAIT 
+	dc.w	COLOR00, $0FF
+	dc.w    BLTSIZE, (2)<<6|(1)
+	dc.w    $0001,$7FFE  ; WAIT
+	dc.w    COLOR00, $000
+
+ 	dc.w	$C639,$FFFE  ; WAIT 
+	dc.w	COLOR00, $0FF
+	dc.w    BLTSIZE, (2)<<6|(2)
+	dc.w    $0001,$7FFE  ; WAIT
+	dc.w    COLOR00, $000
+	
+	dc.w	$C839,$FFFE  ; WAIT 
+	dc.w	COLOR00, $0FF
+	dc.w    BLTSIZE, (2)<<6|(3)
+	dc.w    $0001,$7FFE  ; WAIT
+	dc.w    COLOR00, $000
+	
+	dc.w	$CA39,$FFFE  ; WAIT 
+	dc.w	COLOR00, $0FF
+	dc.w    BLTSIZE, (3)<<6|(2)
+	dc.w    $0001,$7FFE  ; WAIT
+	dc.w    COLOR00, $000
+
+	dc.w	$CC39,$FFFE  ; WAIT 
+	dc.w	COLOR00, $0FF
+	dc.w    BLTSIZE, (3)<<6|(3)
+	dc.w    $0001,$7FFE  ; WAIT
+	dc.w    COLOR00, $000
+
+	dc.w	$CE39,$FFFE  ; WAIT 
+	dc.w	COLOR00, $0FF
+	dc.w    BLTSIZE, (3)<<6|(4)
+	dc.w    $0001,$7FFE  ; WAIT
+	dc.w    COLOR00, $000
+	
+	dc.w	$D039,$FFFE  ; WAIT 
+	dc.w	COLOR00, $0FF
+	dc.w    BLTSIZE, (4)<<6|(3)
+	dc.w    $0001,$7FFE  ; WAIT
+	dc.w    COLOR00, $000
+
+	dc.w	$D239,$FFFE  ; WAIT 
+	dc.w	COLOR00, $0FF
+	dc.w    BLTSIZE, (4)<<6|(4)
+	dc.w    $0001,$7FFE  ; WAIT
+	dc.w    COLOR00, $000
+
+	dc.w	$D439,$FFFE  ; WAIT 
+	dc.w	COLOR00, $0FF
+	dc.w    BLTSIZE, (4)<<6|(5)
+	dc.w    $0001,$7FFE  ; WAIT
+	dc.w    COLOR00, $000
+
+	dc.w	$D639,$FFFE  ; WAIT 
+	dc.w	COLOR00, $0FF
+	dc.w    BLTSIZE, (5)<<6|(4)
+	dc.w    $0001,$7FFE  ; WAIT
+	dc.w    COLOR00, $000
+
+	dc.w	$D839,$FFFE  ; WAIT 
+	dc.w	COLOR00, $0FF
+	dc.w    BLTSIZE, (5)<<6|(5)
+	dc.w    $0001,$7FFE  ; WAIT
+	dc.w    COLOR00, $000
+
+	dc.w	$DA39,$FFFE  ; WAIT 
+	dc.w	COLOR00, $0FF
+	dc.w    BLTSIZE, (5)<<6|(6)
+	dc.w    $0001,$7FFE  ; WAIT
+	dc.w    COLOR00, $000
+
+	dc.w	$DC39,$FFFE  ; WAIT 
+	dc.w	COLOR00, $0FF
+	dc.w    BLTSIZE, (6)<<6|(5)
+	dc.w    $0001,$7FFE  ; WAIT
+	dc.w    COLOR00, $000
+
+	dc.w	$DE39,$FFFE  ; WAIT 
+	dc.w	COLOR00, $0FF
+	dc.w    BLTSIZE, (6)<<6|(6)
+	dc.w    $0001,$7FFE  ; WAIT
+	dc.w    COLOR00, $000
+
+	dc.w	$E039,$FFFE  ; WAIT 
+	dc.w	COLOR00, $0FF
+	dc.w    BLTSIZE, (6)<<6|(7)
+	dc.w    $0001,$7FFE  ; WAIT
+	dc.w    COLOR00, $000
+	
 
 	; Cross vertical boundary
 	dc.w    $ffdf,$fffe 
