@@ -13,7 +13,7 @@ Replaces int1b. Timing has been made more stable by syncing the CPU in each fram
 
 #### int2
 
-The CPU runs in an infinite loop. In each iteration, it reads the VERTB bit in INTREQR and changes the background color to green if the bit is set. The Copper changes the color back to red and black. In AmigaForever (most likely on the real machine, too), the upper area toggles between green and black which means that the bit is sometimes 1 and sometimes 0. In the latter case, the IRQ handler has been executed before the CPU was able to check the bit. 
+Renamed to Interrupts/intreg/flicker
 
 #### int3
 

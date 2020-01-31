@@ -1,6 +1,6 @@
 ## Objective
 
-Test VBLANK timing
+Test VBLANK timing. The tests exhibit a difference between Amiga models. Old Agnus revisions (Amiga 1000) trigger the VERTB interrupt in line 1 whereas newer models trigger the interrupt in line 0.
 
 #### vblank1
 
