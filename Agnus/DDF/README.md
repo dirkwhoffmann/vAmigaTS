@@ -1,5 +1,7 @@
 ## Objective
 
+THIS TEST SET IS DEPRECATED AND REPLACED BY DDFNEW.
+
 The DDF tests use the Copper to modify DDFSTART and DDSTOP in various ways.
 
 #### ddf1
