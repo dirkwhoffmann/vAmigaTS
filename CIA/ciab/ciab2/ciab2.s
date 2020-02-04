@@ -121,49 +121,49 @@ main:
 
 irq1:
 	move.w  #$0004,INTREQ(a1)   ; Acknowledge
-	move.b  #$08,CIAB_CRA       ; One shot mode
-	move.b  #$20,CIAB_TALO      ; TBLO   
-	move.b  #$01,CIAB_TAHI      ; TBHI 
+	move.b  #$08,CIAB_CRB       ; One shot mode
+	move.b  #$20,CIAB_TBLO      ; TBLO   
+	move.b  #$01,CIAB_TBHI      ; TBHI 
 	move.w  #$FF6,COLOR00(a1)
 	rte
 
 irq2:
 	move.w  #$0008,INTREQ(a1)   ; Acknowledge
-	move.b  #$00,CIAB_CRA       ; Continous mode
-	move.b  #$20,CIAB_TALO      ; TBLO   
-	move.b  #$01,CIAB_TAHI      ; TBHI 
+	move.b  #$00,CIAB_CRB       ; Continous mode
+	move.b  #$20,CIAB_TBLO      ; TBLO   
+	move.b  #$01,CIAB_TBHI      ; TBHI 
 	move.w  #$BF6,COLOR00(a1)
 	rte
 
 irq3:
 	move.w  #$0010,INTREQ(a1)   ; Acknowledge
-	move.b  #$00,CIAB_CRA       ; Continous mode
-	move.b  #$20,CIAB_TALO      ; TBLO   
-	move.b  #$01,CIAB_TAHI      ; TBHI 
-	move.b  #$01,CIAB_CRA       ; Start timer
+	move.b  #$00,CIAB_CRB       ; Continous mode
+	move.b  #$20,CIAB_TBLO      ; TBLO   
+	move.b  #$01,CIAB_TBHI      ; TBHI 
+	move.b  #$01,CIAB_CRB       ; Start timer
 	move.w  #$6F6,COLOR00(a1)
 	rte
 
 irq4:
 	move.w  #$0080,INTREQ(a1)   ; Acknowledge
-	move.b  #$08,CIAB_CRA       ; Enable one shot mode
-	move.b  #$20,$A00400        ; TBLO (mirror)  
-	move.b  #$01,$A00500        ; TBHI (mirror)
+	move.b  #$08,CIAB_CRB       ; Enable one shot mode
+	move.b  #$20,$A00600        ; TBLO (mirror)  
+	move.b  #$01,$A00700        ; TBHI (mirror)
 	move.w  #$6FB,COLOR00(a1)
 	rte
 
 irq5:
 	move.w  #$0800,INTREQ(a1)   ; Acknowledge
-	move.b  #$08,CIAB_CRA       ; Enable one shot mode
-	move.b  #$20,$A804FE        ; TBLO (mirror)  
-	move.b  #$01,$A805FE        ; TBHI (mirror)
+	move.b  #$08,CIAB_CRB       ; Enable one shot mode
+	move.b  #$20,$A806FE        ; TBLO (mirror)  
+	move.b  #$01,$A807FE        ; TBHI (mirror)
 	move.w  #$6FF,COLOR00(a1)
 	rte
 
 irq6:
 	move.w  #$0FF,COLOR00(a1) 
 	move.b  CIAB_ICR,d0         ; Acknowledge the IRQ by reading ICR
-	move.b  #$0,CIAB_CRA        ; Stop timer
+	move.b  #$0,CIAB_CRB        ; Stop timer
 	move.w  #$0F0,COLOR00(a1)
 	move.w	#$2000,INTREQ(a1)   ; Acknowledge 
 	move.w  #$00F,COLOR00(a1)   

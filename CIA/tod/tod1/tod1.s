@@ -47,11 +47,12 @@ CIAB_CRB            equ $BFDF00
 ; Main
 ;
 
-entry:	
+entry:
 	; Load OCS base address into a1
 	lea CUSTOM,a1
-	; lea CIABASE,a6
-		
+	
+	moveq #0,d4
+
     ; Disable all bitplanes 
 	move.w #$200,BPLCON0(a1)
 
@@ -102,7 +103,7 @@ entry:
   	; Configure CIAs
 	move.b #$08,CIAB_CRA  ; Start timer A in one shot mode
 	move.b #$08,CIAB_CRB  ; Start timer B in one shot mode
-	move.b #$83,CIAB_ICR  ; Enable CIA timer interrupt
+	move.b #$87,CIAB_ICR  ; Enable CIA timer + tod interrupts
 
 	; Enable interrupts
 	move.w  #$E89C,INTENA(a1)
@@ -121,10 +122,19 @@ main:
 
 irq1:
 	move.w  #$0004,INTREQ(a1)   ; Acknowledge
-	move.b  #$08,CIAB_CRA       ; One shot mode
-	move.b  #$20,CIAB_TALO      ; TBLO   
-	move.b  #$01,CIAB_TAHI      ; TBHI 
-	move.w  #$FF6,COLOR00(a1)
+
+	move.b  #$80,CIAB_CRB        ; Prepare to write alarm
+	move.b  #$00,CIAB_TODHI
+	move.b  #$00,CIAB_TODMID
+	move.b  #$00,CIAB_TODLO
+
+	move.b  #$00,CIAB_CRB        ; Prepare to write tod
+	move.b  #$00,CIAB_TODHI
+	move.b  #$00,CIAB_TODMID
+	move.b  #$00,CIAB_TODLO
+
+	;add.w   #$1,d4
+	;move.w  d4,COLOR00(a1)      ; Modify background color
 	rte
 
 irq2:
@@ -162,12 +172,11 @@ irq5:
 
 irq6:
 	move.w  #$0FF,COLOR00(a1) 
-	move.b  CIAB_ICR,d0         ; Acknowledge the IRQ by reading ICR
-	move.b  #$0,CIAB_CRA        ; Stop timer
-	move.w  #$0F0,COLOR00(a1)
 	move.w	#$2000,INTREQ(a1)   ; Acknowledge 
-	move.w  #$00F,COLOR00(a1)   
-	move.w  #$000,COLOR00(a1)
+	move.b  CIAB_ICR,d0         ; Acknowledge the IRQ by reading ICR
+	;move.b  #$0,CIAB_CRA       ; Stop timer
+	add.w   #$1,d4
+	move.w  d4,COLOR00(a1)      ; Modify background color
 	rte
 
 synccpu:
@@ -286,20 +295,20 @@ synccpu:
 	dc.w 	INTREQ,$8004         ; Level 1 interrupt
 
 	dc.w    $8039, $FFFE
-	dc.w    COLOR00,$00F
-	dc.w 	INTREQ,$8008         ; Level 2 interrupt
+	;dc.w    COLOR00,$00F
+	;dc.w 	INTREQ,$8008         ; Level 2 interrupt
 
 	dc.w    $A039, $FFFE
-	dc.w    COLOR00,$00F
-	dc.w 	INTREQ,$8010         ; Level 3 interrupt
+	;dc.w    COLOR00,$00F
+	;dc.w 	INTREQ,$8010         ; Level 3 interrupt
 
 	dc.w    $C039, $FFFE
-	dc.w    COLOR00,$00F
-	dc.w 	INTREQ,$8080         ; Level 4 interrupt
+	;dc.w    COLOR00,$00F
+	;dc.w 	INTREQ,$8080         ; Level 4 interrupt
 
 	dc.w    $E039, $FFFE
-	dc.w    COLOR00,$00F
-	dc.w 	INTREQ,$8800         ; Level 5 interrupt
+	;dc.w    COLOR00,$00F
+	;dc.w 	INTREQ,$8800         ; Level 5 interrupt
 
 	dc.w	$ffdf,$fffe          ; Cross vertical boundary
 

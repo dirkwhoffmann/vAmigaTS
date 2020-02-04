@@ -100,9 +100,9 @@ entry:
 	move.w  #(DMAF_SETCLR!DMAF_COPPER!DMAF_MASTER),DMACON(a1)
 
   	; Configure CIAs
-	move.b #$08,CIAB_CRA  ; Start timer A in one shot mode
-	move.b #$08,CIAB_CRB  ; Start timer B in one shot mode
-	move.b #$83,CIAB_ICR  ; Enable CIA timer interrupt
+	move.b #$08,CIAA_CRA  ; Start timer A in one shot mode
+	move.b #$08,CIAA_CRB  ; Start timer B in one shot mode
+	move.b #$83,CIAA_ICR  ; Enable CIA timer interrupt
 
 	; Enable interrupts
 	move.w  #$E89C,INTENA(a1)
@@ -121,53 +121,53 @@ main:
 
 irq1:
 	move.w  #$0004,INTREQ(a1)   ; Acknowledge
-	move.b  #$08,CIAB_CRA       ; One shot mode
-	move.b  #$20,CIAB_TALO      ; TBLO   
-	move.b  #$01,CIAB_TAHI      ; TBHI 
+	move.b  #$08,CIAA_CRB       ; One shot mode
+	move.b  #$20,CIAA_TBLO      ; TBLO   
+	move.b  #$01,CIAA_TBHI      ; TBHI 
 	move.w  #$FF6,COLOR00(a1)
 	rte
 
 irq2:
-	move.w  #$0008,INTREQ(a1)   ; Acknowledge
-	move.b  #$00,CIAB_CRA       ; Continous mode
-	move.b  #$20,CIAB_TALO      ; TBLO   
-	move.b  #$01,CIAB_TAHI      ; TBHI 
-	move.w  #$BF6,COLOR00(a1)
+	move.w  #$0FF,COLOR00(a1) 
+	move.b  CIAA_ICR,d0         ; Acknowledge the IRQ by reading ICR
+	move.b  #$0,CIAA_CRB        ; Stop timer
+	move.w  #$0F0,COLOR00(a1)
+	move.w	#$0008,INTREQ(a1)   ; Acknowledge 
+	move.w  #$00F,COLOR00(a1)   
+	move.w  #$000,COLOR00(a1)
 	rte
 
 irq3:
 	move.w  #$0010,INTREQ(a1)   ; Acknowledge
-	move.b  #$00,CIAB_CRA       ; Continous mode
-	move.b  #$20,CIAB_TALO      ; TBLO   
-	move.b  #$01,CIAB_TAHI      ; TBHI 
-	move.b  #$01,CIAB_CRA       ; Start timer
+	move.b  #$00,CIAA_CRB       ; Continous mode
+	move.b  #$20,CIAA_TBLO      ; TBLO   
+	move.b  #$01,CIAA_TBHI      ; TBHI 
 	move.w  #$6F6,COLOR00(a1)
 	rte
 
 irq4:
 	move.w  #$0080,INTREQ(a1)   ; Acknowledge
-	move.b  #$08,CIAB_CRA       ; Enable one shot mode
-	move.b  #$20,$A00400        ; TBLO (mirror)  
-	move.b  #$01,$A00500        ; TBHI (mirror)
+	move.b  #$00,CIAA_CRB       ; Continous mode
+	move.b  #$20,$A00601        ; TBLO (mirror)  
+	move.b  #$01,$A00701        ; TBHI (mirror)
+	move.b  #$01,CIAA_CRB       ; Start timer
 	move.w  #$6FB,COLOR00(a1)
 	rte
 
 irq5:
 	move.w  #$0800,INTREQ(a1)   ; Acknowledge
-	move.b  #$08,CIAB_CRA       ; Enable one shot mode
-	move.b  #$20,$A804FE        ; TBLO (mirror)  
-	move.b  #$01,$A805FE        ; TBHI (mirror)
+	move.b  #$08,CIAA_CRB       ; One shot mode
+	move.b  #$20,$A806FF        ; TBLO (mirror)  
+	move.b  #$01,$A807FF        ; TBHI (mirror)
 	move.w  #$6FF,COLOR00(a1)
 	rte
 
 irq6:
-	move.w  #$0FF,COLOR00(a1) 
-	move.b  CIAB_ICR,d0         ; Acknowledge the IRQ by reading ICR
-	move.b  #$0,CIAB_CRA        ; Stop timer
-	move.w  #$0F0,COLOR00(a1)
-	move.w	#$2000,INTREQ(a1)   ; Acknowledge 
-	move.w  #$00F,COLOR00(a1)   
-	move.w  #$000,COLOR00(a1)
+	move.w  #$2000,INTREQ(a1)   ; Acknowledge
+	move.b  #$08,CIAA_CRB       ; One shot mode
+	move.b  #$20,CIAA_TALO      ; TBLO   
+	move.b  #$01,CIAA_TAHI      ; TBHI 
+	move.w  #$BF6,COLOR00(a1)
 	rte
 
 synccpu:
@@ -287,19 +287,19 @@ synccpu:
 
 	dc.w    $8039, $FFFE
 	dc.w    COLOR00,$00F
-	dc.w 	INTREQ,$8008         ; Level 2 interrupt
+	dc.w 	INTREQ,$8010         ; Level 3 interrupt
 
 	dc.w    $A039, $FFFE
 	dc.w    COLOR00,$00F
-	dc.w 	INTREQ,$8010         ; Level 3 interrupt
+	dc.w 	INTREQ,$8080         ; Level 4 interrupt
 
 	dc.w    $C039, $FFFE
 	dc.w    COLOR00,$00F
-	dc.w 	INTREQ,$8080         ; Level 4 interrupt
+	dc.w 	INTREQ,$8800         ; Level 5 interrupt
 
 	dc.w    $E039, $FFFE
 	dc.w    COLOR00,$00F
-	dc.w 	INTREQ,$8800         ; Level 5 interrupt
+	dc.w 	INTREQ,$A000         ; Level 6 interrupt
 
 	dc.w	$ffdf,$fffe          ; Cross vertical boundary
 
