@@ -124,15 +124,16 @@ irq1:
 	move.w  #$F00,COLOR00(a1)
 	move.w  #$0004,INTREQ(a1)   ; Acknowledge
 
-	move.b  #$08,CIAA_CRA       ; One-shot timers
-	move.b  #$08,CIAB_CRA       
+	move.b  #$FF,CIAA_CRA       ; One-shot timers
+	move.b  #$FF,CIAB_CRA       
+
+	move.b  CIAA_CRA,d0
+	move.b  CIAB_CRA,d1
+
 	move.b  #$10,CIAA_TALO
 	move.b  #$20,CIAB_TALO
 	move.b  #$00,CIAA_TAHI      ; Start timer	
 	move.b  #$00,CIAB_TAHI      ; Start timer	
-
-	move.b  CIAA_CRA,d0
-	move.b  CIAB_CRA,d1
 
 	move.w  #$00F,COLOR00(a1)
 	rte

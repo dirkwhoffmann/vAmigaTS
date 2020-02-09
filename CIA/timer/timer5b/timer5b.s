@@ -56,9 +56,9 @@ entry:
 
 	; Configure CIAs
 	move.b  #$7F,CIAA_ICR
-	move.b  #$82,CIAA_ICR  ; Enable Timer B interrupts
+	move.b  #$81,CIAA_ICR  ; Enable Timer A interrupts
 	move.b  #$7F,CIAB_ICR
-	move.b  #$82,CIAB_ICR  ; Enable Timer B interrupts
+	move.b  #$81,CIAB_ICR  ; Enable Timer A interrupts
 	
 	; Disable all interrupts
 	move.w  #$7FFF,INTENA(a1)
@@ -97,6 +97,16 @@ entry:
 
 main: 
 	jsr     synccpu
+;  	move.w  #2000,d3
+;loop1:
+;	dbra    d3,loop1
+;   	move.w  #1000,d3
+;	move.w  #$888,d4
+;	move.w  #$000,d5
+;loop2:
+;	move.w  d4,COLOR00(a1)
+;	move.w  d5,COLOR00(a1)
+;   dbra    d3,loop2
 	bra.s   main
 
 ;
@@ -107,12 +117,19 @@ irq1:
 	move.w  #$F00,COLOR00(a1)
 	move.w  #$0004,INTREQ(a1)   ; Acknowledge
 
-	move.b  #$08,CIAA_CRB       ; One-shot timers
-	move.b  #$08,CIAB_CRB       
-	move.b  #$20,CIAA_TBLO
-	move.b  #$40,CIAB_TBLO
-	move.b  #$00,CIAA_TBHI      ; Start timer	
-	move.b  #$00,CIAB_TBHI      ; Start timer	
+	move.b  #$08,CIAA_CRA       ; One-shot timers
+	move.b  #$08,CIAB_CRA       
+	move.b  #$20,CIAA_TALO
+	move.b  #$50,CIAB_TALO
+	move.b  #$00,CIAA_TAHI      ; Start timer	
+	move.b  #$03,CIAB_TAHI      ; Start timer	
+
+	; Only modify TALO again
+	move.b #$FF,CIAA_TALO 
+
+    ; Modify TAHI again
+	; move.b  #$01,CIAA_TAHI 
+
 	move.w  #$00F,COLOR00(a1)
 	rte
 

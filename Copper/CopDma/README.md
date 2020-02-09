@@ -1,4 +1,4 @@
-## Objective
+ ## Objective
 
 Verfies how Copper reacts if DMA is switched on and off under certain circumstances.
 

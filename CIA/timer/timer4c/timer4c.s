@@ -103,9 +103,9 @@ entry:
 	move.w	#$8008,INTENA(a1) ; CIA A
 	move.w	#$A000,INTENA(a1) ; CIA B
  
-	; Enable timer A interrupt in both CIAs
-	move.b  #$81,CIAA_ICR
-	move.b  #$81,CIAB_ICR
+	; Enable timer B interrupt in both CIAs
+	move.b  #$82,CIAA_ICR
+	move.b  #$82,CIAB_ICR
 
 
 ;
@@ -124,15 +124,16 @@ irq1:
 	move.w  #$F00,COLOR00(a1)
 	move.w  #$0004,INTREQ(a1)   ; Acknowledge
 
-	move.b  #$08,CIAA_CRA       ; One-shot timers
-	move.b  #$08,CIAB_CRA       
-	move.b  #$10,CIAA_TALO
-	move.b  #$20,CIAB_TALO
-	move.b  #$00,CIAA_TAHI      ; Start timer	
-	move.b  #$00,CIAB_TAHI      ; Start timer	
+	move.b  #$FF,CIAA_CRB       ; One-shot timers
+	move.b  #$FF,CIAB_CRB       
 
-	move.b  CIAA_CRA,d0
-	move.b  CIAB_CRA,d1
+	move.b  CIAA_CRB,d0
+	move.b  CIAB_CRB,d1
+
+	move.b  #$10,CIAA_TBLO
+	move.b  #$20,CIAB_TBLO
+	move.b  #$00,CIAA_TBHI      ; Start timer	
+	move.b  #$00,CIAB_TBHI      ; Start timer	
 
 	move.w  #$00F,COLOR00(a1)
 	rte
