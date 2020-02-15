@@ -32,6 +32,9 @@ entry:
 	; Disable all interrupts
 	move.w  #$7FFF,INTENA(a1)
 
+	; Disable Copper DMA 
+	move.w #$0080,DMACON(a1)
+
 	; Disable all bitplanes 
 	move.w #$200,BPLCON0(a1)
 
@@ -105,12 +108,12 @@ irq4:
 
 
 channel0: ; Sine wave
-	dc.b    0,49
-	dc.b    90,117
-	dc.b    127,117
-	dc.b    90,49
-	dc.b    0,-49
-	dc.b    -90,-117
-	dc.b    -127,-117
-	dc.b    -90,-49
+	dc.b    0,49       ; $0031
+	dc.b    90,117     ; $5175
+	dc.b    127,117    ; $7F75
+	dc.b    90,49      ; $5131
+	dc.b    0,-49      ; $00CF
+	dc.b    -90,-117   ; $A68B
+	dc.b    -127,-117  ; $818B
+	dc.b    -90,-49    ; $A6CF
 channel0end:

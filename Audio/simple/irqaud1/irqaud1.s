@@ -32,6 +32,9 @@ entry:
 	; Disable all interrupts
 	move.w  #$7FFF,INTENA(a1)
 
+    ; Disable Copper DMA 
+	move.w #$0080,DMACON(a1)
+	
 	; Disable all bitplanes 
 	move.w #$200,BPLCON0(a1)
 
@@ -86,7 +89,7 @@ irq2:
 	move.b  CIAA_ICR,d0        ; Clear CIAA::ICR
 	move.w  #$0008,INTREQ(a1)  ; Acknowledge	
 	move.w  #$0001,DMACON(a1)  ; Disable DMA for channel 0
-	clr     d4                 ; irq4 handler will no longer acknowledge the IRQ
+	;clr     d4                 ; irq4 handler will no longer acknowledge the IRQ
 	rte
 
 irq4:

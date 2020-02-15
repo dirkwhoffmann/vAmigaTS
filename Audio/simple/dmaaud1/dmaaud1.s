@@ -32,6 +32,9 @@ entry:
 	; Disable all interrupts
 	move.w  #$7FFF,INTENA(a1)
 
+	; Disable Copper DMA 
+	move.w #$0080,DMACON(a1)
+
 	; Disable all bitplanes 
 	move.w #$200,BPLCON0(a1)
 
