@@ -110,45 +110,45 @@ irq1:
 	move.w  #$00F,COLOR00(a1)
 	move.w  #$0004,INTREQ(a1)   ; Acknowledge
 	move.b  #$80,CIAB_CRB       ; Set alarm
-	move.b  #$00,CIAB_TODMID    ; 
-	move.b  #$00,CIAB_TODHI     ; 
 	move.b  #$08,CIAB_TODLO     ;
-	move.b  #$00,CIAB_CRB       ; Set counter
 	move.b  #$00,CIAB_TODMID    ; 
 	move.b  #$00,CIAB_TODHI     ; 
+	move.b  #$00,CIAB_CRB       ; Set counter
 	move.b  #$00,CIAB_TODLO     ;
+	move.b  #$00,CIAB_TODMID    ; 
+	move.b  #$00,CIAB_TODHI     ; 
 
-	move.b  #$00,CIAB_TODLO     ; Does this write stop the timer?
+	move.b  #$00,CIAB_TODLO     ; Does this write start the timer?
 	rte
 
 irq2:
 	move.w  #$00F,COLOR00(a1)
 	move.w  #$0008,INTREQ(a1)   ; Acknowledge
 	move.b  #$80,CIAB_CRB       ; Set alarm
-	move.b  #$00,CIAB_TODMID    ; 
-	move.b  #$00,CIAB_TODHI     ; 
 	move.b  #$08,CIAB_TODLO     ;
-	move.b  #$00,CIAB_CRB       ; Set counter
 	move.b  #$00,CIAB_TODMID    ; 
 	move.b  #$00,CIAB_TODHI     ; 
+	move.b  #$00,CIAB_CRB       ; Set counter
 	move.b  #$00,CIAB_TODLO     ;
+	move.b  #$00,CIAB_TODMID    ; 
+	move.b  #$00,CIAB_TODHI     ; 
 
-	move.b  #$00,CIAB_TODMID    ; Does this write stop the timer?
+	move.b  #$00,CIAB_TODMID    ; Does this write start the timer?
 	rte
 
 irq3:
 	move.w  #$00F,COLOR00(a1)
 	move.w  #$0010,INTREQ(a1)   ; Acknowledge
 	move.b  #$80,CIAB_CRB       ; Set alarm
-	move.b  #$00,CIAB_TODMID    ; 
-	move.b  #$00,CIAB_TODHI     ; 
 	move.b  #$08,CIAB_TODLO     ;
-	move.b  #$00,CIAB_CRB       ; Set counter
 	move.b  #$00,CIAB_TODMID    ; 
 	move.b  #$00,CIAB_TODHI     ; 
+	move.b  #$00,CIAB_CRB       ; Set counter
 	move.b  #$00,CIAB_TODLO     ;
+	move.b  #$00,CIAB_TODMID    ; 
+	move.b  #$00,CIAB_TODHI     ; 
 
-	move.b  #$00,CIAB_TODHI     ; Does this write stop the timer?
+	move.b  #$00,CIAB_TODHI     ; Does this write start the timer?
 	rte
 
 irq4:
@@ -162,45 +162,45 @@ irq4:
         
 	move.w  #$0080,INTREQ(a1)   ; Acknowledge
 	move.b  #$00,CIAB_CRB       ; Set counter
-	move.b  #$00,CIAB_TODMID    ; 
-	move.b  #$00,CIAB_TODHI     ; 
 	move.b  #$00,CIAB_TODLO     ;
-	move.b  #$80,CIAB_CRB       ; Set alarm
 	move.b  #$00,CIAB_TODMID    ; 
 	move.b  #$00,CIAB_TODHI     ; 
+	move.b  #$80,CIAB_CRB       ; Set alarm
 	move.b  #$08,CIAB_TODLO     ;
+	move.b  #$00,CIAB_TODMID    ; 
+	move.b  #$00,CIAB_TODHI     ; 
 
-	move.b  #$08,CIAB_TODLO     ; Does this write stop the timer?
+	move.b  #$08,CIAB_TODLO     ; Does this write start the timer?
 	rte
 
 irq4_aud1:
 
 	move.w  #$0100,INTREQ(a1)   ; Acknowledge
 	move.b  #$00,CIAB_CRB       ; Set counter
-	move.b  #$00,CIAB_TODMID    ; 
-	move.b  #$00,CIAB_TODHI     ; 
 	move.b  #$00,CIAB_TODLO     ;
-	move.b  #$80,CIAB_CRB       ; Set alarm
 	move.b  #$00,CIAB_TODMID    ; 
 	move.b  #$00,CIAB_TODHI     ; 
+	move.b  #$80,CIAB_CRB       ; Set alarm
 	move.b  #$08,CIAB_TODLO     ;
+	move.b  #$00,CIAB_TODMID    ; 
+	move.b  #$00,CIAB_TODHI     ; 
 
-	move.b  #$00,CIAB_TODMID    ; Does this write stop the timer?
+	move.b  #$00,CIAB_TODMID    ; Does this write start the timer?
 	rte
 
 irq4_aud2:
 
 	move.w  #$0200,INTREQ(a1)   ; Acknowledge
 	move.b  #$00,CIAB_CRB       ; Set counter
-	move.b  #$00,CIAB_TODMID    ; 
-	move.b  #$00,CIAB_TODHI     ; 
 	move.b  #$00,CIAB_TODLO     ;
-	move.b  #$80,CIAB_CRB       ; Set alarm
 	move.b  #$00,CIAB_TODMID    ; 
 	move.b  #$00,CIAB_TODHI     ; 
+	move.b  #$80,CIAB_CRB       ; Set alarm
 	move.b  #$08,CIAB_TODLO     ;
+	move.b  #$00,CIAB_TODMID    ; 
+	move.b  #$00,CIAB_TODHI     ; 
 
-	move.b  #$00,CIAB_TODHI     ; Does this write stop the timer?
+	move.b  #$00,CIAB_TODHI     ; Does this write start the timer?
 	rte
 
 irq4_aud3:

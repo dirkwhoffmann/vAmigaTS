@@ -8,8 +8,6 @@ LVL3_INT_VECTOR		equ $6c
 LVL4_INT_VECTOR		equ $70
 LVL5_INT_VECTOR		equ $74
 LVL6_INT_VECTOR		equ $78
-SCREEN_WIDTH_BYTES	equ (320/8)
-SCREEN_BIT_DEPTH	equ 5
 	
 CIAA_PRA            equ $BFE001	
 CIAA_PRB            equ $BFE101
@@ -112,7 +110,7 @@ irq1:
 	move.b  #$80,CIAB_CRB       ; Set alarm
 	move.b  #$00,CIAB_TODMID    ; 
 	move.b  #$00,CIAB_TODHI     ; 
-	move.b  #$08,CIAB_TODLO     ;
+	move.b  #$00,CIAB_TODLO     ;
 	move.b  #$00,CIAB_CRB       ; Set counter
 	move.b  #$00,CIAB_TODMID    ; 
 	move.b  #$00,CIAB_TODHI     ; 
@@ -127,7 +125,7 @@ irq2:
 	move.b  #$80,CIAB_CRB       ; Set alarm
 	move.b  #$00,CIAB_TODMID    ; 
 	move.b  #$00,CIAB_TODHI     ; 
-	move.b  #$08,CIAB_TODLO     ;
+	move.b  #$00,CIAB_TODLO     ;
 	move.b  #$00,CIAB_CRB       ; Set counter
 	move.b  #$00,CIAB_TODMID    ; 
 	move.b  #$00,CIAB_TODHI     ; 
@@ -142,7 +140,7 @@ irq3:
 	move.b  #$80,CIAB_CRB       ; Set alarm
 	move.b  #$00,CIAB_TODMID    ; 
 	move.b  #$00,CIAB_TODHI     ; 
-	move.b  #$08,CIAB_TODLO     ;
+	move.b  #$00,CIAB_TODLO     ;
 	move.b  #$00,CIAB_CRB       ; Set counter
 	move.b  #$00,CIAB_TODMID    ; 
 	move.b  #$00,CIAB_TODHI     ; 
@@ -168,9 +166,9 @@ irq4:
 	move.b  #$80,CIAB_CRB       ; Set alarm
 	move.b  #$00,CIAB_TODMID    ; 
 	move.b  #$00,CIAB_TODHI     ; 
-	move.b  #$08,CIAB_TODLO     ;
+	move.b  #$00,CIAB_TODLO     ;
 
-	move.b  #$08,CIAB_TODLO     ; Does this write stop the timer?
+	move.b  #$00,CIAB_TODLO     ; Does this write stop the timer?
 	rte
 
 irq4_aud1:
@@ -183,7 +181,7 @@ irq4_aud1:
 	move.b  #$80,CIAB_CRB       ; Set alarm
 	move.b  #$00,CIAB_TODMID    ; 
 	move.b  #$00,CIAB_TODHI     ; 
-	move.b  #$08,CIAB_TODLO     ;
+	move.b  #$00,CIAB_TODLO     ;
 
 	move.b  #$00,CIAB_TODMID    ; Does this write stop the timer?
 	rte
@@ -198,7 +196,7 @@ irq4_aud2:
 	move.b  #$80,CIAB_CRB       ; Set alarm
 	move.b  #$00,CIAB_TODMID    ; 
 	move.b  #$00,CIAB_TODHI     ; 
-	move.b  #$08,CIAB_TODLO     ;
+	move.b  #$00,CIAB_TODLO     ;
 
 	move.b  #$00,CIAB_TODHI     ; Does this write stop the timer?
 	rte
