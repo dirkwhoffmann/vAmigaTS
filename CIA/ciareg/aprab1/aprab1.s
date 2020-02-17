@@ -62,9 +62,9 @@ entry:
 	move.w  #(DMAF_SETCLR!DMAF_COPPER!DMAF_MASTER),DMACON(a1)
 
 	; Configure CIAs
-	move.b  #$00,CIAA_PRA 
+	move.b  #$00,CIAA_PRA    ; The OVL bit must be 0
 	move.b  #$00,CIAA_PRB
-	move.b  #$00,CIAA_DDRA
+	move.b  #$01,CIAA_DDRA   ; The OVL bit must be configured as output
 	move.b  #$00,CIAA_DDRB
 
 	; Enable VERTB innterrupt
