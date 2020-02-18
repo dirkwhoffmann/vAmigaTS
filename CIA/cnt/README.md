@@ -14,5 +14,9 @@ Similar to cnt1, but the background color is changed to yellow in the CIAB inter
 
 Same as cnt1 and cnt2 for timer CIAB::B.
 
+#### cnt5 to cnt7
+
+Similar with a more complicate timer setup. Timer A counts CNT pulses and timer B counts timer A underflows. cnt7 does not trigger the interrupt, because it generates one CNT edge too less.
+ 
 
 Dirk Hoffmann, 2020
