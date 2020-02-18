@@ -39,8 +39,6 @@ irq3:
 	movem.l	d0-a6,-(sp)
 	move.w  #$0020,INTREQ(a1)   ; Acknowledge
 
-	move.w  #$0001,POTGO(a1)
-
 	clr     d0
 	move.w  POTINP(a1),d0
 	

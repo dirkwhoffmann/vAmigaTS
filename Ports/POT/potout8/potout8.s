@@ -2,7 +2,12 @@
 	include "hardware/dmabits.i"
 	include "hardware/intbits.i"
 
+LVL1_INT_VECTOR		equ $64
+LVL2_INT_VECTOR	    equ $68
 LVL3_INT_VECTOR		equ $6c
+LVL4_INT_VECTOR		equ $70
+LVL5_INT_VECTOR		equ $74
+LVL6_INT_VECTOR		equ $78
 	
 entry:	
 	; Load OCS base address into a1
@@ -18,6 +23,8 @@ entry:
 	move.w  #$200,BPLCON0(a1)
 
 	; Install interrupt handlers
+	lea	    irq1(pc),a2
+ 	move.l	a2,LVL1_INT_VECTOR
 	lea	    irq3(pc),a2
  	move.l	a2,LVL3_INT_VECTOR
 
@@ -29,21 +36,26 @@ entry:
 	; Enable Copper DMA
 	move.w  #(DMAF_SETCLR!DMAF_COPPER!DMAF_MASTER),DMACON(a1)
 
-	; Enable VERTB innterrupt
-	move.w	#$C020,INTENA(a1) 
+	; Enable innterrupts
+	move.w	#$C024,INTENA(a1) 
 
+	; Configure POTGO
+	move.w #$0FF1,POTGO(a1)      ; OUTLY = 1, OUTLX = 1, DATLY = 1, DATLX = 1
+	
 .mainLoop:
 	bra.b	.mainLoop
 
+irq1:
+	move.w  #$0004,INTREQ(a1)   ; Acknowledge
+	clr     d0
+	move.w  POT0DAT(a1),d0
+	rte
+	
 irq3:
 	movem.l	d0-a6,-(sp)
 	move.w  #$0020,INTREQ(a1)   ; Acknowledge
-
-	move.w  #$0001,POTGO(a1)
-
-	clr     d0
-	move.w  POTINP(a1),d0
 	
+	; Visualize value stored in d0
 .test0:
 	lea	(bit0+2)(pc),a0
 	move.w #$333,(a0)
@@ -261,6 +273,10 @@ bit0:
 	dc.w	COLOR00, $F00
 	dc.w	$B0D9,$FFFE  ; WAIT 
 	dc.w	COLOR00, $000
+
+	; Scan POT0DAT in the IRQ1 handler
+	dc.w    $C001,$FFFE 
+	dc.w    INTREQ,$8004
 
 	dc.l	$fffffffe
 
