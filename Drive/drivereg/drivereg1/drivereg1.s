@@ -66,7 +66,10 @@ entry:
 	move.w  COPJMP1(a1),d0
 
 	; Configure CIA A
-	move.b  #$88,CIAA_ICR      ; Enable Serial Shift Register IRQ
+	move.b  #$88,CIAA_ICR      ; Enable Serial Shift Register interrupts
+	move.b  #$00,CIAA_CRA
+	move.b  #$FF,CIAA_TALO
+	move.b  #$00,CIAA_TAHI
 
 	; Enable Copper DMA
 	move.w  #(DMAF_SETCLR!DMAF_COPPER!DMAF_MASTER),DMACON(a1)
@@ -83,13 +86,20 @@ entry:
 
 irq2:
 	move.b  CIAA_ICR,d3         ; Clear ICR
+	move.b  CIAA_SDR,d3         ; Save SDR
 	move.w  #$0008,INTREQ(a1)   ; Acknowledge
 
-	move.b  CIAA_SDR,d3
-	btst    #0,d3
+	; Acknowledge the key
+	move.b  #$00,CIAA_SDR
+	move.b  #$40,CIAA_CRA       ; SP = output
+	move.w  #1000,d4
+.loop: 
+	dbra    d4,.loop
+	move.b  #$00,CIAA_CRA       ; SP = output
+
+	btst    #0,d3               ; Skip keydown events
 	bne     .exit 
 
-	move.w  #$0F0,COLOR00(a1)
 	clr     d2
 .check0
 	cmp     #234,d3
