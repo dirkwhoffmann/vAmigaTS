@@ -1,18 +1,18 @@
 ## Objective
 
-Displays the contents of the DMACON0 register at certain points in time.
+Displays the contents of the DMACON register at certain points in time.
 
-#### dmacon0a
+#### dmacon1
 
 Triggers a Blitter operation and records the value of DMACON while the Blitter is still running.
 
-#### dmacon0a
+#### dmacon2
 
 Triggers a Blitter operation and records the value of DMACON after the Blitter has terminated.
 
-#### dmacon0c and dmacon0d
+#### dmacon3 and dmacon4
 
-Same as dmacon0a resp. dmacon0b with the BLTPRI set to 1.
+Same as dmacon1 resp. dmacon2 with the BLTPRI set to 1.
 
 
-Dirk Hoffmann, 2019
+Dirk Hoffmann, 2019 - 2020
