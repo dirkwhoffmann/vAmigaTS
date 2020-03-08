@@ -10,7 +10,7 @@ These tests set DDFSTART and DDFSTOP to different combinations inside the valid 
 
 Sets DDFSTOP to very high coordinates.
 
-#### shift1
+#### shift1 - shift3
 
 Uses DDFSTART and DDFSTOP in combination with BPLCON1. This test has been written to hunt down the vAmiga "Siedler bug".
 
