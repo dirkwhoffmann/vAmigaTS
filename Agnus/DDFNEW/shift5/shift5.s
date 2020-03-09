@@ -42,6 +42,12 @@ level3InterruptHandler:
 	lea     bitplanes(pc),a2
 	lea     BPL1PTH(a1),a3
 	move.l	a2,(a3)
+	lea     BPL2PTH(a1),a3
+	move.l	a2,(a3)
+	lea     BPL3PTH(a1),a3
+	move.l	a2,(a3)
+	lea     BPL4PTH(a1),a3
+	move.l	a2,(a3)
 	movem.l	(sp)+,d0-a6
 	rte
 
@@ -51,14 +57,31 @@ copper:
 	dc.w	BPL1MOD,SCREEN_WIDTH_BYTES*SCREEN_BIT_DEPTH-SCREEN_WIDTH_BYTES
 	dc.w	BPL2MOD,SCREEN_WIDTH_BYTES*SCREEN_BIT_DEPTH-SCREEN_WIDTH_BYTES
 	dc.w    BPLCON1,$FF
+
+	dc.w    COLOR02,$080
+	dc.w    COLOR03,$0F0
+	dc.w    COLOR04,$088
+	dc.w    COLOR05,$08F
+	dc.w    COLOR06,$0F8
+	dc.w    COLOR07,$0FF
+	dc.w    COLOR08,$800
+	dc.w    COLOR09,$F00
+	dc.w    COLOR10,$880
+	dc.w    COLOR11,$8F0
+	dc.w    COLOR12,$F80
+	dc.w    COLOR13,$FF0
+	dc.w    COLOR14,$888
+	dc.w    COLOR15,$FFF
+
     ; 
 	; Block 1 (LORES)
 	;
 
 	dc.w	$3001,$FFFE  ; WAIT 
 	dc.w	COLOR00, $F00
-	dc.w	BPLCON0,(1<<12)|$200 ; 1 bitplanes, lores mode
+	dc.w	BPLCON0,(4<<12)|$200 ; Lores mode
 	dc.w    COLOR01,$66F
+	dc.w    COLOR15,$66F
 	dc.w    BPLCON1,$00
 	dc.w    DDFSTRT,$40
 	dc.w	DDFSTOP,$B0
@@ -93,7 +116,8 @@ copper:
 	dc.w	$4801,$FFFE  ; WAIT 
 	dc.w	COLOR00, $F00
 	dc.w    COLOR01,$B6F
-	dc.w    BPLCON1,$44
+	dc.w    COLOR15,$B6F
+	dc.w    BPLCON1,$04
 	dc.w    DDFSTRT,$40
 	dc.w	DDFSTOP,$B0
 	dc.w	$48D9,$FFFE  ; WAIT 
@@ -127,7 +151,8 @@ copper:
 	dc.w	$6001,$FFFE  ; WAIT 
 	dc.w	COLOR00, $F00
 	dc.w    COLOR01,$F6F
-	dc.w    BPLCON1,$88
+	dc.w    COLOR15,$F6F
+	dc.w    BPLCON1,$08
 	dc.w    DDFSTRT,$40
 	dc.w	DDFSTOP,$B0
 	dc.w	$60D9,$FFFE  ; WAIT 
@@ -161,7 +186,8 @@ copper:
 	dc.w	$7801,$FFFE  ; WAIT 
 	dc.w	COLOR00, $F00
 	dc.w    COLOR01,$F6B
-	dc.w    BPLCON1,$CC
+	dc.w    COLOR15,$F6B
+	dc.w    BPLCON1,$0C
 	dc.w    DDFSTRT,$40
 	dc.w	DDFSTOP,$B0
 	dc.w	$78D9,$FFFE  ; WAIT 
@@ -246,8 +272,9 @@ copper:
 
 	dc.w	$A001,$FFFE  ; WAIT 
 	dc.w	COLOR00, $F00
-	dc.w	BPLCON0,(1<<12)|$8200 ; 1 bitplanes, hires mode
+	dc.w	BPLCON0,(4<<12)|$8200 ; Hires mode
 	dc.w    COLOR01,$66F
+	dc.w    COLOR15,$66F
 	dc.w    BPLCON1,$00
 	dc.w    DDFSTRT,$40
 	dc.w	DDFSTOP,$B0
@@ -282,7 +309,8 @@ copper:
 	dc.w	$B801,$FFFE  ; WAIT 
 	dc.w	COLOR00, $F00
 	dc.w    COLOR01,$B6F
-	dc.w    BPLCON1,$44
+	dc.w    COLOR15,$B6F
+	dc.w    BPLCON1,$04
 	dc.w    DDFSTRT,$40
 	dc.w	DDFSTOP,$B0
 	dc.w	$B8D9,$FFFE  ; WAIT 
@@ -316,7 +344,8 @@ copper:
 	dc.w	$D001,$FFFE  ; WAIT 
 	dc.w	COLOR00, $F00
 	dc.w    COLOR01,$F6F
-	dc.w    BPLCON1,$88
+	dc.w    COLOR15,$F6F
+	dc.w    BPLCON1,$08
 	dc.w    DDFSTRT,$40
 	dc.w	DDFSTOP,$B0
 	dc.w	$D0D9,$FFFE  ; WAIT 
@@ -350,7 +379,8 @@ copper:
 	dc.w	$E801,$FFFE  ; WAIT 
 	dc.w	COLOR00, $F00
 	dc.w    COLOR01,$F6B
-	dc.w    BPLCON1,$CC
+	dc.w    COLOR15,$F6B
+	dc.w    BPLCON1,$0C
 	dc.w    DDFSTRT,$40
 	dc.w	DDFSTOP,$B0
 	dc.w	$E8D9,$FFFE  ; WAIT 

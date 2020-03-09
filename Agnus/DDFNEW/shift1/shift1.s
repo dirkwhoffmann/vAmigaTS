@@ -7,7 +7,7 @@ LVL3_INT_VECTOR		equ $6c
 SCREEN_WIDTH_BYTES	equ (320/8)
 SCREEN_BIT_DEPTH	equ 5
 	
-RIGHT               equ $D0
+RIGHT               equ $B0
 SHIFT1              equ $00
 SHIFT2              equ $FF
 
@@ -68,28 +68,28 @@ copper:
 	dc.w	BPLCON0,(1<<12)|$200 ; 1 bitplanes, lores mode
 	dc.w    BPLCON1,SHIFT1
 	dc.w    COLOR01,$66F
-	dc.w    DDFSTRT,$30
+	dc.w    DDFSTRT,$40
 	dc.w	DDFSTOP,RIGHT
 	dc.w	$30D9,$FFFE  ; WAIT 
 	dc.w	COLOR00, $000
 	
 	dc.w	$3601,$FFFE  ; WAIT 
 	dc.w	COLOR00, $F00
-	dc.w    DDFSTRT,$32
+	dc.w    DDFSTRT,$42
 	dc.w	DDFSTOP,RIGHT
 	dc.w	$36D9,$FFFE  ; WAIT 
 	dc.w	COLOR00, $000
 
 	dc.w	$3C01,$FFFE  ; WAIT 
 	dc.w	COLOR00, $F00
-	dc.w    DDFSTRT,$34
+	dc.w    DDFSTRT,$44
 	dc.w	DDFSTOP,RIGHT
 	dc.w	$3CD9,$FFFE  ; WAIT 
 	dc.w	COLOR00, $000
 
 	dc.w	$4201,$FFFE  ; WAIT 
 	dc.w	COLOR00, $F00
-	dc.w    DDFSTRT,$36 
+	dc.w    DDFSTRT,$46 
 	dc.w	DDFSTOP,RIGHT
 	dc.w	$42D9,$FFFE  ; WAIT 
 	dc.w	COLOR00, $000
@@ -101,28 +101,28 @@ copper:
 	dc.w	$4801,$FFFE  ; WAIT 
 	dc.w	COLOR00, $F00
 	dc.w    COLOR01,$B6F
-	dc.w    DDFSTRT,$38
+	dc.w    DDFSTRT,$48
 	dc.w	DDFSTOP,RIGHT
 	dc.w	$48D9,$FFFE  ; WAIT 
 	dc.w	COLOR00, $000
 
 	dc.w	$4E01,$FFFE  ; WAIT 
 	dc.w	COLOR00, $F00
-	dc.w    DDFSTRT,$3A
+	dc.w    DDFSTRT,$4A
 	dc.w	DDFSTOP,RIGHT
 	dc.w	$4ED9,$FFFE  ; WAIT 
 	dc.w	COLOR00, $000
 
 	dc.w	$5401,$FFFE  ; WAIT 
 	dc.w	COLOR00, $F00
-	dc.w    DDFSTRT,$3C
+	dc.w    DDFSTRT,$4C
 	dc.w	DDFSTOP,RIGHT
 	dc.w	$54D9,$FFFE  ; WAIT 
 	dc.w	COLOR00, $000
 
 	dc.w	$5A01,$FFFE  ; WAIT 
 	dc.w	COLOR00, $F00
-	dc.w    DDFSTRT,$3E
+	dc.w    DDFSTRT,$4E
 	dc.w	DDFSTOP,RIGHT
 	dc.w	$5AD9,$FFFE  ; WAIT 
 	dc.w	COLOR00, $000
@@ -135,28 +135,28 @@ copper:
 	dc.w	COLOR00, $F00
 	dc.w    BPLCON1,SHIFT2
 	dc.w    COLOR01,$F6F
-	dc.w    DDFSTRT,$30 
+	dc.w    DDFSTRT,$40 
 	dc.w	DDFSTOP,RIGHT
 	dc.w	$60D9,$FFFE  ; WAIT 
 	dc.w	COLOR00, $000
 
 	dc.w	$6601,$FFFE  ; WAIT 
 	dc.w	COLOR00, $F00
-	dc.w    DDFSTRT,$32 
+	dc.w    DDFSTRT,$42 
 	dc.w	DDFSTOP,RIGHT
 	dc.w	$66D9,$FFFE  ; WAIT 
 	dc.w	COLOR00, $000
 
 	dc.w	$6C01,$FFFE  ; WAIT 
 	dc.w	COLOR00, $F00
-	dc.w    DDFSTRT,$34
+	dc.w    DDFSTRT,$44
 	dc.w	DDFSTOP,RIGHT
 	dc.w	$6CD9,$FFFE  ; WAIT 
 	dc.w	COLOR00, $000
 
 	dc.w	$7201,$FFFE  ; WAIT 
 	dc.w	COLOR00, $F00
-	dc.w    DDFSTRT,$36
+	dc.w    DDFSTRT,$46
 	dc.w	DDFSTOP,RIGHT
 	dc.w	$72D9,$FFFE  ; WAIT 
 	dc.w	COLOR00, $000
@@ -168,28 +168,28 @@ copper:
 	dc.w	$7801,$FFFE  ; WAIT 
 	dc.w	COLOR00, $F00
 	dc.w    COLOR01,$F6B
-	dc.w    DDFSTRT,$38
+	dc.w    DDFSTRT,$48
 	dc.w	DDFSTOP,RIGHT
 	dc.w	$78D9,$FFFE  ; WAIT 
 	dc.w	COLOR00, $000
 
 	dc.w	$7E01,$FFFE  ; WAIT 
 	dc.w	COLOR00, $F00
-	dc.w    DDFSTRT,$3A
+	dc.w    DDFSTRT,$4A
 	dc.w	DDFSTOP,RIGHT
 	dc.w	$7ED9,$FFFE  ; WAIT 
 	dc.w	COLOR00, $000
 
 	dc.w	$8401,$FFFE  ; WAIT 
 	dc.w	COLOR00, $F00
-	dc.w    DDFSTRT,$3C
+	dc.w    DDFSTRT,$4C
 	dc.w	DDFSTOP,RIGHT
 	dc.w	$84D9,$FFFE  ; WAIT 
 	dc.w	COLOR00, $000
 
 	dc.w	$8A01,$FFFE  ; WAIT 
 	dc.w	COLOR00, $F00
-	dc.w    DDFSTRT,$3E 
+	dc.w    DDFSTRT,$4E 
 	dc.w	DDFSTOP,RIGHT
 	dc.w	$8AD9,$FFFE  ; WAIT 
 	dc.w	COLOR00, $000
@@ -255,28 +255,28 @@ copper:
 	dc.w	BPLCON0,(1<<12)|$8200 ; 1 bitplanes, hires mode
 	dc.w    BPLCON1,SHIFT1
 	dc.w    COLOR01,$66F
-	dc.w    DDFSTRT,$30 
+	dc.w    DDFSTRT,$40 
 	dc.w	DDFSTOP,RIGHT
 	dc.w	$A0D9,$FFFE  ; WAIT 
 	dc.w	COLOR00, $000
 	
 	dc.w	$A601,$FFFE  ; WAIT 
 	dc.w	COLOR00, $F00
-	dc.w    DDFSTRT,$32
+	dc.w    DDFSTRT,$42
 	dc.w	DDFSTOP,RIGHT
 	dc.w	$A6D9,$FFFE  ; WAIT 
 	dc.w	COLOR00, $000
 
 	dc.w	$AC01,$FFFE  ; WAIT 
 	dc.w	COLOR00, $F00
-	dc.w    DDFSTRT,$34 
+	dc.w    DDFSTRT,$44 
 	dc.w	DDFSTOP,RIGHT
 	dc.w	$ACD9,$FFFE  ; WAIT 
 	dc.w	COLOR00, $000
 
 	dc.w	$B201,$FFFE  ; WAIT 
 	dc.w	COLOR00, $F00
-	dc.w    DDFSTRT,$36 
+	dc.w    DDFSTRT,$46 
 	dc.w	DDFSTOP,RIGHT
 	dc.w	$B2D9,$FFFE  ; WAIT 
 	dc.w	COLOR00, $000
@@ -288,28 +288,28 @@ copper:
 	dc.w	$B801,$FFFE  ; WAIT 
 	dc.w	COLOR00, $F00
 	dc.w    COLOR01,$B6F
-	dc.w    DDFSTRT,$38 
+	dc.w    DDFSTRT,$48 
 	dc.w	DDFSTOP,RIGHT
 	dc.w	$B8D9,$FFFE  ; WAIT 
 	dc.w	COLOR00, $000
 
 	dc.w	$BE01,$FFFE  ; WAIT 
 	dc.w	COLOR00, $F00
-	dc.w    DDFSTRT,$3A 
+	dc.w    DDFSTRT,$4A 
 	dc.w	DDFSTOP,RIGHT
 	dc.w	$BED9,$FFFE  ; WAIT 
 	dc.w	COLOR00, $000
 
 	dc.w	$C401,$FFFE  ; WAIT 
 	dc.w	COLOR00, $F00
-	dc.w    DDFSTRT,$3C 
+	dc.w    DDFSTRT,$4C 
 	dc.w	DDFSTOP,RIGHT
 	dc.w	$C4D9,$FFFE  ; WAIT 
 	dc.w	COLOR00, $000
 
 	dc.w	$CA01,$FFFE  ; WAIT 
 	dc.w	COLOR00, $F00
-	dc.w    DDFSTRT,$3E 
+	dc.w    DDFSTRT,$4E 
 	dc.w	DDFSTOP,RIGHT
 	dc.w	$CAD9,$FFFE  ; WAIT 
 	dc.w	COLOR00, $000
@@ -322,28 +322,28 @@ copper:
 	dc.w	COLOR00, $F00
 	dc.w    BPLCON1,SHIFT2
 	dc.w    COLOR01,$F6F
-	dc.w    DDFSTRT,$30
+	dc.w    DDFSTRT,$40
 	dc.w	DDFSTOP,RIGHT
 	dc.w	$D0D9,$FFFE  ; WAIT 
 	dc.w	COLOR00, $000
 
 	dc.w	$D601,$FFFE  ; WAIT 
 	dc.w	COLOR00, $F00
-	dc.w    DDFSTRT,$32 
+	dc.w    DDFSTRT,$42 
 	dc.w	DDFSTOP,RIGHT
 	dc.w	$D6D9,$FFFE  ; WAIT 
 	dc.w	COLOR00, $000
 
 	dc.w	$DC01,$FFFE  ; WAIT 
 	dc.w	COLOR00, $F00
-	dc.w    DDFSTRT,$34 
+	dc.w    DDFSTRT,$44 
 	dc.w	DDFSTOP,RIGHT
 	dc.w	$DCD9,$FFFE  ; WAIT 
 	dc.w	COLOR00, $000
 
 	dc.w	$E201,$FFFE  ; WAIT 
 	dc.w	COLOR00, $F00
-	dc.w    DDFSTRT,$36 
+	dc.w    DDFSTRT,$46 
 	dc.w	DDFSTOP,RIGHT
 	dc.w	$E2D9,$FFFE  ; WAIT 
 	dc.w	COLOR00, $000
@@ -355,28 +355,28 @@ copper:
 	dc.w	$E801,$FFFE  ; WAIT 
 	dc.w	COLOR00, $F00
 	dc.w    COLOR01,$F6B
-	dc.w    DDFSTRT,$38 
+	dc.w    DDFSTRT,$48 
 	dc.w	DDFSTOP,RIGHT
 	dc.w	$E8D9,$FFFE  ; WAIT 
 	dc.w	COLOR00, $000
 
 	dc.w	$EE01,$FFFE  ; WAIT 
 	dc.w	COLOR00, $F00
-	dc.w    DDFSTRT,$3A 
+	dc.w    DDFSTRT,$4A 
 	dc.w	DDFSTOP,RIGHT
 	dc.w	$EED9,$FFFE  ; WAIT 
 	dc.w	COLOR00, $000
 
 	dc.w	$F401,$FFFE  ; WAIT 
 	dc.w	COLOR00, $F00
-	dc.w    DDFSTRT,$3C 
+	dc.w    DDFSTRT,$4C 
 	dc.w	DDFSTOP,RIGHT
 	dc.w	$F4D9,$FFFE  ; WAIT 
 	dc.w	COLOR00, $000
 
 	dc.w	$FA01,$FFFE  ; WAIT 
 	dc.w	COLOR00, $F00
-	dc.w    DDFSTRT,$3E
+	dc.w    DDFSTRT,$4E
 	dc.w	DDFSTOP,RIGHT
 	dc.w	$FAD9,$FFFE  ; WAIT 
 	dc.w	COLOR00, $000

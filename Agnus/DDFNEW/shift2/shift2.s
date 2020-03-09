@@ -6,8 +6,8 @@ LVL3_INT_VECTOR		equ $6c
 SCREEN_WIDTH_BYTES	equ (320/8)
 SCREEN_BIT_DEPTH	equ 5
 	
-LEFT                equ $32
-RIGHT               equ $D0
+LEFT                equ $42
+RIGHT               equ $B0
 
 
 entry:	
