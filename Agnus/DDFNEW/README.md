@@ -12,7 +12,10 @@ Sets DDFSTOP to very high coordinates.
 
 #### shift1 - shift3
 
-Uses DDFSTART and DDFSTOP in combination with BPLCON1. This test has been written to hunt down the vAmiga "Siedler bug".
+Uses DDFSTART and DDFSTOP in combination with BPLCON1. The tests visualize how the bitplane shift value affects the DDF window.
 
+#### shift4 and shift5
+
+Similar to shift3 with different shift values for even and odd bitplanes.
 
 Dirk Hoffmann, 2020
