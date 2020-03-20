@@ -71,15 +71,15 @@ copper:
 	dc.w	COLOR00, $000
 
 	dc.w    $3961,$FFFE  ; Scroll
-	dc.w    BPLCON1,$FF
+	dc.w    BPLCON1,$11
 	dc.w    $39A1,$FFFE  
 	dc.w    BPLCON1,$00
 	dc.w    $3A61,$FFFE  
-	dc.w    BPLCON1,$FF
+	dc.w    BPLCON1,$11
 	dc.w    $3AA1,$FFFE  
 	dc.w    BPLCON1,$00
 	dc.w    $3B61,$FFFE  
-	dc.w    BPLCON1,$FF
+	dc.w    BPLCON1,$11
 	dc.w    $3BA1,$FFFE  
 	dc.w    BPLCON1,$00
 
@@ -88,17 +88,17 @@ copper:
 	dc.w	$3CD9,$FFFE  ; WAIT 
 	dc.w	COLOR00, $000
 
-	dc.w    $3F63,$FFFE  ; Scroll
-	dc.w    BPLCON1,$FF
-	dc.w    $3FA3,$FFFE  
+	dc.w    $3F61,$FFFE  ; Scroll
+	dc.w    BPLCON1,$22
+	dc.w    $3FA1,$FFFE  
 	dc.w    BPLCON1,$00
-	dc.w    $4063,$FFFE  
-	dc.w    BPLCON1,$FF
-	dc.w    $40A3,$FFFE  
+	dc.w    $4061,$FFFE  
+	dc.w    BPLCON1,$22
+	dc.w    $40A1,$FFFE  
 	dc.w    BPLCON1,$00
-	dc.w    $4163,$FFFE  
-	dc.w    BPLCON1,$FF
-	dc.w    $41A3,$FFFE  
+	dc.w    $4161,$FFFE  
+	dc.w    BPLCON1,$22
+	dc.w    $41A1,$FFFE  
 	dc.w    BPLCON1,$00
 
 	dc.w	$4201,$FFFE  ; WAIT 
@@ -106,17 +106,17 @@ copper:
 	dc.w	$42D9,$FFFE  ; WAIT 
 	dc.w	COLOR00, $000
 
-	dc.w    $4565,$FFFE  ; Scroll
-	dc.w    BPLCON1,$FF
-	dc.w    $45A5,$FFFE  
+	dc.w    $4561,$FFFE  ; Scroll
+	dc.w    BPLCON1,$33
+	dc.w    $45A1,$FFFE  
 	dc.w    BPLCON1,$00
-	dc.w    $4665,$FFFE  
-	dc.w    BPLCON1,$FF
-	dc.w    $46A5,$FFFE  
+	dc.w    $4661,$FFFE  
+	dc.w    BPLCON1,$33
+	dc.w    $46A1,$FFFE  
 	dc.w    BPLCON1,$00
-	dc.w    $4765,$FFFE  
-	dc.w    BPLCON1,$FF
-	dc.w    $47A5,$FFFE  
+	dc.w    $4761,$FFFE  
+	dc.w    BPLCON1,$33
+	dc.w    $47A1,$FFFE  
 	dc.w    BPLCON1,$00
 
  	; 
@@ -129,17 +129,17 @@ copper:
 	dc.w	$48D9,$FFFE  ; WAIT 
 	dc.w	COLOR00, $000
 
-	dc.w    $4B67,$FFFE  ; Scroll
-	dc.w    BPLCON1,$FF
-	dc.w    $4BA7,$FFFE  
+	dc.w    $4B61,$FFFE  ; Scroll
+	dc.w    BPLCON1,$44
+	dc.w    $4BA1,$FFFE  
 	dc.w    BPLCON1,$00
-	dc.w    $4C67,$FFFE  
-	dc.w    BPLCON1,$FF
-	dc.w    $4CA7,$FFFE  
+	dc.w    $4C61,$FFFE  
+	dc.w    BPLCON1,$44
+	dc.w    $4CA1,$FFFE  
 	dc.w    BPLCON1,$00
-	dc.w    $4D67,$FFFE  
-	dc.w    BPLCON1,$FF
-	dc.w    $4DA7,$FFFE  
+	dc.w    $4D61,$FFFE  
+	dc.w    BPLCON1,$44
+	dc.w    $4DA1,$FFFE  
 	dc.w    BPLCON1,$00
 
 	dc.w	$4E01,$FFFE  ; WAIT 
@@ -147,17 +147,17 @@ copper:
 	dc.w	$4ED9,$FFFE  ; WAIT 
 	dc.w	COLOR00, $000
 
-	dc.w    $5169,$FFFE  ; Scroll
-	dc.w    BPLCON1,$FF
-	dc.w    $51A9,$FFFE  
+	dc.w    $5161,$FFFE  ; Scroll
+	dc.w    BPLCON1,$55
+	dc.w    $51A1,$FFFE  
 	dc.w    BPLCON1,$00
-	dc.w    $5269,$FFFE  
-	dc.w    BPLCON1,$FF
-	dc.w    $52A9,$FFFE  
+	dc.w    $5261,$FFFE  
+	dc.w    BPLCON1,$55
+	dc.w    $52A1,$FFFE  
 	dc.w    BPLCON1,$00
-	dc.w    $5369,$FFFE  
-	dc.w    BPLCON1,$FF
-	dc.w    $53A9,$FFFE  
+	dc.w    $5361,$FFFE  
+	dc.w    BPLCON1,$55
+	dc.w    $53A1,$FFFE  
 	dc.w    BPLCON1,$00
 
 	dc.w	$5401,$FFFE  ; WAIT 
@@ -165,17 +165,17 @@ copper:
 	dc.w	$54D9,$FFFE  ; WAIT 
 	dc.w	COLOR00, $000
 
-	dc.w    $576B,$FFFE  ; Scroll
-	dc.w    BPLCON1,$FF
-	dc.w    $57AB,$FFFE  
+	dc.w    $5761,$FFFE  ; Scroll
+	dc.w    BPLCON1,$66
+	dc.w    $57A1,$FFFE  
 	dc.w    BPLCON1,$00
-	dc.w    $586B,$FFFE  
-	dc.w    BPLCON1,$FF
-	dc.w    $58AB,$FFFE  
+	dc.w    $5861,$FFFE  
+	dc.w    BPLCON1,$66
+	dc.w    $58A1,$FFFE  
 	dc.w    BPLCON1,$00
-	dc.w    $596B,$FFFE  
-	dc.w    BPLCON1,$FF
-	dc.w    $59AB,$FFFE  
+	dc.w    $5961,$FFFE  
+	dc.w    BPLCON1,$66
+	dc.w    $59A1,$FFFE  
 	dc.w    BPLCON1,$00
 
 	dc.w	$5A01,$FFFE  ; WAIT 
@@ -183,17 +183,17 @@ copper:
 	dc.w	$5AD9,$FFFE  ; WAIT 
 	dc.w	COLOR00, $000
 
-	dc.w    $5D6D,$FFFE  ; Scroll
-	dc.w    BPLCON1,$FF
-	dc.w    $5DAD,$FFFE  
+	dc.w    $5D61,$FFFE  ; Scroll
+	dc.w    BPLCON1,$77
+	dc.w    $5DA1,$FFFE  
 	dc.w    BPLCON1,$00
-	dc.w    $5E6D,$FFFE  
-	dc.w    BPLCON1,$FF
-	dc.w    $5EAD,$FFFE  
+	dc.w    $5E61,$FFFE  
+	dc.w    BPLCON1,$77
+	dc.w    $5EA1,$FFFE  
 	dc.w    BPLCON1,$00
-	dc.w    $5F6D,$FFFE  
-	dc.w    BPLCON1,$FF
-	dc.w    $5FAD,$FFFE  
+	dc.w    $5F61,$FFFE  
+	dc.w    BPLCON1,$77
+	dc.w    $5FA1,$FFFE  
 	dc.w    BPLCON1,$00
 
 	; 
@@ -206,17 +206,17 @@ copper:
 	dc.w	$60D9,$FFFE  ; WAIT 
 	dc.w	COLOR00, $000
 
-	dc.w    $636F,$FFFE  ; Scroll
-	dc.w    BPLCON1,$FF
-	dc.w    $63AF,$FFFE  
+	dc.w    $6361,$FFFE  ; Scroll
+	dc.w    BPLCON1,$88
+	dc.w    $63A1,$FFFE  
 	dc.w    BPLCON1,$00
-	dc.w    $646F,$FFFE  
-	dc.w    BPLCON1,$FF
-	dc.w    $64AF,$FFFE  
+	dc.w    $6461,$FFFE  
+	dc.w    BPLCON1,$88
+	dc.w    $64A1,$FFFE  
 	dc.w    BPLCON1,$00
-	dc.w    $656F,$FFFE  
-	dc.w    BPLCON1,$FF
-	dc.w    $65AF,$FFFE  
+	dc.w    $6561,$FFFE  
+	dc.w    BPLCON1,$88
+	dc.w    $65A1,$FFFE  
 	dc.w    BPLCON1,$00
 
 	dc.w	$6601,$FFFE  ; WAIT 
@@ -224,17 +224,17 @@ copper:
 	dc.w	$66D9,$FFFE  ; WAIT 
 	dc.w	COLOR00, $000
 
-	dc.w    $6971,$FFFE  ; Scroll
-	dc.w    BPLCON1,$FF
-	dc.w    $69B1,$FFFE  
+	dc.w    $6961,$FFFE  ; Scroll
+	dc.w    BPLCON1,$99
+	dc.w    $69A1,$FFFE  
 	dc.w    BPLCON1,$00
-	dc.w    $6A71,$FFFE  
-	dc.w    BPLCON1,$FF
-	dc.w    $6AB1,$FFFE  
+	dc.w    $6A61,$FFFE  
+	dc.w    BPLCON1,$99
+	dc.w    $6AA1,$FFFE  
 	dc.w    BPLCON1,$00
-	dc.w    $6B71,$FFFE  
-	dc.w    BPLCON1,$FF
-	dc.w    $6BB1,$FFFE  
+	dc.w    $6B61,$FFFE  
+	dc.w    BPLCON1,$99
+	dc.w    $6BA1,$FFFE  
 	dc.w    BPLCON1,$00
 
 	dc.w	$6C01,$FFFE  ; WAIT 
@@ -242,17 +242,17 @@ copper:
 	dc.w	$6CD9,$FFFE  ; WAIT 
 	dc.w	COLOR00, $000
 
-	dc.w    $6F73,$FFFE  ; Scroll
-	dc.w    BPLCON1,$FF
-	dc.w    $6FB3,$FFFE  
+	dc.w    $6F61,$FFFE  ; Scroll
+	dc.w    BPLCON1,$AA
+	dc.w    $6FA1,$FFFE  
 	dc.w    BPLCON1,$00
-	dc.w    $7073,$FFFE  
-	dc.w    BPLCON1,$FF
-	dc.w    $70B3,$FFFE  
+	dc.w    $7061,$FFFE  
+	dc.w    BPLCON1,$AA
+	dc.w    $70A1,$FFFE  
 	dc.w    BPLCON1,$00
-	dc.w    $7173,$FFFE  
-	dc.w    BPLCON1,$FF
-	dc.w    $71B3,$FFFE  
+	dc.w    $7161,$FFFE  
+	dc.w    BPLCON1,$AA
+	dc.w    $71A1,$FFFE  
 	dc.w    BPLCON1,$00
 
 	dc.w	$7201,$FFFE  ; WAIT 
@@ -260,17 +260,17 @@ copper:
 	dc.w	$72D9,$FFFE  ; WAIT 
 	dc.w	COLOR00, $000
 	
-	dc.w    $7575,$FFFE  ; Scroll
-	dc.w    BPLCON1,$FF
-	dc.w    $75B5,$FFFE  
+	dc.w    $7561,$FFFE  ; Scroll
+	dc.w    BPLCON1,$BB
+	dc.w    $75A1,$FFFE  
 	dc.w    BPLCON1,$00
-	dc.w    $7675,$FFFE  
-	dc.w    BPLCON1,$FF
-	dc.w    $76B5,$FFFE  
+	dc.w    $7661,$FFFE  
+	dc.w    BPLCON1,$BB
+	dc.w    $76A1,$FFFE  
 	dc.w    BPLCON1,$00
-	dc.w    $7775,$FFFE  
-	dc.w    BPLCON1,$FF
-	dc.w    $77B5,$FFFE  
+	dc.w    $7761,$FFFE  
+	dc.w    BPLCON1,$BB
+	dc.w    $77A1,$FFFE  
 	dc.w    BPLCON1,$00
 
 	; 
@@ -283,17 +283,17 @@ copper:
 	dc.w	$78D9,$FFFE  ; WAIT 
 	dc.w	COLOR00, $000
 
-	dc.w    $7B77,$FFFE  ; Scroll
-	dc.w    BPLCON1,$FF
-	dc.w    $7BB7,$FFFE  
+	dc.w    $7B61,$FFFE  ; Scroll
+	dc.w    BPLCON1,$CC
+	dc.w    $7BA1,$FFFE  
 	dc.w    BPLCON1,$00
-	dc.w    $7C77,$FFFE  
-	dc.w    BPLCON1,$FF
-	dc.w    $7CB7,$FFFE  
+	dc.w    $7C61,$FFFE  
+	dc.w    BPLCON1,$CC
+	dc.w    $7CA1,$FFFE  
 	dc.w    BPLCON1,$00
-	dc.w    $7D77,$FFFE  
-	dc.w    BPLCON1,$FF
-	dc.w    $7DB7,$FFFE  
+	dc.w    $7D61,$FFFE  
+	dc.w    BPLCON1,$CC
+	dc.w    $7DA1,$FFFE  
 	dc.w    BPLCON1,$00
 
 	dc.w	$7E01,$FFFE  ; WAIT 
@@ -301,17 +301,17 @@ copper:
 	dc.w	$7ED9,$FFFE  ; WAIT 
 	dc.w	COLOR00, $000
 
-	dc.w    $8179,$FFFE  ; Scroll
-	dc.w    BPLCON1,$FF 
-	dc.w    $81B9,$FFFE  
+	dc.w    $8161,$FFFE  ; Scroll
+	dc.w    BPLCON1,$DD 
+	dc.w    $81A1,$FFFE  
 	dc.w    BPLCON1,$00
-	dc.w    $8279,$FFFE  
-	dc.w    BPLCON1,$FF
-	dc.w    $82B9,$FFFE  
+	dc.w    $8261,$FFFE  
+	dc.w    BPLCON1,$DD
+	dc.w    $82A1,$FFFE  
 	dc.w    BPLCON1,$00
-	dc.w    $8379,$FFFE  
-	dc.w    BPLCON1,$FF
-	dc.w    $83B9,$FFFE  
+	dc.w    $8361,$FFFE  
+	dc.w    BPLCON1,$DD
+	dc.w    $83A1,$FFFE  
 	dc.w    BPLCON1,$00
 
 	dc.w	$8401,$FFFE  ; WAIT 
@@ -319,17 +319,17 @@ copper:
 	dc.w	$84D9,$FFFE  ; WAIT 
 	dc.w	COLOR00, $000
 
-	dc.w    $877B,$FFFE  ; Scroll 
-	dc.w    BPLCON1,$FF 
-	dc.w    $87BB,$FFFE  
+	dc.w    $8761,$FFFE  ; Scroll 
+	dc.w    BPLCON1,$EE 
+	dc.w    $87A1,$FFFE  
 	dc.w    BPLCON1,$00
-	dc.w    $887B,$FFFE  
-	dc.w    BPLCON1,$FF
-	dc.w    $88BB,$FFFE  
+	dc.w    $8861,$FFFE  
+	dc.w    BPLCON1,$EE
+	dc.w    $88A1,$FFFE  
 	dc.w    BPLCON1,$00
-	dc.w    $897B,$FFFE  
-	dc.w    BPLCON1,$FF
-	dc.w    $89BB,$FFFE  
+	dc.w    $8961,$FFFE  
+	dc.w    BPLCON1,$EE
+	dc.w    $89A1,$FFFE  
 	dc.w    BPLCON1,$00
 
 	dc.w	$8A01,$FFFE  ; WAIT 
@@ -337,17 +337,17 @@ copper:
 	dc.w	$8AD9,$FFFE  ; WAIT 
 	dc.w	COLOR00, $000
 	
-	dc.w    $8D7D,$FFFE  ; Scroll
+	dc.w    $8D61,$FFFE  ; Scroll
 	dc.w    BPLCON1,$FF 
-	dc.w    $8DBD,$FFFE  
+	dc.w    $8DA1,$FFFE  
 	dc.w    BPLCON1,$00
-	dc.w    $8E7D,$FFFE  
+	dc.w    $8E61,$FFFE  
 	dc.w    BPLCON1,$FF
-	dc.w    $8EBD,$FFFE  
+	dc.w    $8EA1,$FFFE  
 	dc.w    BPLCON1,$00
-	dc.w    $8F7D,$FFFE  
+	dc.w    $8F61,$FFFE  
 	dc.w    BPLCON1,$FF
-	dc.w    $8FBD,$FFFE  
+	dc.w    $8FA1,$FFFE  
 	dc.w    BPLCON1,$00
 
 	dc.w	$9001,$FFFE  ; WAIT 
@@ -420,15 +420,15 @@ copper:
 	dc.w	COLOR00, $000
 
 	dc.w    $A961,$FFFE  ; Scroll
-	dc.w    BPLCON1,$FF
+	dc.w    BPLCON1,$11
 	dc.w    $A9A1,$FFFE  
 	dc.w    BPLCON1,$00
 	dc.w    $AA61,$FFFE  
-	dc.w    BPLCON1,$FF
+	dc.w    BPLCON1,$11
 	dc.w    $AAA1,$FFFE  
 	dc.w    BPLCON1,$00
 	dc.w    $AB61,$FFFE  
-	dc.w    BPLCON1,$FF
+	dc.w    BPLCON1,$11
 	dc.w    $ABA1,$FFFE  
 	dc.w    BPLCON1,$00
 
@@ -437,17 +437,17 @@ copper:
 	dc.w	$ACD9,$FFFE  ; WAIT 
 	dc.w	COLOR00, $000
 
-	dc.w    $AF63,$FFFE  ; Scroll
-	dc.w    BPLCON1,$FF
-	dc.w    $AFA3,$FFFE  
+	dc.w    $AF61,$FFFE  ; Scroll
+	dc.w    BPLCON1,$22
+	dc.w    $AFA1,$FFFE  
 	dc.w    BPLCON1,$00
-	dc.w    $B063,$FFFE  
-	dc.w    BPLCON1,$FF
-	dc.w    $B0A3,$FFFE  
+	dc.w    $B061,$FFFE  
+	dc.w    BPLCON1,$22
+	dc.w    $B0A1,$FFFE  
 	dc.w    BPLCON1,$00
-	dc.w    $B163,$FFFE  
-	dc.w    BPLCON1,$FF
-	dc.w    $B1A3,$FFFE  
+	dc.w    $B161,$FFFE  
+	dc.w    BPLCON1,$22
+	dc.w    $B1A1,$FFFE  
 	dc.w    BPLCON1,$00
 
 	dc.w	$B201,$FFFE  ; WAIT 
@@ -455,17 +455,17 @@ copper:
 	dc.w	$B2D9,$FFFE  ; WAIT 
 	dc.w	COLOR00, $000
 
-	dc.w    $B565,$FFFE  ; Scroll
-	dc.w    BPLCON1,$FF
-	dc.w    $B5A5,$FFFE  
+	dc.w    $B561,$FFFE  ; Scroll
+	dc.w    BPLCON1,$33
+	dc.w    $B5A1,$FFFE  
 	dc.w    BPLCON1,$00
-	dc.w    $B665,$FFFE  
-	dc.w    BPLCON1,$FF
-	dc.w    $B6A5,$FFFE  
+	dc.w    $B661,$FFFE  
+	dc.w    BPLCON1,$33
+	dc.w    $B6A1,$FFFE  
 	dc.w    BPLCON1,$00
-	dc.w    $B765,$FFFE  
-	dc.w    BPLCON1,$FF
-	dc.w    $B7A5,$FFFE  
+	dc.w    $B761,$FFFE  
+	dc.w    BPLCON1,$33
+	dc.w    $B7A1,$FFFE  
 	dc.w    BPLCON1,$00
 
  	; 
@@ -478,17 +478,17 @@ copper:
 	dc.w	$B8D9,$FFFE  ; WAIT 
 	dc.w	COLOR00, $000
 
-	dc.w    $BB67,$FFFE  ; Scroll
-	dc.w    BPLCON1,$FF
-	dc.w    $BBA7,$FFFE  
+	dc.w    $BB61,$FFFE  ; Scroll
+	dc.w    BPLCON1,$44
+	dc.w    $BBA1,$FFFE  
 	dc.w    BPLCON1,$00
-	dc.w    $BC67,$FFFE  
-	dc.w    BPLCON1,$FF
-	dc.w    $BCA7,$FFFE  
+	dc.w    $BC61,$FFFE  
+	dc.w    BPLCON1,$44
+	dc.w    $BCA1,$FFFE  
 	dc.w    BPLCON1,$00
-	dc.w    $BD67,$FFFE  
-	dc.w    BPLCON1,$FF
-	dc.w    $BDA7,$FFFE  
+	dc.w    $BD61,$FFFE  
+	dc.w    BPLCON1,$44
+	dc.w    $BDA1,$FFFE  
 	dc.w    BPLCON1,$00
 
 	dc.w	$BE01,$FFFE  ; WAIT 
@@ -496,17 +496,17 @@ copper:
 	dc.w	$BED9,$FFFE  ; WAIT 
 	dc.w	COLOR00, $000
 
-	dc.w    $C169,$FFFE  ; Scroll
-	dc.w    BPLCON1,$FF
-	dc.w    $C1A9,$FFFE  
+	dc.w    $C161,$FFFE  ; Scroll
+	dc.w    BPLCON1,$55
+	dc.w    $C1A1,$FFFE  
 	dc.w    BPLCON1,$00
-	dc.w    $C269,$FFFE  
-	dc.w    BPLCON1,$FF
-	dc.w    $C2A9,$FFFE  
+	dc.w    $C261,$FFFE  
+	dc.w    BPLCON1,$55
+	dc.w    $C2A1,$FFFE  
 	dc.w    BPLCON1,$00
-	dc.w    $C369,$FFFE  
-	dc.w    BPLCON1,$FF
-	dc.w    $C3A9,$FFFE  
+	dc.w    $C361,$FFFE  
+	dc.w    BPLCON1,$55
+	dc.w    $C3A1,$FFFE  
 	dc.w    BPLCON1,$00
 
 	dc.w	$C401,$FFFE  ; WAIT 
@@ -514,17 +514,17 @@ copper:
 	dc.w	$C4D9,$FFFE  ; WAIT 
 	dc.w	COLOR00, $000
 
-	dc.w    $C76B,$FFFE  ; Scroll
-	dc.w    BPLCON1,$FF
-	dc.w    $C7AB,$FFFE  
+	dc.w    $C761,$FFFE  ; Scroll
+	dc.w    BPLCON1,$66
+	dc.w    $C7A1,$FFFE  
 	dc.w    BPLCON1,$00
-	dc.w    $C86B,$FFFE  
-	dc.w    BPLCON1,$FF
-	dc.w    $C8AB,$FFFE  
+	dc.w    $C861,$FFFE  
+	dc.w    BPLCON1,$66
+	dc.w    $C8A1,$FFFE  
 	dc.w    BPLCON1,$00
-	dc.w    $C96B,$FFFE  
-	dc.w    BPLCON1,$FF
-	dc.w    $C9AB,$FFFE  
+	dc.w    $C961,$FFFE  
+	dc.w    BPLCON1,$66
+	dc.w    $C9A1,$FFFE  
 	dc.w    BPLCON1,$00
 
 	dc.w	$CA01,$FFFE  ; WAIT 
@@ -532,17 +532,17 @@ copper:
 	dc.w	$CAD9,$FFFE  ; WAIT 
 	dc.w	COLOR00, $000
 
-	dc.w    $CD6D,$FFFE  ; Scroll
-	dc.w    BPLCON1,$FF
-	dc.w    $CDAD,$FFFE  
+	dc.w    $CD61,$FFFE  ; Scroll
+	dc.w    BPLCON1,$77
+	dc.w    $CDA1,$FFFE  
 	dc.w    BPLCON1,$00
-	dc.w    $CE6D,$FFFE  
-	dc.w    BPLCON1,$FF
-	dc.w    $CEAD,$FFFE  
+	dc.w    $CE61,$FFFE  
+	dc.w    BPLCON1,$77
+	dc.w    $CEA1,$FFFE  
 	dc.w    BPLCON1,$00
-	dc.w    $CF6D,$FFFE  
-	dc.w    BPLCON1,$FF
-	dc.w    $CFAD,$FFFE  
+	dc.w    $CF61,$FFFE  
+	dc.w    BPLCON1,$77
+	dc.w    $CFA1,$FFFE  
 	dc.w    BPLCON1,$00
 
 	; 
@@ -555,17 +555,17 @@ copper:
 	dc.w	$D0D9,$FFFE  ; WAIT 
 	dc.w	COLOR00, $000
 
-	dc.w    $D36F,$FFFE  ; Scroll
-	dc.w    BPLCON1,$FF
-	dc.w    $D3AF,$FFFE  
+	dc.w    $D361,$FFFE  ; Scroll
+	dc.w    BPLCON1,$88
+	dc.w    $D3A1,$FFFE  
 	dc.w    BPLCON1,$00
-	dc.w    $D46F,$FFFE  
-	dc.w    BPLCON1,$FF
-	dc.w    $D4AF,$FFFE  
+	dc.w    $D461,$FFFE  
+	dc.w    BPLCON1,$88
+	dc.w    $D4A1,$FFFE  
 	dc.w    BPLCON1,$00
-	dc.w    $D56F,$FFFE  
-	dc.w    BPLCON1,$FF
-	dc.w    $D5AF,$FFFE  
+	dc.w    $D561,$FFFE  
+	dc.w    BPLCON1,$88
+	dc.w    $D5A1,$FFFE  
 	dc.w    BPLCON1,$00
 
 	dc.w	$D601,$FFFE  ; WAIT 
@@ -573,17 +573,17 @@ copper:
 	dc.w	$D6D9,$FFFE  ; WAIT 
 	dc.w	COLOR00, $000
 	
-	dc.w    $D971,$FFFE  ; Scroll
-	dc.w    BPLCON1,$FF
-	dc.w    $D9B1,$FFFE  
+	dc.w    $D961,$FFFE  ; Scroll
+	dc.w    BPLCON1,$99
+	dc.w    $D9A1,$FFFE  
 	dc.w    BPLCON1,$00
-	dc.w    $DA71,$FFFE  
-	dc.w    BPLCON1,$FF
-	dc.w    $DAB1,$FFFE  
+	dc.w    $DA61,$FFFE  
+	dc.w    BPLCON1,$99
+	dc.w    $DAA1,$FFFE  
 	dc.w    BPLCON1,$00
-	dc.w    $DB71,$FFFE  
-	dc.w    BPLCON1,$FF
-	dc.w    $DBB1,$FFFE  
+	dc.w    $DB61,$FFFE  
+	dc.w    BPLCON1,$99
+	dc.w    $DBA1,$FFFE  
 	dc.w    BPLCON1,$00
 
 	dc.w	$DC01,$FFFE  ; WAIT 
@@ -591,17 +591,17 @@ copper:
 	dc.w	$DCD9,$FFFE  ; WAIT 
 	dc.w	COLOR00, $000
 
-	dc.w    $DF73,$FFFE  ; Scroll
-	dc.w    BPLCON1,$FF
-	dc.w    $DFB3,$FFFE  
+	dc.w    $DF61,$FFFE  ; Scroll
+	dc.w    BPLCON1,$AA
+	dc.w    $DFA1,$FFFE  
 	dc.w    BPLCON1,$00
-	dc.w    $E073,$FFFE  
-	dc.w    BPLCON1,$FF
-	dc.w    $E0B3,$FFFE  
+	dc.w    $E061,$FFFE  
+	dc.w    BPLCON1,$AA
+	dc.w    $E0A1,$FFFE  
 	dc.w    BPLCON1,$00
-	dc.w    $E173,$FFFE  
-	dc.w    BPLCON1,$FF
-	dc.w    $E1B3,$FFFE  
+	dc.w    $E161,$FFFE  
+	dc.w    BPLCON1,$AA
+	dc.w    $E1A1,$FFFE  
 	dc.w    BPLCON1,$00
 
 	dc.w	$E201,$FFFE  ; WAIT 
@@ -609,17 +609,17 @@ copper:
 	dc.w	$E2D9,$FFFE  ; WAIT 
 	dc.w	COLOR00, $000
 
-	dc.w    $E575,$FFFE  ; Scroll
-	dc.w    BPLCON1,$FF
-	dc.w    $E5B5,$FFFE  
+	dc.w    $E561,$FFFE  ; Scroll
+	dc.w    BPLCON1,$BB
+	dc.w    $E5A1,$FFFE  
 	dc.w    BPLCON1,$00
-	dc.w    $E675,$FFFE  
-	dc.w    BPLCON1,$FF
-	dc.w    $E6B5,$FFFE  
+	dc.w    $E661,$FFFE  
+	dc.w    BPLCON1,$BB
+	dc.w    $E6A1,$FFFE  
 	dc.w    BPLCON1,$00
-	dc.w    $E775,$FFFE  
-	dc.w    BPLCON1,$FF
-	dc.w    $E7B5,$FFFE  
+	dc.w    $E761,$FFFE  
+	dc.w    BPLCON1,$BB
+	dc.w    $E7A1,$FFFE  
 	dc.w    BPLCON1,$00
 
 	; 
@@ -632,17 +632,17 @@ copper:
 	dc.w	$E8D9,$FFFE  ; WAIT 
 	dc.w	COLOR00, $000
 
-	dc.w    $EB77,$FFFE  ; Scroll
-	dc.w    BPLCON1,$FF
-	dc.w    $EBB7,$FFFE  
+	dc.w    $EB61,$FFFE  ; Scroll
+	dc.w    BPLCON1,$CC
+	dc.w    $EBA1,$FFFE  
 	dc.w    BPLCON1,$00
-	dc.w    $EC77,$FFFE  
-	dc.w    BPLCON1,$FF
-	dc.w    $ECB7,$FFFE  
+	dc.w    $EC61,$FFFE  
+	dc.w    BPLCON1,$CC
+	dc.w    $ECA1,$FFFE  
 	dc.w    BPLCON1,$00
-	dc.w    $ED77,$FFFE  
-	dc.w    BPLCON1,$FF
-	dc.w    $EDB7,$FFFE  
+	dc.w    $ED61,$FFFE  
+	dc.w    BPLCON1,$CC
+	dc.w    $EDA1,$FFFE  
 	dc.w    BPLCON1,$00
 
 	dc.w	$EE01,$FFFE  ; WAIT 
@@ -650,17 +650,17 @@ copper:
 	dc.w	$EED9,$FFFE  ; WAIT 
 	dc.w	COLOR00, $000
 
-	dc.w    $F179,$FFFE  ; Scroll
-	dc.w    BPLCON1,$FF 
-	dc.w    $F1B9,$FFFE  
+	dc.w    $F161,$FFFE  ; Scroll
+	dc.w    BPLCON1,$DD 
+	dc.w    $F1A1,$FFFE  
 	dc.w    BPLCON1,$00
-	dc.w    $F279,$FFFE  
-	dc.w    BPLCON1,$FF
-	dc.w    $F2B9,$FFFE  
+	dc.w    $F261,$FFFE  
+	dc.w    BPLCON1,$DD
+	dc.w    $F2A1,$FFFE  
 	dc.w    BPLCON1,$00
-	dc.w    $F379,$FFFE  
-	dc.w    BPLCON1,$FF
-	dc.w    $F3B9,$FFFE  
+	dc.w    $F361,$FFFE  
+	dc.w    BPLCON1,$DD
+	dc.w    $F3A1,$FFFE  
 	dc.w    BPLCON1,$00
 
 	dc.w	$F401,$FFFE  ; WAIT 
@@ -668,17 +668,17 @@ copper:
 	dc.w	$F4D9,$FFFE  ; WAIT 
 	dc.w	COLOR00, $000
 
-	dc.w    $F77B,$FFFE  ; Scroll 
-	dc.w    BPLCON1,$FF 
-	dc.w    $F7BB,$FFFE  
+	dc.w    $F761,$FFFE  ; Scroll 
+	dc.w    BPLCON1,$EE 
+	dc.w    $F7A1,$FFFE  
 	dc.w    BPLCON1,$00
-	dc.w    $F87B,$FFFE  
-	dc.w    BPLCON1,$FF
-	dc.w    $F8BB,$FFFE  
+	dc.w    $F861,$FFFE  
+	dc.w    BPLCON1,$EE
+	dc.w    $F8A1,$FFFE  
 	dc.w    BPLCON1,$00
-	dc.w    $F97B,$FFFE  
-	dc.w    BPLCON1,$FF
-	dc.w    $F9BB,$FFFE  
+	dc.w    $F961,$FFFE  
+	dc.w    BPLCON1,$EE
+	dc.w    $F9A1,$FFFE  
 	dc.w    BPLCON1,$00
 
 	dc.w	$FA01,$FFFE  ; WAIT 
@@ -686,17 +686,17 @@ copper:
 	dc.w	$FAD9,$FFFE  ; WAIT 
 	dc.w	COLOR00, $000
 
-	dc.w    $FD7D,$FFFE  ; Scroll
+	dc.w    $FD61,$FFFE  ; Scroll
 	dc.w    BPLCON1,$FF 
-	dc.w    $FDBD,$FFFE  
+	dc.w    $FDA1,$FFFE  
 	dc.w    BPLCON1,$00
-	dc.w    $FE7D,$FFFE  
+	dc.w    $FE61,$FFFE  
 	dc.w    BPLCON1,$FF
-	dc.w    $FEBD,$FFFE  
+	dc.w    $FEA1,$FFFE  
 	dc.w    BPLCON1,$00
-	dc.w    $FF7D,$FFFE  
+	dc.w    $FF61,$FFFE  
 	dc.w    BPLCON1,$FF
-	dc.w    $FFBD,$FFFE  
+	dc.w    $FFA1,$FFFE  
 	dc.w    BPLCON1,$00
 
 	dc.w	$FFDF,$FFFE  ; Cross vertical boundary
