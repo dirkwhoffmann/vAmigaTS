@@ -2,13 +2,25 @@
 
 Visualize the value of the position registers 
 
-#### vpos2
+#### vhpos1
 
-During vBlank, VPOSR is read. The contents is visualized in form of color bars.
+Reads VPOSR in the VBLANK interrupt handler and visualizes the result in form of color bars. 
+
+#### vhpos2
+
+Reads VHPOSR in the VBLANK interrupt handler and visualizes the result in form of color bars. 
+
+#### vhpos3
+
+Reads the TOD counter of CIAB (CIAB counts lines)  in the VBLANK interrupt handler and visualizes the result in form of color bars. The TOD clock is reset after it is read.
+
+#### vhpos4 
+
+Same as vhpos3 with an additional write to VPOSW in the interrupt handler. The write makes every frame a short frame by clearing the uppermost bit. 
 
 #### vhposr1
 
 This test triggers four interrupts per frame. The first interrupt syncs the CPU to get reproducable results. The other three handlers read VHPOSR and visualize the lower 4 bits in form of different colors.
 
 
-Dirk Hoffmann, 2019
+Dirk Hoffmann, 2019 - 2020

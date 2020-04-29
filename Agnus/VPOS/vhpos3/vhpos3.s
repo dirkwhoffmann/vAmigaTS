@@ -1,207 +1,198 @@
 	include "../../../../include/registers.i"
 	include "hardware/dmabits.i"
 	include "hardware/intbits.i"
-	
-LVL3_INT_VECTOR		equ $6c
-SCREEN_WIDTH_BYTES	equ (320/8)
-SCREEN_BIT_DEPTH	equ 6
-	
-entry:	
-	lea	level3InterruptHandler(pc),a3
- 	move.l	a3,LVL3_INT_VECTOR
+	include "ministartup.s"
 
-	;; install copper list and enable DMA
-	lea 	CUSTOM,a1
-	lea	copper(pc),a0
+CIAB_PRA            equ $BFD000	
+CIAB_PRB            equ $BFD100
+CIAB_DDRA           equ $BFD200
+CIAB_DDRB           equ $BFD300
+CIAB_TALO           equ $BFD400
+CIAB_TAHI           equ $BFD500
+CIAB_TBLO           equ $BFD600
+CIAB_TBHI           equ $BFD700
+CIAB_TODLO          equ $BFD800
+CIAB_TODMID         equ $BFD900
+CIAB_TODHI          equ $BFDA00
+CIAB_SDR            equ $BFDC00
+CIAB_ICR            equ $BFDD00
+CIAB_CRA            equ $BFDE00
+CIAB_CRB            equ $BFDF00
+
+LVL1_INT_VECTOR		equ $64
+LVL2_INT_VECTOR	    equ $68
+LVL3_INT_VECTOR		equ $6c
+LVL4_INT_VECTOR		equ $70
+LVL5_INT_VECTOR		equ $74
+LVL6_INT_VECTOR		equ $78
+	
+MAIN:	
+	; Load OCS base address into a1
+	lea CUSTOM,a1
+
+	; Disable interrupts and DMA
+	move.w  #$7FFF,INTENA(a1)
+	move.w  #$7FFF,DMACON(a1)
+
+	; Disable all bitplanes 
+	move.w  #$200,BPLCON0(a1)
+
+	; Install interrupt handlers
+	lea	    irq3(pc),a2
+ 	move.l	a2,LVL3_INT_VECTOR
+
+	; Install copper list
+	lea    	copper(pc),a0
 	move.l	a0,COP1LC(a1)
 	move.w  COPJMP1(a1),d0
-	move.w  #(DMAF_SETCLR!DMAF_COPPER!DMAF_RASTER!DMAF_MASTER),dmacon(a1)
+
+	; Enable Copper DMA
+	move.w  #$8280,DMACON(a1)
+
+	; Enable innterrupts
+	move.w	#$C020,INTENA(a1) 
+
+	; Configure POTGO
+	move.w #$0001,POTGO(a1) 
 
 .mainLoop:
 	bra.b	.mainLoop
-
-level3InterruptHandler:
+	
+irq3:
 	movem.l	d0-a6,-(sp)
+	move.w  #$0020,INTREQ(a1)   ; Acknowledge
 
-.checkVerticalBlank:
-	lea	CUSTOM,a5
-	move.w	INTREQR(a5),d0
-	and.w	#INTF_VERTB,d0	
-	; beq.s	.checkCopper
-	bne.s	.verticalBlank
-	jmp .checkCopper
+    ; Read CIAB TOD
+	moveq  #0,d0
+	move.b CIAB_TODMID,d0     
+	asl    #8,d0
+	move.b CIAB_TODLO,d0
+	move.w #$CCC,d5
 
-.verticalBlank:
-	move.w	#INTF_VERTB,INTREQ(a5)	; clear interrupt bit	
+	; Reset CIAB counter 
+	move.b  #$00,CIAB_CRB       ; Set counter
+	move.b  #$00,CIAB_TODMID    ; 
+	move.b  #$00,CIAB_TODHI     ; 
+	move.b  #$00,CIAB_TODLO     ;
 
-.checkDENISEID:
-
-	; Read test register
-	move.w $DFF004,d0
-
+	; Visualize d0
 .test0:
-	lea	bit0(pc),a0
-	add #2,a0
+	lea	(bit0+2)(pc),a0
 	move.w #$333,(a0)
 	btst #0,d0
 	beq.s .test1
-	move.w #$CCC,(a0)
+	move.w d5,(a0)
 
 .test1:
-	lea	bit1(pc),a0
-	add #2,a0
+	lea	(bit1+2)(pc),a0
 	move.w #$333,(a0)
 	btst #1,d0
 	beq.s .test2
-	move.w #$CCC,(a0)
+	move.w d5,(a0)
 
 .test2:
-	lea	bit2(pc),a0
-	add #2,a0
+	lea	(bit2+2)(pc),a0
 	move.w #$333,(a0)
 	btst #2,d0
 	beq.s .test3
-	move.w #$CCC,(a0)
+	move.w d5,(a0)
 
 .test3:
-	lea	bit3(pc),a0
-	add #2,a0
+	lea	(bit3+2)(pc),a0
 	move.w #$333,(a0)
 	btst #3,d0
 	beq.s .test4
-	move.w #$CCC,(a0)
+	move.w d5,(a0)
 
 .test4:
-	lea	bit4(pc),a0
-	add #2,a0
+	lea	(bit4+2)(pc),a0
 	move.w #$333,(a0)
 	btst #4,d0
 	beq.s .test5
-	move.w #$CCC,(a0)
+	move.w d5,(a0)
 
 .test5:
-	lea	bit5(pc),a0
-	add #2,a0
+	lea	(bit5+2)(pc),a0
 	move.w #$333,(a0)
 	btst #5,d0
 	beq.s .test6
-	move.w #$CCC,(a0)
+	move.w d5,(a0)
 
 .test6:
-	lea	bit6(pc),a0
-	add #2,a0
+	lea	(bit6+2)(pc),a0
 	move.w #$333,(a0)
 	btst #6,d0
 	beq.s .test7
-	move.w #$CCC,(a0)
+	move.w d5,(a0)
 
 .test7:
-	lea	bit7(pc),a0
-	add #2,a0
+	lea	(bit7+2)(pc),a0
 	move.w #$333,(a0)
 	btst #7,d0
 	beq.s .test8
-	move.w #$CCC,(a0)
+	move.w d5,(a0)
 
 .test8:
-	lea	bit8(pc),a0
-	add #2,a0
+	lea	(bit8+2)(pc),a0
 	move.w #$333,(a0)
 	btst #8,d0
 	beq.s .test9
-	move.w #$CCC,(a0)
+	move.w d5,(a0)
 
 .test9:
-	lea	bit9(pc),a0
-	add #2,a0
+	lea	(bit9+2)(pc),a0
 	move.w #$333,(a0)
 	btst #9,d0
 	beq.s .test10
-	move.w #$CCC,(a0)
+	move.w d5,(a0)
 
 .test10:
-	lea	bit10(pc),a0
-	add #2,a0
+	lea	(bit10+2)(pc),a0
 	move.w #$333,(a0)
 	btst #10,d0
 	beq.s .test11
-	move.w #$CCC,(a0)
+	move.w d5,(a0)
 
 .test11:
-	lea	bit11(pc),a0
-	add #2,a0
+	lea	(bit11+2)(pc),a0
 	move.w #$333,(a0)
 	btst #11,d0
 	beq.s .test12
-	move.w #$CCC,(a0)
+	move.w d5,(a0)
 
 .test12:
-	lea	bit12(pc),a0
-	add #2,a0
+	lea	(bit12+2)(pc),a0
 	move.w #$333,(a0)
 	btst #12,d0
 	beq.s .test13
-	move.w #$CCC,(a0)
+	move.w d5,(a0)
 
 .test13:
-	lea	bit13(pc),a0
-	add #2,a0
+	lea	(bit13+2)(pc),a0
 	move.w #$333,(a0)
 	btst #13,d0
 	beq.s .test14
-	move.w #$CCC,(a0)
+	move.w d5,(a0)
 
 .test14:
-	lea	bit14(pc),a0
-	add #2,a0
+	lea	(bit14+2)(pc),a0
 	move.w #$333,(a0)
 	btst #14,d0
 	beq.s .test15
-	move.w #$CCC,(a0)
+	move.w d5,(a0)
 
 .test15:
-	lea	bit15(pc),a0
-	add #2,a0
+	lea	(bit15+2)(pc),a0
 	move.w #$333,(a0)
 	btst #15,d0
-	beq.s .resetBitplanePointers
-	move.w #$CCC,(a0)
+	beq.s .interruptComplete
+	move.w d5,(a0)
 
-.resetBitplanePointers:
-	lea	bitplanes(pc),a1
-	lea     BPL1PTH(a5),a2
-	moveq	#SCREEN_BIT_DEPTH-1,d0
-.bitplaneloop:
-	move.l	a1,(a2)
-	lea	SCREEN_WIDTH_BYTES(a1),a1 ; bit plane data is interleaved
-	addq	#4,a2
-	dbra	d0,.bitplaneloop
-	
-.checkCopper:
-	lea	CUSTOM,a5
-	move.w	INTREQR(a5),d0
-	and.w	#INTF_COPER,d0	
-	beq.s	.interruptComplete
-.copperInterrupt:
-	move.w	#INTF_COPER,INTREQ(a5)	; clear interrupt bit	
-	
 .interruptComplete:
 	movem.l	(sp)+,d0-a6
 	rte
 
-copper:
-	dc.w    DIWSTRT,$2c81
-	dc.w	DIWSTOP,$2cc1
-	dc.w	BPLCON0,$1200
-	dc.w	BPL1MOD,SCREEN_WIDTH_BYTES*SCREEN_BIT_DEPTH-SCREEN_WIDTH_BYTES
-	dc.w	BPL2MOD,SCREEN_WIDTH_BYTES*SCREEN_BIT_DEPTH-SCREEN_WIDTH_BYTES
- 
- 	include	"copper-colors.s"
-
-	dc.w    BPLCON2, $0B
-	
-	; First color block
-
+copper:	
 	dc.w	$3001,$FFFE  ; WAIT 
 	dc.w	COLOR00, $F00
 	dc.w	$30D9,$FFFE  ; WAIT 
@@ -304,7 +295,3 @@ bit0:
 	dc.w	COLOR00, $000
 
 	dc.l	$fffffffe
-
-bitplanes:
-	ds.b 61440,0
-	
