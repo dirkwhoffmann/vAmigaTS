@@ -20,18 +20,21 @@ MAIN:
 	lea	    irq3(pc),a2
  	move.l	a2,LVL3_INT_VECTOR
 
+	; Install single bitplane
+	move.w  #$1200,BPLCON0(a1) ; 1 bitplane
+	move.w  #$0000,BPL1MOD(a1) 
+	move.w  #$0000,BPLCON1(a1) ; No scroll
+	move.w  #$0024,BPLCON2(a1) ; Sprites have priority over playfields
+	move.w  #$0038,DDFSTRT(a1)
+	move.w  #$00D0,DDFSTOP(a1)
+	move.w  #$2C81,DIWSTRT(a1) 
+	move.w  #$F4C1,DIWSTOP(a1)
+
 	; Install Copper list
 	lea    	copper(pc),a0
 	move.l	a0,COP1LC(a1)
 	move.w  COPJMP1(a1),d0
 
-	; Setup playfield
-	move.w  #$2c81,DIWSTRT(a1)
-	move.w  #$2cc1,DIWSTOP(a1)
-	move.w  #(SCREEN_BIT_DEPTH<<12)|$200,BPLCON0(a1)
-	move.w  #(SCREEN_WIDTH_BYTES*SCREEN_BIT_DEPTH-SCREEN_WIDTH_BYTES),BPL1MOD(a1)
-	move.w  #(SCREEN_WIDTH_BYTES*SCREEN_BIT_DEPTH-SCREEN_WIDTH_BYTES),BPL2MOD(a1)
- 
 	; Enable DMA Copper, bitplane, and sprite DMA
 	move.w  #$8100,DMACON(a1) ; Bitplane DMA
 	move.w  #$8080,DMACON(a1) ; Copper DMA
@@ -94,77 +97,166 @@ copper:
 	DC.W    COLOR29,$0CCC 
 	DC.W    COLOR30,$0444 
 	DC.W    COLOR31,$0F00 
-	
-   ; First color block
-	dc.w	$3001,$FFFE  ; WAIT 
-	dc.w	COLOR00, $F00
-	dc.w	$30D9,$FFFE  ; WAIT 
-	dc.w	COLOR00, $000
-	dc.w	$3161,$FFFE  ; WAIT 
-	dc.w    BPLCON0, (0<<12)|$200  ; BPU = 0
 
-	dc.w	$3801,$FFFE  ; WAIT 
-	dc.w	COLOR00, $F00
-	dc.w	$38D9,$FFFE  ; WAIT 
-	dc.w	COLOR00, $000
-	dc.w	$3961,$FFFE  ; WAIT 
-	dc.w    BPLCON0, (4<<12)|$200  ; BPU > 0
+    ; Sprite 0
+	dc.w    $2D31,$FFFE 
+	dc.w    SPR0POS,$2D53 
+	dc.w    $2DE1,$FFFE 
+	dc.w    SPR0POS,$2D43 
+	dc.w    $2E33,$FFFE 
+	dc.w    SPR0POS,$2D55 
+	dc.w    $2EE1,$FFFE 
+	dc.w    SPR0POS,$2D43 
+	dc.w    $2F35,$FFFE 
+	dc.w    SPR0POS,$2D57 
+	dc.w    $2FE1,$FFFE 
+	dc.w    SPR0POS,$2D43 
+	dc.w    $3037,$FFFE 
+	dc.w    SPR0POS,$2D59 
+	dc.w    $30E1,$FFFE 
+	dc.w    SPR0POS,$2D43 
+	dc.w    $3139,$FFFE 
+	dc.w    SPR0POS,$2D5B 
+	dc.w    $31E1,$FFFE 
+	dc.w    SPR0POS,$2D43 
+	dc.w    $323B,$FFFE 
+	dc.w    SPR0POS,$2D5D 
+	dc.w    $2321,$FFFE 
+	dc.w    SPR0POS,$2D43 
+	dc.w    $333F,$FFFE 
+	dc.w    SPR0POS,$2D5F 
+	dc.w    $33E1,$FFFE 
+	dc.w    SPR0POS,$2D43 
+	dc.w    $343F,$FFFE 
+	dc.w    SPR0POS,$2D61 
+	dc.w    $34E1,$FFFE 
+	dc.w    SPR0POS,$2D43 
+	dc.w    $3541,$FFFE 
+	dc.w    SPR0POS,$2D63 
+	dc.w    $35E1,$FFFE 
+	dc.w    SPR0POS,$2D43 
+	dc.w    $3643,$FFFE 
+	dc.w    SPR0POS,$2D65 
+	dc.w    $36E1,$FFFE 
+	dc.w    SPR0POS,$2D43 
+	dc.w    $3745,$FFFE 
+	dc.w    SPR0POS,$2D67 
+	dc.w    $37E1,$FFFE 
+	dc.w    SPR0POS,$2D43 
+	dc.w    $3947,$FFFE 
+	dc.w    SPR0POS,$2D69 
+	dc.w    $39E1,$FFFE 
+	dc.w    SPR0POS,$2D43 
 
-  ; Second color block
-	dc.w	$8001,$FFFE  ; WAIT 
-	dc.w	COLOR00, $F00
-	dc.w	$80D9,$FFFE  ; WAIT 
-	dc.w	COLOR00, $000
-	dc.w	$8181,$FFFE  ; WAIT 
-	dc.w    BPLCON0, (0<<12)|$200  ; BPU = 0
+    ; Sprite 2
+	dc.w    $7D51,$FFFE 
+	dc.w    SPR2POS,$2D74
+	dc.w    $7DE1,$FFFE 
+	dc.w    SPR2POS,$2D64
+	dc.w    $7E53,$FFFE 
+	dc.w    SPR2POS,$2D76
+	dc.w    $7EE1,$FFFE 
+	dc.w    SPR2POS,$2D64
+	dc.w    $7F55,$FFFE 
+	dc.w    SPR2POS,$2D78
+	dc.w    $7FE1,$FFFE 
+	dc.w    SPR2POS,$2D64
+	dc.w    $8057,$FFFE 
+	dc.w    SPR2POS,$2D7A
+	dc.w    $80E1,$FFFE 
+	dc.w    SPR2POS,$2D64
+	dc.w    $8159,$FFFE 
+	dc.w    SPR2POS,$2D7C
+	dc.w    $81E1,$FFFE 
+	dc.w    SPR2POS,$2D64
+	dc.w    $825B,$FFFE 
+	dc.w    SPR2POS,$2D7E
+	dc.w    $82E1,$FFFE 
+	dc.w    SPR2POS,$2D64
+	dc.w    $835F,$FFFE 
+	dc.w    SPR2POS,$2D80
+	dc.w    $83E1,$FFFE 
+	dc.w    SPR2POS,$2D64
+	dc.w    $845F,$FFFE 
+	dc.w    SPR2POS,$2D82
+	dc.w    $84E1,$FFFE 
+	dc.w    SPR2POS,$2D64
+	dc.w    $8561,$FFFE 
+	dc.w    SPR2POS,$2D84
+	dc.w    $85E1,$FFFE 
+	dc.w    SPR2POS,$2D64
+	dc.w    $8663,$FFFE 
+	dc.w    SPR2POS,$2D86
+	dc.w    $86E1,$FFFE 
+	dc.w    SPR2POS,$2D64
+	dc.w    $8765,$FFFE 
+	dc.w    SPR2POS,$2D88
+	dc.w    $87E1,$FFFE 
+	dc.w    SPR2POS,$2D64
+	dc.w    $8867,$FFFE 
+	dc.w    SPR2POS,$2D8A
+	dc.w    $88E1,$FFFE 
+	dc.w    SPR2POS,$2D64
 
-	dc.w	$8801,$FFFE  ; WAIT 
-	dc.w	COLOR00, $F00
-	dc.w	$88D9,$FFFE  ; WAIT 
-	dc.w	COLOR00, $000
-	dc.w	$8981,$FFFE  ; WAIT 
-	dc.w    BPLCON0, (4<<12)|$200  ; BPU > 0
+  ; Sprite 4
+	dc.w    $CD71,$FFFE 
+	dc.w    SPR4POS,$2D95
+	dc.w    $CDE1,$FFFE 
+	dc.w    SPR4POS,$2D85
+	dc.w    $CE73,$FFFE 
+	dc.w    SPR4POS,$2D97
+	dc.w    $CEE1,$FFFE 
+	dc.w    SPR4POS,$2D85
+	dc.w    $CF75,$FFFE 
+	dc.w    SPR4POS,$2D99
+	dc.w    $CFE1,$FFFE 
+	dc.w    SPR4POS,$2D85
+	dc.w    $D077,$FFFE 
+	dc.w    SPR4POS,$2D9B
+	dc.w    $D0E1,$FFFE 
+	dc.w    SPR4POS,$2D85
+	dc.w    $D179,$FFFE 
+	dc.w    SPR4POS,$2D9D
+	dc.w    $D1E1,$FFFE 
+	dc.w    SPR4POS,$2D85
+	dc.w    $D27B,$FFFE 
+	dc.w    SPR4POS,$2D9F
+	dc.w    $D2E1,$FFFE 
+	dc.w    SPR4POS,$2D85
+	dc.w    $D37F,$FFFE 
+	dc.w    SPR4POS,$2DA1
+	dc.w    $D3E1,$FFFE 
+	dc.w    SPR4POS,$2D85
+	dc.w    $D48F,$FFFE 
+	dc.w    SPR4POS,$2DA3
+	dc.w    $D4E1,$FFFE 
+	dc.w    SPR4POS,$2D85
+	dc.w    $D581,$FFFE 
+	dc.w    SPR4POS,$2DA5
+	dc.w    $D5E1,$FFFE 
+	dc.w    SPR4POS,$2D85
+	dc.w    $D683,$FFFE 
+	dc.w    SPR4POS,$2DA7
+	dc.w    $D6E1,$FFFE 
+	dc.w    SPR4POS,$2D85
+	dc.w    $D785,$FFFE 
+	dc.w    SPR4POS,$2DA9
+	dc.w    $D7E1,$FFFE 
+	dc.w    SPR4POS,$2D85
+	dc.w    $D887,$FFFE 
+	dc.w    SPR4POS,$2DAB
+	dc.w    $D8E1,$FFFE 
+	dc.w    SPR4POS,$2D85
 
-	; Third color block
-	dc.w    $D001,$FFFE  ; WAIT
-	dc.w	COLOR00, $F00
-	dc.w    $D0D9,$FFFE  ; WAIT
-	dc.w	COLOR00, $000
-	dc.w    $D1A1,$FFFE  ; WAIT
-	dc.w    BPLCON0, (0<<12)|$200  ; BPU = 0
-
-	dc.w    $D801,$FFFE  ; WAIT
-	dc.w	COLOR00, $F00
-	dc.w    $D8D9,$FFFE  ; WAIT
-	dc.w	COLOR00, $000
-	dc.w    $D9A1,$FFFE  ; WAIT
-	dc.w    BPLCON0, (4<<12)|$200  ; BPU > 0 
-
-	dc.w    $ffdf,$fffe ; Cross vertical boundary
-
-	; Fourth color block
-	dc.w    $2001,$FFFE  ; WAIT
-	dc.w	COLOR00, $F00
-	dc.w    $20D9,$FFFE  ; WAIT
-	dc.w	COLOR00, $000
-	dc.w    $21B5,$FFFE  ; WAIT
-	dc.w    BPLCON0, (0<<12)|$200  ; BPU = 0
-
-	dc.w    $2801,$FFFE  ; WAIT
-	dc.w	COLOR00, $F00
-	dc.w    $28D9,$FFFE  ; WAIT
-	dc.w	COLOR00, $000
-	dc.w    $29B5,$FFFE  ; WAIT
-	dc.w    BPLCON0, (4<<12)|$200  ; BPU > 0
-
-	dc.l	$fffffffe
+	dc.w	$FFDF,$FFFE  ; Cross vertical boundary
+	dc.w    $FFFF,$FFFE  ; End of Copper list
 
 	;;
 	;;  Sprite data 
 	;;
 
 SPRITE0:
-			DC.W    $2D44,$3D00 ;VSTART, HSTART, VSTOP
+			DC.W    $2D43,$3D00 ;VSTART, HSTART, VSTOP
 	        DC.W    $03C0,$0000 ; 0
 	        DC.W    $0FF0,$0000 ; 1
 	        DC.W    $1C78,$0380 ; 2
@@ -182,7 +274,7 @@ SPRITE0:
 	        DC.W    $0FF0,$0000 ; 14
 	        DC.W    $03C0,$0000 ; 15
 			;
-			DC.W    $7D44,$8D00 ;VSTART, HSTART, VSTOP
+			DC.W    $7D43,$8D00 ;VSTART, HSTART, VSTOP
 	        DC.W    $03C0,$0000 ; 0
 	        DC.W    $0FF0,$0000 ; 1
 	        DC.W    $1C78,$0380 ; 2
@@ -200,7 +292,7 @@ SPRITE0:
 	        DC.W    $0FF0,$0000 ; 14
 	        DC.W    $03C0,$0000 ; 15
 			;
-			DC.W    $CD44,$DD00 ;VSTART, HSTART, VSTOP
+			DC.W    $CD43,$DD00 ;VSTART, HSTART, VSTOP
 	        DC.W    $03C0,$0000 ; 0
 	        DC.W    $0FF0,$0000 ; 1
 	        DC.W    $1C78,$0380 ; 2
@@ -218,7 +310,7 @@ SPRITE0:
 	        DC.W    $0FF0,$0000 ; 14
 	        DC.W    $03C0,$0000 ; 15
 			;
-			DC.W    $1D44,$2D04 ;VSTART, HSTART, VSTOP
+			DC.W    $1D43,$2D04 ;VSTART, HSTART, VSTOP
 	        DC.W    $03C0,$0000 ; 0
 	        DC.W    $0FF0,$0000 ; 1
 	        DC.W    $1C78,$0380 ; 2
@@ -314,7 +406,7 @@ SPRITE2:
 	        DC.W    $0000,$0000 ; End of sprite data
 
 SPRITE4:
-			DC.W    $2D84,$3D00 ;VSTART, HSTART, VSTOP
+			DC.W    $2D85,$3D00 ;VSTART, HSTART, VSTOP
 	        DC.W    $03C0,$0000 ; 0
 	        DC.W    $0FF0,$0000 ; 1
 	        DC.W    $1C78,$0380 ; 2
@@ -332,7 +424,7 @@ SPRITE4:
 	        DC.W    $0FF0,$0000 ; 14
 	        DC.W    $03C0,$0000 ; 15
 			;
-			DC.W    $7D84,$8D00 ;VSTART, HSTART, VSTOP
+			DC.W    $7D85,$8D00 ;VSTART, HSTART, VSTOP
 	        DC.W    $03C0,$0000 ; 0
 	        DC.W    $0FF0,$0000 ; 1
 	        DC.W    $1C78,$0380 ; 2
@@ -350,7 +442,7 @@ SPRITE4:
 	        DC.W    $0FF0,$0000 ; 14
 	        DC.W    $03C0,$0000 ; 15
 			;
-			DC.W    $CD84,$DD00 ;VSTART, HSTART, VSTOP
+			DC.W    $CD85,$DD00 ;VSTART, HSTART, VSTOP
 	        DC.W    $03C0,$0000 ; 0
 	        DC.W    $0FF0,$0000 ; 1
 	        DC.W    $1C78,$0380 ; 2
@@ -368,7 +460,7 @@ SPRITE4:
 	        DC.W    $0FF0,$0000 ; 14
 	        DC.W    $03C0,$0000 ; 15
 			;
-			DC.W    $1D84,$2D04 ;VSTART, HSTART, VSTOP
+			DC.W    $1D85,$2D04 ;VSTART, HSTART, VSTOP
 	        DC.W    $03C0,$0000 ; 0
 	        DC.W    $0FF0,$0000 ; 1
 	        DC.W    $1C78,$0380 ; 2
@@ -389,7 +481,7 @@ SPRITE4:
 	        DC.W    $0000,$0000 ; End of sprite data
 
 SPRITE6:
-			DC.W    $2DBC,$3D00 ;VSTART, HSTART, VSTOP
+			DC.W    $2DA3,$3D00 ;VSTART, HSTART, VSTOP
 	        DC.W    $03C0,$0000 ; 0
 	        DC.W    $0FF0,$0000 ; 1
 	        DC.W    $1C78,$0380 ; 2
@@ -407,7 +499,7 @@ SPRITE6:
 	        DC.W    $0FF0,$0000 ; 14
 	        DC.W    $03C0,$0000 ; 15
 			;
-			DC.W    $7DBC,$8D00 ;VSTART, HSTART, VSTOP
+			DC.W    $7DA3,$8D00 ;VSTART, HSTART, VSTOP
 	        DC.W    $03C0,$0000 ; 0
 	        DC.W    $0FF0,$0000 ; 1
 	        DC.W    $1C78,$0380 ; 2
@@ -425,7 +517,7 @@ SPRITE6:
 	        DC.W    $0FF0,$0000 ; 14
 	        DC.W    $03C0,$0000 ; 15
 			;
-			DC.W    $CDA4,$DD00 ;VSTART, HSTART, VSTOP
+			DC.W    $CDA3,$DD00 ;VSTART, HSTART, VSTOP
 	        DC.W    $03C0,$0000 ; 0
 	        DC.W    $0FF0,$0000 ; 1
 	        DC.W    $1C78,$0380 ; 2
@@ -443,7 +535,7 @@ SPRITE6:
 	        DC.W    $0FF0,$0000 ; 14
 	        DC.W    $03C0,$0000 ; 15
 			;
-			DC.W    $1DB7,$2D04 ;VSTART, HSTART, VSTOP
+			DC.W    $1DA3,$2D04 ;VSTART, HSTART, VSTOP
 	        DC.W    $03C0,$0000 ; 0
 	        DC.W    $0FF0,$0000 ; 1
 	        DC.W    $1C78,$0380 ; 2
@@ -464,5 +556,5 @@ SPRITE_END:
 	        DC.W    $0000,$0000 ; End of sprite data
 
 bitplanes:
-	incbin	"image.bin"
+	ds.b    51201
 	

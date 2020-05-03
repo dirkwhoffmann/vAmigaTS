@@ -35,9 +35,6 @@ MAIN:
 	move.w  #$00FF,COLOR18(a1)
 	move.w  #$0F0F,COLOR19(a1)
 
-	; Prepare Copper list
-
-
 	; Install Copper list
 	lea    	copper(pc),a0
 	move.l	a0,COP1LC(a1)

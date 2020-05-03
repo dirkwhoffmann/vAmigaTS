@@ -1,130 +1,89 @@
 	include "../../../../include/registers.i"
 	include "hardware/dmabits.i"
 	include "hardware/intbits.i"
+	include "ministartup.s"
 	
 LVL3_INT_VECTOR		equ $6c
 SCREEN_WIDTH_BYTES	equ (320/8)
 SCREEN_BIT_DEPTH	equ 6
 	
-entry:	
-	lea	level3InterruptHandler(pc),a3
- 	move.l	a3,LVL3_INT_VECTOR
+MAIN:	
+	; Load OCS base address
+	lea CUSTOM,a1
 
-	;;  Move sprite 0 to $25000.
-	MOVE.L  #$25000,a1 ;Point A1 at sprite destination
-	LEA     SPRITE0(pc),a2 ;Point A2 at sprite source
-SPRLOOP0:	
-	MOVE.L  (a2),(a1)+ ;Move a long word
-	CMP.L   #$00000000,(a2)+ ;Check for end of sprite
-	BNE     SPRLOOP0	 ;Loop until entire sprite is moved
+	; Disable interrupts, DMA and bitplanes
+	move.w  #$7FFF,INTENA(a1)
+	move.w  #$7FFF,DMACON(a1)
+	move.w  #$200,BPLCON0(a1)
 
-	;;  Move sprite 2 to $26000.
-	MOVE.L  #$26000,a1 ;Point A1 at sprite destination
-	LEA     SPRITE2(pc),a2 ;Point A2 at sprite source
-SPRLOOP2:	
-	MOVE.L  (a2),(a1)+ ;Move a long word
-	CMP.L   #$00000000,(a2)+ ;Check for end of sprite
-	BNE     SPRLOOP2	 ;Loop until entire sprite is moved
+	; Install interrupt handlers
+	lea	    irq3(pc),a2
+ 	move.l	a2,LVL3_INT_VECTOR
 
-	;;  Move sprite 2 to $27000.
-	MOVE.L  #$27000,a1 ;Point A1 at sprite destination
-	LEA     SPRITE4(pc),a2 ;Point A2 at sprite source
-SPRLOOP4:	
-	MOVE.L  (a2),(a1)+ ;Move a long word
-	CMP.L   #$00000000,(a2)+ ;Check for end of sprite
-	BNE     SPRLOOP4	 ;Loop until entire sprite is moved
-
-	;;  Move sprite 2 to $28000.
-	MOVE.L  #$28000,a1 ;Point A1 at sprite destination
-	LEA     SPRITE6(pc),a2 ;Point A2 at sprite source
-SPRLOOP6:	
-	MOVE.L  (a2),(a1)+ ;Move a long word
-	CMP.L   #$00000000,(a2)+ ;Check for end of sprite
-	BNE     SPRLOOP6	 ;Loop until entire sprite is moved
-
-	;;
-	;;  Now we write a dummy sprite to $30000, since all eight sprites are activated
-	;;  at the same time and we're only going to use one.  The remaining sprites
-	;;  will point to this dummy sprite data.
-	;;
-	MOVE.L  #$00000000,$30000 ;Write it
-
-	;; install copper list and enable DMA
-	lea 	CUSTOM,a1
-	lea	copper(pc),a0
+	; Install Copper list
+	lea    	copper(pc),a0
 	move.l	a0,COP1LC(a1)
 	move.w  COPJMP1(a1),d0
-	move.w  #(DMAF_SETCLR!DMAF_COPPER!32!DMAF_RASTER!DMAF_MASTER),dmacon(a1)
-	; MOVE.W  #$83A0,DMACON(a1) ;Bitplane, Copper, and sprite DMA
+
+	; Enable DMA Copper, bitplane, and sprite DMA
+	move.w  #$8100,DMACON(a1) ; Bitplane DMA
+	move.w  #$8080,DMACON(a1) ; Copper DMA
+	move.w  #$8020,DMACON(a1) ; Sprite DMA
+	move.w  #$8200,DMACON(a1) ; DMA enable
+
+	; Enable interrupts
+	move.w	#$C020,INTENA(a1) 
 
 .mainLoop:
 	bra.b	.mainLoop
 
-level3InterruptHandler:
+irq3:
 	movem.l	d0-a6,-(sp)
+	move.w  #$0020,INTREQ(a1)   ; Acknowledge
+	move.w  #$000,COLOR00(a1)
 
-.checkVerticalBlank:
-	lea	CUSTOM,a5
-	move.w	INTREQR(a5),d0
-	and.w	#INTF_VERTB,d0	
-	beq.s	.checkCopper
-
-.verticalBlank:
-	move.w	#INTF_VERTB,INTREQ(a5)	; clear interrupt bit	
-
-.resetBitplanePointers:
-	lea	bitplanes(pc),a1
-	lea     BPL1PTH(a5),a2
+	; Reset bitplane pointers
+	lea     bitplanes(pc),a3
+	lea     BPL1PTH(a1),a2
 	moveq	#SCREEN_BIT_DEPTH-1,d0
 .bitplaneloop:
-	move.l	a1,(a2)
-	lea	SCREEN_WIDTH_BYTES(a1),a1 ; bit plane data is interleaved
+	move.l	a3,(a2)
+	lea	    SCREEN_WIDTH_BYTES(a3),a3
 	addq	#4,a2
 	dbra	d0,.bitplaneloop
-	
-.checkCopper:
-	lea	CUSTOM,a5
-	move.w	INTREQR(a5),d0
-	and.w	#INTF_COPER,d0	
-	beq.s	.interruptComplete
-.copperInterrupt:
-	move.w	#INTF_COPER,INTREQ(a5)	; clear interrupt bit	
-	
-.interruptComplete:
+
+	; Reset sprite pointers
+	lea	    SPRITE0(pc),a2
+ 	move.l	a2,SPR0PTH(a1)
+	lea	    SPRITE2(pc),a2
+ 	move.l	a2,SPR2PTH(a1)
+	lea	    SPRITE4(pc),a2
+ 	move.l	a2,SPR4PTH(a1)
+	lea	    SPRITE6(pc),a2
+ 	move.l	a2,SPR6PTH(a1)
+
+	lea	    SPRITE_END(pc),a2
+ 	move.l	a2,SPR1PTH(a1)
+ 	move.l	a2,SPR3PTH(a1)
+ 	move.l	a2,SPR5PTH(a1)
+ 	move.l	a2,SPR7PTH(a1)
+
 	movem.l	(sp)+,d0-a6
 	rte
 
 copper:
 	dc.w    DIWSTRT,$2c81
 	dc.w	DIWSTOP,$2cc1
-	dc.w	BPLCON0,(SCREEN_BIT_DEPTH<<12)|$200 ; set color depth and enable COLOR
+	dc.w	BPLCON0,(SCREEN_BIT_DEPTH<<12)|$200
 	dc.w	BPL1MOD,SCREEN_WIDTH_BYTES*SCREEN_BIT_DEPTH-SCREEN_WIDTH_BYTES
 	dc.w	BPL2MOD,SCREEN_WIDTH_BYTES*SCREEN_BIT_DEPTH-SCREEN_WIDTH_BYTES
  
- 	include	"out/image-copper-list.s"
+ 	include	"imagecolors.s"
 
-	DC.W    SPR0PTH,$0002 ;Sprite 0 pointer = $25000
-	DC.W    SPR0PTL,$5000
-	DC.W    SPR1PTH,$0003 ;Sprite 1 pointer = $30000
-	DC.W    SPR1PTL,$0000
-	DC.W    SPR2PTH,$0002 ;Sprite 2 pointer = $26000
-	DC.W    SPR2PTL,$6000
-	DC.W    SPR3PTH,$0003 ;Sprite 3 pointer = $30000
-	DC.W    SPR3PTL,$0000
-	DC.W    SPR4PTH,$0002 ;Sprite 4 pointer = $27000
-	DC.W    SPR4PTL,$7000
-	DC.W    SPR5PTH,$0003 ;Sprite 5 pointer = $30000
-	DC.W    SPR5PTL,$0000
-	DC.W    SPR6PTH,$0002 ;Sprite 6 pointer = $28000
-	DC.W    SPR6PTL,$8000
-	DC.W    SPR7PTH,$0003 ;Sprite 7 pointer = $30000
-	DC.W    SPR7PTL,$0000
+	; Change some colors used by sprites
 	DC.W    COLOR25,$0FF0 
 	DC.W    COLOR26,$0444 
 	DC.W    COLOR27,$0F00 
-
-	;dc.w	$4501,$FFFE  ; WAIT 
-	;dc.w    BPLCON0, (SCREEN_BIT_DEPTH<<12)|$600  ; Enable dual playfield mode
 
 	dc.w    BPLCON2, $0B
 	
@@ -563,11 +522,10 @@ SPRITE6:
 	        DC.W    $1FF8,$0000 ; 14
 	        DC.W    $0FF0,$0000 ; 14
 	        DC.W    $03C0,$0000 ; 15
-			;
+			
+SPRITE_END:
 	        DC.W    $0000,$0000 ; End of sprite data
 
-SPRITE_END: DC.W    $0000,$0001 ; Copy until we get here
-
 bitplanes:
-	incbin	"out/image.bin"
+	incbin	"image.bin"
 	
