@@ -29,14 +29,14 @@ MAIN:
 	move.w  #$F4C1,DIWSTOP(a1)
 
 	; Set up colors
-	MOVE.W  #$0008,COLOR00(a1)
-	MOVE.W  #$0000,COLOR01(a1)
-	MOVE.W  #$0FF0,COLOR17(a1)
-	MOVE.W  #$00FF,COLOR18(a1)
-	MOVE.W  #$0F0F,COLOR19(a1)
-	MOVE.W  #$0FFF,COLOR20(a1)
-	MOVE.W  #$088F,COLOR21(a1)
-	MOVE.W  #$0F88,COLOR22(a1)
+	MOVE.W  #$000,COLOR00(a1)
+	MOVE.W  #$000,COLOR01(a1)
+	MOVE.W  #$FF0,COLOR17(a1)
+	MOVE.W  #$0FF,COLOR18(a1)
+	MOVE.W  #$F0F,COLOR19(a1)
+	MOVE.W  #$FFF,COLOR20(a1)
+	MOVE.W  #$88F,COLOR21(a1)
+	MOVE.W  #$F88,COLOR22(a1)
 
 	; Install Copper list
 	lea    	copper(pc),a0
@@ -72,66 +72,79 @@ irq3:
 
 copper:
 
-	dc.w    SPR0POS,$4D60
-	dc.w    SPR1POS,$2D80
-	dc.w    SPR2POS,$2DA0
-	dc.w    SPR3POS,$00C0
-	dc.w    SPR0CTL,$B100
-	dc.w    SPR1CTL,$0000
-
-	dc.w	$7101,$FFFE  ; WAIT 
+	dc.w	$7101,$FFFE    ; WAIT 
+	dc.w    SPR0POS,$60
+	dc.w    SPR1POS,$60
+	dc.w    SPR1CTL,$80    ; Attach
 	dc.w    SPR0DATA,$0990
 	dc.w    SPR0DATB,$07E0
 	dc.w    SPR1DATA,$0990
 	dc.w    SPR1DATB,$07E0
-	dc.w    SPR2DATA,$0990
-	dc.w    SPR2DATB,$07E0
-	dc.w    SPR3DATA,$0990
-	dc.w    SPR3DATB,$07E0
-	dc.w	$7201,$FFFE  ; WAIT 
+	dc.w	$7181,$FFFE  ; WAIT 
+	dc.w    SPR0POS,$A0
+	dc.w    SPR1POS,$A0
+	dc.w    SPR1CTL,$00    ; Detach
+	dc.w    SPR1DATA,$0990
+
+	dc.w	$7201,$FFFE    ; WAIT 
+	dc.w    SPR0POS,$60
+	dc.w    SPR1POS,$60
+	dc.w    SPR1CTL,$80    ; Attach
 	dc.w    SPR0DATA,$13C8
 	dc.w    SPR0DATB,$0FF0
 	dc.w    SPR1DATA,$13C8
 	dc.w    SPR1DATB,$0FF0
-	dc.w    SPR2DATA,$13C8
-	dc.w    SPR2DATB,$0FF0
-	dc.w    SPR3DATA,$13C8
-	dc.w    SPR3DATB,$0FF0
-	dc.w	$7301,$FFFE  ; WAIT 
+	dc.w	$7281,$FFFE    ; WAIT 
+	dc.w    SPR0POS,$A0
+	dc.w    SPR1POS,$A0
+	dc.w    SPR1CTL,$00    ; Detach
+	dc.w    SPR1DATA,$13C8
+
+	dc.w	$7301,$FFFE    ; WAIT 
+	dc.w    SPR0POS,$60
+	dc.w    SPR1POS,$60
+	dc.w    SPR1CTL,$00    ; Detach
 	dc.w    SPR0DATA,$23C4
 	dc.w    SPR0DATB,$1FF8
 	dc.w    SPR1DATA,$23C4
 	dc.w    SPR1DATB,$1FF8
-	dc.w    SPR2DATA,$23C4
-	dc.w    SPR2DATB,$1FF8
-	dc.w    SPR3DATA,$23C4
-	dc.w    SPR3DATB,$1FF8
-	dc.w	$7401,$FFFE  ; WAIT 
+	dc.w	$7381,$FFFE    ; WAIT 
+	dc.w    SPR0POS,$A0
+	dc.w    SPR1POS,$A0
+	dc.w    SPR1CTL,$80    ; Attach
+	dc.w    SPR1DATA,$23C4
+
+	dc.w	$7401,$FFFE    ; WAIT 
+	dc.w    SPR0POS,$60
+	dc.w    SPR1POS,$60
+	dc.w    SPR1CTL,$00    ; Detach
 	dc.w    SPR0DATA,$13C8
 	dc.w    SPR0DATB,$0FF0
 	dc.w    SPR1DATA,$13C8
 	dc.w    SPR1DATB,$0FF0
-	dc.w    SPR2DATA,$13C8
-	dc.w    SPR2DATB,$0FF0
-	dc.w    SPR3DATA,$13C8
-	dc.w    SPR3DATB,$0FF0
-	dc.w	$7501,$FFFE  ; WAIT 
+	dc.w	$7481,$FFFE    ; WAIT 
+	dc.w    SPR0POS,$A0
+	dc.w    SPR1POS,$A0
+	dc.w    SPR1CTL,$80    ; Attach
+	dc.w    SPR1DATA,$13C8
+
+	dc.w	$7501,$FFFE    ; WAIT 
+	dc.w    SPR0POS,$60
+	dc.w    SPR1POS,$60
+	dc.w    SPR1CTL,$00    ; Detach
 	dc.w    SPR0DATA,$0990
 	dc.w    SPR0DATB,$07E0
 	dc.w    SPR1DATA,$0990
 	dc.w    SPR1DATB,$07E0
-	dc.w    SPR2DATA,$0990
-	dc.w    SPR2DATB,$07E0
-	dc.w    SPR3DATA,$0990
-	dc.w    SPR3DATB,$07E0
-	dc.w    COLOR00,$222
+	dc.w	$7581,$FFFE    ; WAIT 
+	dc.w    SPR0POS,$A0
+	dc.w    SPR1POS,$A0
+	dc.w    SPR1CTL,$80    ; Attach
+	dc.w    SPR1DATA,$0990 ; Rearm
 
-	dc.w	$C501,$FFFE  ; WAIT 
-	dc.w    SPR1POS,$2D80
-	dc.w    COLOR00,$444
-	dc.w	$E501,$FFFE  ; WAIT 
-	dc.w    SPR3POS,$FFFF
-	dc.w    COLOR00,$666
+	dc.w	$7601,$FFFE    ; WAIT 
+	dc.w    SPR0CTL,$0000
+	dc.w    SPR1CTL,$0000
 
 	dc.w    $FFFF,$FFFE
 
