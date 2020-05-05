@@ -42,7 +42,7 @@ MAIN:
 	move.l	a0,COP1LC(a1)
 	move.w  COPJMP1(a1),d0
 
-	; Enable DMA Copper, bitplane, and sprite DMA
+	; Enable Copper, bitplane, and sprite DMA
 	move.w  #$8100,DMACON(a1) ; Bitplane DMA
 	move.w  #$8080,DMACON(a1) ; Copper DMA
 	move.w  #$8020,DMACON(a1) ; Sprite DMA
