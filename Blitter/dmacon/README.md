@@ -14,5 +14,8 @@ Triggers a Blitter operation and records the value of DMACON after the Blitter h
 
 Same as dmacon1 resp. dmacon2 with the BLTPRI set to 1.
 
+#### dmacon5
+
+Same setup as in dmacon4 with Blitter DMA disabled.
 
 Dirk Hoffmann, 2019 - 2020
