@@ -1,9 +1,10 @@
 	include "../../../../include/registers.i"
 	include "hardware/dmabits.i"
 	include "hardware/intbits.i"
-	
+	include "ministartup.s"
+
 ; Configuring the test case
-BLIT_ABCD           equ 15
+BLIT_ABCD           equ 12
 
 BLIT_LF_MINTERM		equ $ca
 BLIT_A_SOURCE_SHIFT	equ 0
@@ -41,19 +42,18 @@ BOB_XPOS_BYTES		equ (BOB_XPOS)/8
 	
 entry:
 
-	; Load OCS base address into a1
-	lea     CUSTOM,a1
-	lea     CUSTOM,a6
+MAIN:	
+	; Load OCS base address
+	lea CUSTOM,a1
 
-	; Disable all bitplanes 
+	; Disable interrupts, DMA and bitplanes
+	move.w  #$7FFF,INTENA(a1)
+	move.w  #$7FFF,DMACON(a1)
 	move.w  #$200,BPLCON0(a1)
 
 	; Disable CIA interrupts
 	move.b  #$7F,$BFDD00  ; CIA B
 	move.b  #$7F,$BFED01  ; CIA A
-
-	; Disable all interrupts
-	move.w  #$7FFF,INTENA(a1)
 
 	; Install interrupt handlers
 	lea	irq1(pc),a2
@@ -92,27 +92,26 @@ entry:
 	lea	copper(pc),a0
 	move.l	a0,COP1LC(a1)
 	move.w  COPJMP1(a1),d0
-	move.w  #$8003,COPCON(a6)   ; Allow Copper to write Blitter registers
+	move.w  #$8003,COPCON(a1)   ; Allow Copper to write Blitter registers
 	
 	; Enable DMA
-	move.w	#$07C0,DMACON(a6)   ; Disable all DMA
-	move.w	#$87C0,DMACON(a6)   ; Set BLTPRI, DMAEN, BPLEN, COPEN, BLTEN
+	move.w	#$87C0,DMACON(a1)   ; BLTPRI, DMAEN, BPLEN, COPEN, BLTEN
 
 	; Enable interrupts
-	move.w	#$C044,INTENA(a6)  
+	move.w	#$C044,INTENA(a1)  
 
 .mainLoop:
 	bra.s	.mainLoop
 
 blitWait:
-	tst DMACONR(a6)		;for compatibility
+	tst DMACONR(a1)		;for compatibility
 .waitblit:
-	btst #6,DMACONR(a6)
+	btst #6,DMACONR(a1)
 	bne.s .waitblit
 	rts
 
 waitBlitIdle:
-	btst #14,DMACONR(a6)
+	btst #14,DMACONR(a1)
 	bne.s waitBlitIdle
 	rts
 
@@ -127,16 +126,16 @@ prepareblit:
 	bsr blitWait
 	; bsr waitBlitIdle    ; DO WE NEED THIS? 
 	move.w #(BLIT_ABCD<<8|BLIT_LF_MINTERM|BLIT_A_SOURCE_SHIFT<<BLIT_ASHIFTSHIFT),BLTCON0(A6)
-	move.w #BLIT_BLTCON1,BLTCON1(a6) 
-	move.l #$ffffffff,BLTAFWM(a6)   	; no masking of first/last word
-	move.w #0,BLTAMOD(a6)	        	; A modulo=bytes to skip between lines
-	move.w #0,BLTBMOD(a6)	        	; B modulo=bytes to skip between lines
-	move.w #SCREEN_WIDTH_BYTES-BOB_WIDTH_BYTES,BLTCMOD(a6)	; C modulo
-	move.w #SCREEN_WIDTH_BYTES-BOB_WIDTH_BYTES,BLTDMOD(a6)	; D modulo
-	move.l #emojiMask,BLTAPTH(a6)	    ; mask bitplane
-	move.l #emoji,BLTBPTH(a6)	        ; bob bitplane
-	move.l #bitplanes+BOB_XPOS_BYTES+(SCREEN_WIDTH_BYTES*SCREEN_BIT_DEPTH*BOB_YPOS),BLTCPTH(a6) ; background top left corner
-	move.l #emoji,BLTDPTH(a6) ; destination top left corner
+	move.w #BLIT_BLTCON1,BLTCON1(a1) 
+	move.l #$ffffffff,BLTAFWM(a1)   	; no masking of first/last word
+	move.w #0,BLTAMOD(a1)	        	; A modulo=bytes to skip between lines
+	move.w #0,BLTBMOD(a1)	        	; B modulo=bytes to skip between lines
+	move.w #SCREEN_WIDTH_BYTES-BOB_WIDTH_BYTES,BLTCMOD(a1)	; C modulo
+	move.w #SCREEN_WIDTH_BYTES-BOB_WIDTH_BYTES,BLTDMOD(a1)	; D modulo
+	move.l #emojiMask,BLTAPTH(a1)	    ; mask bitplane
+	move.l #emoji,BLTBPTH(a1)	        ; bob bitplane
+	move.l #bitplanes+BOB_XPOS_BYTES+(SCREEN_WIDTH_BYTES*SCREEN_BIT_DEPTH*BOB_YPOS),BLTCPTH(a1) ; background top left corner
+	move.l #emoji,BLTDPTH(a1) ; destination top left corner
 	movem.l (sp)+,d0-a6
 	rts
 
@@ -516,9 +515,9 @@ bitplanes:
 	ds.b    51200,$00
 
 emoji:
-	incbin	"out/emoji.bin"
+;	incbin	"out/emoji.bin"
 	ds.b    128,$00
 
 emojiMask:	
-	incbin	"out/emoji-mask.bin"
+;	incbin	"out/emoji-mask.bin"
 	ds.b    128,$00

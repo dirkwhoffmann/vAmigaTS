@@ -18,4 +18,8 @@ Same as dmacon1 resp. dmacon2 with the BLTPRI set to 1.
 
 Same setup as in dmacon4 with Blitter DMA disabled.
 
+#### dmacon6
+
+This test starts a blit and reads back DMACONR immediately. It shows that the BBUSY bit is set immediately. 
+
 Dirk Hoffmann, 2019 - 2020
