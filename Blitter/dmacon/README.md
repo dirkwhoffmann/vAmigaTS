@@ -32,5 +32,10 @@ Similar to dmacon1, but DMACON is recorded directly after the first blit has bee
 
 Similar to dmacon1, but DMACON is recorded directly after the second blit has been started.
 
+#### dmacon7, dmacon8
+
+Similar to dmacon5 and dmacon6, respectively, with different CPU code (DMACON is read
+slightly faster after the blit has been started).
+
 
 Dirk Hoffmann, 2020
