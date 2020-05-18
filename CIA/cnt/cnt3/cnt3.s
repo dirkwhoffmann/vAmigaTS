@@ -1,7 +1,8 @@
 	include "../../../../include/registers.i"
 	include "hardware/dmabits.i"
 	include "hardware/intbits.i"
-	
+	include "ministartup.s"
+
 CIAB_PRA            equ $BFD000	
 CIAB_PRB            equ $BFD100
 CIAB_DDRA           equ $BFD200
@@ -25,22 +26,18 @@ LVL4_INT_VECTOR		equ $70
 LVL5_INT_VECTOR		equ $74
 LVL6_INT_VECTOR		equ $78
 	
-;
-; Main
-;
-
-entry:
-	; Load OCS base address into a1
+MAIN:	
+	; Load OCS base address
 	lea CUSTOM,a1
 
-	; Disable all interrupts
+	; Disable interrupts, DMA and bitplanes
 	move.w  #$7FFF,INTENA(a1)
-
-	; Disable Copper DMA 
-	move.w  #$0080,DMACON(a1)
-
-	; Disable all bitplanes 
+	move.w  #$7FFF,DMACON(a1)
 	move.w  #$200,BPLCON0(a1)
+
+	; Disable CIA interrupts
+	move.b  #$7F,$BFDD00  ; CIA B
+	move.b  #$7F,$BFED01  ; CIA A
 
 	; Install interrupt handlers
 	lea	    irq6(pc),a2
@@ -51,51 +48,56 @@ entry:
 	move.l	a0,COP1LC(a1)
 	move.w  COPJMP1(a1),d0
 
-	; Enable Copper DMA
-	move.w  #(DMAF_SETCLR!DMAF_COPPER),DMACON(a1)
+	; Enable DMA
+	move.w  #$8080,DMACON(a1)   ; Copper
+	move.w  #$8200,DMACON(a1)   ; EN
 
 	; Configure CIAs
-	move.b  #$FF,CIAB_DDRA      ; Configure PA pins as outputs
-	move.b  #$82,CIAB_ICR       ; Enable timer B interrupts
+	move.b  #$FF,CIAB_DDRA      ; PA pins are outputs
+	move.b  #$81,CIAB_ICR       ; Enable timer A interrupts
 	move.w  #$E000,INTENA(a1)
 
 ;
 ; Main loop
 ;
 
-main: 
+mainLoop: 
 	jsr     synccpu
 
-	move.b  #$00,CIAB_CRB       ; Stop timer B
-	move.b  #$FF,CIAB_TBLO
-	move.b  #$01,CIAB_TBHI 
-	move.b  #$29,CIAB_CRB       ; Start timer B with counting source = CNT pin
+	move.b  #$00,CIAB_CRA       ; Stop and set timer A
+	move.b  #$80,CIAB_TALO
+	move.b  #$00,CIAB_TAHI 
+
+	move.b  #$00,CIAB_CRB       ; Stop and set timer B
+	move.b  #$30,CIAB_TBLO
+	move.b  #$00,CIAB_TBHI 
+
+	move.b  #$01,CIAB_CRA       ; Start timer A (continous)
+	move.b  #$49,CIAB_CRB       ; Start timer B in "underflow A" counting mode (one shot)
 
    	move.w  #$1FF,d3
+	moveq   #0,d4
+
 .loop1:
-	move.b  CIAB_TBLO,(COLOR00+1)(a1)
+	move.b  CIAB_TBLO,d4
+	move.w  d4,(COLOR00)(a1)
 	move.b  #$00,CIAB_PRA       ; Generate CNT pulses
 	move.b  #$FF,CIAB_PRA
 	move.w  #$000,COLOR00(a1) 
 	dbra    d3,.loop1
 
-	bra.s   main
+	move.b  #$00,CIAB_CRA       ; Stop timer A
+
+	bra.s   mainLoop
 
 ;
 ; IRQ handlers
 ;
 
 irq6:
-	;move.w  #$FF0,COLOR00(a1) 
-	movem.l	d0-a6,-(sp)
-	move.b  CIAB_ICR,d0         ; Acknowledge the IRQ by reading ICR
+	move.w  #$FFF,COLOR00(a1) 
+	move.b  CIAB_ICR,d0         ; Acknowledge 
 	move.w	#$2000,INTREQ(a1)   ; Acknowledge 
-	nop
-	nop
-	nop
-	nop
-	movem.l	(sp)+,d0-a6
-	;move.w  #$00F,COLOR00(a1)   
 	rte
 
 synccpu:
@@ -146,6 +148,5 @@ synccpu:
 	rts
 
 copper:
-	; dc.w    COLOR00,$0F0	
 	dc.w	$ffdf,$fffe          ; Cross vertical boundary
 	dc.l	$fffffffe
