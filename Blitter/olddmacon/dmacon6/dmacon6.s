@@ -60,11 +60,14 @@ MAIN:
  	move.l	a3,LVL3_INT_VECTOR
 	lea	irq4(pc),a3 
  	move.l	a3,LVL4_INT_VECTOR
-	lea	irq5(pc),a3
- 	move.l	a3,LVL5_INT_VECTOR
+	;lea	irq5(pc),a3
+ 	;move.l	a3,LVL5_INT_VECTOR
 
 	; Enable Interrupts
-	move.w	#$C8A0,INTENA(a1)   ; Enable RBF (5), AUD0 (4), VERTB (3) IRQ
+	move.w	#$8080,INTENA(a1)   ; AUD0 (4)
+	move.w	#$8020,INTENA(a1)   ; VERTB (3)
+	; move.w	#$8800,INTENA(a1)   ; RBF (5)
+	move.w	#$C000,INTENA(a1)   ; Enable
 
 	; Setup Copper
 	lea	copper(pc),a0           ; Get pointer to Copper list
@@ -72,11 +75,11 @@ MAIN:
  	move.w  COPJMP1(a1),d0      ; Jump to the first Copper list
 
 	; Enable DMA
-	; move.w	#$8040,DMACON(a1)   ; Blitter DMA
+	move.w	#$8040,DMACON(a1)   ; Blitter DMA
 	move.w	#$8080,DMACON(a1)   ; Copper DMA
 	move.w	#$8100,DMACON(a1)   ; Bitplane DMA
 	move.w	#$8200,DMACON(a1)   ; DMA enable
-	move.w	#$8400,DMACON(a1)   ; BLTPRI
+	; move.w	#$8400,DMACON(a1)   ; BLTPRI
 
 .mainLoop:
 	bra.b	.mainLoop
@@ -255,9 +258,11 @@ blitWait:
 
 ;; Perform blit
 irq4:
+	move.w	#$0080,INTREQ(a1)	        ; Acknowledge
+
 	; bsr blitWait
-	move.w #$FF0,COLOR00(a1)
-	move.w #(BLIT_ABCD<<8|BLIT_LF_MINTERM|BLIT_A_SOURCE_SHIFT<<BLIT_ASHIFTSHIFT),BLTCON0(A6)
+	move.w #$880,COLOR00(a1)
+	move.w #(BLIT_ABCD<<8|BLIT_LF_MINTERM|BLIT_A_SOURCE_SHIFT<<BLIT_ASHIFTSHIFT),BLTCON0(a1)
 	move.w #BLIT_BLTCON1,BLTCON1(a1) 
 	move.l #$ffffffff,BLTAFWM(a1)   	; no masking of first/last word
 	move.w #0,BLTAMOD(a1)	        	; A modulo=bytes to skip between lines
@@ -268,10 +273,9 @@ irq4:
 	move.l #bitplanes,BLTBPTH(a1)	    ; bob bitplane
 	move.l #bitplanes+BOB_XPOS_BYTES+(SCREEN_WIDTH_BYTES*SCREEN_BIT_DEPTH*BOB_YPOS),BLTCPTH(a1) ; background top left corner
 	move.l #bitplanes+BOB_XPOS_BYTES+(SCREEN_WIDTH_BYTES*SCREEN_BIT_DEPTH*BOB_YPOS),BLTDPTH(a1) ; destination top left corner
-	move.w #(BOB_HEIGHT*SCREEN_BIT_DEPTH)<<6|(BOB_WIDTH_WORDS),BLTSIZE(a1) ; Start Blitter
-	move.w DMACONR(a1),d5       ; Read DMACONR 
-
-	move.w	#$0080,INTREQ(a1)	; clear interrupt bit	
+	move.w #(30)<<6|(30),BLTSIZE(a1)    ; Start Blitter
+	move.w DMACONR(a1),d5               ; Read DMACONR 
+	move.w #$FF0,COLOR00(a1)
 	rte
 
 ;; Record register value
@@ -397,7 +401,7 @@ bit0:
 	dc.w	COLOR00, $000
 
     ; Trigger Blitter operation
-	dc.w    $A201,$FFFE  ; WAIT
+	dc.w    $A001,$FFFE  ; WAIT
 	dc.w	COLOR00, $0F0
 	dc.w    INTREQ, $8080 ; Level 4 interrupt
 

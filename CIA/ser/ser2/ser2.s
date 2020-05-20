@@ -76,6 +76,7 @@ MAIN:
 
 	; Configure CIAs
 	move.b  #$FF,CIAB_DDRA      ; Configure PA pins as outputs
+	move.b  #$40,CIAB_CRA      
 	move.b  #$00,CIAB_CRA       ; SP pin is input
 	move.b  #$00,CIAB_SDR 
 

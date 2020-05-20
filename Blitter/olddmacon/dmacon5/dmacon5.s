@@ -259,7 +259,7 @@ irq4:
 
 	; bsr blitWait
 	move.w #$FF0,COLOR00(a1)
-	move.w #(BLIT_ABCD<<8|BLIT_LF_MINTERM|BLIT_A_SOURCE_SHIFT<<BLIT_ASHIFTSHIFT),BLTCON0(A6)
+	move.w #(BLIT_ABCD<<8|BLIT_LF_MINTERM|BLIT_A_SOURCE_SHIFT<<BLIT_ASHIFTSHIFT),BLTCON0(a1)
 	move.w #BLIT_BLTCON1,BLTCON1(a1) 
 	move.l #$ffffffff,BLTAFWM(a1)   	; no masking of first/last word
 	move.w #0,BLTAMOD(a1)	        	; A modulo=bytes to skip between lines
