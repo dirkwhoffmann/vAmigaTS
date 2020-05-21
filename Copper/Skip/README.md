@@ -42,5 +42,9 @@ The reference image reveals that only MOVE commands can skipped.
     
 This test skips an illegal write. Although the write is omitted, the resulting image shows that the Copper still stops (as it would if the SKIP command wouldn't be there).
 
+#### skipbfd1 to skipbfd3
 
-Dirk Hoffmann, 2019
+These tests utilize the SKIP comand in combination with the BFD flag.
+
+
+Dirk Hoffmann, 2019 - 2020
