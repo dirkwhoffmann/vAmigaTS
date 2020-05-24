@@ -37,5 +37,9 @@ Similar to dmacon1, but DMACON is recorded directly after the second blit has be
 Similar to dmacon5 and dmacon6, respectively, with different CPU code (DMACON is read
 slightly faster after the blit has been started).
 
+#### dmacon9
+
+The test starts the Blitter and turns DMA off in the middle of the blit. While DMA is off, it records the value of DMACON and displays the result.
+
 
 Dirk Hoffmann, 2020

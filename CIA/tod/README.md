@@ -10,7 +10,7 @@ Uses the alarm feature of CIAB to trigger an interrupt in each frame. In the IRQ
 
 Checks certain trigger conditions for TOD interrupt. 
 
-### latch1 to latch9
+#### latch1 to latch9
 
 Tests the TOD's read latch feature. If the is atched, the test produces a still image. If the counter is not  latched, the test case produces an animated counting pattern.
 
@@ -25,6 +25,10 @@ Expected result (A500 8A):
 - latch7: Counting
 - latch8: Counting
 - latch9: Counting
+
+#### todint1 and todint2
+
+These tests configure CIAA to trigger TOD interrupts. In the interrupt handler, the values of VPOSR and VHPOSR are displayed, respectively.
 
 
 Dirk Hoffmann, 2020
