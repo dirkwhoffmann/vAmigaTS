@@ -30,5 +30,9 @@ Expected result (A500 8A):
 
 These tests configure CIAA to trigger TOD interrupts. In the interrupt handler, the values of VPOSR and VHPOSR are displayed, respectively.
 
+#### todint3
+
+Similar to todint2 for CIAB.
+
 
 Dirk Hoffmann, 2020

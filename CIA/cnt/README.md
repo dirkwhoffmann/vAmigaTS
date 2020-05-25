@@ -6,6 +6,10 @@ To test counters in CNT pin counting mode.
 
 Timer CIAB::A is configured to count rising edges on the CNT pin. The edges are created manually by writing $00, $FF, $00, $FF, ... into CIAB::PRA (Note: Bit CIAB::PA1 is connected to the CNT pin). To visualize the result, the current counter value is written into the background color register.
 
+#### cnt1b 
+
+Similar to cnt1 with 5 bitplanes enabled. The test can be used to verify E-Clock timing. 
+
 #### cnt2
 
 Similar to cnt1 for CIAB::B. 
