@@ -6,6 +6,10 @@ The following test cases modify the Copper location register while DMA is off.
 
 Copper DMA is off during VSYNC. In the VBLANK interrupt handler, the location pointer is redirected and Copper DMA is switched on.
 
+#### coplc1b
+
+Same as coplc1 for the second Copper list. 
+
 #### coplc2
 
 Similar to coplc1, but the redirection is done outside the IRQ handler, in a line that is already visible.
