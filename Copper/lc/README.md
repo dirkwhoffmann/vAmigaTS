@@ -14,6 +14,10 @@ Same as coplc1 for the second Copper list.
 
 Similar to coplc1, but the redirection is done outside the IRQ handler, in a line that is already visible.
 
+#### coplc2b
+
+Same as coplc2 for the second Copper list. 
+
 #### coplc3 
 
 This test case uses three Copper lists. It first redirects to Copper list 2, then to Copper list 3. After that, Copper DMA is enabled.
