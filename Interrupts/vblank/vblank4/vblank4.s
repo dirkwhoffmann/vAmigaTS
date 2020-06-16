@@ -105,7 +105,7 @@ main:
 	and.w   #$20,d0
 	beq     .wait
 
-	; Read high byte of VHPOSR
+	; Read low byte of VHPOSR
 	nop
 	nop
 	move.b (a0),d0
