@@ -86,8 +86,8 @@ color1:
 
 irq1:
 	move.w  #$3FFF,INTREQ(a1) ; Acknowledge
-	move.l  #$FF0,COLOR00(a1)
-	move.l  #$4F4,COLOR00(a1)
+	move.l  #$FF00000,COLOR00(a1)
+	move.l  #$4F40000,COLOR00(a1)
 	move.w  #$000,COLOR00(a1)
 	rte
 
