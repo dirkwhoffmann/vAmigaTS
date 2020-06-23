@@ -96,11 +96,11 @@ irq1:
 	dbra    d6,.loop
 	move    #$F00,COLOR00(a1)
 	move    #$000,COLOR00(a1)
+	move.w  VHPOSR(a1),d0
+
 
 	; Acknowledge 
 	move.w  #$0004,INTREQ(a1)
-
-	move.w  #$AA,d0
 
 	; Analyze bits
 .test0:
