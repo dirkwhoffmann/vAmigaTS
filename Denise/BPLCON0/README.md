@@ -30,5 +30,9 @@ Switches back and forth between hires and lowres mode.
 
 Switches on 7 bitplanes (invalid value) and manually writes to BPL5DAT and BPL6DAT.
 
+#### ham1
+
+Switches on 7 bitplanes (invalid value) in HAM mode and manually writes to BPL5DAT and BPL6DAT.
+
 
 Dirk Hoffmann, 2019 - 2020
