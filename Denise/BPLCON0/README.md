@@ -26,8 +26,9 @@ Switches back and forth between valid and invalid bpu values.
 
 Switches back and forth between hires and lowres mode.
 
-#### hires4 
+#### invplanes1
 
-Switches back and forth between dual-playfield and single-playfield mode.
+Switches on 7 bitplanes (invalid value) and manually writes to BPL5DAT and BPL6DAT.
 
-Dirk Hoffmann, 2019
+
+Dirk Hoffmann, 2019 - 2020
