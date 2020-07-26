@@ -12,7 +12,7 @@ Checks certain trigger conditions for TOD interrupt.
 
 #### latch1 to latch9
 
-Tests the TOD's read latch feature. If the is atched, the test produces a still image. If the counter is not  latched, the test case produces an animated counting pattern.
+Tests the TOD's read latch feature. If the counter is latched, the test produces a still image. If the counter is not  latched, the test case produces an animated counting pattern.
 
 Expected result (A500 8A): 
 
@@ -33,6 +33,10 @@ These tests configure CIAA to trigger TOD interrupts. In the interrupt handler, 
 #### todint3
 
 Similar to todint2 for CIAB.
+
+#### todint4
+
+This test matches the counter value with the alarm value while the timer in stopped. It checks if the IRQ is triggered in this state. 
 
 
 Dirk Hoffmann, 2020
