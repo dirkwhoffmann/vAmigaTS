@@ -6,7 +6,7 @@ MAIN:
 
     ; Read test register (lo byte in d0, hi byte in d1)
 	lea     CUSTOM,a1
-	move.w  INTREQR(a1),d1
+	move.w  SERDATR(a1),d1
 	move.b  d1,d0
 	asr     #8,d1
 

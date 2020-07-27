@@ -4,17 +4,16 @@
 	
 MAIN:	
 
-    ; Read test register (lo byte in d0, hi byte in d1)
-	lea     CUSTOM,a1
-	move.w  INTREQR(a1),d1
-	move.b  d1,d0
-	asr     #8,d1
-
 	jsr init
 .mainLoop:
 	bra.b	.mainLoop
 
 irq3:
+    ; Read test register (lo byte in d0, hi byte in d1)
+	move.w  VHPOSR(a1),d1
+	move.b  d1,d0
+	asr     #8,d1
+
 	move.w  #$0020,INTREQ(a1)   ; Acknowledge
 	jsr     coppersetup         ; Update Copper list
 	rte
