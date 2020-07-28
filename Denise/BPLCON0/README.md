@@ -34,5 +34,13 @@ Switches on 7 bitplanes (invalid value) and manually writes to BPL5DAT and BPL6D
 
 Switches on 7 bitplanes (invalid value) in HAM mode and manually writes to BPL5DAT and BPL6DAT.
 
+#### ham2 
+
+Sets the upper four bits of BPLCON0 to values between 0 and 15.
+
+#### ham3 
+
+Same as ham2 in dual playfield mode.
+
 
 Dirk Hoffmann, 2019 - 2020
