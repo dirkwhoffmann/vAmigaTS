@@ -140,7 +140,7 @@ copper:
 	
 	dc.w	BPLCON0,(0<<12)|$200 
 	dc.w    DDFSTRT,$18
-	dc.w    DDFSTOP,$D8 
+	dc.w    DDFSTOP,$E0 
 
 	dc.w    $4F39, $FFFE         ; WAIT
 	dc.w    COLOR00,$F00
@@ -328,6 +328,34 @@ copper:
 	dc.w    DPL1DATA,$F00F
 	dc.w    $E1E1, $FFFE         ; Wait
 	dc.w    DPL3DATA,$CCCC
+	dc.w    DPL1DATA,$F00F
+	dc.w    $E301, $FFFE         ; Wait
+	dc.w    DPL4DATA,$CCCC
+	dc.w    DPL1DATA,$F00F
+	dc.w    $E503, $FFFE         ; Wait
+	dc.w    DPL5DATA,$CCCC
+	dc.w    DPL1DATA,$F00F
+	dc.w    $E705, $FFFE         ; Wait
+	dc.w    DPL6DATA,$CCCC
+	dc.w    DPL1DATA,$F00F
+
+	dc.w    $E907, $FFFE         ; Wait
+	dc.w    DPL1DATA,$CCCC
+	dc.w    DPL1DATA,$F00F
+	dc.w    $EB09, $FFFE         ; Wait
+	dc.w    DPL2DATA,$CCCC
+	dc.w    DPL1DATA,$F00F
+	dc.w    $ED0B, $FFFE         ; Wait
+	dc.w    DPL3DATA,$CCCC
+	dc.w    DPL1DATA,$F00F
+	dc.w    $EF0D, $FFFE         ; Wait
+	dc.w    DPL4DATA,$CCCC
+	dc.w    DPL1DATA,$F00F
+	dc.w    $F10F, $FFFE         ; Wait
+	dc.w    DPL5DATA,$CCCC
+	dc.w    DPL1DATA,$F00F
+	dc.w    $F311, $FFFE         ; Wait
+	dc.w    DPL6DATA,$CCCC
 	dc.w    DPL1DATA,$F00F
 
 	dc.w	$ffdf,$fffe          ; Cross vertical boundary
