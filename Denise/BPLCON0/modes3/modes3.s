@@ -109,7 +109,7 @@ copper:
 	dc.w	BPL6PTL,0
 	dc.w	BPL6PTH,0
 
-	dc.w    COLOR00,$000
+	dc.w    COLOR00,$888
 	dc.w    COLOR01,$F00
 	dc.w    COLOR02,$0F0
 	dc.w    COLOR03,$00F
@@ -166,7 +166,7 @@ copper:
 	dc.w	BPLCON0,$5E00
 
 	dc.w    $8001,$FFFE ; Wait
-	dc.w	BPLCON0,$5E00
+	dc.w	BPLCON0,$6E00
 
 	dc.w    $9001,$FFFE ; Wait
 	dc.w	BPLCON0,$7E00

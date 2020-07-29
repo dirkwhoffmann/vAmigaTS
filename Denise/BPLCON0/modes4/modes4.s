@@ -3,9 +3,6 @@
 	include "hardware/intbits.i"
 	include "ministartup.s"
 
-BPL5DAT             equ $118
-BPL6DAT             equ $11A
-
 MAIN:	
 	; Load OCS base address into a1
 	lea CUSTOM,a1
@@ -113,37 +110,37 @@ copper:
 	dc.w	BPL6PTH,0
 
 	dc.w    COLOR00,$888
-	dc.w    COLOR01,$F00
-	dc.w    COLOR02,$0F0
-	dc.w    COLOR03,$00F
-	dc.w    COLOR04,$FF0
-	dc.w    COLOR05,$0FF
-	dc.w    COLOR06,$F0F
-	dc.w    COLOR07,$FFF
-	dc.w    COLOR08,$C00
-	dc.w    COLOR09,$0C0
-	dc.w    COLOR10,$00C
-	dc.w    COLOR11,$CC0
-	dc.w    COLOR12,$0CC
-	dc.w    COLOR13,$C0C
-	dc.w    COLOR14,$CCC
-	dc.w    COLOR15,$80F
-	dc.w    COLOR16,$F80
-	dc.w    COLOR17,$8F0
-	dc.w    COLOR18,$F08
-	dc.w    COLOR19,$80F
-	dc.w    COLOR20,$0F8
-	dc.w    COLOR21,$08F
-	dc.w    COLOR22,$F40
-	dc.w    COLOR23,$4F0
-	dc.w    COLOR24,$F04
-	dc.w    COLOR25,$40F
-	dc.w    COLOR26,$0F4
-	dc.w    COLOR27,$04F
-	dc.w    COLOR28,$48F
-	dc.w    COLOR29,$F84
-	dc.w    COLOR30,$84F
-	dc.w    COLOR31,$4F8
+	dc.w    COLOR01,$888
+	dc.w    COLOR02,$888
+	dc.w    COLOR03,$888
+	dc.w    COLOR04,$888
+	dc.w    COLOR05,$888
+	dc.w    COLOR06,$888
+	dc.w    COLOR07,$888
+	dc.w    COLOR08,$888
+	dc.w    COLOR09,$888
+	dc.w    COLOR10,$888
+	dc.w    COLOR11,$888
+	dc.w    COLOR12,$888
+	dc.w    COLOR13,$888
+	dc.w    COLOR14,$888
+	dc.w    COLOR15,$888
+	dc.w    COLOR16,$888
+	dc.w    COLOR17,$888
+	dc.w    COLOR18,$888
+	dc.w    COLOR19,$888
+	dc.w    COLOR20,$888
+	dc.w    COLOR21,$888
+	dc.w    COLOR22,$888
+	dc.w    COLOR23,$888
+	dc.w    COLOR24,$888
+	dc.w    COLOR25,$888
+	dc.w    COLOR26,$888
+	dc.w    COLOR27,$888
+	dc.w    COLOR28,$888
+	dc.w    COLOR29,$888
+	dc.w    COLOR30,$888
+	dc.w    COLOR31,$888
 
 	dc.w    DDFSTRT,$0068
 	dc.w	DDFSTOP,$00A8
@@ -151,129 +148,73 @@ copper:
 	dc.w	DIWSTOP,$2cd1
 	dc.w	BPL1MOD,$0
 	dc.w	BPL2MOD,$0
-	dc.w	BPLCON0,$0600
+	dc.w	BPLCON0,$6E00
 
 	dc.w    $3001,$FFFE ; Wait
-	dc.w	BPLCON0,$1600
-	dc.w    BPL5DAT,$0000
-	dc.w    BPL6DAT,$FF00
+	dc.w    COLOR01,$FFF
 	dc.w    $3801,$FFFE ; Wait
-	dc.w    BPL5DAT,$FFFF
-	dc.w    BPL6DAT,$FF00
-
+	dc.w    COLOR02,$FFF
 	dc.w    $4001,$FFFE ; Wait
-	dc.w	BPLCON0,$2600
-	dc.w    BPL5DAT,$0000
-	dc.w    BPL6DAT,$FF00
-	dc.w    $4801,$FFFE ; Wait
-	dc.w    BPL5DAT,$FFFF
-	dc.w    BPL6DAT,$00FF
-
+	dc.w    COLOR03,$FFF
 	dc.w    $5001,$FFFE ; Wait
-	dc.w	BPLCON0,$3600
-	dc.w    BPL5DAT,$0000
-	dc.w    BPL6DAT,$FF00
+	dc.w    COLOR04,$FFF
 	dc.w    $5801,$FFFE ; Wait
-	dc.w    BPL5DAT,$FFFF
-	dc.w    BPL6DAT,$00FF
-
+	dc.w    COLOR05,$FFF
 	dc.w    $6001,$FFFE ; Wait
-	dc.w	BPLCON0,$4600
-	dc.w    BPL5DAT,$0000
-	dc.w    BPL6DAT,$FF00
+	dc.w    COLOR06,$FFF
 	dc.w    $6801,$FFFE ; Wait
-	dc.w    BPL5DAT,$FFFF
-	dc.w    BPL6DAT,$00FF
-
+	dc.w    COLOR07,$FFF
 	dc.w    $7001,$FFFE ; Wait
-	dc.w	BPLCON0,$5600
-	dc.w    BPL5DAT,$0000
-	dc.w    BPL6DAT,$FF00
+	dc.w    COLOR08,$FFF
 	dc.w    $7801,$FFFE ; Wait
-	dc.w    BPL5DAT,$FFFF
-	dc.w    BPL6DAT,$00FF
-
+	dc.w    COLOR09,$FFF
 	dc.w    $8001,$FFFE ; Wait
-	dc.w	BPLCON0,$6600
-	dc.w    BPL5DAT,$0000
-	dc.w    BPL6DAT,$FF00
+	dc.w    COLOR10,$FFF
 	dc.w    $8801,$FFFE ; Wait
-	dc.w    BPL5DAT,$FFFF
-	dc.w    BPL6DAT,$00FF
-
+	dc.w    COLOR11,$FFF
 	dc.w    $9001,$FFFE ; Wait
-	dc.w	BPLCON0,$7600
-	dc.w    BPL5DAT,$0000
-	dc.w    BPL6DAT,$FF00
+	dc.w    COLOR12,$FFF
 	dc.w    $9801,$FFFE ; Wait
-	dc.w    BPL5DAT,$FFFF
-	dc.w    BPL6DAT,$00FF
-
+	dc.w    COLOR13,$FFF
 	dc.w    $A001,$FFFE ; Wait
-	dc.w	BPLCON0,$8600
-	dc.w    BPL5DAT,$0000
-	dc.w    BPL6DAT,$FF00
+	dc.w    COLOR14,$FFF
 	dc.w    $A801,$FFFE ; Wait
-	dc.w    BPL5DAT,$FFFF
-	dc.w    BPL6DAT,$00FF
-
+	dc.w    COLOR15,$FFF
 	dc.w    $B001,$FFFE ; Wait
-	dc.w	BPLCON0,$9600
-	dc.w    BPL5DAT,$0000
-	dc.w    BPL6DAT,$FF00
+	dc.w    COLOR16,$FFF
 	dc.w    $B801,$FFFE ; Wait
-	dc.w    BPL5DAT,$FFFF
-	dc.w    BPL6DAT,$00FF
-
+	dc.w    COLOR17,$FFF
 	dc.w    $C001,$FFFE ; Wait
-	dc.w	BPLCON0,$A600
-	dc.w    BPL5DAT,$0000
-	dc.w    BPL6DAT,$FF00
+	dc.w    COLOR18,$FFF
 	dc.w    $C801,$FFFE ; Wait
-	dc.w    BPL5DAT,$FFFF
-	dc.w    BPL6DAT,$00FF
-
+	dc.w    COLOR19,$FFF
 	dc.w    $D001,$FFFE ; Wait
-	dc.w	BPLCON0,$B600
-	dc.w    BPL5DAT,$0000
-	dc.w    BPL6DAT,$FF00
+	dc.w    COLOR20,$FFF
 	dc.w    $D801,$FFFE ; Wait
-	dc.w    BPL5DAT,$FFFF
-	dc.w    BPL6DAT,$00FF
-
+	dc.w    COLOR21,$FFF
 	dc.w    $E001,$FFFE ; Wait
-	dc.w	BPLCON0,$C600
-	dc.w    BPL5DAT,$0000
-	dc.w    BPL6DAT,$FF00
+	dc.w    COLOR22,$FFF
 	dc.w    $E801,$FFFE ; Wait
-	dc.w    BPL5DAT,$FFFF
-	dc.w    BPL6DAT,$00FF
-
+	dc.w    COLOR23,$FFF
 	dc.w    $F001,$FFFE ; Wait
-	dc.w	BPLCON0,$D600
-	dc.w    BPL5DAT,$0000
-	dc.w    BPL6DAT,$FF00
+	dc.w    COLOR24,$FFF
 	dc.w    $F801,$FFFE ; Wait
-	dc.w    BPL5DAT,$FFFF
-	dc.w    BPL6DAT,$00FF
+	dc.w    COLOR25,$FFF
 
 	dc.w    $ffdf,$fffe ; Cross vertical boundary
 
 	dc.w    $0001,$FFFE ; Wait
-	dc.w	BPLCON0,$E600
-	dc.w    BPL5DAT,$0000
-	dc.w    BPL6DAT,$FF00
+	dc.w    COLOR26,$FFF
 	dc.w    $0801,$FFFE ; Wait
-	dc.w    BPL5DAT,$FFFF
-	dc.w    BPL6DAT,$00FF
-
+	dc.w    COLOR27,$FFF
 	dc.w    $1001,$FFFE ; Wait
-	dc.w	BPLCON0,$F600
-	dc.w    BPL5DAT,$0000
-	dc.w    BPL6DAT,$FF00
+	dc.w    COLOR28,$FFF
 	dc.w    $1801,$FFFE ; Wait
-	dc.w    BPL5DAT,$FFFF
-	dc.w    BPL6DAT,$00FF
+	dc.w    COLOR29,$FFF
+	dc.w    $2001,$FFFE ; Wait
+	dc.w    COLOR30,$FFF
+	dc.w    $2801,$FFFE ; Wait
+	dc.w    COLOR31,$FFF
 
 	dc.l	$fffffffe
 
