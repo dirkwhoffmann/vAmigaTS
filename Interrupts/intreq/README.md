@@ -12,5 +12,9 @@ At the beginning of each frame, timers CIAA::A and CIAB::A are startet to set th
 
 intreqcia1 clears the IRQ bits in INTREQ only. intreqcia2 clears the IRQ bits in ICR only. intreqcia3 clears the IRQ bits in both INTREQ and ICR only (INTREQ is cleared first). intreqcia4 clears the IRQ bits in both INTREQ and ICR only (ICR is cleared first). intreqcia4 enables CIAA IRQs and clears both INTREQ and ICR in the interrupt handler (note: the IRQ is retriggered once, because INTREQ is cleared before ICR).
 
+#### intreqvertb
+
+Tests the VERTB bit in INTREQ and switches the background color to green when a 1 is read back. This test had been written to track down a bug in vAmiga 0.9.9 where a 1 was never received. 
+
 
 Dirk Hoffmann, 2020

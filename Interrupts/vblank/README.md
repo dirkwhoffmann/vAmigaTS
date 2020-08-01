@@ -22,5 +22,9 @@ Same as vblank3 for VHPOSR(LO)
 
 Same as vblank3 (vblank4), but VHPOSR is read inside the VBLANK IRQ handler.
 
+#### vblank7 (vblank8)
 
-Dirk Hoffmann, 2019
+Same as vblank3 (vblank4) with different polling code.
+
+
+Dirk Hoffmann, 2019 - 2020
