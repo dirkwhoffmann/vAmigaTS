@@ -1,73 +1,69 @@
 	include "../../../../include/registers.i"
 	include "hardware/dmabits.i"
 	include "hardware/intbits.i"
+	include "ministartup.s"
 	
-LVL3_INT_VECTOR		equ $6c
-SCREEN_WIDTH_BYTES	equ (320/8)
-SCREEN_BIT_DEPTH	equ 5
-	
-entry:	
-	lea	level3InterruptHandler(pc),a3
- 	move.l	a3,LVL3_INT_VECTOR
+LVL3_INT_VECTOR		equ $6c 
+IMAGE_WIDTH      	equ (320/8)
+IMAGE_DEPTH      	equ 5
 
-	;; install copper list and enable DMA
-	lea 	CUSTOM,a1
-	lea	copper(pc),a0
+MAIN:	
+
+	; Load OCS base address
+	lea CUSTOM,a1
+
+	; Disable interrupts, DMA and bitplanes
+	move.w  #$7FFF,INTENA(a1)
+	move.w  #$7FFF,DMACON(a1)
+	move.w  #$200,BPLCON0(a1)
+
+	; Install interrupt handlers
+	lea	    irq3(pc),a2
+ 	move.l	a2,LVL3_INT_VECTOR
+
+	; Install copper list
+	lea    	copper(pc),a0
 	move.l	a0,COP1LC(a1)
-	move.w  COPJMP1(a1),d0
-	move.w  #(DMAF_SETCLR!DMAF_COPPER!DMAF_RASTER!DMAF_MASTER),dmacon(a1)
-	
+	move.w  COPJMP1(a1),d2
+
+	; Enable DMA
+	move.w  #$8080,DMACON(a1)   ; Copper
+	move.w  #$8100,DMACON(a1)   ; Bitplane
+	move.w  #$8200,DMACON(a1)   ; EN
+
+	; Enable innterrupts
+	move.w	#$8020,INTENA(a1)   ; VBLANK
+	move.w	#$C000,INTENA(a1)   ; EN
+
 .mainLoop:
 	bra.b	.mainLoop
 
-level3InterruptHandler:
-	movem.l	d0-a6,-(sp)
+irq3:
+	move.w  #$0020,INTREQ(a1)   ; Acknowledge
+	move.w  #$8200,DMACON(a1)   ; Enable DMA
 
-.checkVerticalBlank:
-	lea	CUSTOM,a5
-	move.w	INTREQR(a5),d0
-	and.w	#INTF_VERTB,d0	
-	beq.s	.checkCopper
-
-.verticalBlank:
-	move.w	#INTF_VERTB,INTREQ(a5)	; clear interrupt bit	
-
-.enableDMA:
-	move.w  #$8200,DMACON(a5)
-
-.resetBitplanePointers:
-	lea	bitplanes(pc),a1
-	lea     BPL1PTH(a5),a2
-	moveq	#SCREEN_BIT_DEPTH-1,d0
+.bitplanePointers:
+	lea	    bitplanes(pc),a4
+	lea     BPL1PTH(a1),a2
+	moveq	#IMAGE_DEPTH-1,d0
 .bitplaneloop:
-	move.l	a1,(a2)
-	lea	SCREEN_WIDTH_BYTES(a1),a1 ; bit plane data is interleaved
+	move.l	a4,(a2)
+	lea	    IMAGE_WIDTH(a4),a4 ; Bit plane data is interleaved
 	addq	#4,a2
 	dbra	d0,.bitplaneloop
-	
-.checkCopper:
-	lea	CUSTOM,a5
-	move.w	INTREQR(a5),d0
-	and.w	#INTF_COPER,d0	
-	beq.s	.interruptComplete
-.copperInterrupt:
-	move.w	#INTF_COPER,INTREQ(a5)	; clear interrupt bit	
-	
-.interruptComplete:
-	movem.l	(sp)+,d0-a6
+
 	rte
 
 copper:
 	dc.w    DIWSTRT,$2c71 
 	dc.w	DIWSTOP,$2cd1
-	dc.w	BPLCON0,(SCREEN_BIT_DEPTH<<12)|$200 ; set color depth and enable COLOR
-	dc.w	BPL1MOD,SCREEN_WIDTH_BYTES*SCREEN_BIT_DEPTH-SCREEN_WIDTH_BYTES
-	dc.w	BPL2MOD,SCREEN_WIDTH_BYTES*SCREEN_BIT_DEPTH-SCREEN_WIDTH_BYTES
+	dc.w	BPLCON0,(IMAGE_DEPTH<<12)|$200 
+	dc.w	BPL1MOD,IMAGE_WIDTH*IMAGE_DEPTH-IMAGE_WIDTH
+	dc.w	BPL2MOD,IMAGE_WIDTH*IMAGE_DEPTH-IMAGE_WIDTH
  
- 	include	"out/image-copper-list.s"
+ 	include	"../image-colors.s"
 
-
-    ; Set number of bitplanes to 4, so Copper cannot be blocked by bitplane DMA.
+    ; Only enable 4 bitplanes to prevent the Copper being stopped by bitplane DMA
 	dc.w	BPLCON0,(4<<12)|$200
 
     ; First color block
@@ -257,5 +253,5 @@ copper:
 	dc.l	$fffffffe
 
 bitplanes:
-	incbin	"out/image.bin"
+	incbin	"../image.bin"
 	

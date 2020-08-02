@@ -50,32 +50,7 @@ entry:
  	move.l	a2,LVL5_INT_VECTOR
 	lea	irq6(pc),a2
  	move.l	a2,LVL6_INT_VECTOR
-
-	include "out/image-palette.s"
 	
-	;; Set up playfield
-	move.w  #(RASTER_Y_START<<8)|RASTER_X_START,DIWSTRT(a1)
-	move.w	#((RASTER_Y_STOP-256)<<8)|(RASTER_X_STOP-256),DIWSTOP(a1)
-
-	move.w	#(RASTER_X_START/2-SCREEN_RES),DDFSTRT(a1)
-	move.w	#(RASTER_X_START/2-SCREEN_RES)+(8*((SCREEN_WIDTH/16)-1)),DDFSTOP(a1)
-	
-	move.w	#(SCREEN_BIT_DEPTH<<12)|$200,BPLCON0(a1)
-	move.w	#SCREEN_WIDTH_BYTES*SCREEN_BIT_DEPTH-SCREEN_WIDTH_BYTES,BPL1MOD(a1)
-	move.w	#SCREEN_WIDTH_BYTES*SCREEN_BIT_DEPTH-SCREEN_WIDTH_BYTES,BPL2MOD(a1)
-
-  	; Setup bitplane pointers
-	lea     bitplanes(pc),a2
-	lea     copper(pc),a3
-	moveq	#4,d0
-.bitplaneloop:
-	move.l 	a2,d1
-	move.w	d1,2(a3)
-	swap	d1
-	move.w  d1,6(a3)
-	addq	#8,a3
-	dbra	d0,.bitplaneloop
-
 	; Install copper list
 	lea	copper(pc),a0
 	move.l	a0,COP1LC(a1)
@@ -103,7 +78,7 @@ main:
 	move.w  VHPOSR(a1),d2     
 	and     #$FF00,d2
 	cmp.w   #$2000,d2
-	bne     .loop
+	blt     .loop
 	and     #1,VPOSR(a1)
 	bne     .loop
 
@@ -285,19 +260,6 @@ synccpu:
 	rts
 
 copper:
-	;; bitplane pointers must be first else poking addresses will be incorrect
-	dc.w	BPL1PTL,0
-	dc.w	BPL1PTH,0
-	dc.w	BPL2PTL,0
-	dc.w	BPL2PTH,0
-	dc.w	BPL3PTL,0
-	dc.w	BPL3PTH,0
-	dc.w	BPL4PTL,0
-	dc.w	BPL4PTH,0
-	dc.w	BPL5PTL,0
-	dc.w	BPL5PTH,0
-
-	; Draw 
 	dc.w    $3839, $FFFE         ; WAIT
 	dc.w    COLOR00,$F00       
 	dc.w    COLOR00,$000
@@ -398,15 +360,3 @@ bit0:
 	dc.w    $ffdf,$fffe 
 
 	dc.l    $fffffffe	
-
-bitplanes:
-    incbin  "out/image.bin"
-     ds.b    128,$00
-
-emoji:
-	incbin	"out/emoji.bin"
-	ds.b    128,$00
-
-emojiMask:	
-	incbin	"out/emoji-mask.bin"
-	ds.b    128,$00
