@@ -14,5 +14,9 @@ Triggers a Copper interrupt.  In the IRQ handler, Copper DMA is switched off, th
 
 Triggers a Copper interrupt and disabled Copper DMA immediately afterwards. In the IRQ handler, Copper DMA is reenabled. 
 
+#### dmatoggle1
 
-Dirk Hoffmann, 2019
+The Copper is utilized to trigger an interrupt and to draw yellow and red color stripes afterwards. Inside the interrupt handler, Copper DMA is switched on and off continuously. 
+
+
+Dirk Hoffmann, 2019 - 2020

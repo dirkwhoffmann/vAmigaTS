@@ -15,4 +15,13 @@ These tests were written to validate the following property about the OCS chipse
 
 This test backs up the following: When the electron beam crosses the DDF boundary and DMA was on, it can be switched on and off multiple times in that rasterline. 
 
-Dirk Hoffmann, 2019
+#### bplon*x*
+
+These tests utilize the Copper to enable bitplane DMA in the middle of a rasterline.
+
+#### bplon*x*h
+
+Same as bplon*x* in hires mode. 
+
+
+Dirk Hoffmann, 2019 - 2020
