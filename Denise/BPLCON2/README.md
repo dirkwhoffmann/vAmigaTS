@@ -2,6 +2,14 @@
 
 The tests in this test suite modify register BPLCON2 in various ways.
 
+#### dualpf1 - dualpf4
+
+These tests draw an image in dual playfield mode and iterate through all relevant values of BPLCON2. 
+
+#### dualpf5 - dualpf8
+
+Same as dualpf5 - dualpf8 with different scroll values in BPLCON1.
+
 #### pri1
 
 Single-playfield mode, PF2PRI = 0, PF1P has an illegal value
@@ -27,10 +35,6 @@ Same as pri3 with other background images.
 #### pri9 and pri10 
 
 Same as pri8 with illegal values 5 and 6 instead of 7.
-
-#### dualpf1 - dualpf4
-
-These tests draw an image in dual playfield mode and iterate through all relevant values of BPLCON2. 
 
 
 Dirk Hoffmann, 2019 - 2020
