@@ -28,5 +28,9 @@ Same as pri3 with other background images.
 
 Same as pri8 with illegal values 5 and 6 instead of 7.
 
+#### dualpf1 - dualpf4
 
-Dirk Hoffmann, 2019
+These tests draw an image in dual playfield mode and iterate through all relevant values of BPLCON2. 
+
+
+Dirk Hoffmann, 2019 - 2020
