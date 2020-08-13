@@ -70,7 +70,8 @@ MAIN:
 	move.w 	#$C000,INTENA(a1)   ; INTEN
 
 	lea     $DFF170,a4
-	lea     $DFF180,a5
+	lea     $DFF170,a5
+	moveq   #5,d5
 
 .mainLoop:
 	bra.s	.mainLoop

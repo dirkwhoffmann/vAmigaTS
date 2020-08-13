@@ -69,9 +69,8 @@ MAIN:
 	move.w 	#$A000,INTENA(a1)   ; Level 6
 	move.w 	#$C000,INTENA(a1)   ; INTEN
 
-	lea     $DFF165,a4
-	lea     $DFF180,a5
-	moveq   #5,d4
+	lea     $DFF170,a5
+	moveq   #5,d5
 
 .mainLoop:
 	bra.s	.mainLoop
