@@ -70,44 +70,49 @@ MAIN:
 	move.w 	#$C000,INTENA(a1)   ; INTEN
 
 	lea     $DFF180,a4
-	lea     $DFF170,a5
+	lea     $DFF180,a5
 
 .mainLoop:
 	bra.s	.mainLoop
 
 irq1:
 	move.w  #$3FFF,INTREQ(a1) ; Acknowledge
-	move.b  d5,d4
+	move.b  d5,(a4)+
 	move.w  #$FFF,COLOR00(a1)
 	move.w  #$000,COLOR00(a1)
+	subq    #1,a4
 	rte
 
 irq2:
 	move.w  #$3FFF,INTREQ(a1) ; Acknowledge
-	; move.b  a4,d4
+	; move.b  a5,(a4)+
 	move.w  #$FFF,COLOR00(a1)
 	move.w  #$000,COLOR00(a1)
+	; subq    #1,a4
 	rte
 
 irq4:
 	move.w  #$3FFF,INTREQ(a1) ; Acknowledge
-	move.b  (a4),d4
+	move.b  (a5),(a4)+
 	move.w  #$FFF,COLOR00(a1)
 	move.w  #$000,COLOR00(a1)
+	subq    #1,a4
 	rte
 
 irq5:
 	move.w  #$3FFF,INTREQ(a1) ; Acknowledge
-	move.b  -(a4),d4
+	move.b  -(a5),(a4)+
 	move.w  #$FFF,COLOR00(a1)
 	move.w  #$000,COLOR00(a1)
+	subq    #1,a4
 	rte
 
 irq6:
 	move.w  #$3FFF,INTREQ(a1) ; Acknowledge
-	move.b  (a4)+,d4
+	move.b  (a5)+,(a4)+
 	move.w  #$FFF,COLOR00(a1)
 	move.w  #$000,COLOR00(a1)
+	subq    #1,a4
 	rte
 
 irq3:
