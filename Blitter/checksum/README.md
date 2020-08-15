@@ -34,5 +34,9 @@ Runs the Copy Blitter (ascending, inclusive + exclusive fill)
 
 Same tests with an unusual Blit size (width = 1)
 
+#### consec*n*
+
+Runs several Blits in a row without initializing the Blitter in between.
+
 
 Dirk Hoffmann, 2020
