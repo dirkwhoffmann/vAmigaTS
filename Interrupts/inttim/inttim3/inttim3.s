@@ -57,64 +57,65 @@ performTests:
 
 test1: 
 	lea	    color1,a0
-    moveq   #0,d0
+    moveq   #1,d0
 	move.w  #$8004,INTREQ(a6)
-	moveq   #1,d0 
-	moveq   #2,d0 
-	moveq   #3,d0 
+	nop
+	clr.w   d0
+	nop
 
 test2: 
 	lea	    color2,a0
-    moveq   #0,d0
+    moveq   #1,d0
 	lea     $DFF09C,a3
 	move.w  #$8004,(a3)
-	moveq   #1,d0 
-	moveq   #2,d0 
-	moveq   #3,d0 
+	nop
+	clr.w   d0
+	nop
 
 test3: 
 	lea	    color3,a0
-    moveq   #0,d0
+    moveq   #1,d0
 	lea     $DFF09C,a3
 	move.w  #$8004,(a3)+
-	moveq   #1,d0 
-	moveq   #2,d0 
-	moveq   #3,d0 
+	nop
+	clr.w   d0
+	nop
 
 test4: 
 	lea	    color4,a0
-    moveq   #0,d0
+    moveq   #1,d0
 	lea     $DFF09E,a3
 	move.w  #$8004,-(a3)
-	moveq   #1,d0 
-	moveq   #2,d0 
-	moveq   #3,d0 
+	nop
+	clr.w   d0
+	nop
 
 test5: 
 	lea	    color5,a0
-    moveq   #0,d0
+    moveq   #1,d0
 	lea     $DFF09A,a3
 	move.w  #$8004,$2(a3)
-	moveq   #1,d0 
-	moveq   #2,d0 
-	moveq   #3,d0 
+	nop
+	clr.w   d0
+	nop
 
 test6: 
 	lea	    color6,a0
-    moveq   #0,d0
+	moveq   #0,d1
+    moveq   #1,d0
 	lea     $DFF09A,a3
-	move.w  #$8004,$2(a3,d0)
-	moveq   #1,d0 
-	moveq   #2,d0 
-	moveq   #3,d0 
+	move.w  #$8004,$2(a3,d1)
+	nop
+	clr.w   d0
+	nop
 
 test7: 
 	lea	    color7,a0
-    moveq   #0,d0
+    moveq   #1,d0
 	move.w  #$8004,$DFF09C
-	moveq   #1,d0 
-	moveq   #2,d0 
-	moveq   #3,d0 
+	nop
+	clr.w   d0
+	nop
 
 ;
 ; Long writes
@@ -122,64 +123,65 @@ test7:
 
 test11: 
 	lea	    color11,a0
-    moveq   #0,d0
+    moveq   #1,d0
 	move.l  #$C0048004,INTENA(a6)
-	moveq   #1,d0 
-	moveq   #2,d0 
-	moveq   #3,d0 
+	nop
+	clr.l   d0
+	nop
 
 test12: 
 	lea	    color12,a0
-    moveq   #0,d0
+    moveq   #1,d0
 	lea     $DFF09A,a3
 	move.l  #$C0048004,(a3)
-	moveq   #1,d0 
-	moveq   #2,d0 
-	moveq   #3,d0 
+	nop
+	clr.l   d0
+	nop
 
 test13: 
 	lea	    color13,a0
-    moveq   #0,d0
+    moveq   #1,d0
 	lea     $DFF09A,a3
 	move.l  #$C0048004,(a3)+
-	moveq   #1,d0 
-	moveq   #2,d0 
-	moveq   #3,d0 
+	nop
+	clr.l   d0
+	nop
 
 test14: 
 	lea	    color14,a0
-    moveq   #0,d0
+    moveq   #1,d0
 	lea     $DFF09E,a3
 	move.l  #$C0048004,-(a3)
-	moveq   #1,d0 
-	moveq   #2,d0 
-	moveq   #3,d0 
+	nop
+	clr.l   d0
+	nop
 
 test15: 
 	lea	    color15,a0
-    moveq   #0,d0
+    moveq   #1,d0
 	lea     $DFF098,a3
 	move.l  #$C0048004,$2(a3)
-	moveq   #1,d0 
-	moveq   #2,d0 
-	moveq   #3,d0 
+	nop
+	clr.l   d0
+	nop
 
 test16: 
 	lea	    color16,a0
-    moveq   #0,d0
+	moveq   #0,d1
+    moveq   #1,d0
 	lea     $DFF098,a3
-	move.l  #$C0048004,$2(a3,d0)
-	moveq   #1,d0 
-	moveq   #2,d0 
-	moveq   #3,d0 
+	move.l  #$C0048004,$2(a3,d1)
+	nop
+	clr.l   d0
+	nop
 
 test17: 
 	lea	    color17,a0
-    moveq   #0,d0
+    moveq   #1,d0
 	move.l  #$C0048004,$DFF09A
-	moveq   #1,d0 
-	moveq   #2,d0 
-	moveq   #3,d0 
+	nop
+	clr.l   d0
+	nop
 
     rts
 
