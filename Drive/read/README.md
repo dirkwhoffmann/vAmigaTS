@@ -14,5 +14,9 @@ Same as read1 in SYNC mode.
 
 Requests 2 words to read with no drive selected. On a real machine (A500 8A with a Gotek drive), the image flickers heavily, meaning that interrupt timing varies between frames. 
 
+#### read3 
+
+Requests 2 words from df0 with the motor being off.
+
 
 Dirk Hoffmann, 2019 - 2020
