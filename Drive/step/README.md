@@ -14,5 +14,9 @@ Moves the drive head inwards to cylinder 40. After that, the head is moved back 
 
 Pulses the STEP line as fast as possible to see how many cylinders get skipped. 
 
+#### step5
+
+Same as step1 with all four drives selected at the same time. Make sure to connect df0 ... df3 before running this test. The test succeeds if all drives perform the same head movement in parallel.
+
 
 Dirk Hoffmann, 2020
