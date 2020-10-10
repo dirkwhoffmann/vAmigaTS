@@ -31,36 +31,39 @@ MAIN:
 	move.w  #$7FFF,DMACON(a1)
 
 	; Install interrupt handlers
-	lea	    irq3(pc),a3
+	lea	irq3(pc),a3
  	move.l	a3,LVL3_INT_VECTOR
 	
 	; Setup bitplane data
-	lea     bitplanes(pc),a0 
-	move.w  #51201,d0
+	lea bitplane1(pc),a2 
+	lea bitplane1(pc),a3 
+	move.w #51201,d0
 .loop:
-	move.b  #$00,(a0)+
-	dbra    d0,.loop
+	move.b #$00,(a2)+
+	move.b #$00,(a3)+
+	dbra d0,.loop
 
-	lea     bitplanes(pc),a0 
-	move.w  #500,d0
+	lea bitplane1(pc),a2 
+	lea bitplane1(pc),a3 
+	move.w #500,d0
 .loop2:
-	move.b  #$AA,(a0)+
-	dbra    d0,.loop2
-
+	move.b #$AA,(a2)+
+	move.b #$F0,(a3)+
+	dbra d0,.loop2
 
 	; Setup colors
-	move.w  #$000,COLOR00(a1)
-	move.w  #$FF0,COLOR01(a1)
-	move.w  #$FF0,COLOR17(a1)
-	move.w  #$0FF,COLOR18(a1)
-	move.w  #$F0F,COLOR19(a1)
-	move.w  #$880,COLOR21(a1)
-	move.w  #$077,COLOR22(a1)
-	move.w  #$777,COLOR23(a1)
+	move.w #$000,COLOR00(a1)
+	move.w #$FF0,COLOR01(a1)
+	move.w #$FF0,COLOR17(a1)
+	move.w #$0FF,COLOR18(a1)
+	move.w #$F0F,COLOR19(a1)
+	move.w #$880,COLOR21(a1)
+	move.w #$077,COLOR22(a1)
+	move.w #$777,COLOR23(a1)
 
 	; Install copper list
-	lea	    copper(pc),a0
-	move.l  a0,COP1LC(a1)
+	lea	copper(pc),a0
+	move.l	a0,COP1LC(a1)
 	move.w  COPJMP1(a1),d0
 
 	; Enable DMA
@@ -73,7 +76,7 @@ MAIN:
 	move.w  #$C020,INTENA(a1)
 
 	; Configure CLXCON
-	move.w  #$FFFF,$98(a1)
+	move.w #$F083,$98(a1)
 
 .mainLoop:
 	bra.b	.mainLoop
@@ -83,18 +86,19 @@ irq3:
 	move.w	#$3FFF,INTREQ(a1)	; Acknowledge
 
 	; Reset bitplane pointers
-	lea     bitplanes(pc),a2
-	lea     BPL1PTH(a1),a3
-	move.l	a2,(a3)
+	lea     bitplane1(pc),a2
+	move.l	a2,BPL1PTH(a1)
+	lea     bitplane1(pc),a2
+	move.l	a2,BPL2PTH(a1)
 
 	; Reset sprite pointers
 	lea	    SPRITE1(pc),a2
  	move.l	a2,SPR0PTH(a1)
 	lea	    SPRITE2(pc),a2
- 	move.l	a2,SPR1PTH(a1)
+ 	move.l	a2,SPR2PTH(a1)
 
  	lea  	DUMMYSPRITE(pc),a2
- 	move.l	a2,SPR2PTH(a1)
+ 	move.l	a2,SPR1PTH(a1)
  	move.l	a2,SPR3PTH(a1)
  	move.l	a2,SPR4PTH(a1)
  	move.l	a2,SPR5PTH(a1)
@@ -240,7 +244,7 @@ copper:
 
 	dc.w	$3001,$FFFE  ; WAIT 
 	dc.w	COLOR00, $F00
-	dc.w	BPLCON0,(1<<12)|$200
+	dc.w	BPLCON0,(2<<12)|$200
 	dc.w    COLOR01,$66F
 	dc.w	$30D9,$FFFE  ; WAIT 
 	dc.w	COLOR00, $000
@@ -380,7 +384,7 @@ bit0:
 	;;
 
 SPRITE1:
-			DC.W    $3440,$4400 ;VSTART, HSTART, VSTOP
+			DC.W    $3440,$4400 ; VSTART, HSTART, VSTOP
 	        DC.W    $07E0,$0000 ; 0
 	        DC.W    $1FF8,$0000 ; 1
 	        DC.W    $3FFC,$0000 ; 2
@@ -400,7 +404,7 @@ SPRITE1:
 			DC.W    $0000,$0000 ; End of sprite data
 
 			;
-SPRITE2:    DC.W    $3450,$4400 ;VSTART, HSTART, VSTOP
+SPRITE2:    DC.W    $3445,$4400 ; VSTART, HSTART, VSTOP
 	        DC.W    $07E0,$0000 ; 0
 	        DC.W    $1FF8,$0000 ; 1
 	        DC.W    $3FFC,$0000 ; 2
@@ -420,6 +424,6 @@ SPRITE2:    DC.W    $3450,$4400 ;VSTART, HSTART, VSTOP
 DUMMYSPRITE:
 	        DC.W    $0000,$0000 ; End of sprite data
 
-bitplanes:
+bitplane1:
 	ds.b    51201
-	
+

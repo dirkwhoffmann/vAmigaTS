@@ -234,13 +234,13 @@ copper:
 	dc.w	BPL1MOD,$0000 ; SCREEN_WIDTH_BYTES*SCREEN_BIT_DEPTH-SCREEN_WIDTH_BYTES
 	dc.w	BPL2MOD,$0000 ; SCREEN_WIDTH_BYTES*SCREEN_BIT_DEPTH-SCREEN_WIDTH_BYTES
  
-    ; 
+    ;  
 	; Block 1 (LORES)
 	;
 
 	dc.w	$3001,$FFFE  ; WAIT 
 	dc.w	COLOR00, $F00
-	dc.w	BPLCON0,(1<<12)|$200
+	dc.w	BPLCON0,(1<<12)|$200|$400   ; Dual-playfield mode
 	dc.w    COLOR01,$66F
 	dc.w	$30D9,$FFFE  ; WAIT 
 	dc.w	COLOR00, $000
