@@ -38,9 +38,13 @@ Similar to todint2 for CIAB.
 
 This test matches the counter value with the alarm value while the timer is stopped. It checks if the IRQ is triggered in this state. 
 
-#### todpulse1 and todpulse2
+#### todpulse1a
 
-Both test utilize the Copper to trigger an interrupt at a certail location. Inside the IRQ handler the TOD clock of CIA B is reset to 0. After that, the tests wait until the TODLO register changes, and display the value of VHPOSR in form of color bars. 
+This test resets the TOD clock of CIA A inside the VERTB IRQ handler. After that, it wait until the TODLO register changes, and display the value of VHPOSR in form of color bars. 
+
+#### todpulse1b and todpulse2b
+
+Similar to todpulse1a for CIA B (which counts HSYNC pulses). Both test utilize the Copper to trigger an interrupt at a certain location. Inside the IRQ handler the TOD clock of CIA B is reset to 0. After that, the tests wait until the TODLO register changes, and display the value of VHPOSR in form of color bars.
 
 #### toddelay1 to toddelay3
 

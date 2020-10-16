@@ -1,5 +1,5 @@
 BASE = ../../../..
-FLOPPY=bin/todpulse1.adf
-MODULE=todpulse1.s
+FLOPPY=bin/todpulse1b.adf
+MODULE=todpulse1b.s
 
 include $(BASE)/shared/base.mk
