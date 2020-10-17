@@ -46,7 +46,7 @@ This test resets the TOD clock of CIA A inside the VERTB IRQ handler. After that
 
 Similar to todpulse1a for CIA B (which counts HSYNC pulses). Both test utilize the Copper to trigger an interrupt at a certain location. Inside the IRQ handler the TOD clock of CIA B is reset to 0. After that, the tests wait until the TODLO register changes, and display the value of VHPOSR in form of color bars.
 
-#### toddelay1 to toddelay3
+#### toddelay1 to toddelay3 (DEPRECATED)
 
 These tests reset the TOD clock of CIA B and read back TODLO at certain locations. Two tests of this kind are performed and the results are displayed in form of color bars.
 
