@@ -2,9 +2,17 @@
 
 Verification of CIA timers and related interrupts.
 
+#### cont1 and cont2
+
+cont1 runs timers CIAA::A and CIAB::A with a start value of $3781 in continuous mode. cont2 uses as start value of $3782. In the timer IRQ handlers, vertical stripes are drawn. On a real machine, the stripes are slowly moving. They move up in cont1 and down in cont2. 
+
+#### cont3 and cont4
+
+Same for timers CIAA::B and CIAB::B.
+
 #### timer1
 
-Starts timers CIAA::A and CIAB::A in the IRQ level 1 handler. When the timers fire, the IRQ level 2 handler or the level 6 IRQ handler is called, respectively. The background color is changed to enable timing verification.
+Starts timers CIAA::A and CIAB::A in the IRQ level 1 handler. When the timers fire, the level 2 or level 6 IRQ handlers are called, respectively. The background color is changed to enable timing verification.
 
 #### timer2
 

@@ -26,11 +26,11 @@ Expected result (A500 8A):
 - latch8: Counting
 - latch9: Counting
 
-#### todint1 and todint2
+#### todint1 and todint2 (DEPRECATED)
 
 These tests configure CIAA to trigger TOD interrupts. In the interrupt handler, the values of VPOSR and VHPOSR are displayed, respectively.
 
-#### todint3
+#### todint3  (DEPRECATED)
 
 Similar to todint2 for CIAB.
 
@@ -38,11 +38,11 @@ Similar to todint2 for CIAB.
 
 This test matches the counter value with the alarm value while the timer is stopped. It checks if the IRQ is triggered in this state. 
 
-#### todpulse1a
+#### todpulse1a  (DEPRECATED)
 
 This test resets the TOD clock of CIA A inside the VERTB IRQ handler. After that, it wait until the TODLO register changes, and display the value of VHPOSR in form of color bars. 
 
-#### todpulse1b and todpulse2b
+#### todpulse1b and todpulse2b  (DEPRECATED)
 
 Similar to todpulse1a for CIA B (which counts HSYNC pulses). Both test utilize the Copper to trigger an interrupt at a certain location. Inside the IRQ handler the TOD clock of CIA B is reset to 0. After that, the tests wait until the TODLO register changes, and display the value of VHPOSR in form of color bars.
 
