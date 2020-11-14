@@ -14,7 +14,7 @@ Same as block*x* with an additional manual write to BPL5DAT and BPL6DAT.
 
 Similar to block*x* with different bitmap patterns and colors.
 
-### mode*x*b
+### mode*x*c
 
 Same as mode*x* with an additional manual write to BPL5DAT.
 
