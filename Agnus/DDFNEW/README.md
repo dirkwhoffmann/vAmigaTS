@@ -18,4 +18,9 @@ Uses DDFSTART and DDFSTOP in combination with BPLCON1. The tests visualize how t
 
 Similar to shift3 with different shift values for even and odd bitplanes.
 
+#### lupo1
+
+This test mimics parts of the Copper list of "Lupo Alberto (1991)(Idea)" which fails in vAmiga.
+
+
 Dirk Hoffmann, 2020
