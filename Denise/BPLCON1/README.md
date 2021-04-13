@@ -4,17 +4,18 @@ The tests in this test suite modify register BPLCON1 (biplane shift values) in v
 
 ## New tests
 
-#### basic1
+#### simple<n> 
+
+Sets DDFSTRT to $38 + n and runs BPLCON1 through $00, $11, $22, etc.
+
+#### simple1 [DEPRECATED]
 
 Modifies BPLCON1 at the beginning of a rasterline. 
 
-#### timing1
+#### timing1 - timing5
 
-Modifies BPLCON1 at a fixed position in the middle of a rasterline.
+Modifies BPLCON1 at a various positions in the middle of a rasterline.
 
-#### timing2
-
-Set BPLCON1 to a fixed values at varying horizontal positions.
 
 ## Old tests
 
