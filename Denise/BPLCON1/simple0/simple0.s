@@ -28,9 +28,13 @@ MAIN:
 	
 	; Setup bitplane data
 	lea bitplanes(pc),a0 
-	move.w #51201,d0
+	; move.w #51201,d0
+	move.w #6400,d0
 .loop:
-	move.b #$AA,(a0)+
+	move.w #$AAAA,(a0)+
+	move.w #$FFFF,(a0)+
+	move.w #$C0C0,(a0)+
+	move.w #$AAAA,(a0)+
 	dbra d0,.loop
 
 	; Setup colors
