@@ -6,41 +6,6 @@
 PRIV_VECTOR         equ $20
 TRACE_VECTOR        equ $24
 
-CIAA_REG            equ $BFE001	
-CIAB_REG            equ $BFD000	
-
-CIAA_PRA            equ $BFE001	
-CIAA_PRB            equ $BFE101
-CIAA_DDRA           equ $BFE201
-CIAA_DDRB           equ $BFE301
-CIAA_TALO           equ $BFE401
-CIAA_TAHI           equ $BFE501
-CIAA_TBLO           equ $BFE601
-CIAA_TBHI           equ $BFE701
-CIAA_TODLO          equ $BFE801
-CIAA_TODMID         equ $BFE901
-CIAA_TODHI          equ $BFEA01
-CIAA_SDR            equ $BFEC01
-CIAA_ICR            equ $BFED01
-CIAA_CRA            equ $BFEE01
-CIAA_CRB            equ $BFEF01
-
-CIAB_PRA            equ $BFD000	
-CIAB_PRB            equ $BFD100
-CIAB_DDRA           equ $BFD200
-CIAB_DDRB           equ $BFD300
-CIAB_TALO           equ $BFD400
-CIAB_TAHI           equ $BFD500
-CIAB_TBLO           equ $BFD600
-CIAB_TBHI           equ $BFD700
-CIAB_TODLO          equ $BFD800
-CIAB_TODMID         equ $BFD900
-CIAB_TODHI          equ $BFDA00
-CIAB_SDR            equ $BFDC00
-CIAB_ICR            equ $BFDD00
-CIAB_CRA            equ $BFDE00
-CIAB_CRB            equ $BFDF00
-
 LVL1_INT_VECTOR		equ $64
 LVL2_INT_VECTOR	    equ $68
 LVL3_INT_VECTOR		equ $6c
@@ -64,9 +29,9 @@ MAIN:
  	move.l	a2,LVL3_INT_VECTOR
 
  	; Install exception handlers
-	lea	trace(pc),a3
+	lea	    trace(pc),a3
  	move.l	a3,TRACE_VECTOR
-	lea	priv(pc),a3
+	lea	    priv(pc),a3
  	move.l	a3,PRIV_VECTOR
 
 	; Install copper list
@@ -82,10 +47,6 @@ MAIN:
 	move.w	#$8004,INTENA(a1)   ; Soft
 	move.w	#$8020,INTENA(a1)   ; VBLANK
 	move.w	#$C000,INTENA(a1)   ; EN
-
-	; Read test values from CIAs
-	move.b  CIAA_REG,d1
-	move.b  CIAB_REG,d0
 
 .mainLoop:
 	jsr     synccpu
@@ -109,10 +70,10 @@ irq3:
 irq1:
 	move.w  #$0004,INTREQ(a1)   ; Acknowledge	
 	move.w  #$0F0,COLOR00(a1)
-
 	andi    #$7FFF,SR          ; Clear Trace bit
 	stop    #$2000
-
+	move.w  #$FFF,COLOR00(a1)
+	move.w  #$000,COLOR00(a1)
 	rte
 
 synccpu:
@@ -212,7 +173,10 @@ copper:
 	dc.w    $6039,$FFFE
 	dc.w    COLOR00,$888
 	dc.w    INTREQ,$8004 
-	; dc.w    COLOR00,$000
+
+	dc.w    $7039,$FFFE
+	dc.w    COLOR00,$888
+	dc.w    INTREQ,$8020 
 
 	dc.l	$fffffffe
 

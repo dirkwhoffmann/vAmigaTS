@@ -53,9 +53,9 @@ MAIN:
 	bra     .mainLoop
 
 trace:
-	move.w  #$00F,COLOR00(a1)
+	move.w  #$F00,COLOR00(a1)
 	andi    #$7FFF,SR          ; Clear Trace bit
-	move.w  #$000,COLOR00(a1) 
+	move.w  #$2000,COLOR00(a1) 
 	rte
 
 priv: 
@@ -70,8 +70,9 @@ irq3:
 irq1:
 	move.w  #$0004,INTREQ(a1)   ; Acknowledge	
 	move.w  #$0F0,COLOR00(a1)
-	andi    #$7FFF,SR          ; Clear Trace bit
-	stop    #$0000
+	stop    #$A000              ; Trace flag + Supervisor flag
+	move.w  #$FFF,COLOR00(a1)
+	move.w  #$FFF,COLOR00(a1)
 	rte
 
 synccpu:
@@ -171,6 +172,10 @@ copper:
 	dc.w    $6039,$FFFE
 	dc.w    COLOR00,$888
 	dc.w    INTREQ,$8004 
+
+	dc.w    $7039,$FFFE
+	dc.w    COLOR00,$888
+	dc.w    INTREQ,$8020 
 
 	dc.l	$fffffffe
 

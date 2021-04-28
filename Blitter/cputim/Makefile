@@ -3,10 +3,6 @@
 # To run all regression tests:
 # make [-j<number of parallel threads>]
 
-
-# Path to the vAmiga executable
-EXE=/tmp/vAmiga/vAmiga.app/Contents/MacOS/vAmiga
-
 # Collect all .ini files
 INI=$(wildcard */*.ini)
 LOG=$(INI:.ini=.log)
@@ -25,7 +21,7 @@ clean:
 
 %.log: %.tiff
 	@cp $(basename $@).adf /tmp/$(basename $(@F)).adf
-	@$(EXE) $(basename $@).ini &> /dev/null
+	@$(VAMIGA) $(basename $@).ini &> /dev/null
 	@cmp /tmp/$(basename $(@F)).tiff $(basename $@).tiff
 	@echo "$(basename $@): PASS"
 	@echo "$(basename $@): PASS" > $@
@@ -35,7 +31,7 @@ clean:
 %.tiff:
 	@echo "Creating missing reference image $@"
 	@cp $(basename $@).adf /tmp/$(basename $(@F)).adf
-	@$(EXE) $(basename $@).ini &> /dev/null
+	@$(VAMIGA) $(basename $@).ini &> /dev/null
 	@cp /tmp/$(basename $(@F)).tiff $(basename $@).tiff
 	@rm /tmp/$(basename $(@F)).adf
 	@rm /tmp/$(basename $(@F)).tiff
