@@ -1,10 +1,5 @@
-# Path to the vAmiga executable
-VAMIGA = /tmp/vAmiga/vAmiga.app/Contents/MacOS/vAmiga
-
-SUBDIRS = Blitter CPU Denise Interrupts Sprites
+SUBDIRS = stop
 MYMAKE = $(MAKE) --no-print-directory
-
-export VAMIGA
 
 .PHONY: all subdirs clean
 
