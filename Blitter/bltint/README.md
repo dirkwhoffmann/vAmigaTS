@@ -10,5 +10,9 @@ This test has been written to tackle vAmiga bug #466 (High Density by Darkness d
 
 Similar to bltint1 with the CLR command replaced by a series of NOPs.
 
+#### bltint7
+
+Similar to bltint1 with the CLR command replaced by RET.
+
 
 Dirk Hoffmann, 2021

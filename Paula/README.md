@@ -1,12 +1,8 @@
 ## Overview
 
-#### INT
-
-Deprecated interrupt test suite. Replaced by top-level directory Interrupts
-
 #### registers
 
-Verfifies certain properties of the OCS registers belonging to Paula.
+Verfifies basic properties of Paula registers.
 
 
 Dirk Hoffmann, 2020
