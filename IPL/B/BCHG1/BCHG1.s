@@ -88,57 +88,42 @@ color1:
 
 irq1:
 	move.w  #$0F0,COLOR00(a1)
-	beq.s   .l1
-	move.w  #$FF0,COLOR00(a1)
-.l1:
+	bchg    d4,SPR0PTH(a1)
 	move.w  #$FF0,COLOR00(a1)
 	move.w  #$000,COLOR00(a1)
 	move.w  #$3FFF,INTREQ(a1) ; Acknowledge
-	moveq   #0,d0
 	rte
 
 irq2:
 	move.w  #$0F0,COLOR00(a1)
-	beq.s   .l1
-	move.w  #$FF0,COLOR00(a1)
-.l1:
+	bchg    d5,SPR0PTH(a1)
 	move.w  #$FF0,COLOR00(a1)
 	move.w  #$000,COLOR00(a1)
 	move.w  #$3FFF,INTREQ(a1) ; Acknowledge
-	moveq   #1,d0
 	rte
 
 irq3:
 	move.w  #$0F0,COLOR00(a1)
-	beq.s   .l1
-	move.w  #$FF0,COLOR00(a1)
-.l1:
+	bchg    #0,SPR0PTH(a1)
 	move.w  #$FF0,COLOR00(a1)
 	move.w  #$000,COLOR00(a1)
 	move.w  #$3FFF,INTREQ(a1) ; Acknowledge
-	moveq   #0,d0
 	rte
 
 irq4:
 	move.w  #$0F0,COLOR00(a1)
-	beq.s   .l1
- 	move.w  #$FF0,COLOR00(a1)
-.l1:
+	bchg    #3,SPR0PTH(a1)
 	move.w  #$FF0,COLOR00(a1)
 	move.w  #$000,COLOR00(a1)
 	move.w  #$3FFF,INTREQ(a1) ; Acknowledge
-	moveq   #1,d0
 	rte
 
 irq5:
 	move.w  #$0F0,COLOR00(a1)
-	beq.s   .l1
-	move.w  #$FF0,COLOR00(a1)
-.l1:
+	bchg    #7,SPR0PTH(a1)
 	move.w  #$FF0,COLOR00(a1)
 	move.w  #$000,COLOR00(a1)
 	move.w  #$3FFF,INTREQ(a1) ; Acknowledge
-	moveq   #0,d0
 	rte
 
 irq6:

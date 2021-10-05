@@ -88,7 +88,7 @@ color1:
 
 irq1:
 	move.w  #$0F0,COLOR00(a1)
-	beq.s   .l1
+	bne.s   .l1
 	move.w  #$FF0,COLOR00(a1)
 .l1:
 	move.w  #$FF0,COLOR00(a1)
@@ -99,7 +99,7 @@ irq1:
 
 irq2:
 	move.w  #$0F0,COLOR00(a1)
-	beq.s   .l1
+	bne.s   .l1
 	move.w  #$FF0,COLOR00(a1)
 .l1:
 	move.w  #$FF0,COLOR00(a1)
@@ -110,7 +110,7 @@ irq2:
 
 irq3:
 	move.w  #$0F0,COLOR00(a1)
-	beq.s   .l1
+	bne.s   .l1
 	move.w  #$FF0,COLOR00(a1)
 .l1:
 	move.w  #$FF0,COLOR00(a1)
@@ -121,7 +121,7 @@ irq3:
 
 irq4:
 	move.w  #$0F0,COLOR00(a1)
-	beq.s   .l1
+	bne.s   .l1
  	move.w  #$FF0,COLOR00(a1)
 .l1:
 	move.w  #$FF0,COLOR00(a1)
@@ -132,7 +132,7 @@ irq4:
 
 irq5:
 	move.w  #$0F0,COLOR00(a1)
-	beq.s   .l1
+	bne.s   .l1
 	move.w  #$FF0,COLOR00(a1)
 .l1:
 	move.w  #$FF0,COLOR00(a1)
