@@ -37,18 +37,6 @@ MAIN:
  	move.l	a3,LVL5_INT_VECTOR
 	lea	    irq6(pc),a3
  	move.l	a3,LVL6_INT_VECTOR
-
-	; Setup bitplane pointers
-	lea     bitplanes(pc),a2
-	lea     copper(pc),a3
-	moveq	#5,d0
-.bitplaneloop:
-	move.l 	a2,d1
-	move.w	d1,2(a3)
-	swap	d1
-	move.w  d1,6(a3)
-	addq	#8,a3
-	dbra	d0,.bitplaneloop
 	
 	; Install copper list
 	lea	    copper(pc),a0
@@ -73,11 +61,11 @@ MAIN:
 	move.l  #$000F000F,d4
 	move.l  #$00F000F0,d5
 	moveq   #0,d6
-	lea     $DFF120,a4          ; Some unused custom register
-	lea     $DFF122,a5          ; Some unused custom register
 
 mainloop: 
 	jsr     synccpu
+	lea     spare1,a4
+	lea     spare1,a5
 
    	move.w  #8000,d3
 loop1:
@@ -193,19 +181,6 @@ synccpu:
 	rts
 	
 copper:
-	dc.w	BPL1PTL,0
-	dc.w	BPL1PTH,0
-	dc.w	BPL2PTL,0
-	dc.w	BPL2PTH,0
-	dc.w	BPL3PTL,0
-	dc.w	BPL3PTH,0
-	dc.w	BPL4PTL,0
-	dc.w	BPL4PTH,0
-	dc.w	BPL5PTL,0
-	dc.w	BPL5PTH,0
-	dc.w	BPL6PTL,0
-	dc.w	BPL6PTH,0
-
 	dc.w	BPLCON0,(0<<12)|$200 
 
 	dc.w    $4F39, $FFFE         ; WAIT
@@ -551,5 +526,9 @@ copper:
 
 	dc.l	$fffffffe
 
-bitplanes:
-	ds.b 61440,$00
+
+	ds.b 128,$00
+spare:	
+	ds.b 128,$00
+spare1:
+	ds.b 128,$00
