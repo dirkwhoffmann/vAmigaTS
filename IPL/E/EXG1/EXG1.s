@@ -59,7 +59,7 @@ MAIN:
 
 mainloop: 
 	jsr     synccpu
-	lea     subroutine,a4
+	lea     spare1,a4
 	lea     spare1,a5
 	moveq   #0,d4
 	moveq   #0,d5
@@ -84,34 +84,34 @@ color1:
 
 irq1:
 	move.w  #$0F0,COLOR00(a1)
-	jsr     (a4)
+	exg     d4,d4
 	move.w  #$FF0,COLOR00(a1)
 	move.w  #$000,COLOR00(a1)
 	move.w  #$3FFF,INTREQ(a1) ; Acknowledge
-	lea     subroutine,a4
 	rte
 
 irq2:
 	move.w  #$0F0,COLOR00(a1)
-	jsr     $0(a4)
+	exg     d4,d5
 	move.w  #$FF0,COLOR00(a1)
 	move.w  #$000,COLOR00(a1)
 	move.w  #$3FFF,INTREQ(a1) ; Acknowledge
-	lea     subroutine,a4
-	moveq   #0,d4
+	nop
 	rte
 
 irq3:
 	move.w  #$0F0,COLOR00(a1)
-	jsr     $0(a4,d4)
+	exg     d5,d5
 	move.w  #$FF0,COLOR00(a1)
 	move.w  #$000,COLOR00(a1)
 	move.w  #$3FFF,INTREQ(a1) ; Acknowledge
+	nop
+	nop
 	rte
 
 irq4:
 	move.w  #$0F0,COLOR00(a1)
-	jsr     subroutine
+	exg     d5,d4
 	move.w  #$FF0,COLOR00(a1)
 	move.w  #$000,COLOR00(a1)
 	move.w  #$3FFF,INTREQ(a1) ; Acknowledge
@@ -119,7 +119,7 @@ irq4:
 
 irq5:
 	move.w  #$0F0,COLOR00(a1)
-	jsr     subroutine(pc)
+	exg     d4,d5
 	move.w  #$FF0,COLOR00(a1)
 	move.w  #$000,COLOR00(a1)
 	move.w  #$3FFF,INTREQ(a1) ; Acknowledge
@@ -130,12 +130,7 @@ irq6:
 	move.w  #$F00,COLOR00(a1)
 	move.w  #$3FFF,INTREQ(a1) ; Acknowledge
 	move.w  #$000,COLOR00(a1)
-	lea     subroutine,a4
 	rte 
-
-subroutine:
-    move.w  #$0FF,COLOR00(a1)
-	rts
 
 synccpu:
 	lea     VHPOSR(a1),a3     ; VHPOSR     

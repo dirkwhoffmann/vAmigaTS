@@ -3,6 +3,8 @@
 	include "hardware/intbits.i"
 	include "ministartup.s"
 
+ILL_EXC_VECTOR		equ $10
+CHK_EXC_VECTOR		equ $18
 LVL1_INT_VECTOR		equ $64
 LVL2_INT_VECTOR		equ $68
 LVL3_INT_VECTOR		equ $6c
@@ -25,6 +27,10 @@ MAIN:
 	move.b  #$7F,$BFED01  ; CIA A
 
 	; Install exception handlers
+	lea	    illex(pc),a2
+ 	move.l	a2,ILL_EXC_VECTOR
+	lea	    chkex(pc),a2
+ 	move.l	a2,CHK_EXC_VECTOR
 	lea	    irq1(pc),a3
  	move.l	a3,LVL1_INT_VECTOR
 	lea	    irq2(pc),a3
@@ -57,12 +63,17 @@ MAIN:
 	move.w 	#$A000,INTENA(a1)   ; Level 6
 	move.w 	#$C000,INTENA(a1)   ; INTEN
 
+	; Initialize some registers for being used by the test command
+	move.l  #$000F000F,d4
+	move.l  #$00F000F0,d5
+	moveq   #0,d6
+
 mainloop: 
 	jsr     synccpu
-	lea     subroutine,a4
+	lea     spare1,a4
 	lea     spare1,a5
-	moveq   #0,d4
-	moveq   #0,d5
+	moveq   #42,d0
+	moveq   #42,d1
    	move.w  #8000,d3
 loop1:
 	dbra    d3,loop1
@@ -82,28 +93,37 @@ color1:
 	dc.w    $4F4
 	dc.w    $4F4
 
+illex:
+    move.w  #$0FF,COLOR00(a1)
+	add.w   #2,$4(a7)          ; Saved PC += 2
+    move.w  #$000,COLOR00(a1)
+	rte
+
+chkex: 
+    move.w  #$FFF,COLOR00(a1)
+    move.w  #$00F,COLOR00(a1)
+    move.w  #$FF0,COLOR00(a1)
+	rte
+
 irq1:
 	move.w  #$0F0,COLOR00(a1)
-	jsr     (a4)
+	chk     d1,d0
 	move.w  #$FF0,COLOR00(a1)
 	move.w  #$000,COLOR00(a1)
 	move.w  #$3FFF,INTREQ(a1) ; Acknowledge
-	lea     subroutine,a4
 	rte
 
 irq2:
 	move.w  #$0F0,COLOR00(a1)
-	jsr     $0(a4)
+	illegal
 	move.w  #$FF0,COLOR00(a1)
 	move.w  #$000,COLOR00(a1)
 	move.w  #$3FFF,INTREQ(a1) ; Acknowledge
-	lea     subroutine,a4
-	moveq   #0,d4
 	rte
 
 irq3:
 	move.w  #$0F0,COLOR00(a1)
-	jsr     $0(a4,d4)
+	illegal
 	move.w  #$FF0,COLOR00(a1)
 	move.w  #$000,COLOR00(a1)
 	move.w  #$3FFF,INTREQ(a1) ; Acknowledge
@@ -111,7 +131,7 @@ irq3:
 
 irq4:
 	move.w  #$0F0,COLOR00(a1)
-	jsr     subroutine
+	illegal
 	move.w  #$FF0,COLOR00(a1)
 	move.w  #$000,COLOR00(a1)
 	move.w  #$3FFF,INTREQ(a1) ; Acknowledge
@@ -119,23 +139,17 @@ irq4:
 
 irq5:
 	move.w  #$0F0,COLOR00(a1)
-	jsr     subroutine(pc)
+	illegal
 	move.w  #$FF0,COLOR00(a1)
 	move.w  #$000,COLOR00(a1)
 	move.w  #$3FFF,INTREQ(a1) ; Acknowledge
-	nop
 	rte
 
 irq6:
 	move.w  #$F00,COLOR00(a1)
 	move.w  #$3FFF,INTREQ(a1) ; Acknowledge
 	move.w  #$000,COLOR00(a1)
-	lea     subroutine,a4
 	rte 
-
-subroutine:
-    move.w  #$0FF,COLOR00(a1)
-	rts
 
 synccpu:
 	lea     VHPOSR(a1),a3     ; VHPOSR     

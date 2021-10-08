@@ -57,12 +57,16 @@ MAIN:
 	move.w 	#$A000,INTENA(a1)   ; Level 6
 	move.w 	#$C000,INTENA(a1)   ; INTEN
 
+	; Initialize some registers for being used by the test command
+	move.l  #$000F000F,d4
+	move.l  #$00F000F0,d5
+	moveq   #0,d6
+
 mainloop: 
 	jsr     synccpu
-	lea     subroutine,a4
+	lea     spare1,a4
 	lea     spare1,a5
-	moveq   #0,d4
-	moveq   #0,d5
+
    	move.w  #8000,d3
 loop1:
 	dbra    d3,loop1
@@ -84,26 +88,24 @@ color1:
 
 irq1:
 	move.w  #$0F0,COLOR00(a1)
-	jsr     (a4)
+	lea     (a4),a5
 	move.w  #$FF0,COLOR00(a1)
 	move.w  #$000,COLOR00(a1)
 	move.w  #$3FFF,INTREQ(a1) ; Acknowledge
-	lea     subroutine,a4
 	rte
 
 irq2:
 	move.w  #$0F0,COLOR00(a1)
-	jsr     $0(a4)
+	lea     $10(a4),a5
 	move.w  #$FF0,COLOR00(a1)
 	move.w  #$000,COLOR00(a1)
 	move.w  #$3FFF,INTREQ(a1) ; Acknowledge
-	lea     subroutine,a4
-	moveq   #0,d4
+	moveq   #0,d0
 	rte
 
 irq3:
 	move.w  #$0F0,COLOR00(a1)
-	jsr     $0(a4,d4)
+	lea     $10(a4,d0),a5
 	move.w  #$FF0,COLOR00(a1)
 	move.w  #$000,COLOR00(a1)
 	move.w  #$3FFF,INTREQ(a1) ; Acknowledge
@@ -111,7 +113,7 @@ irq3:
 
 irq4:
 	move.w  #$0F0,COLOR00(a1)
-	jsr     subroutine
+	lea     $FFFF,a4
 	move.w  #$FF0,COLOR00(a1)
 	move.w  #$000,COLOR00(a1)
 	move.w  #$3FFF,INTREQ(a1) ; Acknowledge
@@ -119,23 +121,17 @@ irq4:
 
 irq5:
 	move.w  #$0F0,COLOR00(a1)
-	jsr     subroutine(pc)
+	lea     $FFFFFFFF,a4
 	move.w  #$FF0,COLOR00(a1)
 	move.w  #$000,COLOR00(a1)
 	move.w  #$3FFF,INTREQ(a1) ; Acknowledge
-	nop
 	rte
 
 irq6:
 	move.w  #$F00,COLOR00(a1)
 	move.w  #$3FFF,INTREQ(a1) ; Acknowledge
 	move.w  #$000,COLOR00(a1)
-	lea     subroutine,a4
 	rte 
-
-subroutine:
-    move.w  #$0FF,COLOR00(a1)
-	rts
 
 synccpu:
 	lea     VHPOSR(a1),a3     ; VHPOSR     
