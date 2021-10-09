@@ -88,7 +88,7 @@ color1:
 
 irq1:
 	move.w  #$0F0,COLOR00(a1)
-	move.w  d5,$DFF120
+	move.w  d5,$30
 	move.w  #$FF0,COLOR00(a1)
 	move.w  #$000,COLOR00(a1)
 	move.w  #$3FFF,INTREQ(a1) ; Acknowledge
@@ -96,7 +96,7 @@ irq1:
 
 irq2:
 	move.w  #$0F0,COLOR00(a1)
-	move.w  (a4),$DFF120
+	move.w  (a4),$30
 	move.w  #$FF0,COLOR00(a1)
 	move.w  #$000,COLOR00(a1)
 	move.w  #$3FFF,INTREQ(a1) ; Acknowledge
@@ -105,7 +105,7 @@ irq2:
 
 irq3:
 	move.w  #$0F0,COLOR00(a1)
-	move.w  d5,$DFF120
+	move.w  d5,$30
 	move.w  #$FF0,COLOR00(a1)
 	move.w  #$000,COLOR00(a1)
 	move.w  #$3FFF,INTREQ(a1) ; Acknowledge
@@ -113,7 +113,7 @@ irq3:
 
 irq4:
 	move.w  #$0F0,COLOR00(a1)
-	move.w  -(a4),$DFF120
+	move.w  -(a4),$30
 	move.w  #$FF0,COLOR00(a1)
 	move.w  #$000,COLOR00(a1)
 	move.w  #$3FFF,INTREQ(a1) ; Acknowledge
@@ -121,7 +121,7 @@ irq4:
 
 irq5:
 	move.w  #$0F0,COLOR00(a1)
-	move.w  (a4)+,$DFF120
+	move.w  (a4)+,$30
 	move.w  #$FF0,COLOR00(a1)
 	move.w  #$000,COLOR00(a1)
 	move.w  #$3FFF,INTREQ(a1) ; Acknowledge
