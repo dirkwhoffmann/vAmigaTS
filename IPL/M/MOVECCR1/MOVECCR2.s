@@ -66,7 +66,8 @@ mainloop:
 	jsr     synccpu
 	lea     spare1,a4
 	lea     spare1,a5
-
+	moveq   #0,d4
+	moveq   #0,d5
    	move.w  #8000,d3
 loop1:
 	dbra    d3,loop1
@@ -88,7 +89,7 @@ color1:
 
 irq1:
 	move.w  #$0F0,COLOR00(a1)
-	move    d0,CCR
+	move    $10(a5),CCR
 	move.w  #$FF0,COLOR00(a1)
 	move.w  #$000,COLOR00(a1)
 	move.w  #$3FFF,INTREQ(a1) ; Acknowledge
@@ -96,7 +97,7 @@ irq1:
 
 irq2:
 	move.w  #$0F0,COLOR00(a1)
-	move    (a4),CCR
+	move    $10(a5,d5),CCR
 	move.w  #$FF0,COLOR00(a1)
 	move.w  #$000,COLOR00(a1)
 	move.w  #$3FFF,INTREQ(a1) ; Acknowledge
@@ -105,7 +106,7 @@ irq2:
 
 irq3:
 	move.w  #$0F0,COLOR00(a1)
-	move    d0,CCR
+	move    $DFF120,CCR
 	move.w  #$FF0,COLOR00(a1)
 	move.w  #$000,COLOR00(a1)
 	move.w  #$3FFF,INTREQ(a1) ; Acknowledge
@@ -113,7 +114,7 @@ irq3:
 
 irq4:
 	move.w  #$0F0,COLOR00(a1)
-	move    (a4)+,CCR
+	move    #$FFFF,CCR
 	move.w  #$FF0,COLOR00(a1)
 	move.w  #$000,COLOR00(a1)
 	move.w  #$3FFF,INTREQ(a1) ; Acknowledge
@@ -121,7 +122,7 @@ irq4:
 
 irq5:
 	move.w  #$0F0,COLOR00(a1)
-	move    -(a4),CCR
+	move    #$FF,CCR
 	move.w  #$FF0,COLOR00(a1)
 	move.w  #$000,COLOR00(a1)
 	move.w  #$3FFF,INTREQ(a1) ; Acknowledge
