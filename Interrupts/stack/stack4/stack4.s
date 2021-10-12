@@ -51,7 +51,7 @@ MAIN:
 	; Setup bitplane pointers
 	lea     bitplanes(pc),a2
 	lea     copper(pc),a3
-	moveq	#4,d0
+	moveq	#5,d0
 .bitplaneloop:
 	move.l 	a2,d1
 	move.w	d1,2(a3)
@@ -126,7 +126,7 @@ synccpu:
 	move.w  #$000,COLOR00(a1)  
 
 cpuwait:
-	bra.s   mainLoop
+	bra     mainLoop
 
 ;
 ; IRQ handlers
@@ -196,6 +196,8 @@ retirq:
 	dc.w	BPL4PTH,0
 	dc.w	BPL5PTL,0
 	dc.w	BPL5PTH,0
+	dc.w	BPL6PTL,0
+	dc.w	BPL6PTH,0
 
 	dc.w    $5039, $FFFE         ; WAIT
 	dc.w    COLOR00,$F00
@@ -243,44 +245,44 @@ retirq:
 	; 0 bitplanes
 	; 
 
-	dc.w    BPLCON0,$0200 
+	dc.w    BPLCON0,$6200 
 
-	dc.w    $5339, $FFFE         ; Wait
+	dc.w    $5319, $FFFE         ; Wait
 	dc.w    COLOR00,$F4F
 	dc.w 	INTREQ,$8004         ; Level 1 interrupt
-	dc.w    $5539, $FFFE         ; Wait
+	dc.w    $5519, $FFFE         ; Wait
 	dc.w    COLOR00,$F4F
 	dc.w 	INTREQ,$8008         ; Level 2 interrupt
-	dc.w    $5739, $FFFE         ; Wait
+	dc.w    $5719, $FFFE         ; Wait
 	dc.w    COLOR00,$F4F
 	dc.w 	INTREQ,$8010         ; Level 3 interrupt
-	dc.w    $5939, $FFFE         ; Wait
+	dc.w    $5919, $FFFE         ; Wait
 	dc.w    COLOR00,$F4F
 	dc.w 	INTREQ,$8080         ; Level 4 interrupt
 
-	dc.w    $5B41, $FFFE         ; Wait
+	dc.w    $5B21, $FFFE         ; Wait
 	dc.w    COLOR00,$F4F
 	dc.w 	INTREQ,$8004         ; Level 1 interrupt
-	dc.w    $5D41, $FFFE         ; Wait
+	dc.w    $5D21, $FFFE         ; Wait
 	dc.w    COLOR00,$F4F
 	dc.w 	INTREQ,$8008         ; Level 2 interrupt
-	dc.w    $5F41, $FFFE         ; Wait
+	dc.w    $5F21, $FFFE         ; Wait
 	dc.w    COLOR00,$F4F
 	dc.w 	INTREQ,$8010         ; Level 3 interrupt
-	dc.w    $6141, $FFFE         ; Wait
+	dc.w    $6121, $FFFE         ; Wait
 	dc.w    COLOR00,$F4F
 	dc.w 	INTREQ,$8080         ; Level 4 interrupt
 
-	dc.w    $6343, $FFFE         ; Wait
+	dc.w    $6323, $FFFE         ; Wait
 	dc.w    COLOR00,$F4F
 	dc.w 	INTREQ,$8004         ; Level 1 interrupt
-	dc.w    $6543, $FFFE         ; Wait
+	dc.w    $6523, $FFFE         ; Wait
 	dc.w    COLOR00,$F4F
 	dc.w 	INTREQ,$8008         ; Level 2 interrupt
-	dc.w    $6743, $FFFE         ; Wait
+	dc.w    $6723, $FFFE         ; Wait
 	dc.w    COLOR00,$F4F
 	dc.w 	INTREQ,$8010         ; Level 3 interrupt
-	dc.w    $6943, $FFFE         ; Wait
+	dc.w    $6923, $FFFE         ; Wait
 	dc.w    COLOR00,$F4F
 	dc.w 	INTREQ,$8080         ; Level 4 interrupt
 
@@ -289,44 +291,44 @@ retirq:
 	; 
 
 	dc.w    $7001, $FFFE
-	dc.w    BPLCON0,$1200
+	dc.w    BPLCON0,$6200
 
-	dc.w    $7339, $FFFE         ; Wait
+	dc.w    $7325, $FFFE         ; Wait
 	dc.w    COLOR00,$F4F
 	dc.w 	INTREQ,$8004         ; Level 1 interrupt
-	dc.w    $7539, $FFFE         ; Wait
+	dc.w    $7525, $FFFE         ; Wait
 	dc.w    COLOR00,$F4F
 	dc.w 	INTREQ,$8008         ; Level 2 interrupt
-	dc.w    $7739, $FFFE         ; Wait
+	dc.w    $7725, $FFFE         ; Wait
 	dc.w    COLOR00,$F4F
 	dc.w 	INTREQ,$8010         ; Level 3 interrupt
-	dc.w    $7939, $FFFE         ; Wait
+	dc.w    $7925, $FFFE         ; Wait
 	dc.w    COLOR00,$F4F
 	dc.w 	INTREQ,$8080         ; Level 4 interrupt
 
-	dc.w    $7B41, $FFFE         ; Wait
+	dc.w    $7B27, $FFFE         ; Wait
 	dc.w    COLOR00,$F4F
 	dc.w 	INTREQ,$8004         ; Level 1 interrupt
-	dc.w    $7D41, $FFFE         ; Wait
+	dc.w    $7D27, $FFFE         ; Wait
 	dc.w    COLOR00,$F4F
 	dc.w 	INTREQ,$8008         ; Level 2 interrupt
-	dc.w    $7F41, $FFFE         ; Wait
+	dc.w    $7F27, $FFFE         ; Wait
 	dc.w    COLOR00,$F4F
 	dc.w 	INTREQ,$8010         ; Level 3 interrupt
-	dc.w    $8141, $FFFE         ; Wait
+	dc.w    $8127, $FFFE         ; Wait
 	dc.w    COLOR00,$F4F
 	dc.w 	INTREQ,$8080         ; Level 4 interrupt
 
-	dc.w    $8343, $FFFE         ; Wait
+	dc.w    $8329, $FFFE         ; Wait
 	dc.w    COLOR00,$F4F
 	dc.w 	INTREQ,$8004         ; Level 1 interrupt
-	dc.w    $8543, $FFFE         ; Wait
+	dc.w    $8529, $FFFE         ; Wait
 	dc.w    COLOR00,$F4F
 	dc.w 	INTREQ,$8008         ; Level 2 interrupt
-	dc.w    $8743, $FFFE         ; Wait
+	dc.w    $8729, $FFFE         ; Wait
 	dc.w    COLOR00,$F4F
 	dc.w 	INTREQ,$8010         ; Level 3 interrupt
-	dc.w    $8943, $FFFE         ; Wait
+	dc.w    $8929, $FFFE         ; Wait
 	dc.w    COLOR00,$F4F
 	dc.w 	INTREQ,$8080         ; Level 4 interrupt
 
@@ -335,44 +337,44 @@ retirq:
 	; 
 
 	dc.w    $9001, $FFFE
-	dc.w    BPLCON0,$2200
+	dc.w    BPLCON0,$6200
 
-	dc.w    $9339, $FFFE         ; Wait
+	dc.w    $932B, $FFFE         ; Wait
 	dc.w    COLOR00,$F4F
 	dc.w 	INTREQ,$8004         ; Level 1 interrupt
-	dc.w    $9539, $FFFE         ; Wait
+	dc.w    $952B, $FFFE         ; Wait
 	dc.w    COLOR00,$F4F
 	dc.w 	INTREQ,$8008         ; Level 2 interrupt
-	dc.w    $9739, $FFFE         ; Wait
+	dc.w    $972B, $FFFE         ; Wait
 	dc.w    COLOR00,$F4F
 	dc.w 	INTREQ,$8010         ; Level 3 interrupt
-	dc.w    $9939, $FFFE         ; Wait
+	dc.w    $992B, $FFFE         ; Wait
 	dc.w    COLOR00,$F4F
 	dc.w 	INTREQ,$8080         ; Level 4 interrupt
 
-	dc.w    $9B41, $FFFE         ; Wait
+	dc.w    $9B2D, $FFFE         ; Wait
 	dc.w    COLOR00,$F4F
 	dc.w 	INTREQ,$8004         ; Level 1 interrupt
-	dc.w    $9D41, $FFFE         ; Wait
+	dc.w    $9D2D, $FFFE         ; Wait
 	dc.w    COLOR00,$F4F
 	dc.w 	INTREQ,$8008         ; Level 2 interrupt
-	dc.w    $9F41, $FFFE         ; Wait
+	dc.w    $9F2D, $FFFE         ; Wait
 	dc.w    COLOR00,$F4F
 	dc.w 	INTREQ,$8010         ; Level 3 interrupt
-	dc.w    $A141, $FFFE         ; Wait
+	dc.w    $A12D, $FFFE         ; Wait
 	dc.w    COLOR00,$F4F
 	dc.w 	INTREQ,$8080         ; Level 4 interrupt
 
-	dc.w    $A343, $FFFE         ; Wait
+	dc.w    $A32F, $FFFE         ; Wait
 	dc.w    COLOR00,$F4F
 	dc.w 	INTREQ,$8004         ; Level 1 interrupt
-	dc.w    $A543, $FFFE         ; Wait
+	dc.w    $A52F, $FFFE         ; Wait
 	dc.w    COLOR00,$F4F
 	dc.w 	INTREQ,$8008         ; Level 2 interrupt
-	dc.w    $A743, $FFFE         ; Wait
+	dc.w    $A72F, $FFFE         ; Wait
 	dc.w    COLOR00,$F4F
 	dc.w 	INTREQ,$8010         ; Level 3 interrupt
-	dc.w    $A943, $FFFE         ; Wait
+	dc.w    $A92F, $FFFE         ; Wait
 	dc.w    COLOR00,$F4F
 	dc.w 	INTREQ,$8080         ; Level 4 interrupt
 
@@ -381,44 +383,44 @@ retirq:
 	; 
 
 	dc.w    $B001, $FFFE
-	dc.w    BPLCON0,$3200
+	dc.w    BPLCON0,$6200
 
-	dc.w    $B339, $FFFE         ; Wait
+	dc.w    $B331, $FFFE         ; Wait
 	dc.w    COLOR00,$F4F
 	dc.w 	INTREQ,$8004         ; Level 1 interrupt
-	dc.w    $B539, $FFFE         ; Wait
+	dc.w    $B531, $FFFE         ; Wait
 	dc.w    COLOR00,$F4F
 	dc.w 	INTREQ,$8008         ; Level 2 interrupt
-	dc.w    $B739, $FFFE         ; Wait
+	dc.w    $B731, $FFFE         ; Wait
 	dc.w    COLOR00,$F4F
 	dc.w 	INTREQ,$8010         ; Level 3 interrupt
-	dc.w    $B939, $FFFE         ; Wait
+	dc.w    $B931, $FFFE         ; Wait
 	dc.w    COLOR00,$F4F
 	dc.w 	INTREQ,$8080         ; Level 4 interrupt
 
-	dc.w    $BB41, $FFFE         ; Wait
+	dc.w    $BB33, $FFFE         ; Wait
 	dc.w    COLOR00,$F4F
 	dc.w 	INTREQ,$8004         ; Level 1 interrupt
-	dc.w    $BD41, $FFFE         ; Wait
+	dc.w    $BD33, $FFFE         ; Wait
 	dc.w    COLOR00,$F4F
 	dc.w 	INTREQ,$8008         ; Level 2 interrupt
-	dc.w    $BF41, $FFFE         ; Wait
+	dc.w    $BF33, $FFFE         ; Wait
 	dc.w    COLOR00,$F4F
 	dc.w 	INTREQ,$8010         ; Level 3 interrupt
-	dc.w    $C141, $FFFE         ; Wait
+	dc.w    $C133, $FFFE         ; Wait
 	dc.w    COLOR00,$F4F
 	dc.w 	INTREQ,$8080         ; Level 4 interrupt
 
-	dc.w    $C343, $FFFE         ; Wait
+	dc.w    $C335, $FFFE         ; Wait
 	dc.w    COLOR00,$F4F
 	dc.w 	INTREQ,$8004         ; Level 1 interrupt
-	dc.w    $C543, $FFFE         ; Wait
+	dc.w    $C535, $FFFE         ; Wait
 	dc.w    COLOR00,$F4F
 	dc.w 	INTREQ,$8008         ; Level 2 interrupt
-	dc.w    $C743, $FFFE         ; Wait
+	dc.w    $C735, $FFFE         ; Wait
 	dc.w    COLOR00,$F4F
 	dc.w 	INTREQ,$8010         ; Level 3 interrupt
-	dc.w    $C943, $FFFE         ; Wait
+	dc.w    $C935, $FFFE         ; Wait
 	dc.w    COLOR00,$F4F
 	dc.w 	INTREQ,$8080         ; Level 4 interrupt
 
@@ -427,44 +429,44 @@ retirq:
 	; 
 
 	dc.w    $D001, $FFFE
-	dc.w    BPLCON0,$4200
+	dc.w    BPLCON0,$6200
 
-	dc.w    $D339, $FFFE         ; Wait
+	dc.w    $D313, $FFFE         ; Wait
 	dc.w    COLOR00,$F4F
 	dc.w 	INTREQ,$8004         ; Level 1 interrupt
-	dc.w    $D539, $FFFE         ; Wait
+	dc.w    $D513, $FFFE         ; Wait
 	dc.w    COLOR00,$F4F
 	dc.w 	INTREQ,$8008         ; Level 2 interrupt
-	dc.w    $D739, $FFFE         ; Wait
+	dc.w    $D713, $FFFE         ; Wait
 	dc.w    COLOR00,$F4F
 	dc.w 	INTREQ,$8010         ; Level 3 interrupt
-	dc.w    $D939, $FFFE         ; Wait
+	dc.w    $D913, $FFFE         ; Wait
 	dc.w    COLOR00,$F4F
 	dc.w 	INTREQ,$8080         ; Level 4 interrupt
 
-	dc.w    $DB41, $FFFE         ; Wait
+	dc.w    $DB15, $FFFE         ; Wait
 	dc.w    COLOR00,$F4F
 	dc.w 	INTREQ,$8004         ; Level 1 interrupt
-	dc.w    $DD41, $FFFE         ; Wait
+	dc.w    $DD15, $FFFE         ; Wait
 	dc.w    COLOR00,$F4F
 	dc.w 	INTREQ,$8008         ; Level 2 interrupt
-	dc.w    $DF41, $FFFE         ; Wait
+	dc.w    $DF15, $FFFE         ; Wait
 	dc.w    COLOR00,$F4F
 	dc.w 	INTREQ,$8010         ; Level 3 interrupt
-	dc.w    $E141, $FFFE         ; Wait
+	dc.w    $E115, $FFFE         ; Wait
 	dc.w    COLOR00,$F4F
 	dc.w 	INTREQ,$8080         ; Level 4 interrupt
 
-	dc.w    $E343, $FFFE         ; Wait
+	dc.w    $E317, $FFFE         ; Wait
 	dc.w    COLOR00,$F4F
 	dc.w 	INTREQ,$8004         ; Level 1 interrupt
-	dc.w    $E543, $FFFE         ; Wait
+	dc.w    $E517, $FFFE         ; Wait
 	dc.w    COLOR00,$F4F
 	dc.w 	INTREQ,$8008         ; Level 2 interrupt
-	dc.w    $E743, $FFFE         ; Wait
+	dc.w    $E717, $FFFE         ; Wait
 	dc.w    COLOR00,$F4F
 	dc.w 	INTREQ,$8010         ; Level 3 interrupt
-	dc.w    $E943, $FFFE         ; Wait
+	dc.w    $E917, $FFFE         ; Wait
 	dc.w    COLOR00,$F4F
 	dc.w 	INTREQ,$8080         ; Level 4 interrupt
 
@@ -473,46 +475,46 @@ retirq:
 	; 
 
 	dc.w    $F001, $FFFE
-	dc.w    BPLCON0,$5200
+	dc.w    BPLCON0,$6200
 
-	dc.w    $F339, $FFFE         ; Wait
+	dc.w    $F319, $FFFE         ; Wait
 	dc.w    COLOR00,$F4F
 	dc.w 	INTREQ,$8004         ; Level 1 interrupt
-	dc.w    $F539, $FFFE         ; Wait
+	dc.w    $F519, $FFFE         ; Wait
 	dc.w    COLOR00,$F4F
 	dc.w 	INTREQ,$8008         ; Level 2 interrupt
-	dc.w    $F739, $FFFE         ; Wait
+	dc.w    $F719, $FFFE         ; Wait
 	dc.w    COLOR00,$F4F
 	dc.w 	INTREQ,$8010         ; Level 3 interrupt
-	dc.w    $F939, $FFFE         ; Wait
+	dc.w    $F919, $FFFE         ; Wait
 	dc.w    COLOR00,$F4F
 	dc.w 	INTREQ,$8080         ; Level 4 interrupt
 
-	dc.w    $FB41, $FFFE         ; Wait
+	dc.w    $FB21, $FFFE         ; Wait
 	dc.w    COLOR00,$F4F
 	dc.w 	INTREQ,$8004         ; Level 1 interrupt
-	dc.w    $FD41, $FFFE         ; Wait
+	dc.w    $FD21, $FFFE         ; Wait
 	dc.w    COLOR00,$F4F
 	dc.w 	INTREQ,$8008         ; Level 2 interrupt
-	dc.w    $FF41, $FFFE         ; Wait
+	dc.w    $FF21, $FFFE         ; Wait
 	dc.w    COLOR00,$F4F
 	dc.w 	INTREQ,$8010         ; Level 3 interrupt
 
 	dc.w	$ffdf,$fffe          ; Cross vertical boundary
 
-	dc.w    $0141, $FFFE         ; Wait
+	dc.w    $0123, $FFFE         ; Wait
 	dc.w    COLOR00,$F4F
 	dc.w 	INTREQ,$8080         ; Level 4 interrupt
-	dc.w    $0343, $FFFE         ; Wait
+	dc.w    $0323, $FFFE         ; Wait
 	dc.w    COLOR00,$F4F
 	dc.w 	INTREQ,$8004         ; Level 1 interrupt
-	dc.w    $0543, $FFFE         ; Wait
+	dc.w    $0523, $FFFE         ; Wait
 	dc.w    COLOR00,$F4F
 	dc.w 	INTREQ,$8008         ; Level 2 interrupt
-	dc.w    $0743, $FFFE         ; Wait
+	dc.w    $0723, $FFFE         ; Wait
 	dc.w    COLOR00,$F4F
 	dc.w 	INTREQ,$8010         ; Level 3 interrupt
-	dc.w    $0943, $FFFE         ; Wait
+	dc.w    $0923, $FFFE         ; Wait
 	dc.w    COLOR00,$F4F
 	dc.w 	INTREQ,$8080         ; Level 4 interrupt
 
