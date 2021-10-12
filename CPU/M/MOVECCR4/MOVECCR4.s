@@ -78,6 +78,7 @@ MAIN:
 
 irq1:
 	move.w  #$3FFF,INTREQ(a1) ; Acknowledge
+	nop
 	move    $10(a5),CCR
 	move.w  #$FFF,COLOR00(a1)
 	move.w  #$000,COLOR00(a1)
@@ -85,6 +86,7 @@ irq1:
 
 irq2:
 	move.w  #$3FFF,INTREQ(a1) ; Acknowledge
+	nop
 	move    $5(a5,d5),CCR
 	move.w  #$FFF,COLOR00(a1)
 	move.w  #$000,COLOR00(a1)
@@ -92,6 +94,7 @@ irq2:
 
 irq4:
 	move.w  #$3FFF,INTREQ(a1) ; Acknowledge
+	nop
 	move    $30,CCR
 	move.w  #$FFF,COLOR00(a1)
 	move.w  #$000,COLOR00(a1)
@@ -99,6 +102,7 @@ irq4:
 
 irq5:
 	move.w  #$3FFF,INTREQ(a1) ; Acknowledge
+	nop
 	move    $DFF180,CCR
 	move.w  #$FFF,COLOR00(a1)
 	move.w  #$000,COLOR00(a1)
