@@ -1,35 +1,16 @@
-	include "../../../../include/registers.i"
-	include "hardware/dmabits.i"
-	include "hardware/intbits.i"
-	include "ministartup.s"
-
-CHK_EXC_VECTOR		equ $18
-
-LVL1_INT_VECTOR		equ $64
-LVL2_INT_VECTOR		equ $68
-LVL3_INT_VECTOR		equ $6c
-LVL4_INT_VECTOR		equ $70
-LVL5_INT_VECTOR		equ $74
-LVL6_INT_VECTOR		equ $78
+	include "../../../include/registers.i"
+	include "../../../include/ministartup.i"
+	include "../../../include/util.i"
 
 MAIN:
 
-	; Load OCS base address
-	lea CUSTOM,a1
-
-	; Disable interrupts, DMA and bitplanes
-	move.w  #$7FFF,INTENA(a1)
-	move.w  #$7FFF,DMACON(a1)
-	move.w  #$200,BPLCON0(a1)
-
-	; Disable CIA interrupts
-	move.b  #$7F,$BFDD00  ; CIA B
-	move.b  #$7F,$BFED01  ; CIA A
+	; Prepare the test environment
+	bsr     prepare
 
 	; Install exception handlers
-	lea	irq2(pc),a3
+	lea	    irq2(pc),a3
  	move.l	a3,LVL2_INT_VECTOR
-	lea	irq3_1(pc),a3
+	lea	    irq3_1(pc),a3
  	move.l	a3,LVL3_INT_VECTOR
 
 	; Setup bitplane pointers
@@ -45,12 +26,12 @@ MAIN:
 	dbra	d0,.bitplaneloop
 	
 	; Install copper list
-	lea	copper(pc),a0
+	lea	    copper(pc),a0
 	move.l	a0,COP1LC(a1)
 	move.w  COPJMP1(a1),d0
 
 	; Setup the Blitter
-	jsr prepareblit
+	jsr     prepareblit
 
 	; Enable Interrupts
 	move.w 	#$8008,INTENA(a1)   ; Level 2 (Soft)
@@ -68,29 +49,23 @@ MAIN:
 	move.w	#$C044,INTENA(a1)  
 
 	; IRQ3 handlers
-	lea	irq3_1(pc),a3
-	lea	irq3_2(pc),a4           
+	lea     irq3_1(pc),a3
+	lea	    irq3_2(pc),a4           
 
-.mainLoop:
-	bra.s	.mainLoop
-
-blitWait:
-	tst DMACONR(a1)		;for compatibility
-.waitblit:
-	btst #6,DMACONR(a1)
-	bne.s .waitblit
-	rts
+	; Enter the main loop
+	move.w  #7000,delayloop+2    ; Adjust main loop delay
+	jmp     mainloop
 
 prepareblit:	
 	movem.l d0-a6,-(sp)
-	bsr blitWait
-	move.w #0,BLTCON0(A6)
-	move.w #0,BLTCON1(a1) 
-	move.l #$ffffffff,BLTAFWM(a1)
-	move.w #0,BLTAMOD(a1)
-	move.w #0,BLTBMOD(a1)
-	move.w #0,BLTCMOD(a1)
-	move.w #0,BLTDMOD(a1)
+	bsr     blitWait
+	move.w  #0,BLTCON0(A6)
+	move.w  #0,BLTCON1(a1) 
+	move.l  #$ffffffff,BLTAFWM(a1)
+	move.w  #0,BLTAMOD(a1)
+	move.w  #0,BLTBMOD(a1)
+	move.w  #0,BLTCMOD(a1)
+	move.w  #0,BLTDMOD(a1)
 	movem.l (sp)+,d0-a6
 	rts
 
