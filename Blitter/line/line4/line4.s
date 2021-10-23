@@ -11,7 +11,7 @@ BLTCON1_5   equ $51
 BLTCON1_6   equ $55
 BLTCON1_7   equ $59
 BLTCON1_8   equ $5D
-PATTERN     equ $FFFF
+PATTERN     equ $AAAA
 
 MAIN:
 
