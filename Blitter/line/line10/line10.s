@@ -3,15 +3,15 @@
 	include "../../../include/util.i"
 
 LENGTH		equ $1602
-BLTCON1_1   equ $03
-BLTCON1_2   equ $07
-BLTCON1_3   equ $0B
-BLTCON1_4   equ $0F
-BLTCON1_5   equ $13
-BLTCON1_6   equ $17
-BLTCON1_7   equ $1B
-BLTCON1_8   equ $1F
-PATTERN     equ $3333
+BLTCON1_1   equ $43
+BLTCON1_2   equ $47
+BLTCON1_3   equ $4B
+BLTCON1_4   equ $4F
+BLTCON1_5   equ $53
+BLTCON1_6   equ $57
+BLTCON1_7   equ $5B
+BLTCON1_8   equ $5F
+PATTERN     equ $80F0
 
 MAIN:
 

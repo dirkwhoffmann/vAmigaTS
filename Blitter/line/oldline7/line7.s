@@ -3,15 +3,16 @@
 	include "../../../include/util.i"
 
 LENGTH		equ $1602
-BLTCON1_1   equ $03
-BLTCON1_2   equ $07
-BLTCON1_3   equ $0B
-BLTCON1_4   equ $0F
-BLTCON1_5   equ $13
-BLTCON1_6   equ $17
-BLTCON1_7   equ $1B
-BLTCON1_8   equ $1F
-PATTERN     equ $3333
+BLTCON0_X   equ $0BCA
+BLTCON1_1   equ $01
+BLTCON1_2   equ $05
+BLTCON1_3   equ $09
+BLTCON1_4   equ $0D
+BLTCON1_5   equ $11
+BLTCON1_6   equ $15
+BLTCON1_7   equ $19
+BLTCON1_8   equ $1D
+PATTERN     equ $FFFF
 
 MAIN:
 
@@ -100,7 +101,7 @@ prepareblit:
 	move.w  #-100,BLTAPTL(a1)
 	move.w  #-300,BLTAMOD(a1)
 	move.w  #100,BLTBMOD(a1)
-	move.w  #$ABCA,BLTCON0(a1)
+	move.w  #BLTCON0_X,BLTCON0(a1)
 	move.w  #$8000,BLTADAT(a1)
 	move.w  #PATTERN,BLTBDAT(a1)
 	move.l  #$FFFFFFFF,BLTAFWM(a1)

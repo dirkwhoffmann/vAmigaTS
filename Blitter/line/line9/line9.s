@@ -11,7 +11,7 @@ BLTCON1_5   equ $13
 BLTCON1_6   equ $17
 BLTCON1_7   equ $1B
 BLTCON1_8   equ $1F
-PATTERN     equ $3333
+PATTERN     equ $80F0
 
 MAIN:
 
