@@ -18,4 +18,9 @@ Same as line1 and line2 with the SING bit set (single pixel mode).
 
 Same as line1 with a different starting point (center is slightly shifted).
 
+#### bltdpt1
+
+This test verifies that the first word is written to the D channel and not the C channel. If everything works fine, the lines are drawn in green. Otherwise, the lines appear yellow.
+
+
 Dirk Hoffmann, 2021
