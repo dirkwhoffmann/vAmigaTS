@@ -50,6 +50,9 @@ MAIN:
 
 runtest:
 
+	; Set line pattern
+	move.w  #PATTERN,BLTBDAT(a1)
+
     ; Blit 1
 	bsr     prepareblit
 	move.w  #BLTCON1_1,BLTCON1(a1)
@@ -102,7 +105,6 @@ prepareblit:
 	move.w  #100,BLTBMOD(a1)
 	move.w  #$ABCA,BLTCON0(a1)
 	move.w  #$8000,BLTADAT(a1)
-	move.w  #PATTERN,BLTBDAT(a1)
 	move.l  #$FFFFFFFF,BLTAFWM(a1)
 	rts
 

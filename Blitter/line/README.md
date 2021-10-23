@@ -22,7 +22,7 @@ Same as line5 and line6 with a custom pattern in BLTBDAT.
 
 Same as line7 and line8 with a different pattern.
 
-#### old line7 (gone)
+#### line11
 
 Same as line1 with a different starting point (center is slightly shifted).
 
