@@ -34,5 +34,9 @@ Iterates through all 16 combinations of the channel enable bits.
 
 Special test case for exhibiting the undocumented "channel B feature". If channel B is enabled, BLTBDAT is constantly updated by DMA data which destroys the line pattern. If the feature is supported, you'll see striped lines. If not, a solid horizontal bar is visible. 
 
+#### start1, start2
+
+Like line1 with varying start values for each line.
+
 
 Dirk Hoffmann, 2021
