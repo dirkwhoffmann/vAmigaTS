@@ -26,9 +26,13 @@ Same as line7 and line8 with a different pattern.
 
 Same as line1 with a different starting point (center is slightly shifted).
 
-#### bltdpt1
+#### channels1, channels2
 
-This test verifies that the first word is written to the D channel and not the C channel. If everything works fine, the lines are drawn in green. Otherwise, the lines appear yellow.
+Iterates through all 16 combinations of the channel enable bits.
+
+#### channels3
+
+Special test case for exhibiting the undocumented "channel B feature". If channel B is enabled, BLTBDAT is constantly updated by DMA data which destroys the line pattern. If the feature is supported, you'll see striped lines. If not, a solid horizontal bar is visible. 
 
 
 Dirk Hoffmann, 2021
