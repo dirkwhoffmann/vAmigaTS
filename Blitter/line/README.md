@@ -44,7 +44,10 @@ Like line1 with varying start values for each line.
 
 #### combined1
 
-This test runs a line blit followed by a copy blit. The line blit will modify the ASH bits in BPLCON0 which means that the copy blit is carried out with a shift. As a result, the two dashed lines at the top get disaligned.
+This test runs a line blit followed by a copy blit. The line blit will modify the ASH bits in BLTCON0 which means that the copy blit is carried out with a shift. As a result, the two dashed lines at the top get disaligned.
 
+#### combined2
+
+This test runs two line blits in a row. The second blit runs with the value of BLTCON1 as it was left by the first blit. The test has been setup such that the SIGN bit changes during the first blit. It is 0 when the first blit starts and 1 when the first blit ends. The form of the center pixel in the test picture reveals that the second blit starts with the SIGN bit equal to 1.
 
 Dirk Hoffmann, 2021
