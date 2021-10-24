@@ -38,5 +38,9 @@ Special test case for exhibiting the undocumented "channel B feature". If channe
 
 Like line1 with varying start values for each line.
 
+#### combined1
+
+This test runs a line blit followed by a copy blit. The line blit will modify the ASH bits in BPLCON0 which means that the copy blit is carried out with a shift. As a result, the two dashed lines at the top get disaligned.
+
 
 Dirk Hoffmann, 2021
