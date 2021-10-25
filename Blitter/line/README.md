@@ -50,4 +50,9 @@ This test runs a line blit followed by a copy blit. The line blit will modify th
 
 This test runs two line blits in a row. The second blit runs with the value of BLTCON1 as it was left by the first blit. The test has been setup such that the SIGN bit changes during the first blit. It is 0 when the first blit starts and 1 when the first blit ends. The form of the center pixel in the test picture reveals that the second blit starts with the SIGN bit equal to 1.
 
+#### zero1
+
+This test runs 12 line blits. Each blit draws a horizontal line with varying line patterns and multiple combinations of the SING and USEC bit. After each blit, the value of the Blitter zero bit is read and visualized in form of a blue or yellow line.
+
+
 Dirk Hoffmann, 2021
