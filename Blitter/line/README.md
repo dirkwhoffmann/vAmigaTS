@@ -26,6 +26,10 @@ Same as line7 and line8 with a different pattern.
 
 Same as line1 with a different starting point (center is slightly shifted).
 
+#### mask1, mask2, mask3
+
+Same as line1 with unusual values in BLTADAT and the two mask registers.
+
 #### channels1, channels2
 
 Iterates through all 16 combinations of the channel enable bits.
