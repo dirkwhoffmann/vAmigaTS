@@ -18,5 +18,9 @@ Triggers a Copper interrupt and disabled Copper DMA immediately afterwards. In t
 
 The Copper is utilized to trigger an interrupt and to draw yellow and red color stripes afterwards. Inside the interrupt handler, Copper DMA is switched on and off continuously. 
 
+#### cycleE0
 
-Dirk Hoffmann, 2019 - 2020
+This test verifies the handling of DMA cycle E0. This cycle needs special treatment because it can by used by the CPU or the Blitter, but not by the Copper. If the Copper tries to use this cycle, Agnus will deny it. In addition, the cycle will be blocked which means that it cannot be used by the CPU or the Blitter either. 
+
+
+Dirk Hoffmann, 2019 - 2021
