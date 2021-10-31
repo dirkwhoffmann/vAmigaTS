@@ -13,12 +13,6 @@ TRP0_INT_VECTOR		equ $80
 TRP1_INT_VECTOR		equ $84
 TRP2_INT_VECTOR		equ $88
 
-BLTSIZE1            equ (1)<<6|(1)
-BLTSIZE2            equ (2)<<6|(1)
-BLTSIZE3            equ (3)<<6|(1)
-BLTSIZE4            equ (2)<<6|(2)
-BLTSIZE5            equ (5)<<6|(1)
-
 MAIN:
 	; Load OCS base address
 	lea     CUSTOM,a1
@@ -84,7 +78,7 @@ prepareblit:
 	btst    #0,d0
 	bne     .prepareline
 
-	; Prepare the copy Bliter
+	; Prepare the copy Blitter
 	move.w  #$004,COLOR00(a1)
 	move.w  #BLIT_BLTCON0,BLTCON0(a1)
 	move.w  #BLIT_BLTCON1,BLTCON1(a1) 
@@ -102,7 +96,7 @@ prepareblit:
 
 .prepareline:
 	; Prepare the line Blitter
-	; move.w  #$FFF,COLOR00(a1)
+	;move.w  #$040,COLOR00(a1)
 	move.w  #BLIT_BLTCON0,BLTCON0(a1)
 	move.w  #BLIT_BLTCON1,BLTCON1(a1) 
 	move.l  #$ffffffff,BLTAFWM(a1)
@@ -111,7 +105,6 @@ prepareblit:
 	move.w  #-100,BLTAPTL(a1)
 	move.w  #-200,BLTAMOD(a1)
 	move.w  #0,BLTBMOD(a1)
-	move.w  #$ABCA,BLTCON0(a1)
 	move.w  #$8000,BLTADAT(a1)
 	move.l  #spare,BLTBPTH(a1)	
 	move.l  #spare,BLTCPTH(a1)
