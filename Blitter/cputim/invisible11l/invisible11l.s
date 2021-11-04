@@ -1,4 +1,4 @@
-BLIT_BLTCON0        equ $0FCA
+BLIT_BLTCON0        equ $0BCA
 BLIT_BLTCON1		equ $0001
 
 SIZE1               equ (1)<<6|(2)
