@@ -8,13 +8,6 @@ LVL4_INT_VECTOR		equ $70
 LVL5_INT_VECTOR		equ $74
 LVL6_INT_VECTOR		equ $78
 
-BLTSIZE1            equ (4)<<6|(2)
-BLTSIZE2            equ (3)<<6|(3)
-BLTSIZE3            equ (5)<<6|(2)
-BLTSIZE4            equ (11)<<6|(1)
-BLTSIZE5            equ (6)<<6|(2)
-BLTSIZE6            equ (13)<<6|(1)
-
 MAIN:
 	; Load OCS base address
 	lea     CUSTOM,a1
