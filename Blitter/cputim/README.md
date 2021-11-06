@@ -2,7 +2,7 @@
 
 Test Blitter timing
 
-#### cputim1 - cputim7
+#### cputim1 - cputim10
 
 These tests run the Blitter with various combinations for the channel bits, the fill bit, and the line mode bit. The Copper is utilized to trigger interrupts. Inside the interrupt handler, the Blitter is started by the CPU. The Copper waits for the Blitter and changes the background color when the Blitter has terminated. 
 
