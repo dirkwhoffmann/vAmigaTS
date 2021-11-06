@@ -1,7 +1,10 @@
 # Path to the vAmiga executable
 VAMIGA = /tmp/vAmiga/vAmiga.app/Contents/MacOS/vAmiga
 
-SUBDIRS = Blitter CPU Denise Interrupts Sprites
+# Collect all directories containing a Makefile
+MKFILES = $(wildcard */Makefile)
+SUBDIRS = $(dir $(MKFILES))
+
 MYMAKE = $(MAKE) --no-print-directory
 
 export VAMIGA

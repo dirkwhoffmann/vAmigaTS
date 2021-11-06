@@ -1,4 +1,8 @@
-SUBDIRS = cputim
+# Regression testing for vAmiga
+# Subdir Makefile v1.0
+
+MKFILES = $(wildcard */Makefile)
+SUBDIRS = $(dir $(MKFILES))
 MYMAKE = $(MAKE) --no-print-directory
 
 .PHONY: all subdirs clean

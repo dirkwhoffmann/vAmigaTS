@@ -1,22 +1,38 @@
-SUBDIRS = BPLCON1
-MYMAKE = $(MAKE) --no-print-directory
+# Regression testing for vAmiga
+#
+# To run all regression tests:
+# make [-j<number of parallel threads>]
 
-.PHONY: all subdirs clean
+# Collect all .ini files
+INI=$(wildcard */*.ini)
+LOG=$(INI:.ini=.log)
+TIFF=$(INI:.ini=.tiff)
 
-all: subdirs
+.PHONY: all prepare clean
+
+all: prepare $(LOG) $(TIFF)
 	@echo > /dev/null
-	
-prebuild:
-	@echo "Entering ${CURDIR}"
-		
-subdirs:
-	@for dir in $(SUBDIRS); do \
-		echo "Entering ${CURDIR}/$$dir"; \
-		$(MAKE) -C $$dir; \
-	done
 
+prepare:
+	@echo "Running regression tests..."
+		
 clean:
-	@for dir in $(SUBDIRS); do \
-		echo "Cleaning up ${CURDIR}/$$dir"; \
-		$(MAKE) -C $$dir clean; \
-	done
+	rm -f */*.log
+
+%.log: %.tiff
+	@cp $(basename $@).adf /tmp/$(basename $(@F)).adf
+	@$(VAMIGA) $(basename $@).ini &> /dev/null
+	@cmp /tmp/$(basename $(@F)).tiff $(basename $@).tiff
+	@echo "$(basename $@): PASS"
+	@echo "$(basename $@): PASS" > $@
+	@rm /tmp/$(basename $(@F)).adf
+	@rm /tmp/$(basename $(@F)).tiff
+
+%.tiff:
+	@echo "Creating missing reference image $@"
+	@cp $(basename $@).adf /tmp/$(basename $(@F)).adf
+	@$(VAMIGA) $(basename $@).ini &> /dev/null
+	@cp /tmp/$(basename $(@F)).tiff $(basename $@).tiff
+	@rm /tmp/$(basename $(@F)).adf
+	@rm /tmp/$(basename $(@F)).tiff
+	
