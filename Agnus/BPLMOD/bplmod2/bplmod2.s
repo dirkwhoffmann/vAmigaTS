@@ -1,4 +1,4 @@
-SHIFT               equ $31
+SHIFT               equ $91
 
 MODIFY1	MACRO
 	move.w  #2,BPL1MOD(a1)
