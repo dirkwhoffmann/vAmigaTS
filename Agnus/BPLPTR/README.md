@@ -6,9 +6,13 @@ Test the bitplane pointer registers.
 
 This test enables two bitplanes and draws a vertical bar in each of them. The Copper is utilized to trigger interrupts. In the interrupt handlers, BPL1PTL and BPL2PTL are modified by the CPU. 
 
-#### bplptr2, bplptr2
+#### bplptr2, bplptr3
 
 Similar to bplptr1, but the modification is carried out late in the scanline, around the DMA cycles belonging to the last fetch unit. The writes will interfere with the addition of BPL1MOD and BPL2MOD to BPL1PT and BPL2PT, respectively.
+
+#### bplptr4 - bplptr6
+
+Similar to bplptr1 - bplptr3 with the write to BPLxPTL carried out by the Copper.
 
 #### dropXY
 

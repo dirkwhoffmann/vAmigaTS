@@ -1,55 +1,26 @@
 ## Objective
 
-THIS TEST SET IS DEPRECATED AND REPLACED BY DDFNEW.
+Modify DDFSTART and DDSTOP in various ways. Note that the result differes between OCS Agnus and ECS Agnus. The old OCS Agnus ignores bit H1 in both DDFSTRT and DDFSTOP. 
 
-The DDF tests use the Copper to modify DDFSTART and DDSTOP in various ways.
+#### ddfnew1 - ddfnew10
 
-#### ddf1
+These tests set DDFSTART and DDFSTOP to different combinations inside the valid range. The upper part of the screen is drawn in lores mode and the lower part in hires mode.
 
-DDFSTRT is incremented continously at the end of certain rasterlines. DDFSTOP is aligned at $D0 and not changing.
+#### farright1
 
-#### ddf1b
+Sets DDFSTOP to very high coordinates.
 
-DDFSTRT is incremented continously at the beginning of certain rasterlines. DDFSTOP is aligned at $D0 and not changing.
+#### shift1 - shift3
 
-#### ddf1m
+Uses DDFSTART and DDFSTOP in combination with BPLCON1. The tests visualize how the bitplane shift value affects the DDF window.
 
-DDFSTRT is incremented continously at the end of certain rasterlines. DDFSTOP is misaligned at $D3 and not changing.
+#### shift4 and shift5
 
-#### ddf2 
+Similar to shift3 with different shift values for even and odd bitplanes.
 
-DDFSTRT is aligned at $38 and not changing. DDFSTOP is incremented continously. 
+#### lupo1
 
-#### ddf2m 
+This test mimics parts of the Copper list of "Lupo Alberto (1991)(Idea)" which fails in vAmiga.
 
-DDFSTRT is misaligned at $3B and not changing. DDFSTOP is incremented continously. 
 
-#### ddf3
-
-DDFSTRT is decremented continously. DDFSTOP is aligned at $D0 and not changing.
-
-#### ddf3m
-
-DDFSTRT is decremented continously. DDFSTOP is misaligned at $D3 and not changing.
-
-#### ddf4
-
-DDFSTRT is aligned at $38 and not changing. DDFSTOP is decremented continously. 
-
-#### ddf4m
-
-DDFSTRT is misaligned at $3B and not changing. DDFSTOP is decremented continously. 
-
-#### ddf5
-
-Various combinations of DIWSTRT and DIWSTOP. Some combinations cross the hardware stop boundaries.
-
-#### ddf6
-
-Mores test combinations around the hardware stops (flickers in UAE).
-
-#### ddf7
-
-Modifying DDFSTRT and DDFSTOP around the specified start and specfied stop positions.
-
-Dirk Hoffmann, 2019
+Dirk Hoffmann, 2020
