@@ -1,6 +1,6 @@
 ## Objective
 
-Verfify the collision detection bits.-
+Verfify the collision detection bits.
 
 #### sprcoll1 - sprcoll8
 
