@@ -1,13 +1,10 @@
 ## Objective
 
-This test suite verfies properties of the DIWSTRT and DIWSTOP registers.
+Verifies the emulation of the display window (DIW).
 
-#### diw9, diw10, diw11
+#### diw1 - diw11
 
-These three tests provide strong evidence for the hypothesis that the H flip-flop is automatically set at the beginning of each frame.
+These tests utilize the Copper to manipulate DIWSTRT and DIWSTOP in various ways.
 
-#### diw12
 
-Opens the display window very early, inside the VBLANK area.
-
-Dirk Hoffmann, 2019
+Dirk Hoffmann, 2019 - 2021
