@@ -2,7 +2,11 @@
 
 Modify DDFSTART and DDSTOP in various ways. Note that the result differes between OCS Agnus and ECS Agnus. The old OCS Agnus ignores bit H1 in both DDFSTRT and DDFSTOP. 
 
-#### ddfnew1 - ddfnew10
+#### dmaslots
+
+This test enables 6 bitplanes in lowres modes in the upper half of the screen and three bitplanes in hires mode in the lower half. The Copper is utilized to draw color stripes. From one red line to the next, DDFSTRT and DDSTOP are shifted to the right by 2 which causes the fetch units to shift, too. The position of the Copper lines exhibit the position of the fetch units (the Copper can't start at arbitrary positons because of heavy bitplane DMA. Only a few slots remain free and can thus be used by the Copper).
+
+#### ddf1 - ddf10
 
 These tests set DDFSTART and DDFSTOP to different combinations inside the valid range. The upper part of the screen is drawn in lores mode and the lower part in hires mode.
 
@@ -20,7 +24,7 @@ Similar to shift3 with different shift values for even and odd bitplanes.
 
 #### lupo1
 
-This test mimics parts of the Copper list of "Lupo Alberto (1991)(Idea)" which fails in vAmiga.
+This test mimics parts of the Copper list of "Lupo Alberto (1991)(Idea)" which failed in earlier versions of vAmiga.
 
 
-Dirk Hoffmann, 2020
+Dirk Hoffmann, 2020 - 2022
