@@ -37,6 +37,11 @@ not_AGA:
 
 If an AGA chipset has been detected, the second half of the screen is drawn in red. OCS and ECS machines draw in yellow instead.
 
+#### losso
+
+This test program was posted on EAB by user Losso. He kindly allowed me to add it to my test suite. Losso's program is a great test case for verifying the shift register logic of Denise. Details about the test can be found in the EAB article: 
+
+http://eab.abime.net/showthread.php?t=108873
 
 
-Dirk Hoffmann, 2019
+Dirk Hoffmann, 2019 - 2022
