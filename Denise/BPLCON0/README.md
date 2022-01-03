@@ -26,22 +26,6 @@ Same as mode*x* with additional manual writes to BPL5DAT and BPL6DAT.
 
 Same as mode*x*c with an invalid value for bitplane priority 2 and different bitplane data.
 
-### hires1
-
-Draws an image in hires mode and reduces the number of bitplanes after each color block.
-
-### hires2
-
-Enables hires mode with invalid bpu values (5,6,7).
-
-### hires3 
-
-Switches back and forth between valid and invalid bpu values.
-
-### hires4 
-
-Switches back and forth between hires and lowres mode.
-
 ### invplanes1
 
 Switches on 7 bitplanes (invalid value) and manually writes to BPL5DAT and BPL6DAT.

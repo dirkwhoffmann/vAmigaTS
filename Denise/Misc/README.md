@@ -4,7 +4,7 @@ This test suite verfies some general properties of Denise.
 
 #### deniseid
 
-Reads DFF07C (DENISEID) and visualizes all 16 bits. Each bit is represented by a color bar. The uppermost color bar visualizes bit #15, the lower most color bar visualizes bit #0. A bright color indicates a 1, a dark color a 0.
+Reads DFF07C (DENISEID) and visualizes all 16 bits. Each bit is represented by a color bar. The uppermost color bar visualizes bit #15, the lowermost color bar visualizes bit #0. A bright color indicates a 1, a dark color a 0.
 
 Note: On OCS machines, this register does not exist. Hence, the Amiga is reading from an unmapped area. In most cases, my A500 returned 0xFFFF as bit pattern, but not always.
 
