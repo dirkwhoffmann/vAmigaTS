@@ -8,7 +8,7 @@ copper:
 	dc.w	$3839,$FFFE  ; WAIT 
 	RULER
 
-	dc.w	$3a19,$FFFE  ; WAIT (close to DDFSTRT position)
+	dc.w	$3a15,$FFFE  ; WAIT (close to DDFSTRT position)
 	dc.w    DIWSTRT,$3a81   
 
 	dc.w	$7E39,$FFFE  ; WAIT 

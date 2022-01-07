@@ -22,7 +22,7 @@ DDFSTOP is never hit.
 
 DDFSTRT is set in the same line where it hits. It is set mid-scanline.
 
-#### diw10 - diw13
+#### diw10 - diw15
 
 DDFSTRT is set in the same line where it hits. It is set close to the DDFSTRT position.
 
