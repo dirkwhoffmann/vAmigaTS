@@ -2,9 +2,17 @@
 
 Verify timing of the DDFSTART and DDSTOP registers.
 
-#### ddftim1 - ddftim8
+#### ddftimcop1 - ddftimcop4
 
-These tests modify DDFSTRT around the DDFSTRT trigger cycle. ddftim1 - ddftim4 utilize the CPU to perform the modification, ddftim5 - ddftim8 utilize the Copper. 
+The Copper is utilized to modify DDFSTRT around the trigger cycle. 
+
+#### ddftimcop5 - ddftimcop8
+
+The Copper is utilized to write a value into DDFSTRT which is close to the current DMA cycle.
+
+#### ddftimcpu1 - ddftimcpu8
+
+Same as ddfcoptim1 - ddfcoptim8, but the modification is carried out by the CPU.
 
 
 Dirk Hoffmann, 2022
