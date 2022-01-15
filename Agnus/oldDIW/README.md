@@ -6,5 +6,9 @@ Verifies the emulation of the display window (DIW).
 
 These tests utilize the Copper to manipulate DIWSTRT and DIWSTOP in various ways.
 
+#### diwvert1
 
-Dirk Hoffmann, 2019 - 2021
+DEPRECATED. Superseded by DIWV/onoff1
+
+
+Dirk Hoffmann, 2019 - 2022

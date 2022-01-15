@@ -26,5 +26,9 @@ DDFSTRT is set in the same line where it hits. It is set mid-scanline.
 
 DDFSTRT is set in the same line where it hits. It is set close to the DDFSTRT position.
 
+#### onoff1
+
+Modifies DIWVSTRT and DIWSTOP in the middle of some scanlines. The comparison value will start or stop matching the current vertical position.
+
 
 Dirk Hoffmann, 2022
