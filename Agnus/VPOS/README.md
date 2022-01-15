@@ -20,12 +20,7 @@ Same as vhpos3 with an additional write to VPOSW in the interrupt handler. The w
 
 #### vhpos5 
 
-Same as vhpos3 with a single additional write to VPOSW in the initialization code. This single write is sufficient to make all frames
-short. 
-
-#### vhposr1
-
-This test triggers four interrupts per frame. The first interrupt syncs the CPU to get reproducable results. The other three handlers read VHPOSR and visualize the lower 4 bits in form of different colors.
+Same as vhpos3 with a single additional write to VPOSW in the initialization code. This single write is sufficient to make all frames short. 
 
 #### lof1 and lof2
 
