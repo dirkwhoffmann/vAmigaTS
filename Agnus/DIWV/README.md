@@ -16,15 +16,15 @@ DIWSTRT and DIWSTOP are close together. DIWSTRT starts one line earlier than DIW
 
 #### diwv8
 
-DDFSTOP is never hit.
+DIWSTOP is never hit.
 
 #### diwv9
 
-DDFSTRT is set in the same line where it hits. It is set mid-scanline.
+DIWSTRT is set in the same line where it hits. It is set mid-scanline.
 
 #### diw10 - diw15
 
-DDFSTRT is set in the same line where it hits. It is set close to the DDFSTRT position.
+DIWSTRT is set in the same line where it hits. It is set close to the DDFSTRT position.
 
 #### onoff1
 
