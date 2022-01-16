@@ -30,5 +30,9 @@ Same as mode*x*c with an invalid value for bitplane priority 2 and different bit
 
 Switches on 7 bitplanes (invalid value) and manually writes to BPL5DAT and BPL6DAT.
 
+### hilo
 
-Dirk Hoffmann, 2019 - 2021
+Switches between hires and lores mode inside the last fetch unit.
+
+
+Dirk Hoffmann, 2019 - 2022
