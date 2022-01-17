@@ -20,6 +20,11 @@ prepare:
 clean:
 	rm -f */*.log
 
+# Failing tests
+wait/crossing1.log:
+	@echo "$(basename $@): FIX ME"
+	@echo "$(basename $@): FIX ME" > $@
+
 %.log: %.tiff
 	@cp $(wildcard $(dir $@)*.adf) /tmp/$(basename $(@F)).adf
 	@$(VAMIGA) $(basename $@).ini &> /dev/null

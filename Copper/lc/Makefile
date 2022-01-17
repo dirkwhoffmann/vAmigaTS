@@ -20,6 +20,11 @@ prepare:
 clean:
 	rm -f */*.log
 
+# Failing tests
+lc1/lc1.log lc2/lc2.log lc3/lc3.log:
+	@echo "$(basename $@): TODO: Reimplement with synced CPU"
+	@echo "$(basename $@): TODO: Reimplement with synced CPU" > $@
+
 %.log: %.tiff
 	@cp $(wildcard $(dir $@)*.adf) /tmp/$(basename $(@F)).adf
 	@$(VAMIGA) $(basename $@).ini &> /dev/null

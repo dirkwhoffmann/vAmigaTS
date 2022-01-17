@@ -1,4 +1,5 @@
-# Regression testing for vAmiga
+# Regression testing for vAmiga 
+# Version: 2.1.2022
 #
 # To run all regression tests:
 # make [-j<number of parallel threads>]
@@ -20,7 +21,7 @@ clean:
 	rm -f */*.log
 
 %.log: %.tiff
-	@cp $(basename $@).adf /tmp/$(basename $(@F)).adf
+	@cp $(wildcard $(dir $@)*.adf) /tmp/$(basename $(@F)).adf
 	@$(VAMIGA) $(basename $@).ini &> /dev/null
 	@cmp /tmp/$(basename $(@F)).tiff $(basename $@).tiff
 	@echo "$(basename $@): PASS"
@@ -30,7 +31,7 @@ clean:
 
 %.tiff:
 	@echo "Creating missing reference image $@"
-	@cp $(basename $@).adf /tmp/$(basename $(@F)).adf
+	@cp $(wildcard $(dir $@)*.adf) /tmp/$(basename $(@F)).adf
 	@$(VAMIGA) $(basename $@).ini &> /dev/null
 	@cp /tmp/$(basename $(@F)).tiff $(basename $@).tiff
 	@rm /tmp/$(basename $(@F)).adf

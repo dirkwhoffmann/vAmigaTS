@@ -1,38 +1,22 @@
-# Regression testing for vAmiga
-#
-# To run all regression tests:
-# make [-j<number of parallel threads>]
+SUBDIRS = int
+MYMAKE = $(MAKE) --no-print-directory
 
-# Collect all .ini files
-INI=$(wildcard */*.ini)
-LOG=$(INI:.ini=.log)
-TIFF=$(INI:.ini=.tiff)
+.PHONY: all subdirs clean
 
-.PHONY: all prepare clean
-
-all: prepare $(LOG) $(TIFF)
+all: subdirs
 	@echo > /dev/null
-
-prepare:
-	@echo "Running regression tests..."
-		
-clean:
-	rm -f */*.log
-
-%.log: %.tiff
-	@cp $(basename $@).adf /tmp/$(basename $(@F)).adf
-	@$(VAMIGA) $(basename $@).ini &> /dev/null
-	@cmp /tmp/$(basename $(@F)).tiff $(basename $@).tiff
-	@echo "$(basename $@): PASS"
-	@echo "$(basename $@): PASS" > $@
-	@rm /tmp/$(basename $(@F)).adf
-	@rm /tmp/$(basename $(@F)).tiff
-
-%.tiff:
-	@echo "Creating missing reference image $@"
-	@cp $(basename $@).adf /tmp/$(basename $(@F)).adf
-	@$(VAMIGA) $(basename $@).ini &> /dev/null
-	@cp /tmp/$(basename $(@F)).tiff $(basename $@).tiff
-	@rm /tmp/$(basename $(@F)).adf
-	@rm /tmp/$(basename $(@F)).tiff
 	
+prebuild:
+	@echo "Entering ${CURDIR}"
+		
+subdirs:
+	@for dir in $(SUBDIRS); do \
+		echo "Entering ${CURDIR}/$$dir"; \
+		$(MAKE) -C $$dir; \
+	done
+
+clean:
+	@for dir in $(SUBDIRS); do \
+		echo "Cleaning up ${CURDIR}/$$dir"; \
+		$(MAKE) -C $$dir clean; \
+	done
