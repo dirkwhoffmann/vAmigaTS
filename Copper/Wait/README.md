@@ -26,7 +26,11 @@ Chains together multiple Waits with the same trigger coordinate.
 
 Applies the WAIT command with varying comparison masks
 
-#### crossing1 and crossing2
+#### cross1 - cross6
+
+Tries to crosses the vertical boundary with varying horizontal trigger values.
+
+#### crossing1 and crossing2 (DEPRECATED)
 
 Tries to cross the vertical boundary. crossing1 triggers at $ffdb which is too early. crossing2 triggers at $ffdd which is just in time to cross.
 
@@ -39,4 +43,4 @@ This test activates the Blitter and verifies the behaviour of the WAIT command i
 Verifies the "WAIT for Blitter" behaviour with a blit crossing the vertical boundary. 
 
 
-Dirk Hoffmann, 2019 - 2020
+Dirk Hoffmann, 2019 - 2022
