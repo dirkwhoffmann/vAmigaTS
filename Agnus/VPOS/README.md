@@ -26,5 +26,8 @@ Same as vhpos3 with a single additional write to VPOSW in the initialization cod
 
 These tests set the LOF bit in VPOSW to 0 and 1 in order to force a long frame and a short frame, respectively. After that, it displays the highest line number of the frame where the LOF bit had been set.
 
+#### probe1 - probe4
 
-Dirk Hoffmann, 2019 - 2020
+These tests probe VHPOSR at 16 different locations and display the result. Test probe2 and probe4 are special as they modifiy the ERSY bit. In probe2, ERSY is set and reset in the same scanline (which has no effect). In probe4, a scanline is crossed with ERSY equal to 1. On a real machine, this causes display corruption because the HSYNC signal is not generated. 
+
+Dirk Hoffmann, 2019 - 2022
