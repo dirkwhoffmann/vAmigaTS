@@ -9,6 +9,9 @@ Utilizes the Copper to write a data word into AUD0DAT in order to trigger an aud
 
 Similar to the audtim tests, but for DMA driven audio.
 
+### dmalen0
+
+DMA audio test with AUD0LEN equal to 0. 
 
 ---
-Dirk Hoffmann, 2020
+Dirk Hoffmann, 2020 - 2022

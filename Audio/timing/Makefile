@@ -21,9 +21,9 @@ clean:
 	rm -f */*.log
 
 # Failing tests
-audtim3/audtim3.log audtim4/audtim4.log dmatim1/dmatim1.log dmatim2/dmatim2.log dmatim3/dmatim3.log dmatim6/dmatim6.log: 
-	@echo "$(basename $@): KNOWN TO FAIL"
-	@echo "$(basename $@): KNOWN TO FAIL" > $@
+dmalen0/dmalen0.log audtim3/audtim3.log audtim4/audtim4.log dmatim1/dmatim1.log dmatim2/dmatim2.log dmatim3/dmatim3.log dmatim6/dmatim6.log: 
+	@echo "$(basename $@): FIXME"
+	@echo "$(basename $@): FIXME" > $@
 
 %.log: %.tiff
 	@cp $(wildcard $(dir $@)*.adf) /tmp/$(basename $(@F)).adf
