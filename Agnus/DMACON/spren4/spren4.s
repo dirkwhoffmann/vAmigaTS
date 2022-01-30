@@ -11,8 +11,6 @@ MAIN:
 	include "../spren.i"
 
 copper:
-	dc.w    BPLCON2, $0B	
-	dc.w    BPLCON0, (1<<12)|$600
 sprite0:
 	dc.w    SPR0PTL, $0000
 sprite1:
@@ -29,6 +27,10 @@ sprite6:
 	dc.w    SPR6PTL, $0000
 sprite7:
 	dc.w    SPR7PTL, $0000
+
+	dc.w    $3801,$FFFE 
+	dc.w    BPLCON2, $0B	
+	dc.w    BPLCON0, (1<<12)|$600
 
 	;
 	; Sprite 1
