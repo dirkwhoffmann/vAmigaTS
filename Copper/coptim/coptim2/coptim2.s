@@ -1,174 +1,95 @@
-	include "../../../../include/registers.i"
-	include "hardware/dmabits.i"
-	include "hardware/intbits.i"
-	
-entry:
+DDFSTRT_INI		equ $68
+DDFSTOP_INI		equ $70
 
-	lea 	CUSTOM,a6           ; Chipset base
+	include "../coptim.i"
 
-	move	#$7fff,INTENA(a6)	; Disable all interrupts
-	move.b  #$7F,$BFDD00        ; Disable CIA B interrupts
-	move.b  #$7F,$BFED01        ; Disable CIA A interrupts
-	
-	move.w  #$8003,COPCON(a6)   ; Allow Copper to write Blitter registers
-	lea	    copper1(pc),a0      ; Get pointer to first Copper list
-	move.l	a0,COP1LC(a6)       ; Write pointer to Copper location register 1
-	lea	    copper2(pc),a0      ; Get pointer to second Copper list
-	move.l	a0,COP2LC(a6)       ; Write pointer to Copper location register 2
- 	move.w  COPJMP1(a6),d0      ; Jump to the first Copper list
-	
-	move.w	#$0FFF,DMACON(a6)   ; Disable all DMA
-	move.w	#$8280,DMACON(a6)   ; Enable Copper DMA
+copper:
+	dc.w	BPL1PTL,0
+	dc.w	BPL1PTH,0
+	dc.w	BPL2PTL,0
+	dc.w	BPL2PTH,0
+	dc.w	BPL3PTL,0
+	dc.w	BPL3PTH,0
+	dc.w	BPL4PTL,0
+	dc.w	BPL4PTH,0
+	dc.w	BPL5PTL,0
+	dc.w	BPL5PTH,0
+	dc.w	BPL6PTL,0
+	dc.w	BPL6PTH,0
+	dc.w    COLOR31,$555
 
-.mainLoop:
-	bra.s	.mainLoop
+	dc.w    $5039,$FFFE    ; WAIT
+	RULER
+	dc.w    $5201,$FFFE    ; WAIT
+	dc.w    BPLCON0,$6200 
 
-copper1:
+	dc.w    $5859,$FFFE    ; WAIT
+	dc.w    $5859,$FFFE    ; WAIT
+	STRIPE
+	dc.w    $5A5B,$FFFE    ; WAIT
+	dc.w    $5A5B,$FFFE    ; WAIT
+	STRIPE
+	dc.w    $5C5D,$FFFE    ; WAIT
+	dc.w    $5C5D,$FFFE    ; WAIT
+	STRIPE
+	dc.w    $5E5F,$FFFE    ; WAIT
+	dc.w    $5E5F,$FFFE    ; WAIT
+	STRIPE
+	dc.w    $6061,$FFFE    ; WAIT
+	dc.w    $6061,$FFFE    ; WAIT
+	STRIPE
+	dc.w    $6263,$FFFE    ; WAIT
+	dc.w    $6263,$FFFE    ; WAIT
+	STRIPE
+	dc.w    $6465,$FFFE    ; WAIT
+	dc.w    $6465,$FFFE    ; WAIT
+	STRIPE
+	dc.w    $6667,$FFFE    ; WAIT
+	dc.w    $6667,$FFFE    ; WAIT
+	STRIPE
+	dc.w    $6869,$FFFE    ; WAIT
+	dc.w    $6869,$FFFE    ; WAIT
+	STRIPE
+	dc.w    $6A6B,$FFFE    ; WAIT
+	dc.w    $6A6B,$FFFE    ; WAIT
+	STRIPE
+	dc.w    $6C6D,$FFFE    ; WAIT
+	dc.w    $6C6D,$FFFE    ; WAIT
+	STRIPE
+	dc.w    $6E6F,$FFFE    ; WAIT
+	dc.w    $6E6F,$FFFE    ; WAIT
+	STRIPE
+	dc.w    $7071,$FFFE    ; WAIT
+	dc.w    $7071,$FFFE    ; WAIT
+	STRIPE
+	dc.w    $7273,$FFFE    ; WAIT
+	dc.w    $7273,$FFFE    ; WAIT
+	STRIPE
+	dc.w    $7475,$FFFE    ; WAIT
+	dc.w    $7475,$FFFE    ; WAIT
+	STRIPE
+	dc.w    $7677,$FFFE    ; WAIT
+	dc.w    $7677,$FFFE    ; WAIT
+	STRIPE
+	dc.w    $7879,$FFFE    ; WAIT
+	dc.w    $7879,$FFFE    ; WAIT
+	STRIPE
+	dc.w    $7A7B,$FFFE    ; WAIT
+	dc.w    $7A7B,$FFFE    ; WAIT
+	STRIPE
+	dc.w    $7C7D,$FFFE    ; WAIT
+	dc.w    $7C7D,$FFFE    ; WAIT
+	STRIPE
+	dc.w    $7E7F,$FFFE    ; WAIT
+	dc.w    $7E7F,$FFFE    ; WAIT
+	STRIPE
+	dc.w    $8081,$FFFE    ; WAIT
+	dc.w    $8081,$FFFE    ; WAIT
+	STRIPE
 
-    ; Enable 0 bitplanes
-	dc.w    BPLCON0, (0<<12)|$200
+	dc.w	$ffdf,$fffe    ; Cross vertical boundary
+	dc.w    BPLCON0,$0200
+	dc.l	$fffffffe
 
-  	dc.w    $2F39, $FFFE         ; WAIT
-	dc.w    COLOR00,$F00
-	dc.w    COLOR00,$000
-	dc.w    COLOR00,$FFF
-	dc.w    COLOR00,$000
-	dc.w    COLOR00,$FFF
-	dc.w    COLOR00,$000
-	dc.w    COLOR00,$FFF
-	dc.w    COLOR00,$000
-	dc.w    COLOR00,$FFF
-	dc.w    COLOR00,$000
-	dc.w    COLOR00,$FFF
-	dc.w    COLOR00,$000
-	dc.w    COLOR00,$FFF
-	dc.w    COLOR00,$000
-	dc.w    COLOR00,$FFF
-	dc.w    COLOR00,$000
-	dc.w    COLOR00,$FFF
-	dc.w    COLOR00,$000
-	dc.w    COLOR00,$FFF
-	dc.w    COLOR00,$000
-	dc.w    COLOR00,$FFF
-	dc.w    COLOR00,$000
-	dc.w    COLOR00,$FFF
-	dc.w    COLOR00,$000
-	dc.w    COLOR00,$FFF
-	dc.w    COLOR00,$000
-	dc.w    COLOR00,$FFF
-	dc.w    COLOR00,$000
-	dc.w    COLOR00,$FFF
-	dc.w    COLOR00,$000
-	dc.w    COLOR00,$FFF
-	dc.w    COLOR00,$000
-	dc.w    COLOR00,$FFF
-	dc.w    COLOR00,$000
-	dc.w    COLOR00,$FFF
-	dc.w    COLOR00,$000
-	dc.w    COLOR00,$FFF
-	dc.w    COLOR00,$000
-	dc.w    COLOR00,$0F0
-	dc.w    COLOR00,$000
-
-    ;
-    ; Perform some basic timing tests
-	;
-
-	dc.w	$31DD,$FFFE     ; WAIT 
-	dc.w	COLOR00, $F00
-	dc.w	COLOR00, $FF0
-	dc.w	COLOR00, $F00
-	dc.w	COLOR00, $FF0
-	dc.w	COLOR00, $F00
-	dc.w	COLOR00, $FF0
-	dc.w	COLOR00, $F00
-	dc.w	COLOR00, $FF0
-	dc.w	COLOR00, $F00
-	dc.w	COLOR00, $FF0
-	dc.w	COLOR00, $F00
-	dc.w	COLOR00, $FF0
-	dc.w	COLOR00, $F00
-	dc.w	COLOR00, $FF0
-	dc.w	COLOR00, $F00
-	dc.w	COLOR00, $FF0
-	dc.w	COLOR00, $F00
-	dc.w	COLOR00, $FF0
-	dc.w    COLOR00, $000
-
-	dc.w	$33DF,$FFFE     ; WAIT 
-	dc.w	COLOR00, $F00
-	dc.w	COLOR00, $FF0
-	dc.w	COLOR00, $F00
-	dc.w	COLOR00, $FF0
-	dc.w	COLOR00, $F00
-	dc.w	COLOR00, $FF0
-	dc.w	COLOR00, $F00
-	dc.w	COLOR00, $FF0
-	dc.w	COLOR00, $F00
-	dc.w	COLOR00, $FF0
-	dc.w	COLOR00, $F00
-	dc.w	COLOR00, $FF0
-	dc.w	COLOR00, $F00
-	dc.w	COLOR00, $FF0
-	dc.w	COLOR00, $F00
-	dc.w	COLOR00, $FF0
-	dc.w	COLOR00, $F00
-	dc.w	COLOR00, $FF0
-	dc.w    COLOR00, $000
-
-	dc.w	$35E1,$FFFE     ; WAIT 
-	dc.w	COLOR00, $F00
-	dc.w	COLOR00, $FF0
-	dc.w	COLOR00, $F00
-	dc.w	COLOR00, $FF0
-	dc.w	COLOR00, $F00
-	dc.w	COLOR00, $FF0
-	dc.w	COLOR00, $F00
-	dc.w	COLOR00, $FF0
-	dc.w	COLOR00, $F00
-	dc.w	COLOR00, $FF0
-	dc.w	COLOR00, $F00
-	dc.w	COLOR00, $FF0
-	dc.w	COLOR00, $F00
-	dc.w	COLOR00, $FF0
-	dc.w	COLOR00, $F00
-	dc.w	COLOR00, $FF0
-	dc.w	COLOR00, $F00
-	dc.w	COLOR00, $FF0
-	dc.w    COLOR00, $000
-
-	dc.w	$37E3,$FFFE     ; WAIT 
-	dc.w	COLOR00, $F00
-	dc.w	COLOR00, $FF0
-	dc.w	COLOR00, $F00
-	dc.w	COLOR00, $FF0
-	dc.w	COLOR00, $F00
-	dc.w	COLOR00, $FF0
-	dc.w	COLOR00, $F00
-	dc.w	COLOR00, $FF0
-	dc.w	COLOR00, $F00
-	dc.w	COLOR00, $FF0
-	dc.w	COLOR00, $F00
-	dc.w	COLOR00, $FF0
-	dc.w	COLOR00, $F00
-	dc.w	COLOR00, $FF0
-	dc.w	COLOR00, $F00
-	dc.w	COLOR00, $FF0
-	dc.w	COLOR00, $F00
-	dc.w	COLOR00, $FF0
-	dc.w    COLOR00, $000
-
-	; Cross vertical boundary
-	dc.w    $ffdf,$fffe 
-
-	dc.l    $fffffffe	
-
-copper2:
-	; dc.w    $4051,$FFFE    ; WAIT 
-	dc.w	COLOR00, $0F0
-	dc.w	COLOR00, $000
-
-	; Cross vertical boundary
-	dc.w    $ffdf,$fffe 
-
-	dc.l    $fffffffe	
+bitplanes:
+	ds.b 61440,$00

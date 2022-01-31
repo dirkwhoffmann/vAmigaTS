@@ -24,65 +24,86 @@ copper:
 	dc.w    BPLCON0,$6200 
 
 	dc.w    $58C9,$FFFE    ; WAIT
+	dc.w    $58C9,$FFFE    ; WAIT
 	STRIPE
 	STRIPE
+	dc.w    $5ACB,$FFFE    ; WAIT
 	dc.w    $5ACB,$FFFE    ; WAIT
 	STRIPE
 	STRIPE
 	dc.w    $5CCD,$FFFE    ; WAIT
+	dc.w    $5CCD,$FFFE    ; WAIT
 	STRIPE
 	STRIPE
+	dc.w    $5ECF,$FFFE    ; WAIT
 	dc.w    $5ECF,$FFFE    ; WAIT
 	STRIPE
 	STRIPE
 	dc.w    $60D1,$FFFE    ; WAIT
+	dc.w    $60D1,$FFFE    ; WAIT
 	STRIPE
 	STRIPE
+	dc.w    $62D3,$FFFE    ; WAIT
 	dc.w    $62D3,$FFFE    ; WAIT
 	STRIPE
 	STRIPE
 	dc.w    $64D5,$FFFE    ; WAIT
+	dc.w    $64D5,$FFFE    ; WAIT
 	STRIPE
 	STRIPE
+	dc.w    $66D7,$FFFE    ; WAIT
 	dc.w    $66D7,$FFFE    ; WAIT
 	STRIPE
 	STRIPE
 	dc.w    $68D9,$FFFE    ; WAIT
+	dc.w    $68D9,$FFFE    ; WAIT
 	STRIPE
 	STRIPE
+	dc.w    $6ADB,$FFFE    ; WAIT
 	dc.w    $6ADB,$FFFE    ; WAIT
 	STRIPE
 	STRIPE
 	dc.w    $6CDD,$FFFE    ; WAIT
+	dc.w    $6CDD,$FFFE    ; WAIT
 	STRIPE
 	STRIPE
+	dc.w    $6EDF,$FFFE    ; WAIT
 	dc.w    $6EDF,$FFFE    ; WAIT
 	STRIPE
 	STRIPE
 	dc.w    $70E1,$FFFE    ; WAIT
+	dc.w    $70E1,$FFFE    ; WAIT
 	STRIPE
 	STRIPE
+	dc.w    $7301,$FFFE    ; WAIT
 	dc.w    $7301,$FFFE    ; WAIT
 	STRIPE
 	STRIPE
 	dc.w    $7503,$FFFE    ; WAIT
+	dc.w    $7503,$FFFE    ; WAIT
 	STRIPE
 	STRIPE
+	dc.w    $7705,$FFFE    ; WAIT
 	dc.w    $7705,$FFFE    ; WAIT
 	STRIPE
 	STRIPE
 	dc.w    $7907,$FFFE    ; WAIT
+	dc.w    $7907,$FFFE    ; WAIT
 	STRIPE
 	STRIPE
+	dc.w    $7B09,$FFFE    ; WAIT
 	dc.w    $7B09,$FFFE    ; WAIT
 	STRIPE
 	STRIPE
 	dc.w    $7D0B,$FFFE    ; WAIT
+	dc.w    $7D0B,$FFFE    ; WAIT
 	STRIPE
 	STRIPE
 	dc.w    $7F0D,$FFFE    ; WAIT
+	dc.w    $7F0D,$FFFE    ; WAIT
 	STRIPE
 	STRIPE
+	dc.w    $810F,$FFFE    ; WAIT
 	dc.w    $810F,$FFFE    ; WAIT
 	STRIPE
 	STRIPE
