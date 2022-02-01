@@ -26,6 +26,10 @@ Chains together multiple Waits with the same trigger coordinate.
 
 Applies the WAIT command with varying comparison masks
 
+#### mask2
+
+A vastly improved masking test
+
 #### crossing1 and crossing2 (DEPRECATED)
 
 Tries to cross the vertical boundary. crossing1 triggers at $ffdb which is too early. crossing2 triggers at $ffdd which is just in time to cross.
