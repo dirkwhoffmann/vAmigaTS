@@ -1,6 +1,6 @@
 ## Objective
 
-Tests the masking feature of WAIT and SKIP.
+Tests the masking feature of the WAIT and SKIP command.
 
 #### waitmask1 - waitmask8
 
