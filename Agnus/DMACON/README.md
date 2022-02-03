@@ -10,13 +10,21 @@ The Copper is utilized to modify the BPLEN bit in DMACON around the trigger cycl
 
 Same as bploncop1 - bploncop4 with the modification being carried out by the CPU.
 
-#### spren1, spren2
+#### sprdiscop1 - sprdiscop3
 
-Draw a couple of sprites and utilizes the Copper to switch sprite DMA off or on around the sprite DMA cylces. 
+Sprite DMA is disabled by the Copper around the sprite fetch cycles.
 
-#### spren3, spren4
+#### sprenacop1 - sprenacop3
 
-Similar to spren1 and spren2, but the writes to DMACON are carried out by the CPU. 
+Sprite DMA is enabled by the Copper around the sprite fetch cycles.
+
+#### sprdiscpu1 - sprdiscpu3
+
+Sprite DMA is disabled by the CPU around the sprite fetch cycles.
+
+#### sprenacpu1 - sprenacpu3
+
+Sprite DMA is enabled by the CPU around the sprite fetch cycles.
 
 
 Dirk Hoffmann, 2022
