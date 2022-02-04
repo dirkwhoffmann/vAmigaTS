@@ -26,5 +26,9 @@ Sprite DMA is disabled by the CPU around the sprite fetch cycles.
 
 Sprite DMA is enabled by the CPU around the sprite fetch cycles.
 
+#### bltspr1 - bltspr2
+
+These tests start the Blitter at the beginning of a line and let it run across the sprite DMA cycles. The Copper is utilized to disable sprite DMA at certain positions.
+
 
 Dirk Hoffmann, 2022
