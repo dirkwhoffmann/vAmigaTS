@@ -6,6 +6,14 @@ Basic Copper timing tests
 
 Runs the Copper in areas with multiple bitplanes enabled. 
 
+#### copcpu1
+
+This test runs the CPU through multiple areas with 4, 5, or 6 bitplanes enabled. Inside these areas, the Copper executes multiple WAIT commands to steal bus cycles. 
+
+#### copblt1
+
+Similar idea as copcpu1, but the Copper is utilized to steal cycles from the Blitter. 
+
 #### oldcoptim1
 
 Basic timing with a jump to Copper list 2 involved.

@@ -54,9 +54,22 @@ RULER	MACRO
 MAIN:
 	jsr 	setup
 
-.mainLoop:
+mainloop: 
 	jsr     synccpu
-	bra.b	.mainLoop
+delayloop:
+   	move.w  #2000,d3
+.loop1:
+	move.w  #$555,COLOR00(a1)
+	move.w  #$222,COLOR00(a1)
+	dbra    d3,.loop1
+   	move.w  #300,d3
+	move.w  #$F0F,d4
+	move.w  #$000,d5
+.loop2:
+	move.w  d4,COLOR00(a1)
+	move.w  d5,COLOR00(a1)
+    dbra    d3,.loop2
+	bra.s   mainloop
 	
 setup:
 	; Load OCS base address
@@ -175,8 +188,6 @@ synccpu:
 
 	; Wait until we have reached a certain scanline
 .loop 
-	move.w  #$555,COLOR00(a1)
-	move.w  #$222,COLOR00(a1)
 	move.w  (a3),d2     
 	and     #$FF00,d2
 	cmp.w   #$2000,d2
