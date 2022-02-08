@@ -59,7 +59,8 @@ MAIN:
 	move.w  #$8003,COPCON(a1)   ; Allow Copper to write Blitter registers
 
 	; Enable innterrupts
-	move.w	#$C02C,INTENA(a1) 
+	; move.w	#$C02C,INTENA(a1) 
+    move.w	#$C00C,INTENA(a1) 
 
 	; Enable DMA
 	move.w	#$8080,DMACON(a1)   ; Copper DMA 	
@@ -77,16 +78,38 @@ error:
 
 irq1:
     move.w  #$300,COLOR00(a1)
-    IRQ1
 	move.w  #$3FFF,INTREQ(a1)         ; Acknowledge	
+    IRQ1
     move.w  #$000,COLOR00(a1)
 	rte
 
 irq2:
+	move.w  #$3FFF,INTREQ(a1)         ; Acknowledge	
+
     movem.l	d0-a6,-(sp)
 
+	lea 	CUSTOM,a1
+	move.w	#$3FFF,INTREQ(a1)	; Acknowledge
+	move.l  #bitplane1,BPL1PTH(a1)
+	move.l  #bitplane2,BPL2PTH(a1)
+	move.w  #$38,DDFSTRT(a1)
+	move.w  #$D0,DDFSTOP(a1)
+	move.w  #$2C81,DIWSTRT(a1)
+	move.w  #$F4C1,DIWSTOP(a1)
+	move.w  #0,BPLCON1(a1)
+	move.w  #0,BPLCON2(a1)
+	move.w  #0,BPL1MOD(a1)
+	move.w  #0,BPL2MOD(a1)
+
+    jsr     synccpu 
+    
     ; Setup
     lea     values,a2           ; Measured values
+
+    move.w  (a2),d0              ; Exit if nothing has been measures yet
+    cmpi    #0,d0
+    beq     .exit
+
     lea     expected,a5         ; Expected values
     lea     regnames(pc),a1     ; Output strings
     moveq   #3,d1               ; First output row
@@ -113,8 +136,8 @@ irq2:
     dbf     d2,.l
 
     lea     CUSTOM,a1
-	move.w  #$3FFF,INTREQ(a1)         ; Acknowledge	
 
+.exit:
     movem.l	(sp)+,d0-a6
 
     move.w  #$000,COLOR00(a1)
@@ -122,22 +145,55 @@ irq2:
 	rte
 
 irq3:
-	movem.l	d0-a6,-(sp)
-	lea 	CUSTOM,a1
 	move.w	#$3FFF,INTREQ(a1)	; Acknowledge
-	move.l  #bitplane1,BPL1PTH(a1)
-	move.l  #bitplane2,BPL2PTH(a1)
-	move.w  #$38,DDFSTRT(a1)
-	move.w  #$D0,DDFSTOP(a1)
-	move.w  #$2C81,DIWSTRT(a1)
-	move.w  #$F4C1,DIWSTOP(a1)
-	move.w  #$2200,BPLCON0(a1)
-	move.w  #0,BPLCON1(a1)
-	move.w  #0,BPLCON2(a1)
-	move.w  #0,BPL1MOD(a1)
-	move.w  #0,BPL2MOD(a1)
-	movem.l	(sp)+,d0-a6
 	rte
+
+synccpu:
+	lea     VHPOSR(a1),a3      ; VHPOSR     
+
+	; Wait until we have reached a certain scanline
+.loop 
+	move.w  (a3),d2     
+	and     #$FF00,d2
+	cmp.w   #$2000,d2
+	bne     .loop
+	and     #1,VPOSR(a1)
+	bne     .loop
+
+	; Sync horizontally
+	move.w  #$F0F,COLOR00(a1)
+.synccpu1:
+	andi.w  #$F,(a3)          ; 16 cycles
+	bne     .synccpu1         ; 10 cycles
+	move.w  #$606,COLOR00(a1)
+.synccpu2:
+	andi.w  #$1F,(a3)         ; 16 cycles
+	bne     .synccpu2         ; 10 cycles
+	move.w  #$A0A,COLOR00(a1)
+.synccpu3:
+	andi.w  #$FF,(a3)         ; 16 cycles
+	nop                       ;  4 cycles
+	nop                       ;  4 cycles
+	nop                       ;  4 cycles
+	bne     .synccpu3         ; 10 cycles (if taken)
+
+	; Adust horizontally
+  	moveq   #10,d2
+.adjust:
+    dbra    d2,.adjust
+
+	; Sync vertically
+.synccpu4:
+	nop 
+	move.w  #$404,COLOR00(a1)
+	ds.w    96,$4E71          ; NOPs to keep the horizontal position in each iteration
+	move.w  (a3),d2     
+	move.w  #$F0F,COLOR00(a1)  
+	and     #$FF00,d2
+	cmp.w   #$3000,d2
+	bne     .synccpu4
+	move.w  #$000,COLOR00(a1)
+	rts
 
 regnames:
     dc.b '0: $', 0
@@ -159,6 +215,10 @@ regnames:
 	even
 
     ALIGN 2
+counter:
+    dc.w 	0
+
+    ALIGN 2
 values:
     ds.w 	16,0
 
@@ -166,18 +226,12 @@ copper:
 
     ; Run the test
     COPPER
-
-    ; Print values
-    dc.w    $6001,$FFFE
-    dc.w    INTREQ, $8008        ; Level 2 interrupt
-
-	; Cross vertical boundary
-	dc.w    $ffdf,$fffe 
     
     ; Disable Copper DMA (if the Copper should be executed for one frame only)
-	dc.w    $20df,$fffe 
+	; dc.w    $20df,$fffe 
     ; dc.w    DMACON,$0080
 
+    dc.w    BPLCON0,$0200
 	dc.l    $fffffffe
 
 bitplane1:

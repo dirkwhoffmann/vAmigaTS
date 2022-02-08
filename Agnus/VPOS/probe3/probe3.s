@@ -35,8 +35,15 @@ IRQ1 	MACRO
     ENDM
 
 COPPER 	MACRO
-    dc.w    $4081,$FFFE
-    dc.w    INTREQ, $8004        ; Level 1 interrupt
+
+    dc.w    $1001,$FFFE
+    dc.w    INTREQ,$8008        ; Level 2 interrupt
+
+    dc.w    $4001,$FFFE 
+    dc.w    BPLCON0,$2200
+
+    dc.w    $E883,$FFFE
+    dc.w    INTREQ, $8004       ; Level 1 interrupt
 	ENDM
     
 	include "../probe.i"
@@ -45,5 +52,5 @@ COPPER 	MACRO
     dc.b    'PROBE3', 0
     ALIGN 2
 expected:
-    dc.w    $40B7,$40C1,$40CB,$40D5,$40DF,$4107,$4111,$411B
-    dc.w    $4125,$412F,$4139,$4143,$414D,$4157,$4161,$416B
+    dc.w    $E8C0,$E8CA,$E8D4,$E8DE,$E905,$E90F,$E919,$E923
+    dc.w    $E92D,$E937,$E941,$E94B,$E955,$E95F,$E969,$E973

@@ -1,46 +1,66 @@
+;IRQ1 	MACRO
+;    move.w  VHPOSR(a1),d5
+;    lea     values,a2
+;    add.w   d4,a2
+;    move.w  d5,(a2)
+;    addi    #2,d4
+;   andi    #$1F,d4
+;    ENDM
+
 IRQ1 	MACRO
     move.w  VHPOSR(a1),d5
     lea     values,a2
+    move.w  counter,d4
     add.w   d4,a2
     move.w  d5,(a2)
     addi    #2,d4
     andi    #$1F,d4
+    move.w  d4,counter
     ENDM
-    
+
 COPPER 	MACRO
 
-    dc.w    $4051,$FFFE
+    dc.w    $0401,$FFFE 
+    dc.w    INTREQ, $8008        ; Level 2 interrupt
+
+    dc.w    $3801,$FFFE
+    dc.w    BPLCON0,$2200
+
+    dc.w    $E051,$FFFE
     dc.w    INTREQ, $8004        ; Level 1 interrupt
-    dc.w    $4253,$FFFE
+    dc.w    $E253,$FFFE
     dc.w    INTREQ, $8004        ; Level 1 interrupt
-    dc.w    $4455,$FFFE
+    dc.w    $E455,$FFFE
     dc.w    INTREQ, $8004        ; Level 1 interrupt
-    dc.w    $4657,$FFFE
+    dc.w    $E657,$FFFE
     dc.w    INTREQ, $8004        ; Level 1 interrupt
-    dc.w    $4859,$FFFE
+    dc.w    $E859,$FFFE
     dc.w    INTREQ, $8004        ; Level 1 interrupt
-    dc.w    $4A5B,$FFFE
+    dc.w    $EA5B,$FFFE
     dc.w    INTREQ, $8004        ; Level 1 interrupt
-    dc.w    $4C5D,$FFFE
+    dc.w    $EC5D,$FFFE
     dc.w    INTREQ, $8004        ; Level 1 interrupt
-    dc.w    $4E5F,$FFFE
+    dc.w    $EE5F,$FFFE
     dc.w    INTREQ, $8004        ; Level 1 interrupt
-    dc.w    $5061,$FFFE
+    dc.w    $F061,$FFFE
     dc.w    INTREQ, $8004        ; Level 1 interrupt
-    dc.w    $5263,$FFFE
+    dc.w    $F263,$FFFE
     dc.w    INTREQ, $8004        ; Level 1 interrupt
-    dc.w    $5465,$FFFE
+    dc.w    $F465,$FFFE
     dc.w    INTREQ, $8004        ; Level 1 interrupt
-    dc.w    $5667,$FFFE
+    dc.w    $F667,$FFFE
     dc.w    INTREQ, $8004        ; Level 1 interrupt
-    dc.w    $5869,$FFFE
+    dc.w    $F869,$FFFE
     dc.w    INTREQ, $8004        ; Level 1 interrupt
-    dc.w    $5A6B,$FFFE
+    dc.w    $FA6B,$FFFE
     dc.w    INTREQ, $8004        ; Level 1 interrupt
-    dc.w    $5C6D,$FFFE
+    dc.w    $FC6D,$FFFE
     dc.w    INTREQ, $8004        ; Level 1 interrupt
-    dc.w    $5E6F,$FFFE
+    dc.w    $FE6F,$FFFE
     dc.w    INTREQ, $8004        ; Level 1 interrupt
+
+	; Cross vertical boundary
+	dc.w    $ffdf,$fffe 
 	ENDM
     
 	include "../probe.i"
@@ -49,5 +69,5 @@ COPPER 	MACRO
     dc.b    'PROBE1', 0
     ALIGN 2
 expected:
-    dc.w    $4083,$4285,$4487,$4689,$4889,$4A8F,$4C8F,$4E91
-    dc.w    $5093,$5295,$5495,$569B,$589B,$5A9D,$5C9F,$5EA1
+    dc.w    $E08B,$E28D,$E48F,$E691,$E891,$EA97,$EC97,$EE99
+    dc.w    $F09B,$F29D,$F49C,$F69C,$F8A1,$FAA2,$FCA2,$FEA6
