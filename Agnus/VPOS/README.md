@@ -2,6 +2,14 @@
 
 Visualize the value of the position registers 
 
+#### cycleDFv, cycle01v, cycleDFvh, cycle01vh
+
+Reads and visualizes
+- VPOSR in line $FF, cycle $DF,
+- VPOSR in line $100, cycle $01,
+- VHPOSR in line $FF, cycle $DF,
+- VHPOSR in line $100, cycle $01, respectively.
+
 #### vhpos1
 
 Reads VPOSR in the VBLANK interrupt handler and visualizes the result in form of color bars. 
@@ -33,6 +41,10 @@ These tests probe VHPOSR at 16 different locations and display the result.
 #### ersy1, ersy2
 
 Similar to the probe tests with an additional modification of the ERSY bit. In ersy1, ERSY is set and reset in the same scanline (which has no effect). In ersy2, a scanline is crossed with ERSY equal to 1. On a real machine, this causes display corruption because the HSYNC signal is not generated. 
+
+#### vprobe1 - vprobe4
+
+These tests probe VPOSR while crossing the vertical boundary (vpos changes from $FF to $100).
 
 
 Dirk Hoffmann, 2019 - 2022
