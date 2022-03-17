@@ -2,7 +2,7 @@
 
 #### timing
 
-These tests several small blits with all 16 bit combinations of USEA/USEB/USEC/USED in BLTCON0. Blitter timing is visualized in form of color stripes. The Copper is utilized to both start the Blitter and to recognize when the Blitter has terminated.  In the upper part, the blits are run with all bitplanes disabled. In the lower part, all 6 bitplanes are enabled. 
+These tests perform several small blits with all 16 bit combinations of USEA/USEB/USEC/USED in BLTCON0. Blitter timing is visualized in form of color stripes. The Copper is utilized to both start the Blitter and to recognize when the Blitter has terminated.  In the upper part, the blits are run with all bitplanes disabled. In the lower part, all 6 bitplanes are enabled. 
 
 #### irqtim
 
