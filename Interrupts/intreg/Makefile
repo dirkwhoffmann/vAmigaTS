@@ -1,4 +1,5 @@
-# Regression testing for vAmiga
+# Regression testing for vAmiga 
+# Version: 2.1.2022
 #
 # To run all regression tests:
 # make [-j<number of parallel threads>]
@@ -19,13 +20,8 @@ prepare:
 clean:
 	rm -f */*.log
 
-# Failing tests
-flicker/flicker.log flicker2/flicker2.log:
-	@echo "$(basename $@): MUST BE EXECUTED MANUALLY"
-	@echo "$(basename $@): MUST BE EXECUTED MANUALLY" > $@
-
 %.log: %.tiff
-	@cp $(basename $@).adf /tmp/$(basename $(@F)).adf
+	@cp $(wildcard $(dir $@)*.adf) /tmp/$(basename $(@F)).adf
 	@$(VAMIGA) $(basename $@).ini &> /dev/null
 	@cmp /tmp/$(basename $(@F)).tiff $(basename $@).tiff
 	@echo "$(basename $@): PASS"
@@ -35,7 +31,7 @@ flicker/flicker.log flicker2/flicker2.log:
 
 %.tiff:
 	@echo "Creating missing reference image $@"
-	@cp $(basename $@).adf /tmp/$(basename $(@F)).adf
+	@cp $(wildcard $(dir $@)*.adf) /tmp/$(basename $(@F)).adf
 	@$(VAMIGA) $(basename $@).ini &> /dev/null
 	@cp /tmp/$(basename $(@F)).tiff $(basename $@).tiff
 	@rm /tmp/$(basename $(@F)).adf
