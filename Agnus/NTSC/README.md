@@ -14,5 +14,9 @@ Same setup as ntsc0. In addition, the LOL bit in VPOSW is modified in various wa
 
 Same setup as ntsc0. In addition, Agnus is forced to run in PAL (NTSC) mode by setting (clearing) bit 5 in BEAMCON0.
 
+#### ntsc5
+
+Same as ntsc0 with BEAMCON0::LOLDIS = 1 and BEAMCON0::PAL = 0.
+
 
 Dirk Hoffmann, 2022
