@@ -10,6 +10,10 @@ The Copper is utilized to modify the BPLEN bit in DMACON around the trigger cycl
 
 Same as bploncop1 - bploncop4 with the modification being carried out by the CPU.
 
+#### reenable
+
+In some scanlines, bitplane DMA is disabled after DDFSTRT has been passed and reenabled before DDFSTOP has been reached. 
+
 #### sprdiscop1 - sprdiscop3
 
 Sprite DMA is disabled by the Copper around the sprite fetch cycles.
