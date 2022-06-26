@@ -10,6 +10,10 @@ The Copper is utilized to modify the BPLEN bit in DMACON around the trigger cycl
 
 Same as bploncop1 - bploncop4 with the modification being carried out by the CPU.
 
+#### bploff1
+
+This test exhibits a bug in the Agnus sequencer logic. When bitplane DMA is switched off in the middle of a line (inside the active bpl area), bitplane DMA terminates early once DMA is reenabled. On ECS machines, early termination always happens (only 1 or 2 fetch units are processed). On OCS machines, early termination happens only when DMA is switched off inside or close to the last fetch unit. This bug is not supported by vAmiga, yet. Hence, the test fails. 
+
 #### reenable
 
 In some scanlines, bitplane DMA is disabled after DDFSTRT has been passed and reenabled before DDFSTOP has been reached. 
