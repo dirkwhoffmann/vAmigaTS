@@ -75,9 +75,14 @@ irq2:
 
 synccpu:
 	lea     VHPOSR(a1),a3      ; VHPOSR     
+	lea     COLOR00(a1),a4
+	move.w  #$666,d3
+	move.w  #$000,d4
 
 	; Wait until we have reached a certain scanline
 .loop 
+	move.w 	d3,(a4)
+	move.w  d4,(a4)
 	move.w  (a3),d2     
 	and     #$FF00,d2
 	cmp.w   #$2000,d2
@@ -197,7 +202,7 @@ copper:
 
 	dc.w	$4201,$FFFE  
 	dc.w    DMACON,BPLDMAOFF
-	dc.w    COLOR01,$000	
+	dc.w    COLOR01,IDLECOL
 	dc.w	$4301,$FFFE  
 	dc.w    COLOR01,COL
 	dc.w	$4311,$FFFE  
@@ -205,7 +210,7 @@ copper:
 
 	dc.w	$4401,$FFFE  
 	dc.w    DMACON,BPLDMAOFF
-	dc.w    COLOR01,$000	
+	dc.w    COLOR01,IDLECOL
 	dc.w	$4501,$FFFE  
 	dc.w    COLOR01,COL
 	dc.w	$4513,$FFFE  
@@ -213,7 +218,7 @@ copper:
 
 	dc.w	$4601,$FFFE  
 	dc.w    DMACON,BPLDMAOFF
-	dc.w    COLOR01,$000	
+	dc.w    COLOR01,IDLECOL
 	dc.w	$4701,$FFFE  
 	dc.w    COLOR01,COL
 	dc.w	$4715,$FFFE  
@@ -221,7 +226,7 @@ copper:
 
 	dc.w	$4801,$FFFE  
 	dc.w    DMACON,BPLDMAOFF
-	dc.w    COLOR01,$000	
+	dc.w    COLOR01,IDLECOL
 	dc.w	$4901,$FFFE  
 	dc.w    COLOR01,COL
 	dc.w	$4917,$FFFE  
@@ -229,7 +234,7 @@ copper:
 
 	dc.w	$4A01,$FFFE  
 	dc.w    DMACON,BPLDMAOFF
-	dc.w    COLOR01,$000	
+	dc.w    COLOR01,IDLECOL
 	dc.w	$4B01,$FFFE  
 	dc.w    COLOR01,COL
 	dc.w	$4B19,$FFFE  
@@ -237,7 +242,7 @@ copper:
 
 	dc.w	$4C01,$FFFE  
 	dc.w    DMACON,BPLDMAOFF
-	dc.w    COLOR01,$000	
+	dc.w    COLOR01,IDLECOL
 	dc.w	$4D01,$FFFE  
 	dc.w    COLOR01,COL
 	dc.w	$4D1B,$FFFE  
@@ -245,7 +250,7 @@ copper:
 
 	dc.w	$4E01,$FFFE  
 	dc.w    DMACON,BPLDMAOFF
-	dc.w    COLOR01,$000	
+	dc.w    COLOR01,IDLECOL
 	dc.w	$4F01,$FFFE  
 	dc.w    COLOR01,COL
 	dc.w	$4F1D,$FFFE  
@@ -253,7 +258,7 @@ copper:
 
 	dc.w	$5001,$FFFE  
 	dc.w    DMACON,BPLDMAOFF
-	dc.w    COLOR01,$000	
+	dc.w    COLOR01,IDLECOL
 	dc.w	$5101,$FFFE  
 	dc.w    COLOR01,COL
 	dc.w	$511F,$FFFE  
@@ -261,7 +266,7 @@ copper:
 
 	dc.w	$5201,$FFFE  
 	dc.w    DMACON,BPLDMAOFF
-	dc.w    COLOR01,$000	
+	dc.w    COLOR01,IDLECOL
 	dc.w	$5301,$FFFE  
 	dc.w    COLOR01,COL
 	dc.w	$5321,$FFFE  
@@ -269,7 +274,7 @@ copper:
 
 	dc.w	$5401,$FFFE  
 	dc.w    DMACON,BPLDMAOFF
-	dc.w    COLOR01,$000	
+	dc.w    COLOR01,IDLECOL	
 	dc.w	$5501,$FFFE  
 	dc.w    COLOR01,COL
 	dc.w	$5523,$FFFE  
@@ -295,80 +300,102 @@ copper:
 	dc.w    INTREQ, $8008       ; Level 2 IRQ
 
 	dc.w	$6401,$FFFE  
+	dc.w    BPLCON0,(0<<12)|$200
 	dc.w    DMACON,BPLDMAON
-	dc.w    COLOR01,$000	
+	dc.w    COLOR01,IDLECOL	
 	dc.w	$6501,$FFFE  
+	dc.w    BPLCON0,(1<<12)|$200
 	dc.w    COLOR01,COL
 	dc.w	$6573,$FFFE  
 	dc.w    INTREQ, $8008       ; Level 2 IRQ
 
-	dc.w	$6601,$FFFE  
+	dc.w	$6601,$FFFE
+	dc.w    BPLCON0,(0<<12)|$200
 	dc.w    DMACON,BPLDMAON
-	dc.w    COLOR01,$000	
-	dc.w	$6701,$FFFE  
+	dc.w    COLOR01,IDLECOL	
+	dc.w	$6701,$FFFE
+	dc.w    BPLCON0,(1<<12)|$200
 	dc.w    COLOR01,COL
 	dc.w	$6775,$FFFE  
 	dc.w    INTREQ, $8008       ; Level 2 IRQ
 
 	dc.w	$6801,$FFFE  
+	dc.w    BPLCON0,(0<<12)|$200
 	dc.w    DMACON,BPLDMAON
-	dc.w    COLOR01,$000	
-	dc.w	$6901,$FFFE  
+	dc.w    COLOR01,IDLECOL	
+	dc.w	$6901,$FFFE
+	dc.w    BPLCON0,(1<<12)|$200
 	dc.w    COLOR01,COL
 	dc.w	$6977,$FFFE  
 	dc.w    INTREQ, $8008       ; Level 2 IRQ
 
 	dc.w	$6A01,$FFFE  
+	dc.w    BPLCON0,(0<<12)|$200
 	dc.w    DMACON,BPLDMAON
-	dc.w    COLOR01,$000	
+	dc.w    COLOR01,IDLECOL	
 	dc.w	$6B01,$FFFE  
+	dc.w    BPLCON0,(1<<12)|$200
 	dc.w    COLOR01,COL
 	dc.w	$6B79,$FFFE  
 	dc.w    INTREQ, $8008       ; Level 2 IRQ
 
-	dc.w	$6C01,$FFFE  
+	dc.w	$6C01,$FFFE
+	dc.w    BPLCON0,(0<<12)|$200
 	dc.w    DMACON,BPLDMAON
-	dc.w    COLOR01,$000	
+	dc.w    COLOR01,IDLECOL	
 	dc.w	$6D01,$FFFE  
+	dc.w    BPLCON0,(1<<12)|$200
 	dc.w    COLOR01,COL
 	dc.w	$6D7B,$FFFE  
 	dc.w    INTREQ, $8008       ; Level 2 IRQ
 
 	dc.w	$6E01,$FFFE  
+	dc.w    BPLCON0,(0<<12)|$200
 	dc.w    DMACON,BPLDMAON
-	dc.w    COLOR01,$000	
+	dc.w    COLOR01,IDLECOL	
 	dc.w	$6F01,$FFFE  
+	dc.w    BPLCON0,(1<<12)|$200
 	dc.w    COLOR01,COL
 	dc.w	$6F7D,$FFFE  
 	dc.w    INTREQ, $8008       ; Level 2 IRQ
 
-	dc.w	$7001,$FFFE  
+	dc.w	$7001,$FFFE
+	dc.w    BPLCON0,(0<<12)|$200
 	dc.w    DMACON,BPLDMAON
-	dc.w    COLOR01,$000	
+	dc.w    COLOR01,IDLECOL	
 	dc.w	$7101,$FFFE  
+	dc.w    BPLCON0,(1<<12)|$200
 	dc.w    COLOR01,COL
 	dc.w	$717F,$FFFE  
 	dc.w    INTREQ, $8008       ; Level 2 IRQ
 
-	dc.w	$7201,$FFFE  
+	dc.w	$7201,$FFFE
+	dc.w    BPLCON0,(0<<12)|$200
 	dc.w    DMACON,BPLDMAON
-	dc.w    COLOR01,$000	
-	dc.w	$7301,$FFFE  
+	dc.w    COLOR01,IDLECOL	
+	dc.w	$7301,$FFFE
+	dc.w    BPLCON0,(1<<12)|$200  
 	dc.w    COLOR01,COL
 	dc.w	$7381,$FFFE  
 	dc.w    INTREQ, $8008       ; Level 2 IRQ
 
 	dc.w	$7401,$FFFE  
+	dc.w    BPLCON0,(0<<12)|$200
 	dc.w    DMACON,BPLDMAON
-	dc.w    COLOR01,$000	
+	dc.w    COLOR01,IDLECOL
 	dc.w	$7501,$FFFE  
+	dc.w    BPLCON0,(1<<12)|$200
 	dc.w    COLOR01,COL
 	dc.w	$7583,$FFFE  
 	dc.w    INTREQ, $8008       ; Level 2 IRQ
 
 	dc.w	$7601,$FFFE  
+	dc.w    BPLCON0,(0<<12)|$200
+	dc.w    DMACON,BPLDMAON
+	dc.w    COLOR01,IDLECOL
+	dc.w	$7701,$FFFE  
+	dc.w    BPLCON0,(1<<12)|$200
 	dc.w    DMACON,BPLDMAOFF
-	dc.w    COLOR01,$000	
 
 	; Cross vertical boundary
 	dc.w    $ffdf,$fffe 
