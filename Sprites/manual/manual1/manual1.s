@@ -34,9 +34,9 @@ MAIN:
 	MOVE.W  #$0FF0,COLOR17(a1)
 	MOVE.W  #$00FF,COLOR18(a1)
 	MOVE.W  #$0F0F,COLOR19(a1)
-	MOVE.W  #$0FFF,COLOR20(a1)
-	MOVE.W  #$088F,COLOR21(a1)
-	MOVE.W  #$0F88,COLOR22(a1)
+	MOVE.W  #$0FFF,COLOR21(a1)
+	MOVE.W  #$088F,COLOR22(a1)
+	MOVE.W  #$0F88,COLOR23(a1)
 
 	; Install Copper list
 	lea    	copper(pc),a0

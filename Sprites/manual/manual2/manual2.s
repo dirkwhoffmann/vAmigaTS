@@ -39,9 +39,9 @@ entry:
 	MOVE.W  #$0FF0,COLOR17(a0) ;Color 17 = yellow
 	MOVE.W  #$00FF,COLOR18(a0) ;Color 18 = cyan
 	MOVE.W  #$0F0F,COLOR19(a0) ;Color 19 = magenta
-	MOVE.W  #$0FFF,COLOR20(a0) ;
-	MOVE.W  #$088F,COLOR21(a0) ;
-	MOVE.W  #$0F88,COLOR22(a0) ;
+	MOVE.W  #$0FFF,COLOR21(a0) ;
+	MOVE.W  #$088F,COLOR22(a0) ;
+	MOVE.W  #$0F88,COLOR23(a0) ;
 	;;
 	;;  Move Copper list to $20000.
 	;;
