@@ -1,7 +1,7 @@
 # vAmiga Test Suite
 
 <p align="center">
-  <img src="http://www.dirkwhoffmann.de/vAMIGA/pics/vats1.png" height="100">
+  <img src="https://dirkwhoffmann.github.io/vAmiga/images/va-ts.png" height="100">
 </p>
 
 ## Overview
