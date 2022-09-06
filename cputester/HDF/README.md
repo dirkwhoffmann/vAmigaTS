@@ -37,6 +37,30 @@ feature_full_extension_format=1
 mode=all
 ```
 
+### IRQ_0x0.hdf
+
+Supported CPUs: 68000, 68010
+
+```
+feature_sr_mask=0x8000
+feature_interrupts=1
+feature_undefined_ccr=1
+mode=jsr,jmp,bsr,bcc,dbcc,nop,exg,swap,stop,mvsr2,mv2sr,andsr,eorsr,orsr
+min_opcode_test_rounds=100
+```
+
+### AESRC_0x0.hdf
+
+Supported CPUs: 68000
+
+```
+feature_target_src_ea=0x37fff1,0x7111
+feature_target_dst_ea=
+feature_undefined_ccr=1
+mode=all
+```
+
+
 ### simple.hdf (DEPRECATED)
 
 Covered CPUs: 68000, 68010, 68020, 68030, 68040
