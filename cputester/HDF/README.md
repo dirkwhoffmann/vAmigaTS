@@ -133,6 +133,17 @@ feature_sr_mask=0x3000 (BASIC2)
 mode=all
 ```
 
+### FBASIC_0x0.hdf
+
+Basic FPU test. No arithmetic exceptions, unsupported instructions or datatypes, denormals or unnormals.
+
+```
+feature_sr_mask=0xc000
+exceptions=-48,-49,-50,-51,-52,-53,-54
+min_opcode_test_rounds=5000
+mode=fmove,fsmove,fdmove,fint,fintrz,fneg,fsneg,fdneg,fabs,fsabs,fdabs,fdiv,fsdiv,fddiv,fadd,fsadd,fdadd,fmul,fsmul,fdmul,fsgldiv,fsglmul,fsub,fssub,fdsub,fcmp,ftst,fsqrt
+```
+
 ### simple.hdf (DEPRECATED)
 
 Covered CPUs: 68000, 68010, 68020, 68030, 68040
