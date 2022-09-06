@@ -24,7 +24,20 @@ This error message indicates that the HDF does not contain test data for the emu
 
 The HDFs have been generated with the following settings:
 
-### simple.hdf
+### simple_0x0.hdf
+
+Supported CPUs: 68000, 68010, 68020, 68030, 68040
+
+```
+test_rounds=2
+feature_flags_mode=0
+feature_sr_mask=0x0000
+feature_undefined_ccr=1
+feature_full_extension_format=1
+mode=all
+```
+
+### simple.hdf (DEPRECATED)
 
 Covered CPUs: 68000, 68010, 68020, 68030, 68040
 
@@ -35,7 +48,7 @@ feature_undefined_ccr=1
 mode=all
 ```
 
-### extmodes.hdf
+### extmodes.hdf (DEPRECATED)
 
 Covered CPUs: 68020, 68030, 68040
 
