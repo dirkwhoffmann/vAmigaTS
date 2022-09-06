@@ -117,14 +117,19 @@ feature_undefined_ccr=1
 feature_exception_vectors=0x000123
 ```
 
-### BASIC_0x0.hdf
+### BASIC1_0x0.hdf, BASIC2_0x0.hdf
 
 Basic tests with all SR T1, T0 and M combinations
 
 Supported CPUs: 68020
 
 ```
-feature_sr_mask=0xf000
+feature_sr_mask=0xC000 (BASIC1)
+mode=all
+```
+
+```
+feature_sr_mask=0x3000 (BASIC2)
 mode=all
 ```
 
