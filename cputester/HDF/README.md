@@ -94,6 +94,18 @@ feature_undefined_ccr=1
 mode=mv2sr.w,mvusp2r,mvr2usp,illegal,chk,trap,trapv,divu,divs,orsr.w
 ```
 
+### LM_0x0.hdf
+
+Supported CPUs: 68010
+
+```
+feature_loop_mode_68010=1
+feature_loop_mode_cnt=3
+min_opcode_test_rounds=100
+feature_undefined_ccr=1
+mode=all
+```
+
 ### ODDIRQ_0x0.hdf
 
 Supported CPUs: 68010
@@ -103,6 +115,17 @@ mode=nop,ext,swap
 feature_interrupts=1
 feature_undefined_ccr=1
 feature_exception_vectors=0x000123
+```
+
+### BASIC_0x0.hdf
+
+Basic tests with all SR T1, T0 and M combinations
+
+Supported CPUs: 68020
+
+```
+feature_sr_mask=0xf000
+mode=all
 ```
 
 ### simple.hdf (DEPRECATED)
