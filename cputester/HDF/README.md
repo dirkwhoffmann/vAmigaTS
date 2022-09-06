@@ -83,6 +83,28 @@ feature_undefined_ccr=1
 mode=rts,rtd,rtr,jsr,bsr,link,unlk,pea
 ```
 
+### ODDEXC_0x0.hdf
+
+Supported CPUs: 68000, 68010
+
+```
+feature_exception_vectors=0x000123
+verbose=0
+feature_undefined_ccr=1
+mode=mv2sr.w,mvusp2r,mvr2usp,illegal,chk,trap,trapv,divu,divs,orsr.w
+```
+
+### ODDIRQ_0x0.hdf
+
+Supported CPUs: 68010
+
+```
+mode=nop,ext,swap
+feature_interrupts=1
+feature_undefined_ccr=1
+feature_exception_vectors=0x000123
+```
+
 ### simple.hdf (DEPRECATED)
 
 Covered CPUs: 68000, 68010, 68020, 68030, 68040
