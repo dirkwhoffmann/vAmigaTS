@@ -60,6 +60,28 @@ feature_undefined_ccr=1
 mode=all
 ```
 
+### AEDST_0x0.hdf
+
+Supported CPUs: 68000, 68010
+
+```
+feature_target_src_ea=
+feature_target_dst_ea=0x37fff1,0x7111
+verbose=0
+feature_undefined_ccr=1
+mode=move,movea,mvmel,mvmle
+```
+
+### ODDSTK_0x0.hdf
+
+Supported CPUs: 68000, 68010
+
+```
+feature_usp=2
+verbose=0
+feature_undefined_ccr=1
+mode=rts,rtd,rtr,jsr,bsr,link,unlk,pea
+```
 
 ### simple.hdf (DEPRECATED)
 
