@@ -4,7 +4,7 @@ Verifies basic properties of the memory management unit.
 
 #### mmureg1, mmureg2
 
-A very basic test for verifying the MMU registers. Some constant values are written into MMUSR, TT0, TT1, CRP, and SRP. The values are read back and displayed on the screen. mmureg1 utilizes the PMOVE command, mmureg2 utilizes PMOVEFD.
+A very basic test for verifying the MMU registers. Some constant values are written into MMUSR, TC, TT0, TT1, CRP, and SRP. The values are read back and displayed on the screen. mmureg1 utilizes the PMOVE command, mmureg2 utilizes PMOVEFD.
 
 #### ptest30r, ptest30w
 
