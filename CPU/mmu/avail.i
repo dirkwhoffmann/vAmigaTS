@@ -73,31 +73,30 @@ error:
 done:
     bra.s   done
 
-trap0:
-    ploadr  #$7,(a0)
+checkpoint1:
     lea     copper1,a0
     move.w  #$040,$2(a0)
-
-    ploadr  SFC,$2(a0)
+	rts
+checkpoint2:
     lea     copper2,a0
     move.w  #$060,$2(a0)
-
-    ploadr  DFC,$FF.w
+	rts
+checkpoint3:
     lea     copper3,a0
     move.w  #$080,$2(a0)
-
-    ploadw  #0,($2,a0,d0)
+	rts
+checkpoint4:
     lea     copper4,a0
     move.w  #$0A0,$2(a0)
-
-    ploadw  d0,$12345678.l
+	rts
+checkpoint5:
     lea     copper5,a0
     move.w  #$0C0,$2(a0)
-
-    ploadw  d7,$FFFF.l
+	rts
+checkpoint6:
     lea     copper6,a0
     move.w  #$0E0,$2(a0)
-    rte
+	rts
 
 illegal:
     jmp     continue
@@ -153,13 +152,10 @@ copper6:
 	dc.w    $ffdf,$fffe 
 
 	dc.l    $fffffffe
-
     even
     
 bitplane1:
 	ds.b    320*256/8,$00
 bitplane2:
 	ds.b    320*256/8,$00
-info: 
-    dc.b    'PLOAD30', 0
     even 
