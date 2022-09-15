@@ -24,4 +24,13 @@ A very basic test for verifying the MMU registers. Some constant values are writ
 
 These tests verifiy the ACU (Access Control Unit) of the 680EC030. Both tests write various values into TT0 (aka AC0). After that, ptest30r issues a PTESTR instruction and ptest30w issues a PTESTW instructions. After each PTEST call, the value of the ACSR (aka MMUSR) is recorded and displayed.
 
+#### translate1
+
+This test checks the 68030 MMU. It enables the MMU with a simple 1:1 mapping.
+
+#### translate2
+
+This test checks the 68030 MMU. It maps range $1xxxxxxxxxx to $0xxxxxxxxxx. If the mapping succeeds, green bars appear. 
+
+
 Dirk Hoffmann, 2022
