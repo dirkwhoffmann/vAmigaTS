@@ -26,11 +26,12 @@ These tests verifiy the ACU (Access Control Unit) of the 680EC030. Both tests wr
 
 #### translate1
 
-This test checks the 68030 MMU. It enables the MMU with a simple 1:1 mapping.
+This test checks the 68030 MMU with a very simple page table. It maps range $Axxxxx to $Dxxxxx and utilizes a 1:1 mapping for all other regions. After enabling the MMU, the test modifies the background color
+by accessing the color register via the $Axxxxx mirror space. If the MMU works as expected, the background color appears green.
 
-#### translate2
+#### translate2, translate3
 
-This test checks the 68030 MMU. It maps range $1xxxxxxxxxx to $0xxxxxxxxxx. If the mapping succeeds, green bars appear. 
+Similar to translate1 with more sophisticated table structures.
 
 
 Dirk Hoffmann, 2022

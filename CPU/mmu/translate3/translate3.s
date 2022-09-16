@@ -10,13 +10,20 @@ trap0:
 	pmove   (a2),CRP
 
 	; Install TC 
-	; PS = F (32 KB), IS = 8, TIA = 4, TIAB = 4, TIAC = 1, TIAD = 0
-	move.l  #$80F84410,(a2)  
+	; PS = C (4 KB), IS = 8, TIA = 4, TIAB = 4, TIAC = 4, TIAD = 0
+	move.l  #$80C84440,(a2)  
 	pmove   (a2),TC
 
 	; Install pointer to table B
 	lea 	subtable,a2
 	lea     tableb,a3
+	move.l  a3,(a2)
+	andi.b  #$F0,$3(a2)
+	ori.b   #$02,$3(a2)
+
+	; Install pointer to table C
+	lea 	subtable2,a2
+	lea     tablec,a3
 	move.l  a3,(a2)
 	andi.b  #$F0,$3(a2)
 	ori.b   #$02,$3(a2)
@@ -34,7 +41,7 @@ shouldnotreach:
 
 	even 
 info: 
-    dc.b    'TRANSLATE2', 0
+    dc.b    'TRANSLATE3', 0
 
 	even
 crpval: 
@@ -54,7 +61,7 @@ tablea:
 	dc.b    $00, $80, $00, $01 ; 8
 	dc.b    $00, $90, $00, $01 ; 9
 subtable:
-	dc.b    $00, $00, $00, $00 ; 10    Will contain a pointer to tableb:
+	dc.b    $00, $00, $00, $00 ; 10  Will contain a pointer to tableb:
 	dc.b    $00, $B0, $00, $01 ; 11
 	dc.b    $00, $C0, $00, $01 ; 12
 	dc.b    $00, $D0, $00, $01 ; 13
@@ -78,4 +85,24 @@ tableb:
 	dc.b    $00, $DC, $00, $01 ; 12
 	dc.b    $00, $DD, $00, $01 ; 13
 	dc.b    $00, $DE, $00, $01 ; 14
-	dc.b    $00, $DF, $00, $01 ; 15
+subtable2:
+	dc.b    $00, $00, $00, $00 ; 15  Will contain a pointer to tablec:
+
+	align 4
+tablec:
+	dc.b    $00, $DF, $00, $01 ; 0
+	dc.b    $00, $DF, $10, $01 ; 1
+	dc.b    $00, $DF, $20, $01 ; 2   
+	dc.b    $00, $DF, $30, $01 ; 3
+	dc.b    $00, $DF, $40, $01 ; 4
+	dc.b    $00, $DF, $50, $01 ; 5
+	dc.b    $00, $DF, $60, $01 ; 6
+	dc.b    $00, $DF, $70, $01 ; 7
+	dc.b    $00, $DF, $80, $01 ; 8
+	dc.b    $00, $DF, $90, $01 ; 9
+	dc.b    $00, $DF, $A0, $01 ; 10 
+	dc.b    $00, $DF, $B0, $01 ; 11
+	dc.b    $00, $DF, $C0, $01 ; 12
+	dc.b    $00, $DF, $D0, $01 ; 13
+	dc.b    $00, $DF, $E0, $01 ; 14
+	dc.b    $00, $DF, $F0, $01 ; 15

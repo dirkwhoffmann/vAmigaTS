@@ -2,7 +2,7 @@
 
 trap0:
 
-	; Install MMU table
+	; Install CRP
 	lea 	crpval,a2
 	lea     mmutable,a3
 	move.l  #$80000002,(a2) ; Write L/U and DT (short table)
@@ -16,12 +16,9 @@ trap0:
 
 	; At this point, the MMU should be active
 
-	bsr 	checkpoint1
-	bsr 	checkpoint2
-	bsr 	checkpoint3
-	bsr 	checkpoint4
-	bsr 	checkpoint5
-	bsr 	checkpoint6
+	; Use the mirror address to change the bg color to green
+    lea     $aff180,a0
+    move.w  #$0A0,(a0)
     rte
 	
 shouldnotreach:
@@ -30,7 +27,7 @@ shouldnotreach:
 
 	even 
 info: 
-    dc.b    'TRANSLATE 1 (68030)', 0
+    dc.b    'TRANSLATE1', 0
 
 	even
 crpval: 
@@ -40,7 +37,7 @@ crpval:
 mmutable:
 	dc.b    $00, $00, $00, $01 ; 0
 	dc.b    $00, $10, $00, $01 ; 1
-	dc.b    $00, $20, $00, $01 ; 2
+	dc.b    $00, $20, $00, $01 ; 2   
 	dc.b    $00, $30, $00, $01 ; 3
 	dc.b    $00, $40, $00, $01 ; 4
 	dc.b    $00, $50, $00, $01 ; 5
@@ -48,7 +45,7 @@ mmutable:
 	dc.b    $00, $70, $00, $01 ; 7
 	dc.b    $00, $80, $00, $01 ; 8
 	dc.b    $00, $90, $00, $01 ; 9
-	dc.b    $00, $A0, $00, $01 ; 10 
+	dc.b    $00, $D0, $00, $01 ; 10    MAP $Ax xxxx TO $Dx xxxx
 	dc.b    $00, $B0, $00, $01 ; 11
 	dc.b    $00, $C0, $00, $01 ; 12
 	dc.b    $00, $D0, $00, $01 ; 13
