@@ -22,9 +22,11 @@ start:
 	lea	trap0(pc),a3
 	move.l	a3,TRP0_INT_VECTOR
 
+	move.w  #0,COLOR00(a1)
+
     ; Record values
     trap    #0
-
+	
 	; Setup bitplane pointers
 	lea     copper(pc),a3
 
@@ -142,7 +144,6 @@ copper:
 	dc.w    BPLCON2,$0000
 	dc.w    BPL1MOD,$0000
 	dc.w    BPL2MOD,$0000
-	; dc.w    COLOR00,$000
 	dc.w    COLOR01,$F00
 	dc.w    COLOR02,$0F0
 	dc.w    COLOR03,$FFF
