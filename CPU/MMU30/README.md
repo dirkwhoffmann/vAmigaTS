@@ -67,7 +67,7 @@ Same as translate*i* with long table entries instead of short table entries.
 
 This test performs some memory accesses and dumps portions of the MMU table afterwards. It verifies that the U bit is set for all used table entries. 
 
-#### 30ubit3, 30ubit13
+#### 30ubit3, 30ubit3l
 
 This test performs some memory accesses and dumps some page descriptors afterwards. It verifies the values of the U bit and the M bit.
 
