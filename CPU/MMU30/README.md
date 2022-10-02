@@ -55,9 +55,9 @@ Same as translate4 with an additional indirect descriptor at the bottom of the t
 
 Same as translate4 with TID = 0 which makes the pointer to table D an indirect descriptor. 
 
-#### 30translate7
+#### 30translate7, 30translate8
 
-Same as translate1 with another layer of indirection (FC bit set).
+Same as translate1 with another layer of indirection (FC bit set). 30translate7 installs pointers to regular MMU tables whereas 30translate8 installs early termination descriptors.
 
 #### 30translate*i*l
 
