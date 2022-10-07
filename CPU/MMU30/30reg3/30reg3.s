@@ -6,15 +6,15 @@ trap0:
     lea    payload,a2 
     pmove  (a2),MMUSR
     addq   #2,a2
-    pmove  (a2),TC
+    pmovefd  (a2),TC
     addq   #4,a2
-    pmove  (a2),TT0
+    pmovefd  (a2),TT0
     addq   #4,a2
-    pmove  (a2),TT1
+    pmovefd  (a2),TT1
     addq   #4,a2
-    pmove  (a2),CRP
+    pmovefd  (a2),CRP
     addq   #8,a2
-    pmove  (a2),SRP
+    pmovefd  (a2),SRP
     addq   #8,a2
 
     ; Read back values
@@ -34,7 +34,7 @@ trap0:
     rte
 
 info: 
-    dc.b    '30REG1: PMOVE TEST', 0
+    dc.b    '30REG3: PMOVEFD TEST', 0
     even 
 
 payload:
@@ -42,5 +42,19 @@ payload:
     dc.b    $40,$41,$42,$43,$54,$55,$56,$57,$60,$61,$62,$63,$74,$75,$76,$77
 
 expected:
-    dc.b    $00,$01,$02,$03,$14,$15,$16,$17,$00,$21,$22,$23,$04,$35,$36,$37
-    dc.b    $40,$41,$42,$43,$54,$55,$56,$57,$60,$61,$62,$63,$74,$75,$00,$00
+	dc.w   	$0001
+	dc.w   	$0203
+	dc.w   	$1415
+	dc.w   	$1617
+	dc.w   	$0021
+	dc.w   	$2223
+	dc.w   	$0435
+	dc.w   	$3637
+	dc.w   	$4041
+	dc.w   	$4243
+	dc.w   	$5455
+	dc.w   	$5657
+	dc.w   	$6061
+	dc.w   	$6263
+	dc.w   	$7475
+	dc.w   	$0000
