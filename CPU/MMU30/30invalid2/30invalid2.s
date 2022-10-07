@@ -3,7 +3,7 @@
 
 trap0:
 	; Invalidate the MMU table
-	lea 	rangeAF,a2
+	move.l 	rangeAF_reloc,a2
 	move.l  #0,(a2)
 
 	; Enable the MMU
@@ -21,5 +21,20 @@ info:
 	even
 
 expected:
-    dc.b    $00,$00,$00,$00,$00,$5C,$20,$14,$00,$07,$01,$EA,$B0,$08,$00,$00
-    dc.b    $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
+ 	dc.w   	$0000
+	dc.w   	$0000
+	dc.w   	$0020
+	dc.w   	$2010
+	dc.w   	$0007
+	dc.w   	$020C
+	dc.w   	$A008
+	dc.w   	$0000
+	dc.w   	$0000
+	dc.w   	$0000
+	dc.w   	$0000
+	dc.w   	$0000
+	dc.w   	$0000
+	dc.w   	$0000
+	dc.w   	$0000
+	dc.w   	$0000
+	

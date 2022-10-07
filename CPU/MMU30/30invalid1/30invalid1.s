@@ -3,23 +3,37 @@
 
 trap0:
 	; Invalidate the MMU table
-	lea 	rangeA,a2
+	move.l  rangeA_reloc,a2				
 	move.l  #0,(a2)
 
 	; Enable the MMU
-	jsr setupTC
+	jsr 	setupTC
 
 	; Trigger a bus error by accessing the $Axxxxx range
-	jsr trigger
+	jsr 	trigger
     rte
 
 exit:
-	jmp continue
+	jmp 	continue
 	
 info: 
     dc.b    '30INVALID1 (Short table, JMP recovery)', 0
 	even
 
 expected:
-    dc.b    $00,$00,$00,$00,$00,$5C,$20,$14,$00,$07,$01,$EA,$B0,$08,$00,$00
-    dc.b    $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
+	dc.w   	$0000
+	dc.w   	$0000
+	dc.w   	$0020
+	dc.w   	$2010
+	dc.w   	$0007
+	dc.w   	$020C
+	dc.w   	$A008
+	dc.w   	$0000
+	dc.w   	$0000
+	dc.w   	$0000
+	dc.w   	$0000
+	dc.w   	$0000
+	dc.w   	$0000
+	dc.w   	$0000
+	dc.w   	$0000
+	dc.w   	$0000

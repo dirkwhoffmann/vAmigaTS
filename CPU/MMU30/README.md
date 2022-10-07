@@ -22,9 +22,13 @@ These tests verifiy the ACU (Access Control Unit) of the 680EC030. Both tests wr
 
 These tests integrate an invalid table descriptor into the table structure. Accessing such a descriptor causes a bus error exception. In the exception handler, some stack information is recorded and displayed on the screen afterwards.
 
+UAE images have been created with UAE 4.9.1, Kick v2.04, 68030+MMU, 1 MB Chip, 8 MB Fast
+
 #### 30invalid*x*_rte
 
 Similar to 30invalid*x* with a different method to exit the bus error handler. Whereas 30invalid*x* uses a direct jump, these tests exit the handler with the RTE instruction. Before leaving the handler, the cache is flushed and the invalid descriptor removed from the table to prevent another bus error to happen. 
+
+UAE images have been created with UAE 4.9.1, Kick v2.04, 68030+MMU, 1 MB Chip, 8 MB Fast
 
 #### 30limit*x*
 
