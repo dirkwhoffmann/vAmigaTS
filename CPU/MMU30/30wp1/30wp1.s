@@ -3,7 +3,7 @@
 
 trap0:
 	; Set write protection flag
-	lea 	rangeA,a2
+	move.l	rangeA_reloc,a2
 	ori.b   #$04,$3(a2)		; Enable write protection
 
 	; Enable the MMU
@@ -21,5 +21,19 @@ info:
 	even
 
 expected:
-    dc.b    $00,$00,$00,$00,$00,$5C,$20,$14,$00,$07,$01,$EA,$B0,$08,$00,$00
-    dc.b    $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
+    dc.w    $0000 ; 1
+    dc.w    $0000 ; 2
+    dc.w    $0020 ; 3
+    dc.w    $2010 ; 4
+    dc.w    $0007 ; 5
+    dc.w    $020C ; 6
+    dc.w    $A008 ; 7
+    dc.w    $0000 ; 8
+    dc.w    $0000 ; 9
+    dc.w    $0000 ; 10
+    dc.w    $0000 ; 11
+    dc.w    $0000 ; 12
+    dc.w    $0000 ; 13
+    dc.w    $0000 ; 14
+    dc.w    $0000 ; 15
+    dc.w    $0000 ; 16

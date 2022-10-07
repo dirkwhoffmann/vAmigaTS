@@ -1,0 +1,390 @@
+;======================================================================
+;
+;	SetCPU V1.4
+;	by Dave Haynie (released to the public domain)
+;
+;	68030 Assembly Function Module
+;
+;	This module contains functions that access functions in the 68020,
+;	68030, and 68851 chips, and ID all of these, plus the 68881/68882
+;	FPU chips.
+;
+;======================================================================
+
+;======================================================================
+;
+;	Macros & constants used herein...
+;
+;======================================================================
+
+CALLSYS macro   *
+	jsr     LVO\1(A6)
+	endm
+
+CIB_ENABLE	EQU	0
+CIB_FREEZE	EQU	1
+CIB_ENTRY	EQU	2
+CIB_CLEAR	EQU	3
+CIB_BURST	EQU	4
+
+CDB_ENABLE	EQU	8
+CDB_FREEZE	EQU	9
+CDB_ENTRY	EQU	10
+CDB_CLEAR	EQU	11
+CDB_BURST	EQU	12
+CDB_WALLOC	EQU	13
+
+; AFB_68030	EQU	2
+
+ATNFLGS		EQU	$129
+
+LVOSupervisor	EQU	-30
+LVOFindTask	EQU	-294
+LVOAllocTrap	EQU	-342
+LVOFreeTrap	EQU	-348
+
+;======================================================================
+;
+;	Need just a little more stuff
+;
+;======================================================================
+
+	NOLIST
+	include "exec/execbase.i"
+	include "exec/tasks.i"
+	LIST
+
+	machine mc68020
+		mc68881
+	cseg
+
+;**********************************************************************
+;
+;	This section contains functions that identify and operate on CPU 
+;	things.
+;
+;**********************************************************************
+
+	public	_GetCPUType	; ID the CPU
+	public	_GetCACR	; Get 020/030 CACR register
+	public	_SetCACR	; Set 020/030 CACR register
+
+;======================================================================
+;
+;	This function returns the type of the CPU in the system as a
+;	longword: 68000, 68010, 68020, or 68030.  The testing must be done
+;	in reverse order, in that any higher CPU also has the bits set for
+;	a lower CPU.  Also, since 1.3 doesn't recognize the 68030, if I
+;	find the 68020 bit set, I always check for the presence of a 
+;	68030.
+;
+;	This routine should be the first test routine called under 1.2
+;	and 1.3.
+;
+;	ULONG GetCPUType();
+;
+;======================================================================
+
+_GetCPUType:
+	movem.l	a4/a5,-(sp)		; Save this register
+	move.l	4,a6			; Get ExecBase
+	btst.b	#AFB_68030,ATNFLGS(a6)	; Does the OS think an '030 is here?
+	beq	0$
+	move.l	#68030,d0		; Sure does...
+	movem.l	(sp)+,a4/a5
+	rts
+0$
+	btst.b	#AFB_68020,ATNFLGS(a6)	; Maybe a 68020
+	bne	2$
+	btst.b	#AFB_68010,ATNFLGS(a6)	; Maybe a 68010?
+	bne	1$
+	move.l	#68000,d0		; Just a measley '000
+	movem.l	(sp)+,a4/a5
+	rts
+1$
+	move.l	#68010,d0		; Yup, we're an '010
+	movem.l	(sp)+,a4/a5
+	rts
+2$
+	move.l	#68020,d0		; Assume we're an '020
+	lea	3$,a5			; Get the start of the supervisor code
+	CALLSYS	Supervisor
+	movem.l	(sp)+,a4/a5
+	rts
+3$
+	movec	cacr,d1			; Get the cache register
+	move.l	d1,a4			; Save it for a minute
+	bset.l	#CIB_BURST,d1		; Set the inst burst bit
+	bclr.l	#CIB_ENABLE,d1		; Clear the inst cache bit
+	movec	d1,cacr			; Try to set the CACR
+	movec	cacr,d1
+	btst.l	#CIB_BURST,d1		; Do we have a set burst bit?
+	beq	4$
+	move.l	#68030,d0		; It's a 68030
+	bset.b	#AFB_68030,ATNFLGS(a6)
+4$
+	move.l	a4,d1			; Restore the original CACR
+	movec	d1,cacr
+	rte
+
+;======================================================================
+;
+;	This function returns the 68020/68030 CACR register.  It assumes
+;	a 68020 or 68030 based system.
+;
+;	ULONG GetCACR()
+;
+;======================================================================
+
+_GetCACR:
+	move.l	4,a6			; Get ExecBase
+	btst.b	#AFB_68020,ATNFLGS(a6)	; Does the OS think an '020 is here?
+	bne	1$
+	moveq.l	#0,d0			; No CACR here, pal
+	rts
+1$
+	move.l	a5,-(sp)		; Save this register
+	lea	2$,a5			; Get the start of the supervisor code
+	CALLSYS	Supervisor
+	move.l	(sp)+,a5		; Give back registers
+	rts
+2$
+	movec	cacr,d0			; Make CACR the return value
+	rte
+
+;======================================================================
+;
+;	This function sets the value of the 68020/68030 CACR register.  
+;	It assumes a 68020 or 68030 based system.
+;
+;	void SetCACR(cacr)
+;	ULONG cacr;
+;
+;======================================================================
+
+_SetCACR:
+	move.l	4(sp),d0		; New CACR is on stack
+	move.l	4,a6			; Get ExecBase
+	btst.b	#AFB_68020,ATNFLGS(a6)	; Does the OS think an '020 is here?
+	bne	1$
+	rts				; No CACR here, pal
+1$
+	move.l	a5,-(sp)		; Save this register
+	lea	2$,a5			; Get the start of the supervisor code
+	CALLSYS	Supervisor
+	move.l	(sp)+,a5		; Give back register
+	rts
+2$
+	movec	d0,cacr			; Set the CACR
+	rte
+
+;**********************************************************************
+;
+;	This section contains functions that identify and operate on
+;	MMU things.  Unfortunately, there aren't any MMU op-codes in
+;	the Manx assembler yet, so I have to fudge them here.
+;
+;**********************************************************************
+
+	public	_GetMMUType	; Returns the type of MMU
+	public	_GetCRP		; Gets MMU CRP register
+	public	_SetCRP		; Sets MMU CRP register
+	public	_GetTC		; Gets MMU TC register
+	public	_SetTC		; Gets MMU TC register
+
+;======================================================================
+;
+;	This function returns 0L if the system contains no MMU, 
+;	68851L if the system does contain an 68851, or 68030L if the
+;	system contains a 68030.
+;
+;	This routine seems to lock up on at least some CSA 68020 
+;	boards, though it runs just fine on those from Ronin and 
+;	Commodore, as well as all 68030 boards it's been tested on.
+;
+;	ULONG GetMMUType()
+;
+;======================================================================
+
+_GetMMUType:
+	move.l	4,a6			; Get ExecBase
+	movem.l	a3/a4/a5,-(sp)		; Save this stuff
+	move.l	#0,a1	
+	CALLSYS	FindTask		; Call FindTask(0L)
+	move.l	d0,a3
+
+	move.l	TC_TRAPCODE(a3),a4	; Change the exception vector
+	move.l	#2$,TC_TRAPCODE(a3)
+	
+	subq.l	#4,sp			; Let's try an MMU instruction
+	dc.w	$f017			; Slimey PMOVE tc,(sp)
+	dc.w	$4200
+	cmpi	#0,d0			; Any MMU here?
+	beq	1$
+	btst.b	#AFB_68030,ATNFLGS(a6)	; Does the OS think an '030 is here?
+	beq	1$
+	move.l	#68030,d0
+
+1$
+	addq.l	#4,sp			; Return that local
+	move.l	a4,TC_TRAPCODE(a3)	; Reset exception stuff
+	movem.l	(sp)+,a3/a4/a5		; and return the registers
+	rts
+
+	; This is the exception code.  No matter what machine we're on,
+	; we get an exception.  If the MMU's in place, we should get a
+	; privilige violation; if not, an F-Line emulation exception.
+2$
+	move.l	(sp)+,d0		; Get Amiga supplied exception #
+	cmpi	#11,d0			; Is it an F-Line?
+	beq	3$			; If so, go to the fail routine
+	move.l	#68851,d0		; We have MMU
+	addq.l	#4,2(sp)		; Skip the MMU instruction
+	rte
+3$
+	moveq.l	#0,d0			; It dinna woik,
+	addq.l	#4,2(sp)		; Skip the MMU instruction
+	rte
+
+;======================================================================
+;
+;	This function returns the MMU CRP register.  It assumes a 68020 
+;	system with MMU, or a 68030 based system (eg, test for MMU before
+;	you call this, or you wind up in The Guru Zone).  Note that the
+;	CRP register is two longwords long.
+;
+;	void GetCRP(ULONG *)
+;
+;======================================================================
+
+_GetCRP:
+	move.l	4(sp),a0		; Pointer to the CRP storage area
+	move.l	4,a6			; Get ExecBase
+	move.l	a5,-(sp)
+	lea	2$,a5			; Get the start of the supervisor code
+	CALLSYS	Supervisor
+	move.l	(sp)+,a5
+	rts
+2$
+	dc.w	$f010			; PMOVE CRP,(a0)
+	dc.w	$4e00
+	rte
+
+;======================================================================
+;
+;	This function sets the MMU CRP register.  It assumes a 68020 
+;	system with MMU, or a 68030 based system (eg, test for MMU before
+;	you call this, or you wind up in The Guru Zone).  Note that the
+;	CRP register is two longwords long.
+;
+;	void SetCRP(ULONG *)
+;
+;======================================================================
+
+_SetCRP:
+	move.l	4(sp),a0		; Pointer to the CRP storage area
+	move.l	4,a6			; Get ExecBase
+	move.l	a5,-(sp)
+	lea	2$,a5			; Get the start of the supervisor code
+	CALLSYS	Supervisor
+	move.l	(sp)+,a5		; Give back registers
+	rts
+2$
+	dc.w	$f010			; PMOVE (a0),CRP
+	dc.w	$4c00
+	rte
+
+;======================================================================
+;
+;	This function returns the MMU TC register.  It assumes a 68020 
+;	system with MMU, or a 68030 based system (eg, test for MMU before
+;	you call this, or you wind up in The Guru Zone).  
+;
+;	ULONG GetTC()
+;
+;======================================================================
+
+_GetTC:
+	move.l	4,a6			; Get ExecBase
+	move.l	a5,-(sp)
+	subq.l	#4,sp			; Make a place to dump TC
+	move.l	sp,a0
+	lea	2$,a5			; Get the start of the supervisor code
+	CALLSYS	Supervisor
+	move.l	(sp),d0			; Here's the result
+	addq.l	#4,sp
+	move.l	(sp)+,a5
+	rts
+2$
+	dc.w	$f010			; PMOVE TC,(a0)
+	dc.w	$4200
+	rte
+
+;======================================================================
+;
+;	This function sets the MMU TC register.  It assumes a 68020 
+;	system with MMU, or a 68030 based system (eg, test for MMU before
+;	you call this, or you wind up in The Guru Zone).  
+;
+;	void SetTC(ULONG)
+;
+;======================================================================
+
+_SetTC:
+	lea	4(sp),a0		; Get address of our new TC value
+	move.l	4,a6			; Get ExecBase
+	move.l	a5,-(sp)
+	lea	2$,a5			; Get the start of the supervisor code
+ 	CALLSYS	Supervisor
+	move.l	(sp)+,a5
+	rts
+2$
+	dc.w	$f010			; PMOVE (a0),TC
+	dc.w	$4000
+	rte
+
+
+;**********************************************************************
+;
+;	This section contains functions that identify and operate on
+;	FPU things.  
+;
+;**********************************************************************
+
+	public	_GetFPUType	; Gets the FPU type
+
+;======================================================================
+;
+;	This function returns the type of the FPU in the system as a
+;	longword: 0 (no FPU), 68881, or 68882.
+;
+;	ULONG GetFPUType();
+;
+;======================================================================
+
+_GetFPUType:
+	move.l	a5,-(sp)		; Save this register
+	move.l	4,a6			; Get ExecBase
+	btst.b	#AFB_68881,ATNFLGS(a6)	; Does the OS think an FPU is here?
+	bne	1$	
+	moveq.l	#0,d0			; No FPU here, dude
+	move.l	(sp)+,a5		; Give back the register
+	rts
+1$
+	lea	2$,a5			; Get the start of the supervisor code
+	CALLSYS	Supervisor
+	move.l	(sp)+,a5		; Give back registers
+	rts
+2$
+	move.l	#68881,d0		; Assume we're a 68881
+	fsave	-(sp)			; Test and check
+	moveq.l	#0,d1
+	move.b	1(sp),d1		; Size of this frame
+	cmpi	#$18,d1
+	beq 3$
+	move.l	#68882,d0		; It's a 68882
+3$
+	frestore (sp)+			; Restore the stack
+	rte
+
+	end

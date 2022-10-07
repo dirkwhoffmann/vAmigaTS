@@ -16,7 +16,7 @@ trap0:
     move.w  #$060,$aff180
 
 	; Record page descriptors from table D (U and M bit are of interest)
-	lea		tabled,a2
+	lea		tableD,a2
 	lea		values,a3
 
 	moveq   #15,d0
@@ -33,7 +33,7 @@ info:
 
 expected:
     dc.w    $0001 ; 1
-    dc.w    $0019 ; 2
+    dc.w    $0001 ; 2
     dc.w    $0001 ; 3
     dc.w    $0001 ; 4
     dc.w    $0001 ; 5

@@ -7,13 +7,13 @@ info:
 	
 trap0:
 	; Patch the MMU table
-	lea 	rangeA,a2
+	move.l	rangeA_reloc,a2
 	move.l 	#$00D00001,(a2)
 
 	; Install FCL pointers
 	lea 	fcltable,a2
-	lea     tablea,a3
-	addq    #2,a3			; Descriptor (short table)
+	move.l  tableA_reloc,a3
+	addq    #2,a3			; Set descriptor type (short table)
 	move.l  a3,(a2)
 	move.l  a3,$4(a2)
 	move.l  a3,$8(a2)
@@ -54,3 +54,8 @@ fcltable:
 	dc.b    $00, $00, $00, $00 ; 6
 	dc.b    $00, $00, $00, $00 ; 7
 	align   4
+
+crpval:
+	dc.b    $00, $00, $00, $00
+tcval:
+	dc.b    $00, $00, $00, $00

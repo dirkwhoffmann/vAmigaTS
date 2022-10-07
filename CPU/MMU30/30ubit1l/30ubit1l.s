@@ -32,7 +32,7 @@ info:
 expected:
     dc.w    $0009 ; 1
     dc.w    $0001 ; 2
-    dc.w    $0001 ; 3
+    dc.w    $0009 ; 3
     dc.w    $0001 ; 4
     dc.w    $0001 ; 5
     dc.w    $0001 ; 6

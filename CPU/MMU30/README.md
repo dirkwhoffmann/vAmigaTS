@@ -79,5 +79,9 @@ This test performs some memory accesses and dumps some page descriptors afterwar
 
 Triggers a bus error by writing into a write-secured memory area. 
 
+#### setcpu
+
+This directory contains SetCPU v1.4 which was written by Dave Haynie. It has slightly been modified by me to make it compilable with Bebbo's m68k-amigaos-gcc cross compiler. SetCPU contains a FastRom option which is enabled by passing in FASTROM as command line argument.
+
 
 Dirk Hoffmann, 2022

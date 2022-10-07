@@ -11,6 +11,7 @@ trap0:
 
 	; Trigger a bus error by accessing the $Axxxxx range in user mode
 	jsr 	trigger_usermode
+
     rte
 
 exit:
@@ -21,5 +22,19 @@ info:
 	even
 
 expected:
-    dc.b    $00,$00,$00,$00,$00,$5C,$00,$00,$00,$07,$02,$00,$B0,$08,$00,$00
-    dc.b    $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
+	dc.w   	$0000
+	dc.w   	$0000
+	dc.w   	$0020
+	dc.w   	$0000
+	dc.w   	$0007
+	dc.w   	$0218
+	dc.w   	$A008
+	dc.w   	$0000
+	dc.w   	$0000
+	dc.w   	$0000
+	dc.w   	$0000
+	dc.w   	$0000
+	dc.w   	$0000
+	dc.w   	$0000
+	dc.w   	$0000
+	dc.w   	$0000

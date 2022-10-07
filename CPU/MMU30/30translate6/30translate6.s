@@ -7,7 +7,7 @@ info:
 	
 trap0:
 	; Patch the MMU table
-	lea 	rangeAFF,a2
+	move.l	rangeAFF_reloc,a2
 	lea     newtabled,a3
 	move.l  a3,(a2)
 	andi.b  #$F0,$3(a2)
@@ -26,6 +26,8 @@ trap0:
     move.w  #$0A0,$aff180
     rte
 
+tcval:
+	dc.b    $00, $00, $00, $00
 	align   4
 newtabled:
 	dc.b    $00, $DF, $F0, $01

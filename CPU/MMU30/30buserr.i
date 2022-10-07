@@ -80,17 +80,19 @@ continue:
     lea     regnames(pc),a1     ; Output strings
     moveq   #3,d1               ; First output row
     moveq   #6,d2               ; Line counter
-    
+
+   	move.w  #$060,$DFF180 
 .l:
     ; Read measured value
     moveq   #0,d0
     move.w  (a2)+,d0
 
     ; Compare with the expected value and select the target bitplane accordingly
-    lea     bitplane1+2,a0
-    cmp.w   (a5)+,d0
-    bne     .skip
     lea     bitplane2+2,a0
+    cmp.w   (a5)+,d0
+    beq     .skip
+    lea     bitplane1+2,a0
+	move.w  #$600,$DFF180
 .skip:
 
     ; Print line
@@ -122,7 +124,7 @@ trigger:
 
 	; Trigger a bus fault by accessing the $Axxxxx range
     move.w  #$060,$aff180
-    rts
+	rts
 
 trigger_usermode:
 	; Save current MMUSR in D0
@@ -136,11 +138,15 @@ trigger_usermode:
 	move 	#0,SR
 
 	; Trigger a bus fault by accessing the $Axxxxx range
-    move.w  #$060,$aff180
-    rts
+    move.w  #$060,$AFF180
+
+.shouldnotreach:
+	move.w	#$F0F,$DFF180
+	bra 	.shouldnotreach
+	rts
 
 buserr:
-	move.w 	#$006,COLOR00(a1)
+	move.w 	#$008,COLOR00(a1)
     lea     values,a3
 
 	; Record D0.w (contains old MMUSR)
@@ -155,7 +161,7 @@ buserr:
 	move.w  a0,(a3)+
 
 	; Read and record SR from stack
-	move.w  a7,a2
+	move.l  a7,a2
 	move.w  (a2)+,(a3)+
 
 	; Read and record PC from stack

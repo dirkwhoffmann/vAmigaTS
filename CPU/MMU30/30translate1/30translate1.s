@@ -7,7 +7,7 @@ info:
 	
 trap0:
 	; Patch the MMU table
-	lea 	rangeA,a2
+	move.l  rangeA_reloc,a2				
 	move.l 	#$00D00001,(a2)
 
 	; Enable the MMU

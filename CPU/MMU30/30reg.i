@@ -70,17 +70,19 @@ start:
     lea     regnames(pc),a1     ; Output strings
     moveq   #3,d1               ; First output row
     moveq   #15,d2              ; Line counter
-    
+
+	move.w  #$060,$DFF180
 .l:
     ; Read measured value
     moveq   #0,d0
     move.w  (a2)+,d0
 
     ; Compare with the expected value and select the target bitplane accordingly
-    lea     bitplane1+2,a0
-    cmp.w   (a5)+,d0
-    bne     .skip
     lea     bitplane2+2,a0
+    cmp.w   (a5)+,d0
+    beq     .skip
+    lea     bitplane1+2,a0
+	move.w  #$600,$DFF180
 .skip:
 
     ; Print line

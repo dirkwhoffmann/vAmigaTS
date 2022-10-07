@@ -7,11 +7,11 @@ info:
 	
 trap0:
 	; Patch the MMU table
-	lea 	rangeAFF1,a2
+	move.l	rangeAFF1_reloc,a2
 	move.l 	#$00DFF101,(a2)
 
 	; Enable the MMU
-	jsr setupTC
+	jsr 	setupTC
 
 	; Change background color by using the mirror space at $Axxxxx
     move.w  #$0A0,$aff180

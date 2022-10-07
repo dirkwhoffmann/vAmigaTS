@@ -34,6 +34,8 @@ setupMMU:
 	pmove   (a2),TC
 	nop
 
+	pflusha
+	
 	; Install the Cpu Root Pointer (CRP)
 	lea 	crpval,a2
 	lea     tablea,a3
@@ -62,7 +64,7 @@ crpval:
 tcval: 
 	dc.b    $00,$00,$00,$00,$00,$00,$00,$00
 
-	align 4
+	align 8
 tablea:
 	dc.b    $00, $00, $00, $01 ; 0
 	dc.b    $00, $10, $00, $01 ; 1

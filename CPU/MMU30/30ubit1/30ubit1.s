@@ -13,7 +13,7 @@ trap0:
     move.w  #$060,$aff180
 
 	; Record the MMU table (we're interested in the value of the U bit)
-	lea		tablea,a2
+	lea		tableA,a2
 	lea		values,a3
 
 	moveq   #15,d0
@@ -29,7 +29,7 @@ info:
 	even
 
 expected:
-    dc.w    $0009 ; 1
+    dc.w    $0001 ; 1
     dc.w    $0001 ; 2
     dc.w    $0001 ; 3
     dc.w    $0001 ; 4
@@ -39,9 +39,9 @@ expected:
     dc.w    $0001 ; 8
     dc.w    $0001 ; 9
     dc.w    $0001 ; 10
-    dc.w    $000A ; 11
+    dc.w    $0000 ; 11
     dc.w    $0001 ; 12
     dc.w    $0001 ; 13
-    dc.w    $0009 ; 14
+    dc.w    $0001 ; 14
     dc.w    $0001 ; 15
     dc.w    $0001 ; 16
