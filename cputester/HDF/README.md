@@ -1,17 +1,16 @@
 # Overview
 
-The HDF files in this directory contain CPU test programs generated with cputester. To perform a test run in vAmiga, perform the followings steps:
+The HDF files in this directory contain CPU test programs generated with Toni Wilen's cputester. To perform a test run in vAmiga, perform the followings steps:
 
 - Install Kickstart v2.04
 - Enable 8MB Fast Ram
 - Select the CPU model under test (68000, 68010, 68020, 68030, or 68040)
 - Drag the HDF file into the emulator and reboot
-- When the CLI prompt appears, type `cputest all`
+- When the CLI prompt appears, type `cputest all` or `cputest all -cycles`
 
 Note:
-
+ - Option `-cycles` enables cycle counting. If this option is used, FastRam MUST be enabled.
  - The test data is located in directory `data/x_default` where x indicates the CPU type (M68x00).
-
 
 ## Troubleshooting:
 
