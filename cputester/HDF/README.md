@@ -94,13 +94,13 @@ feature_undefined_ccr=1
 mode=mv2sr.w,mvusp2r,mvr2usp,illegal,chk,trap,trapv,divu,divs,orsr.w
 ```
 
-### LM_0x0.hdf
+### LOOP*n*_0x0.hdf
 
 Supported CPUs: 68010
 
 ```
 feature_loop_mode_68010=1
-feature_loop_mode_cnt=3
+feature_loop_mode_cnt=n
 min_opcode_test_rounds=100
 feature_undefined_ccr=1
 mode=all
