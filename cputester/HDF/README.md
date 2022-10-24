@@ -60,7 +60,7 @@ feature_undefined_ccr=1
 mode=all
 ```
 
-### AEDST_0x0.hdf
+### AEDST_000.hdf
 
 Supported CPUs: 68000, 68010
 
@@ -70,6 +70,18 @@ feature_target_dst_ea=0x37fff1,0x7111
 verbose=0
 feature_undefined_ccr=1
 mode=move,movea,mvmel,mvmle
+```
+
+### AEDST_010.hdf
+
+Supported CPUs: 68000, 68010
+
+```
+feature_target_src_ea=
+feature_target_dst_ea=0x37fff1,0x7111
+verbose=0
+feature_undefined_ccr=1
+mode=all
 ```
 
 ### ODDSTK_0x0.hdf
@@ -142,27 +154,4 @@ feature_sr_mask=0xc000
 exceptions=-48,-49,-50,-51,-52,-53,-54
 min_opcode_test_rounds=5000
 mode=fmove,fsmove,fdmove,fint,fintrz,fneg,fsneg,fdneg,fabs,fsabs,fdabs,fdiv,fsdiv,fddiv,fadd,fsadd,fdadd,fmul,fsmul,fdmul,fsgldiv,fsglmul,fsub,fssub,fdsub,fcmp,ftst,fsqrt
-```
-
-### simple.hdf (DEPRECATED)
-
-Covered CPUs: 68000, 68010, 68020, 68030, 68040
-
-```
-test_rounds=2
-feature_sr_mask=0x0000
-feature_undefined_ccr=1
-mode=all
-```
-
-### extmodes.hdf (DEPRECATED)
-
-Covered CPUs: 68020, 68030, 68040
-
-```
-test_rounds=2
-feature_sr_mask=0x0000
-feature_undefined_ccr=1
-mode=all
-feature_full_extension_format=2
 ```
