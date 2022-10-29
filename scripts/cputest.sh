@@ -7,7 +7,8 @@
 
 function createScript () {
 
-	NAME=${1%/}_$2
+	NAME=$(basename $1)_$2
+	echo "NAME = $NAME"
 	FILE=${NAME}.ini
 	ADF=/tmp/${NAME}.adf
 
@@ -35,7 +36,7 @@ do
 		cd $dir
 		createScript $dir 68000
 		createScript $dir 68010
-		cd ..
+		cd - &> /dev/null
 	fi
 done
 
