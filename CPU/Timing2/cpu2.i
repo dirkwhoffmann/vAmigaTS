@@ -2,6 +2,7 @@
 		
 ILGL_EXC_VECTOR		equ $10
 PRIV_EXC_VECTOR		equ $20
+FORMAT_ERR_VECTOR	equ $38
 LVL1_INT_VECTOR		equ $64
 LVL2_INT_VECTOR		equ $68
 LVL3_INT_VECTOR		equ $6c
@@ -9,9 +10,9 @@ LVL4_INT_VECTOR		equ $70
 LVL5_INT_VECTOR		equ $74
 LVL6_INT_VECTOR		equ $78
 COPCOL				equ $66F
-COLOR1 				equ $F44
-COLOR2 				equ $FF4
-COLOR3 				equ $4F4
+COLOR1 				equ $FFF
+COLOR2 				equ $000
+COLOR3 				equ $4B4
 
 MAIN:
 
@@ -32,6 +33,8 @@ MAIN:
  	move.l	a3,PRIV_EXC_VECTOR
 	lea 	ilgl(pc),a3 
  	move.l	a3,ILGL_EXC_VECTOR
+	lea 	fmterr(pc),a3 
+	move.l	a3,FORMAT_ERR_VECTOR
 	lea		irq1(pc),a3
  	move.l	a3,LVL1_INT_VECTOR
 	lea		irq2(pc),a3
@@ -93,6 +96,11 @@ ilgl:
     move.w  #$0FF,COLOR00(a1)
 	add.w   #2,$4(a7)         ; Saved PC += 2
 	rte
+
+fmterr:
+    move.w  #$0FF,COLOR00(a1)
+ 	add.l   #2,$2(a7)        ; Return to the instruction following the one which caused the exception  
+	rte 
 
 irq1:
 	move.w  #COLOR1,COLOR00(a1)
@@ -409,8 +417,9 @@ copper:
 
 	dc.l	$fffffffe
 
+	ds.b    256,$00
 spare:
-	dc.b    $20,$00,$20,$00
+	ds.b    256,$00
 
 bitplanes:
 	ds.b 	61440,$00
