@@ -19,7 +19,6 @@ function createScript () {
 	if [[ "$2" != "68000" ]]; then
 		echo "cpu set revision $2" >> $FILE
 	fi
-	echo "memory set slow 0" >> $FILE
 	echo "" >> $FILE
 	echo "# Run the test" >> $FILE
 	echo "regression run $ADF" >> $FILE

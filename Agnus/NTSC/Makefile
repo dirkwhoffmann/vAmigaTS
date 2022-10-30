@@ -1,8 +1,14 @@
 # Regression testing for vAmiga 
-# Version: 2.1.2022
+# Version: 29.10.2022
 #
 # To run all regression tests:
-# make [-j<number of parallel threads>]
+#
+#    export VAMIGA=/path/to/the/vAmiga/executable/under/test
+#    make [-j<number of parallel threads>]
+
+ifndef VAMIGA
+VAMIGA=/tmp/vAmiga/vAmiga.app/Contents/MacOS/vAmiga
+endif
 
 # Collect all .ini files
 INI=$(wildcard */*.ini)
