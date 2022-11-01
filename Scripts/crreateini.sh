@@ -1,9 +1,9 @@
 #!/bin/bash
 
-# Creates two script file for a standard ECS / OCS test
+# This is a personal script which I use for creating .ini files. 
 # Dirk W. Hoffmann, 2022
 #
-# Usage: ecsocstest <list of test directories>
+# Usage: cputest <list of test directories>
 
 function createScript () {
 
@@ -15,16 +15,14 @@ function createScript () {
 	echo "# Dirk W. Hoffmann, $(date +'%Y')" >> $FILE
 	echo "" >> $FILE
 	echo "# Setup the test environment" >> $FILE
-	if [[ "$2" == "ocs" ]]; then
-		echo "regression setup A500_ECS_1MB /tmp/kick13.rom" >> $FILE
-	else
-		echo "regression setup A500_OCS_1MB /tmp/kick13.rom" >> $FILE
+	echo "regression setup A500_ECS_1MB /tmp/kick13.rom" >> $FILE
+	if [[ "$2" != "68000" ]]; then
+		echo "cpu set revision $2" >> $FILE
 	fi
-	echo "amiga set ntsc" >> $FILE   # REMOVE ME
 	echo "" >> $FILE
 	echo "# Run the test" >> $FILE
 	echo "regression run $ADF" >> $FILE
-	echo "wait 11 seconds" >> $FILE
+	echo "wait 9 seconds" >> $FILE
 	echo "" >> $FILE
 	echo "# Exit with a screenshot" >> $FILE
 	echo "screenshot save $NAME" >> $FILE
@@ -35,8 +33,8 @@ do
 	if [[ -d $dir ]]; then
 		echo "Creating scripts for $dir"
 		cd $dir
-		createScript $dir ecs
-		createScript $dir ocs
+		createScript $dir 68000
+		createScript $dir 68010
 		cd - &> /dev/null
 	fi
 done

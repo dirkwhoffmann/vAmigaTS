@@ -1,4 +1,4 @@
-# Top-level Makefile for the vAmiga regression test suite
+# Makefile for sub dir level 2
 # (C)opyright Dirk W. Hoffmann, 2022
 #
 # To run all regression tests:
@@ -22,19 +22,15 @@ MKFILES = $(wildcard */Makefile)
 SUBDIRS = $(dir $(MKFILES))
 MYMAKE = $(MAKE) --no-print-directory
 
-.PHONY: all prebuild subdirs clean
+.PHONY: all subdirs clean
 
-all: prebuild subdirs
+all: subdirs
 	@echo > /dev/null
-	
-prebuild:
-	@echo "vAmiga regression tester" 
-	@echo "${VAMIGA}"
-		
+			
 subdirs:
 	@for dir in $(SUBDIRS); do \
 		echo "Entering ${CURDIR}/$$dir"; \
-		$(MAKE) -C $$dir; || exit 1; \
+		$(MAKE) -C $$dir || exit 1; \
 	done
 
 clean:

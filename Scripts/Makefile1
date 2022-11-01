@@ -1,0 +1,30 @@
+# Makefile for sub dir level 1
+# (C)opyright Dirk W. Hoffmann, 2022
+
+ifndef VAMIGA
+VAMIGA = /tmp/vAmiga/vAmiga.app/Contents/MacOS/vAmiga
+export VAMIGA
+endif
+
+# Collect all directories containing a Makefile
+MKFILES = $(wildcard */Makefile)
+SUBDIRS = $(dir $(MKFILES))
+MYMAKE = $(MAKE) --no-print-directory
+
+.PHONY: all subdirs clean
+
+all: subdirs
+	@echo > /dev/null
+			
+subdirs:
+	@for dir in $(SUBDIRS); do \
+		echo ""; \
+		echo "Entering ${CURDIR}/$$dir"; \
+		$(MAKE) -C $$dir || exit 1; \
+	done
+
+clean:
+	@for dir in $(SUBDIRS); do \
+		echo "Cleaning up ${CURDIR}/$$dir"; \
+		$(MAKE) -C $$dir clean; \
+	done
