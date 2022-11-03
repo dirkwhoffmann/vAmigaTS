@@ -3,13 +3,16 @@
 #
 # To run all regression tests:
 #
-#    1. Copy Kickstart 1.3 to /tmp
+#    1. Install raw2tiff 
+#       brew install libtiff
+#
+#    2. Copy Kickstart 1.3 to /tmp
 #       cp /path/to/Kickstart/kick13.rom /tmp
 #
-#    2. Specifiy where to find the find the vAmiga executable
+#    3. Specifiy the vAmiga executable
 #       export VAMIGA=/path/to/the/vAmiga/executable/under/test
 #
-#    3. Run tests
+#    4. Run tests
 #       make [-j<number of parallel threads>]
 
 # Check if we're ready to go
@@ -30,32 +33,40 @@ endif
 INI=$(wildcard */*.ini)
 LOG=$(INI:.ini=.log)
 TIFF=$(INI:.ini=.tiff)
+RAW=$(INI:.ini=.raw)
 
 .PHONY: all prepare clean
 
-all: prepare $(LOG) $(TIFF)
+all: prepare $(LOG) $(TIFF) $(RAW)
 	@echo > /dev/null
 
 prepare:
 	@echo "Running regression tests..."
 		
 clean:
-	rm -f */*.log
+	@rm -f */*.log
 
-%.log: %.tiff
+%.log: %.tiff %.raw
 	@cp $(wildcard $(dir $@)*.adf) /tmp/$(basename $(@F)).adf
 	@$(VAMIGA) $(basename $@).ini &> /dev/null
-	@cmp /tmp/$(basename $(@F)).tiff $(basename $@).tiff
-	@echo "$(basename $@): PASS"
-	@echo "$(basename $@): PASS" > $@
-	@rm /tmp/$(basename $(@F)).adf
-	@rm /tmp/$(basename $(@F)).tiff
+	@cmp -s /tmp/$(basename $(@F)).raw $(basename $@).raw; \
+	RETVAL=$$?; \
+	if [ $$RETVAL -eq 0 ]; then \
+		echo "$(basename $@): PASS"; \
+		echo "$(basename $@): PASS" > $@; \
+    else \
+		echo "$(basename $@): **** FAIL ****"; \
+		echo "$(basename $@): **** FAIL ****" > $@; \
+	fi
 
-%.tiff:
-	@echo "Creating missing reference image $@"
-	@cp $(wildcard $(dir $@)*.adf) /tmp/$(basename $(@F)).adf
-	@$(VAMIGA) $(basename $@).ini &> /dev/null
-	@cp /tmp/$(basename $(@F)).tiff $(basename $@).tiff
-	@rm /tmp/$(basename $(@F)).adf
-	@rm /tmp/$(basename $(@F)).tiff
+%.tiff: %.raw
+	@echo "Creating missing TIFF image $@"
+	@raw2tiff -p rgb -b 3 -w 716 -l 285 $(basename $@).raw $(basename $@).tiff
 	
+%.raw:
+	@echo "Creating missing raw image $@"
+	@cp $(wildcard $(dir $@)*.adf) /tmp/$(basename $(@F)).adf
+	@$(VAMIGA) $(basename $@).ini &> /dev/null
+	@cp /tmp/$(basename $(@F)).raw $(basename $@).raw
+	@rm /tmp/$(basename $(@F)).adf
+	@rm /tmp/$(basename $(@F)).raw

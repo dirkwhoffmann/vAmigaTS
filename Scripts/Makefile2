@@ -35,6 +35,5 @@ subdirs:
 
 clean:
 	@for dir in $(SUBDIRS); do \
-		echo "Cleaning up ${CURDIR}/$$dir"; \
 		$(MAKE) -C $$dir clean; \
 	done
