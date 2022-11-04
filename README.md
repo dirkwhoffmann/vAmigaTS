@@ -18,11 +18,11 @@ To run all regression tests:
 
 1. Install TIFF tools 
 
-  `brew install libtiff`
+    `brew install libtiff`
 
 1. Copy Kickstart 1.3 to /tmp
 
-   `cp /path/to/Kickstart/kick13.rom /tmp`
+    `cp /path/to/Kickstart/kick13.rom /tmp`
 
 2. Specifiy the vAmiga executable
        
@@ -31,11 +31,6 @@ To run all regression tests:
 3. Run tests
 
     `make [-j<number of parallel threads>] 2>&1 | tee results.log`
-
-## Failing tests
-
-The following tests are known to fail in vAmiga
-- Agnus/Registers/DMACON/bpoffbug1
 
 ## Where to go from here?
 
