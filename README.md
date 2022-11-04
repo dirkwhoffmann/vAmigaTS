@@ -6,7 +6,7 @@
 
 ## Overview
 
-This repo contains various Amiga example programs that have been developed for testing the vAmiga emulator. Each test consists of a disk image in ADF format and reference images taken from other emulators. Most tests come with an additional screenshot taken from a real A500. 
+This repository contains various Amiga example programs that have been developed for testing the vAmiga emulator. Each test consists of a disk image in ADF format and reference images taken on real Amigas. 
 
 Many tests are modifications of the Amiga example programs written by Alpine9000.
 
@@ -14,9 +14,26 @@ Directory cputester contains various ADFs that have been created with the cputes
 
 ## Automatic regression testing
 
-This repo also contains multiple Makefiles for performing automatic regression tests. To run the tests, make sure to let variable VAMIGA in the top-level Makefile point to the vAmiga executable under test.
+To run all regression tests:
+
+1. Install TIFF tools 
+
+  `brew install libtiff`
+
+1. Copy Kickstart 1.3 to /tmp
+
+   `cp /path/to/Kickstart/kick13.rom /tmp`
+
+2. Specifiy the vAmiga executable
+       
+    `export VAMIGA=/path/to/the/vAmiga/executable/under/test`
+
+3. Run tests
+
+    `make [-j<number of parallel threads>] 2>&1 | tee results.log`
 
 ## Where to go from here?
 
-- [vAmiga Emulator](https://github.com/dirkwhoffmann/vAmiga)
+- [Amiga emulator vAmiga](https://github.com/dirkwhoffmann/vAmiga)
+- [CPU emulator Moira](https://github.com/dirkwhoffmann/Moira)
 - [Amiga Examples by Alpine9000](https://github.com/alpine9000/amiga_examples)
