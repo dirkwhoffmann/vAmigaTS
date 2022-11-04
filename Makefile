@@ -23,7 +23,7 @@ prebuild:
 subdirs:
 	@for dir in $(SUBDIRS); do \
 		echo "Entering ${CURDIR}/$$dir"; \
-		$(MAKE) -C $$dir; || exit 1; \
+		$(MAKE) -C $$dir || exit 1; \
 	done
 
 clean:
