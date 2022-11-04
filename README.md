@@ -32,6 +32,11 @@ To run all regression tests:
 
     `make [-j<number of parallel threads>] 2>&1 | tee results.log`
 
+## Failing tests
+
+The following tests are known to fail in vAmiga
+- Agnus/Registers/DMACON/bpoffbug1
+
 ## Where to go from here?
 
 - [Amiga emulator vAmiga](https://github.com/dirkwhoffmann/vAmiga)
