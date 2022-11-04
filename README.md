@@ -10,9 +10,7 @@ This repository contains various Amiga example programs that have been developed
 
 Many tests are modifications of the Amiga example programs written by Alpine9000.
 
-Directory cputester contains various ADFs that have been created with the cputester tool written by Toni Wilen. All disks have been set up to auto-boot and test a single instruction each. 
-
-## Automatic regression testing
+## Regression testing
 
 To run all regression tests:
 
