@@ -26,6 +26,10 @@ DIWSTRT is set in the same line where it hits. It is set mid-scanline.
 
 DIWSTRT is set in the same line where it hits. It is set close to the DDFSTRT position.
 
+#### diw16 - diw17
+
+This test uses a DIW that only spans the upper half of the screen. In the lower half, BPL0DAT and BPL1DAT are written directly by the Copper. The test shows that video output can be generated in the vertical border area. 
+
 #### onoff1
 
 Modifies DIWVSTRT and DIWSTOP in the middle of some scanlines. The comparison value will start or stop matching the current vertical position.
