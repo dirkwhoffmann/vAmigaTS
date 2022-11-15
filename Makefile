@@ -1,5 +1,24 @@
 # Top-level Makefile for the vAmiga regression test suite
 # (C)opyright Dirk W. Hoffmann, 2022
+#
+# To run all regression tests:
+#
+# 1. Install TIFF tools 
+#
+#    `brew install libtiff`
+#
+# 2. Copy Kickstart 1.3 to /tmp
+# 
+#    `cp /path/to/Kickstart/kick13.rom /tmp`
+#
+# 3. Specifiy the vAmiga executable
+#       
+#    `export VAMIGA=/path/to/the/vAmiga/executable/under/test`
+#
+# 4. Run tests
+#
+#    `make [-j<number of parallel threads>] 2>&1 | tee results.log`
+
 
 ifndef VAMIGA
 VAMIGA = /tmp/vAmiga/vAmiga.app/Contents/MacOS/vAmiga

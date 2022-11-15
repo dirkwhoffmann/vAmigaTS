@@ -18,15 +18,15 @@ To run all regression tests:
 
     `brew install libtiff`
 
-1. Copy Kickstart 1.3 to /tmp
+2. Copy Kickstart 1.3 to /tmp
 
     `cp /path/to/Kickstart/kick13.rom /tmp`
 
-2. Specifiy the vAmiga executable
+3. Specifiy the vAmiga executable
        
     `export VAMIGA=/path/to/the/vAmiga/executable/under/test`
 
-3. Run tests
+4. Run tests
 
     `make [-j<number of parallel threads>] 2>&1 | tee results.log`
 
