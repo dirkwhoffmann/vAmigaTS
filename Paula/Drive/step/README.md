@@ -8,7 +8,7 @@ Moves the drive head inwards to cylinder 100 (which doesn't exist). After that, 
 
 #### step2 and step3
 
-Moves the drive head inwards to cylinder 40. After that, the head is moved back to cylinder 0. In the move back phase, the time between head step pulses is reduced to a value that no longer complies to the specs. In step3, the value is still sufficient to move the head in UAE. In step4, it is too short (UAE misses some steps).
+Moves the drive head inwards to cylinder 40. After that, the head is moved back to cylinder 0. In the move back phase, the time between head step pulses is reduced to a value that no longer complies to the specs. In step2, the value is still sufficient to move the head in UAE. In step3, it is too short (UAE misses some steps).
 
 #### step4
 
