@@ -1,6 +1,8 @@
 	include "../30reg.i"
 
 trap0:
+    lea    oldtt0,a2        ; Save current value of TT0
+    pmove  TT0,(a2)         
 
     lea    payload,a2       ; Values for TT0
     lea    values,a3        ; Recorded MMUSR values
@@ -16,11 +18,19 @@ trap0:
     and.w  #$0040,(a3) ; Mask out all bits except AC
     addq   #2,a3
     dbra   d1,.loop
+
+    lea    oldtt0,a2        ; Restore old value of TT0
+    pmove  (a2),TT0
+
     rte
 
 info: 
     dc.b    'PTESTW (68EC30)', 0
     even 
+
+oldtt0:
+    dc.b    $00,$00,$00,$00
+    dc.b    $00,$00,$00,$00
 
 payload:
     dc.b    $00,$00,$01,$07 ; 1

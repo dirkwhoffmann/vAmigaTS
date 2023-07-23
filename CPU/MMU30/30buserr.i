@@ -20,12 +20,22 @@ start:
 	move.b  #$7F,$BFDD00  ; CIA B
 	move.b  #$7F,$BFED01  ; CIA A
 
+	; Redirect stack pointers to chip ram
+	lea     stacksetup(pc),a3
+    move.l  a3,TRP0_INT_VECTOR
+    trap    #0
+stacksetup:
+    lea     chip_stack_top,a3
+    move.l  a3,sp
+    sub.l   #$200*4,a3
+    move.l  a3,usp
+
 	; Install trap handlers
-	lea	buserr(pc),a3
+	lea		buserr(pc),a3
 	move.l	a3,BUS_ERR_VECTOR
-	lea	trap0(pc),a3
+	lea		trap0(pc),a3
 	move.l	a3,TRP0_INT_VECTOR
-	lea	trap1(pc),a3
+	lea		trap1(pc),a3
 	move.l	a3,TRP1_INT_VECTOR
 
 	; Setup the MMU
@@ -37,6 +47,14 @@ start:
     trap    #0
 
 continue:
+	; Disable the MMU (to regain access to Kickstart)
+	move.l  a4,a2
+	add.l   #$2000,a2
+	move.l  #0,(a2)  
+	move.l  #0,$4(a2)  
+	pmove   (a2),TC
+	nop
+
 	; Setup bitplane pointers
 	lea     copper(pc),a3
 
@@ -232,3 +250,8 @@ bitplane1:
 	ds.b    320*256/8,$00
 bitplane2:
 	ds.b    320*256/8,$00
+
+	align 4
+    ds.l    $400
+chip_stack_top:
+
