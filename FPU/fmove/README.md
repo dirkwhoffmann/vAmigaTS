@@ -16,9 +16,13 @@ Similar to fmove1 with a negative payload.
 
 #### fmove3-*format*, fmove3-pipd
 
-Similar to fmove1. Instead of loading the constant from constant Rom, it is loaded via fmove #*value*.
+A floating-point value is read via immediate addressing mode and written back.
 
-#### fmovecr-*n*
+#### fmove4-*format*
+
+A floating-point value is read from memory and written back. 
+
+#### fmovecr1, fmovecr2
 
 Reads and displays a constant from constant Rom.
 
