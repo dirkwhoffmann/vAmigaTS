@@ -70,11 +70,6 @@ start:
     moveq   #23,d2              ; Line counter
     
 .l:
-
-	; 
-	; First value
-	; 
-
 	; Select the "green" bitplane
     lea     bitplane2+2,a0
 
@@ -91,30 +86,12 @@ start:
 
 .skip1: 
 
-	; Position cursor 
-    move.w  d1,d3  
-    mulu    #40*8,d3				; Move cursor to the correct line
-    add.w   d3,a0
-
-    ; Print prefix ('.. = $')
-    bsr     writestring
-
-    ; Print first value (in d0)
-    bsr     write32
-
-	; 
-	; Second value
-	; 
-	
-	; Select the "green" bitplane
-    lea     bitplane2+2,a0
-
     ; Read second measured value
-    moveq   #0,d0
-    move.l  (a2)+,d0
+    moveq   #0,d4
+    move.l  (a2)+,d4
 
     ; Compare with the expected value 
-    cmp.l   (a5)+,d0
+    cmp.l   (a5)+,d4
     beq     .skip2
 
     ; Select the "red" bitplane
@@ -122,24 +99,25 @@ start:
 
 .skip2:
 
-    ; Position cursor 
+    ; Print line
     move.w  d1,d3  
     mulu    #40*8,d3
-    add.w   d3,a0  		  			; Move cursor to the correct line
-    add.w   #14,a0  	  			; Move cursor right
+    add.w   d3,a0
+    bsr     writestring
+
+    ; Print first value (in d0)
+    bsr     write32
 
     ; Print delimiter (' $')
-    move.l  d0,d4
     moveq   #32,d0
     bsr     writechar
     moveq   #36,d0
     bsr     writechar
-    move.l  d4,d0 
-    
-    ; Print second value (in d0)
+
+    ; Print second value
+    move.l  d4,d0
     bsr     write32
 
-    ; Repeat or exit loop
     addq    #1,d1
     dbf     d2,.l
 	bra     done
