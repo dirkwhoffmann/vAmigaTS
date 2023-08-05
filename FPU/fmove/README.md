@@ -26,10 +26,6 @@ A floating-point value is read via immediate addressing mode and written back.
 
 A floating-point value is read from memory and written back. 
 
-#### fmovecr*n*
-
-Reads and displays a constant from constant Rom. fmovecr3 and above read from undocumented constant space (reserved space which is marked for further expansion). 
-
 #### packed*n*
 
 Reads various values in packed format (.p) and writes them back into memory in extended format (.x). packed3 and above utilize unusual bit patterns (e.g., patterns with BCD-Digits greater than 9). 
