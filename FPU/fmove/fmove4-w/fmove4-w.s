@@ -29,7 +29,7 @@ trap0:
     rte
 
 info: 
-    dc.b    'FMOVE4-P', 0
+    dc.b    'FMOVE4-W', 0
     even 
 
 payload:
