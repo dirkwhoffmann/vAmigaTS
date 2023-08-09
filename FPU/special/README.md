@@ -18,5 +18,9 @@ Similar test with the FMOVEM instruction. In contrast to FMOVE, no rounding take
 
 Load FP0 with special bit patterns for zero, infinity, NaN, etc. For each value, the contents of FP0 is displayed, together with the contents of the status register. 
 
+#### special2-x
+
+Slightly modified version of special1-x. It differs in the point in times when FPSR is read.
+
 
 Dirk Hoffmann, 2023
