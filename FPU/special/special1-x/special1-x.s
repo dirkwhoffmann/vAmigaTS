@@ -12,8 +12,9 @@ trap0:
 
     lea     values,a2 
 
-    ; Setup control register
-    fmove.l 0,FPCR
+    ; Setup registers
+    fmove.l #0,FPCR
+    fmove.l #0,FPSR
 
     ; 1+2: Denormalized number (sign bit = 0)
     fmove.x #$000000001234123412341234,FP0
