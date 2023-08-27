@@ -8,7 +8,7 @@ trap0:
 
     fmove.l #$00,FPCR
 
-   ; 1+2     SEEE---MMMMMMMMMMMMMMMMM
+    ; 1+2     SEEE---MMMMMMMMMMMMMMMMM
     fmove.p #$800200012346250000000000,FP0
     fmove.x FP0,(a2)+
     addq    #4,a2

@@ -8,7 +8,12 @@ Loads some special bit patterns in packed BCD format and displays the status reg
 
 #### packed*n*
 
-Reads various values in packed format (.p) and writes them back into memory in extended format (.x). packed3 and above utilize unusual bit patterns (e.g., patterns with BCD-Digits greater than 9). 
+Reads various values in packed format (.p) and writes them back into memory in extended format (.x). 
+
+- packed1, packed2: Uses some standard bit pattern
+- packed3, packed4: Bit patterns contain invalid BCD digits (A - F)
+- packed5, packed6: Uses special bit patterns (e.g., e = 'FFF' to signal inf and nan)
+- packed7: Uses BCD-coded numbers having an exact representation in binary
 
 #### kfactor*n*-*cr*
 

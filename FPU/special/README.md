@@ -20,7 +20,11 @@ Load FP0 with special bit patterns for zero, infinity, NaN, etc. For each value,
 
 #### special2-x
 
-Slightly modified version of special1-x. It differs in the point in times when FPSR is read.
+Slightly modified version of special1-x. It reads FPSR two times.
+
+#### zflags
+
+Moves zeroes in and out of FPU registers and checks the Z flag afterwards.
 
 
 Dirk Hoffmann, 2023
