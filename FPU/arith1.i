@@ -9,66 +9,65 @@ TEST    MACRO
 
         lea     values,a2
 
-        ; 1 + 2: Zero (sign bit = 0)
+        ; 1 + 2:  SEEE---MMMMMMMMMMMMMMMMM
         fmove.x #$000000000000000000000000,FP0
         \1      FP0
         DUMP
 
-        ; 3 + 4: Zero (sign bit = 1)
-        fmove.x #$800000000000000000000000,FP1
-        \1      FP1,FP0
-        DUMP
-
-        ; 5 + 6
-        fmove.w #1,FP0
+        ; 3 + 4:  SEEE---MMMMMMMMMMMMMMMMM
+        fmove.x #$800000000000000000000000,FP0
         \1      FP0
         DUMP
 
-        ; 7 + 8
-        fmove.w #-1,FP1
-        \1      FP1,FP0
+        ; 5 + 6   SEEE---MMMMMMMMMMMMMMMMM
+        fmove.p #$000000010000000000000000,FP0
+        \1      FP0
+        DUMP
+
+        ; 7 + 8   SEEE---MMMMMMMMMMMMMMMMM
+        fmove.p #$800000010000000000000000,FP0
+        \1      FP0
         DUMP
 
         ; 9 + 10  SEEE---MMMMMMMMMMMMMMMMM
-        fmove.p #$000300012346250000000000,FP1
-        \1      FP1,FP0
+        fmove.p #$000000020000000000000000,FP0
+        \1      FP0
         DUMP
 
         ; 11 + 12 SEEE---MMMMMMMMMMMMMMMMM
-        fmove.p #$800300012346250000000000,FP0
+        fmove.p #$80000020000000000000000,FP0
         \1      FP0
         DUMP
 
-       ; 13 + 14
-        fmovecr #$00,FP0
-        \1      FP0
-        DUMP
-
-        ; 15 + 16
-        fmovecr #$00,FP0
-        fneg    FP0
-        \1      FP0
-        DUMP
-
-        ; 17 + 18: Infinity (sign bit = 0)
-        fmove.x #$7FFF00000000000000000000,FP1
+        ; 13 + 14 SEEE---MMMMMMMMMMMMMMMMM
+        fmove.p #$400100050000000000000000,FP1
         \1      FP1,FP0
         DUMP
 
-        ; 19 + 20: Infinity (sign bit = 1)
-        fmove.x #$FFFF00000000000000000000,FP2
+        ; 15 + 16 SEEE---MMMMMMMMMMMMMMMMM
+        fmove.p #$C00100050000000000000000,FP2
         \1      FP2,FP0
-        DUMP 
+        DUMP
 
-        ; 21 + 22: Signaling NaN (sign bit = 0)
-        fmove.x #$7FFF00000000000000000001,FP3
+        ; 17 + 18 SEEE---MMMMMMMMMMMMMMMMM
+        fmove.p #$400100010000000000000000,FP3
         \1      FP3,FP0
-        DUMP 
+        DUMP
 
-        ; 23 + 24: Signaling NaN (sign bit = 1)
-        fmove.x #$FFFF00000000000000000001,FP4
+        ; 19 + 20 SEEE---MMMMMMMMMMMMMMMMM
+        fmove.p #$C00100010000000000000000,FP4
         \1      FP4,FP0
-        DUMP 
+        DUMP
+
+        ; 21 + 22 SEEE---MMMMMMMMMMMMMMMMM
+        fmove.p #$000200012462500000000000,FP5
+        \1      FP5,FP0
+        DUMP
+
+        ; 23 + 24 SEEE---MMMMMMMMMMMMMMMMM
+        fmove.p #$800200012462500000000000,FP6
+        \1      FP6,FP0
+        DUMP
 
         movem.l (a7)+,d0/d1/a2/a3
         ENDM
