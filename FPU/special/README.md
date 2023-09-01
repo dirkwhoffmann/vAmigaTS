@@ -14,9 +14,14 @@ Simple test that loads the FPU registers with the minimal and maximal values (be
 
 Both tests cycle through the different precision and rounding modes. In each iteration, a value from the constant Rom is read. Afterwards, it is written back to memory in extended precision mode. Both tests differ in the point in time when FPSR is read (the contents of FPSR is displayed in the last longword of each four-longword chunk).
 
-#### precisionm3
+#### precision3
 
 Similar test with the FMOVEM instruction. In contrast to FMOVE, no rounding takes place.
+
+#### revcheck1
+
+Runs a small test program that was posted here: https://forums.atariage.com/topic/192508-motorola-68881-68882-math-co-processors/page/2/
+The program prints "68881" or "68882" in the first row, depending on the detected FPU revision. The second value is the size of the stack frame which differs between both revisions. 
 
 #### special1-x
 
