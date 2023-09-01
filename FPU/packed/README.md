@@ -19,5 +19,9 @@ Reads various values in packed format (.p) and writes them back into memory in e
 
 Writes a constant into memory in packed BCD format and different k-factors. cr is the initial value of FPCR and selects different rounding modes. 
 
+#### pprec*n* 
+
+Reads in a packed BCD string close to FLOAT_MAX and DOUBLE_MAX with different rounding modes activated.
+
 
 Dirk Hoffmann, 2023
