@@ -9,12 +9,12 @@ TEST    MACRO
 
         lea     values,a2
 
-        ; 1 + 2:  SEEE---MMMMMMMMMMMMMMMMM
+        ; 1 + 2:  
         fmove.x #$000000000000000000000000,FP0
         \1      FP0
         DUMP
 
-        ; 3 + 4:  SEEE---MMMMMMMMMMMMMMMMM
+        ; 3 + 4:  
         fmove.x #$800000000000000000000000,FP0
         \1      FP0
         DUMP
@@ -35,7 +35,7 @@ TEST    MACRO
         DUMP
 
         ; 11 + 12 SEEE---MMMMMMMMMMMMMMMMM
-        fmove.p #$80000020000000000000000,FP0
+        fmove.p #$800000020000000000000000,FP0
         \1      FP0
         DUMP
 

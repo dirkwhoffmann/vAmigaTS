@@ -40,27 +40,33 @@ TEST    MACRO
         DUMP 
 
         ; 13+14: Infinity (sign bit = 0)
-        fmove.x #$7FFF00000000000000000000,FP0
+        fmove.x #$7FFF00000000000000000000,FP1
+        \1      FP1,FP0
         DUMP 
 
         ; 15+16: Infinity (sign bit = 1)
-        fmove.x #$FFFF00000000000000000000,FP0
+        fmove.x #$FFFF00000000000000000000,FP2
+        \1      FP2,FP0
         DUMP 
 
         ; 17+18: Signaling NaN (sign bit = 0)
-        fmove.x #$7FFF00000000000000000001,FP0
+        fmove.x #$7FFF00000000000000000001,FP3
+        \1      FP3,FP0
         DUMP 
 
         ; 19+20: Nonsignaling NaN (sign bit = 0)
-        fmove.x #$7FFF00004000000000000000,FP0
+        fmove.x #$7FFF00004000000000000000,FP4
+        \1      FP4,FP0
         DUMP 
 
         ; 21+22: Signaling NaN (sign bit = 1)
-        fmove.x #$FFFF00000000000000000001,FP0
+        fmove.x #$FFFF00000000000000000001,FP5
+        \1      FP5,FP0
         DUMP 
 
         ; 23+24: Nonsignaling NaN (sign bit = 1)
-        fmove.x #$FFFF00004000000000000001,FP0
+        fmove.x #$FFFF00004000000000000001,FP6
+        \1      FP6,FP0
         DUMP 
 
         movem.l (a7)+,d0/d1/a2/a3
