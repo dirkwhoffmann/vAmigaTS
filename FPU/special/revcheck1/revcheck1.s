@@ -14,8 +14,9 @@ trap0:
     cmp.b   #0,d0
     beq     .skip
     move.l  #$68882,(a2)
-    addq    #4,a2
 .skip:
+    addq    #4,a2
+
     ; Displays the stack frame size in the first row (right value)
     move.l  d2,(a2)+
 
