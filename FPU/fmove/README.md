@@ -30,9 +30,9 @@ A floating-point value is read from memory and written back.
 
 The contents of a data register is transferred into a FPU register. Note: This operation is only availabe for addressing modes .b, .w, .l, and .s.
 
-#### precision1, precision2
+#### fmove-nan-1
 
-Both tests cycle through the different precision and rounding modes. In each iteration, a value from the constant Rom is read. Afterwards, it is written back to memory in extended precision mode. Both tests differ in the point in time when FPSR is read (the contents of FPSR is displayed in the last longword of each four-longword chunk).
+Loads some reserved bit patterns and writes them back in different format. 
 
 
 Dirk Hoffmann, 2023
