@@ -32,7 +32,7 @@ MYMAKE = $(MAKE) --no-print-directory
 
 .PHONY: all prebuild subdirs clean
 
-all: prebuild subdirs
+all: prebuild subdirs tiff
 	@echo > /dev/null
 	
 prebuild:
@@ -43,6 +43,12 @@ subdirs:
 	@for dir in $(SUBDIRS); do \
 		echo "Entering ${CURDIR}/$$dir"; \
 		$(MAKE) -C $$dir || exit 1; \
+	done
+
+tiff:
+	@for dir in $(SUBDIRS); do \
+		echo "Entering ${CURDIR}/$$dir"; \
+		$(MAKE) tiff -C $$dir || exit 1; \
 	done
 
 clean:
