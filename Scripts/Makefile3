@@ -52,8 +52,7 @@ clean:
 %.log: %.tiff %.raw
 	@cp $(wildcard $(dir $@)*.adf) /tmp/$(basename $(@F)).adf
 	@$(VAMIGA) $(basename $@).ini &> /dev/null
-	@raw2tiff -p rgb -b 3 -w 716 -l 285 /tmp/$(basename $(@F)).raw /tmp/$(basename $(@F)).tiff
-	@tiffcmp -t /tmp/$(basename $(@F)).tiff $(basename $@).tiff; \
+	@diff /tmp/$(basename $(@F)).raw $(basename $@).raw; \
 	RETVAL=$$?; \
 	if [ $$RETVAL -eq 0 ]; then \
 		echo "$(basename $@): PASS"; \
@@ -63,7 +62,6 @@ clean:
 	fi
 	@rm /tmp/$(basename $(@F)).adf
 	@rm /tmp/$(basename $(@F)).raw
-	@rm /tmp/$(basename $(@F)).tiff
 
 %.raw:
 	@echo "Creating missing raw image $@"
