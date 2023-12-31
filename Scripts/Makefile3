@@ -32,17 +32,18 @@ endif
 # Collect all .ini files
 INI=$(wildcard */*.ini)
 LOG=$(INI:.ini=.log)
+RAW=$(INI:.ini=.raw)
 TIFF=$(INI:.ini=.tiff)
 
 .PHONY: all prepare clean
 
-all: $(LOG) $(TIFF)
+all: $(LOG) $(RAW) $(TIFF)
 	@echo > /dev/null
 		
 clean:
 	@rm -f */*.log
 
-%.log: %.tiff
+%.log: %.tiff %.raw
 	@cp $(wildcard $(dir $@)*.adf) /tmp/$(basename $(@F)).adf
 	@$(VAMIGA) $(basename $@).ini &> /dev/null
 	@raw2tiff -p rgb -b 3 -w 716 -l 285 /tmp/$(basename $(@F)).raw /tmp/$(basename $(@F)).tiff
@@ -58,10 +59,13 @@ clean:
 	@rm /tmp/$(basename $(@F)).raw
 	@rm /tmp/$(basename $(@F)).tiff
 
-%.tiff:
-	@echo "Creating missing TIFF image $@"
+%.raw:
+	@echo "Creating missing raw image $@"
 	@cp $(wildcard $(dir $@)*.adf) /tmp/$(basename $(@F)).adf
 	@$(VAMIGA) $(basename $@).ini &> /dev/null
-	@raw2tiff -p rgb -b 3 -w 716 -l 285 /tmp/$(basename $(@F)).raw $(basename $@).tiff
+	@mv /tmp/$(basename $(@F)).raw $(basename $@).raw
 	@rm /tmp/$(basename $(@F)).adf
-	@rm /tmp/$(basename $(@F)).raw
+
+%.tiff: %.raw
+	@echo "Creating missing TIFF image $@"
+	@raw2tiff -p rgb -b 3 -w 716 -l 285 $(basename $@).raw $(basename $@).tiff

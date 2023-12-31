@@ -1,4 +1,4 @@
-	include "../../fpureg.i"
+ 	include "../../fpureg.i"
 
 DUMP    MACRO
         fmove   FPSR,12(a2)
