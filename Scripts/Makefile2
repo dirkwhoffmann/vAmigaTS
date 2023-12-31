@@ -22,7 +22,7 @@ MKFILES = $(wildcard */Makefile)
 SUBDIRS = $(dir $(MKFILES))
 MYMAKE = $(MAKE) --no-print-directory
 
-.PHONY: all subdirs clean
+.PHONY: all subdirs tiff clean
 
 all: subdirs
 	@echo > /dev/null
@@ -31,6 +31,12 @@ subdirs:
 	@for dir in $(SUBDIRS); do \
 		echo "Entering ${CURDIR}/$$dir"; \
 		$(MAKE) -C $$dir || exit 1; \
+	done
+
+tiff:
+	@for dir in $(SUBDIRS); do \
+		echo "Entering ${CURDIR}/$$dir"; \
+		$(MAKE) tiff -C $$dir || exit 1; \
 	done
 
 clean:

@@ -40,6 +40,12 @@ TIFF=$(INI:.ini=.tiff)
 all: $(LOG) $(RAW) $(TIFF)
 	@echo > /dev/null
 		
+tiff: $(TIFF)
+	@echo > /dev/null
+
+raw: $(RAW)
+	@echo > /dev/null
+
 clean:
 	@rm -f */*.log
 
