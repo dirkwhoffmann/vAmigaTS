@@ -48,6 +48,7 @@ raw: $(RAW)
 
 clean:
 	@rm -f */*.log
+	@rm -f */*_fail.*
 
 %.log: %.tiff %.raw
 	@cp $(wildcard $(dir $@)*.adf) /tmp/$(basename $(@F)).adf
@@ -59,6 +60,8 @@ clean:
 		echo "$(basename $@): PASS" > $@; \
     else \
 		echo "$(basename $@): **** FAIL ****"; \
+		raw2tiff -p rgb -b 3 -w 716 -l 285 $(basename $@).raw $(basename $@)_fail.tiff; \
+		cp /tmp/$(basename $(@F)).raw $(basename $@)_fail.raw; \
 	fi
 	@rm /tmp/$(basename $(@F)).adf
 	@rm /tmp/$(basename $(@F)).raw
