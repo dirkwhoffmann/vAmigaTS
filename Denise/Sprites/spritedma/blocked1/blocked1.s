@@ -2,7 +2,7 @@
 	include "hardware/dmabits.i"
 	include "hardware/intbits.i"
 	
-	include "ministartup.s"
+	include "../../../../include/ministartup.i"
 		
 ; Constants
 LVL3_INT_VECTOR		equ $6c
@@ -118,25 +118,26 @@ copper:
 	DC.W    COLOR31,$0F00 
 
     ; 
-	; Block 1 (LORES)
+	; Block 1
 	;
 
 	dc.w	$3001,$FFFE  ; WAIT 
 	dc.w	COLOR00, $F00
 	dc.w	BPLCON0,(4<<12)|$200 ; 4 bitplanes, lores mode
 	dc.w    COLOR01,$66F
+	dc.w    COLOR03,$66F
 	dc.w    COLOR15,$66F
 	dc.w	$30D9,$FFFE  ; WAIT 
 	dc.w	COLOR00, $000
-	dc.w    $3301,$FFFE  
 
  	; 
-	; Block 2 (LORES)
+	; Block 2
 	;
 
 	dc.w	$4801,$FFFE  ; WAIT 
-	dc.w	COLOR00, $F00
+	dc.w	COLOR00,$F00
 	dc.w    COLOR01,$B6F
+	dc.w    COLOR03,$B6F
 	dc.w    COLOR15,$B6F
 	dc.w	$48D9,$FFFE  ; WAIT 
 	dc.w	COLOR00, $000
@@ -144,12 +145,13 @@ copper:
 	dc.w    DDFSTRT,$0018
 
 	; 
-	; Block 3 (LORES)
+	; Block 3
 	;
 
 	dc.w	$6001,$FFFE  ; WAIT 
-	dc.w	COLOR00, $F00
+	dc.w	COLOR00,$F00
 	dc.w    COLOR01,$F6F
+	dc.w    COLOR03,$F6F
 	dc.w    COLOR15,$F6F
 	dc.w	$60D9,$FFFE  ; WAIT 
 	dc.w	COLOR00, $000
@@ -157,93 +159,49 @@ copper:
 	dc.w    DDFSTRT,$0038
   
 	; 
-	; Block 4 (LORES)
+	; Block 4
 	;
 
 	dc.w	$7801,$FFFE  ; WAIT 
-	dc.w	COLOR00, $F00
+	dc.w	COLOR00,$F00
 	dc.w    COLOR01,$F6B
+	dc.w    COLOR03,$F6B
 	dc.w    COLOR15,$F6B
 	dc.w	$78D9,$FFFE  ; WAIT 
 	dc.w	COLOR00, $000
-	dc.w    $7B01,$FFFE  
 
 	dc.w	$9001,$FFFE  ; WAIT 
 	dc.w	COLOR00, $F00
 	dc.w	$90D9,$FFFE  ; WAIT 
 	dc.w	COLOR00, $000
-	dc.w	BPLCON0,(0<<12)|$200 ; Bitplane DMA off
-
-	;
-	; HIRES
-	;
-
-	dc.w    $9839, $FFFE         ; WAIT
-	dc.w    COLOR00,$F00
-	dc.w    COLOR00,$000
-	dc.w    COLOR00,$FFF
-	dc.w    COLOR00,$000
-	dc.w    COLOR00,$FFF
-	dc.w    COLOR00,$000
-	dc.w    COLOR00,$FFF
-	dc.w    COLOR00,$000
-	dc.w    COLOR00,$FFF
-	dc.w    COLOR00,$000
-	dc.w    COLOR00,$FFF
-	dc.w    COLOR00,$000
-	dc.w    COLOR00,$FFF
-	dc.w    COLOR00,$000
-	dc.w    COLOR00,$FFF
-	dc.w    COLOR00,$000
-	dc.w    COLOR00,$FFF
-	dc.w    COLOR00,$000
-	dc.w    COLOR00,$FFF
-	dc.w    COLOR00,$000
-	dc.w    COLOR00,$FFF
-	dc.w    COLOR00,$000
-	dc.w    COLOR00,$FFF
-	dc.w    COLOR00,$000
-	dc.w    COLOR00,$FFF
-	dc.w    COLOR00,$000
-	dc.w    COLOR00,$FFF
-	dc.w    COLOR00,$000
-	dc.w    COLOR00,$FFF
-	dc.w    COLOR00,$000
-	dc.w    COLOR00,$FFF
-	dc.w    COLOR00,$000
-	dc.w    COLOR00,$FFF
-	dc.w    COLOR00,$000
-	dc.w    COLOR00,$FFF
-	dc.w    COLOR00,$000
-	dc.w    COLOR00,$FFF
-	dc.w    COLOR00,$000
-	dc.w    COLOR00,$0F0
-	dc.w    COLOR00,$000
 
     ; 
-	; Block 1 (HIRES)
+	; Block 5
 	;
 
-	dc.w	$A001,$FFFE  ; WAIT 
-	dc.w	COLOR00, $F00
-	dc.w	BPLCON0,(4<<12)|$8200 ; 4 bitplanes, hires mode
+	dc.w	$9001,$FFFE  ; WAIT 
+	dc.w	COLOR00,$F00
 	dc.w    COLOR01,$66F
+	dc.w    COLOR03,$66F
 	dc.w    COLOR15,$66F
-	dc.w	$A0D9,$FFFE  ; WAIT 
+	dc.w	$90D9,$FFFE  ; WAIT 
 	dc.w	COLOR00, $000
-	dc.w    $A301,$FFFE  
 
  	; 
-	; Block 2 (HIRES)
+	; Block 6
 	;
 
-	dc.w	$B801,$FFFE  ; WAIT 
-	dc.w	COLOR00, $F00
+	dc.w	$A801,$FFFE  ; WAIT 
+	dc.w	COLOR00,$F00
 	dc.w    COLOR01,$B6F
+	dc.w    COLOR03,$B6F
 	dc.w    COLOR15,$B6F
-	dc.w	$B8D9,$FFFE  ; WAIT 
+	dc.w	$A8D9,$FFFE  ; WAIT 
 	dc.w	COLOR00, $000
-	dc.w    $BB01,$FFFE  
+	dc.w    $AB01,$FFFE  
+
+	dc.w	BPLCON0,(0<<12)|$200 ; Bitplane DMA off
+	dc.l	$fffffffe
 
 	; 
 	; Block 3 (HIRES)

@@ -2,17 +2,9 @@
 
 This test suite verifies various aspects of sprite DMA.
 
-#### blocked1
+#### blocked1 and blocked2
 
-Related to GitHub issue #799. Sprite DMA is blocked temporarily by expanding the DDF window. The test demonstrates that the old register value is kept during the blocking period. 
-
-#### blocked2
-
-Similar to blocked1. The last sprite line lies withing the disabled DMA area. As a result, the sprite is not disarmed.
-
-#### blocked3
-
-Similar to blocked1 with 2 bitplanes enabled over a larger area. This blocks the first sprite cycle during the whole sprite drawing range. 
+Related to GitHub issue #799. Sprite DMA is blocked temporarily by expanding the DDF window. blocked1 enabled 4 bitplanes, blocked2 enables 2 bitplanes. Test blocked2 fails in vAmiga 2.4 and below. 
 
 #### sprdma1 to sprdma3
 
