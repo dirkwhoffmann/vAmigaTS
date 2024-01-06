@@ -2,10 +2,6 @@
 
 This test suite verifies various aspects of sprite DMA.
 
-#### blocked1 and blocked2
-
-Related to GitHub issue #799. Sprite DMA is blocked temporarily by expanding the DDF window. blocked1 enabled 4 bitplanes, blocked2 enables 2 bitplanes. Test blocked2 fails in vAmiga 2.4 and below. 
-
 #### sprdma1 to sprdma3
 
 Toggles the SPRDMA bit in DMACON at certain positions.
