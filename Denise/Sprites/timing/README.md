@@ -4,11 +4,15 @@ The tests in this directory verifiy timing of sprite related registers.
 
 ### oldsprtimdat, oldsprtimpos (DEPRECATED)
 
-These tests draw a number of sprites and utilize the Copper to change SPRxDATA, SPRxDATB, and SPRxPOS manually at positions close to the horizontal sprite start. Both tests are first-generation tests and have been. Although they have been replaced by better ones (sprtimdat1, sprtimpos1, ...) I keep them for the time being.
+These tests draw a number of sprites and utilize the Copper to change SPRxDATA, SPRxDATB, and SPRxPOS manually at positions close to the horizontal sprite start. Both tests are first-generation tests and have been deprecated. Although they have been replaced by better ones (sprtimdat1, sprtimpos1, ...) I kept them for the time being.
 
 ### sprtimdat1, sprtimdat2
 
 Improved versions of oldsprtimdat. The tests incorporate the case of odd horizontal sprite positions.
+
+### sprdmadat1, sprdmadat2
+
+Similar to sprtimdat, but the registeres are written close to the DMA cycles.
 
 ### sprtimpos1
 
