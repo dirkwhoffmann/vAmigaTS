@@ -1,5 +1,5 @@
 BASE = ../../../../..
-FLOPPY=bin/disarm2.adf
-MODULE=disarm2.s
+FLOPPY=bin/interfere3b.adf
+MODULE=interfere3b.s
 
 include $(BASE)/shared/base.mk

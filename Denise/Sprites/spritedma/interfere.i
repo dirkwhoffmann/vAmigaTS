@@ -138,90 +138,12 @@ copper:
 	;
 
 	dc.w	$3001,$FFFE  ; WAIT 
-	dc.w	COLOR00, $F00
+	dc.w	COLOR00,$000
 	dc.w    COLOR01,$66F
 	dc.w    COLOR03,$66F
 	dc.w    COLOR15,$66F
-	dc.w	$30D9,$FFFE  ; WAIT 
-	dc.w	COLOR00, $000
-	dc.w	$471D,$FFFE  ; WAIT 
-	dc.w    SPR0CTL,$000 ; Disarm
 
- 	; 
-	; Block 2
-	;
-
-	dc.w	$5001,$FFFE  ; WAIT 
-	dc.w	COLOR00,$F00
-	dc.w    COLOR01,$B6F
-	dc.w    COLOR03,$B6F
-	dc.w    COLOR15,$B6F
-	dc.w	$50D9,$FFFE  ; WAIT 
-	dc.w	COLOR00, $000
-	dc.w	$571D,$FFFE  ; WAIT 
-	dc.w    SPR1CTL,$000 ; Disarm
-	dc.w	$671D,$FFFE  ; WAIT 
-	dc.w    SPR2CTL,$000 ; Disarm
-
-	; 
-	; Block 3
-	;
-
-	dc.w	$7001,$FFFE  ; WAIT 
-	dc.w	COLOR00,$F00
-	dc.w    COLOR01,$F6F
-	dc.w    COLOR03,$F6F
-	dc.w    COLOR15,$F6F
-	dc.w	$70D9,$FFFE  ; WAIT 
-	dc.w	COLOR00, $000
-	dc.w	$771D,$FFFE  ; WAIT 
-	dc.w    SPR3CTL,$000 ; Disarm
-	dc.w	$871D,$FFFE  ; WAIT 
-	dc.w    SPR4CTL,$000 ; Disarm
-  
-	; 
-	; Block 4
-	;
-
-	dc.w	$9001,$FFFE  ; WAIT 
-	dc.w	COLOR00,$F00
-	dc.w    COLOR01,$F6B
-	dc.w    COLOR03,$F6B
-	dc.w    COLOR15,$F6B
-	dc.w	$90D9,$FFFE  ; WAIT 
-	dc.w	COLOR00, $000
-	dc.w	$971D,$FFFE  ; WAIT 
-	dc.w    SPR5CTL,$000 ; Disarm
-	dc.w	$A71D,$FFFE  ; WAIT 
-	dc.w    SPR6CTL,$000 ; Disarm
-
-    ; 
-	; Block 5
-	;
-
-	dc.w	$B001,$FFFE  ; WAIT 
-	dc.w	COLOR00,$F00
-	dc.w    COLOR01,$66F
-	dc.w    COLOR03,$66F
-	dc.w    COLOR15,$66F
-	dc.w	$B0D9,$FFFE  ; WAIT 
-	dc.w	COLOR00, $000
-	dc.w	$B71D,$FFFE  ; WAIT 
-	dc.w    SPR7CTL,$000 ; Disarm
-
- 	; 
-	; Block 6
-	;
-
-	dc.w	$D001,$FFFE  ; WAIT 
-	dc.w	COLOR00,$F00
-	dc.w    COLOR01,$B6F
-	dc.w    COLOR03,$B6F
-	dc.w    COLOR15,$B6F
-	dc.w	$D0D9,$FFFE  ; WAIT 
-	dc.w	COLOR00, $000
-	dc.w	$D71D,$FFFE  ; WAIT 
-	dc.w    SPR5CTL,$000 ; Disarm
+	PAYLOAD 
 
 	dc.w    $F001,$FFFE  
 	dc.w	BPLCON0,(0<<12)|$200 ; Bitplane DMA off

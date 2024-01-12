@@ -2,10 +2,6 @@
 
 Test when writes to SPRxPT get dropped.
 
-#### disarm1 - disarm2
-
-Draws all seven sprites and utilizes to Copper to write into SPRxCTL around the same time the register is written by DMA.
-
 #### sprdrop1 - sprdrop4
 
 This test draws all 8 sprites. The Copper is utilized to change registers SPRxPTL. Some writes will be dropped (they won't change the register value) because they conflict with sprite DMA.

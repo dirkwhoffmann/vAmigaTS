@@ -2,6 +2,14 @@
 
 This test suite verifies various aspects of sprite DMA.
 
+#### interfere*n*
+
+Theses tests manually modify SPRxCTL and SPRxPOS inside the sprite DMA area to see how competing register modifications are resolved. 
+
+#### interfere*n*b
+
+Same as interfere*n* with the register writes happening two DMA cycles later.
+
 #### sprdma1 to sprdma3
 
 Toggles the SPRDMA bit in DMACON at certain positions.
