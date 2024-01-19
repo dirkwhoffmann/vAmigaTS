@@ -60,7 +60,7 @@ clean:
 		echo "$(basename $@): PASS" > $@; \
     else \
 		echo "$(basename $@): **** FAIL ****"; \
-		raw2tiff -p rgb -b 3 -w 716 -l 285 $(basename $@).raw $(basename $@)_fail.tiff; \
+		raw2tiff -p rgb -b 3 -w 716 -l 285 /tmp/$(basename $(@F)).raw $(basename $@)_fail.tiff; \
 		cp /tmp/$(basename $(@F)).raw $(basename $@)_fail.raw; \
 	fi
 	@rm /tmp/$(basename $(@F)).adf
