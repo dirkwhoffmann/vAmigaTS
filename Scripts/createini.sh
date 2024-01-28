@@ -1,9 +1,9 @@
 #!/bin/bash
 
 # This is a personal script which I use for creating .ini files. 
-# Dirk W. Hoffmann, 2022
+# Dirk W. Hoffmann, 2022 - 2024
 #
-# Usage: cputest <list of test directories>
+# Usage: createini <list of test directories>
 
 function createScript () {
 
@@ -17,10 +17,12 @@ function createScript () {
 	echo "# Setup the test environment" >> $FILE
 	if [[ "$2" == "OCS" ]]; then
 		echo "regression setup A500_OCS_1MB /tmp/kick13.rom" >> $FILE
-	else 
+	elif [[ "$2" == "ECS" ]]; then
 		echo "regression setup A500_ECS_1MB /tmp/kick13.rom" >> $FILE
-	fi
-	if [[ "$2" == "68010" ]]; then
+	elif [[ "$2" == "PLUS" ]]; then
+		echo "regression setup A500_PLUS_1MB /tmp/kick13.rom" >> $FILE
+	elif [[ "$2" == "68010" ]]; then
+		echo "regression setup A500_ECS_1MB /tmp/kick13.rom" >> $FILE
 		echo "cpu set revision $2" >> $FILE
 	fi
 	echo "" >> $FILE
@@ -39,6 +41,7 @@ do
 		cd $dir
 		createScript $dir ECS
 		createScript $dir OCS
+		# createScript $dir PLUS
 		cd - &> /dev/null
 	fi
 done

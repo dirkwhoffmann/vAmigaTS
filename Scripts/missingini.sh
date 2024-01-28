@@ -3,7 +3,7 @@
 # Searches for directories with missing test scripts (missing .ini files)
 # Dirk W. Hoffmann, 2022
 #
-# Usage: cputest <list of test directories>
+# Usage: missingini <list of test directories>
 
 for dir in "$@"
 do

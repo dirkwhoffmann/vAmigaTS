@@ -30,9 +30,9 @@ MKFILES = $(wildcard */Makefile)
 SUBDIRS = $(dir $(MKFILES))
 MYMAKE = $(MAKE) --no-print-directory
 
-.PHONY: all prebuild subdirs clean
+.PHONY: all prebuild subdirs missingini clean
 
-all: prebuild subdirs tiff
+all: prebuild subdirs tiff missingini
 	@echo > /dev/null
 	
 prebuild:
@@ -51,6 +51,10 @@ tiff:
 		$(MAKE) tiff -C $$dir || exit 1; \
 	done
 
+missingini:
+	@echo "The following tests have no test scripts. They must me run manually..."
+	@./Scripts/missingini.sh */*/*/*
+	
 clean:
 	@for dir in $(SUBDIRS); do \
 		echo "Cleaning up ${CURDIR}/$$dir"; \
