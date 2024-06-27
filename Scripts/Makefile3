@@ -15,6 +15,10 @@
 #    4. Run tests
 #       make [-j<number of parallel threads>]
 
+# Note: The old Makefile used raw2tiff to generate preview images:
+# raw2tiff -p rgb -b 3 -w 716 -l 285 /tmp/$(basename $(@F)).raw $(basename $@)_fail.tiff; \
+# raw2tiff has vanished in macOS. Therefore, the new Makefile uilizes imagemagick
+
 # Check if we're ready to go
 KICK13 = /tmp/kick13.rom
 ifndef VAMIGA
@@ -60,7 +64,7 @@ clean:
 		echo "$(basename $@): PASS" > $@; \
     else \
 		echo "$(basename $@): **** FAIL ****"; \
-		raw2tiff -p rgb -b 3 -w 716 -l 285 /tmp/$(basename $(@F)).raw $(basename $@)_fail.tiff; \
+		magick -depth 8 -size 716x285 rgb:/tmp/$(basename $(@F)).raw $(basename $@)_fail.tiff; \
 		cp /tmp/$(basename $(@F)).raw $(basename $@)_fail.raw; \
 	fi
 	@rm /tmp/$(basename $(@F)).adf
@@ -75,4 +79,5 @@ clean:
 
 %.tiff: %.raw
 	@echo "Creating missing TIFF image $@"
-	@raw2tiff -p rgb -b 3 -w 716 -l 285 $(basename $@).raw $(basename $@).tiff
+	# @raw2tiff -p rgb -b 3 -w 716 -l 285 $(basename $@).raw $(basename $@).tiff
+	@magick -depth 8 -size 716x285 rgb:$(basename $@).raw $(basename $@).tiff
