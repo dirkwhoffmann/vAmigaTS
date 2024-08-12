@@ -56,6 +56,7 @@ MAIN:
 	move.w	#$C044,INTENA(a1) 
 
 .mainLoop:
+	jsr     synccpu
 	bra.s	.mainLoop
 
 blitWait:
@@ -95,6 +96,53 @@ irq3:                                 ; Called when the Blitter terminates
 	move.w  #$0040,INTREQ(a1)         ; Acknowledge
 	move.w  #$000,COLOR00(a1)
 	rte
+
+synccpu:
+	lea     VHPOSR(a1),a3     ; VHPOSR     
+
+	; Wait until we have reached a certain scanline
+.loop 
+	move.w  (a3),d2     
+	and     #$FF00,d2
+	cmp.w   #$3000,d2
+	bne     .loop
+	and     #1,VPOSR(a1)
+	bne     .loop
+
+	; Sync horizontally
+	move.w  #$F0F,COLOR00(a1)
+.synccpu1:
+	andi.w  #$F,(a3)          ; 16 cycles
+	bne     .synccpu1         ; 10 cycles
+	move.w  #$606,COLOR00(a1)
+.synccpu2:
+	andi.w  #$1F,(a3)         ; 16 cycles
+	bne     .synccpu2         ; 10 cycles
+	move.w  #$A0A,COLOR00(a1)
+.synccpu3:
+	andi.w  #$FF,(a3)         ; 16 cycles
+	nop                       ;  4 cycles
+	nop                       ;  4 cycles
+	nop                       ;  4 cycles
+	bne     .synccpu3         ; 10 cycles (if taken)
+
+	; Adust horizontally
+  	moveq   #10,d2
+.adjust:
+    dbra    d2,.adjust
+
+	; Sync vertically
+.synccpu4:
+	nop 
+	move.w  #$404,COLOR00(a1)
+	ds.w    96,$4E71          ; NOPs to keep the horizontal position in each iteration
+	move.w  (a3),d2     
+	move.w  #$F0F,COLOR00(a1)  
+	and     #$FF00,d2
+	cmp.w   #$4000,d2
+	bne     .synccpu4
+	move.w  #$000,COLOR00(a1)
+	rts
 
 copper:
 
