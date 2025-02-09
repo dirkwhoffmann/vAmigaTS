@@ -39,11 +39,11 @@ ifeq (,$(wildcard $(KICK13)))
     $(error $(KICK13) not found)
 endif
 
-# Collect all .ini files
-INI=$(wildcard */*.ini)
-LOG=$(INI:.ini=.log)
-RAW=$(INI:.ini=.raw)
-TIFF=$(INI:.ini=.tiff)
+# Collect all RetroShell scripts
+RETROSH=$(wildcard */*.retrosh)
+LOG=$(RETROSH:.retrosh=.log)
+RAW=$(RETROSH:.retrosh=.raw)
+TIFF=$(RETROSH:.retrosh=.tiff)
 
 .PHONY: all prepare clean
 
@@ -62,7 +62,7 @@ clean:
 
 %.log: %.tiff %.raw
 	@cp $(wildcard $(dir $@)*.adf) /tmp/$(basename $(@F)).adf
-	@$(VAMIGA) $(basename $@).ini &> /dev/null
+	@$(VAMIGA) $(basename $@).retrosh &> /dev/null
 	@diff /tmp/$(basename $(@F)).raw $(basename $@).raw; \
 	RETVAL=$$?; \
 	if [ $$RETVAL -eq 0 ]; then \
@@ -79,7 +79,7 @@ clean:
 %.raw:
 	@echo "Creating missing raw image $@"
 	@cp $(wildcard $(dir $@)*.adf) /tmp/$(basename $(@F)).adf
-	@$(VAMIGA) $(basename $@).ini &> /dev/null
+	@$(VAMIGA) $(basename $@).retrosh &> /dev/null
 	@mv /tmp/$(basename $(@F)).raw $(basename $@).raw
 	@rm /tmp/$(basename $(@F)).adf
 
