@@ -16,7 +16,7 @@ To run all regression tests:
 
 1. Install TIFF tools 
 
-    `brew install libtiff`
+    `brew install imagemagick`
 
 2. Copy Kickstart 1.3 to /tmp
 

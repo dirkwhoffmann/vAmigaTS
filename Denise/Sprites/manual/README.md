@@ -14,4 +14,8 @@ This test manually draws sprites 0 and 1 at the same horizontal coordinates. Usi
 
 This test replays some instructions from the Copper list of "Brian the Lion". It is very sensitive to sprite register timing. 
 
-Dirk Hoffmann, 2019 - 2020
+#### vblen1
+
+This test isolates a bug in vAmiga discussed in GitHub issue #967. By manually setting SPRxCTL and SPRxPOS, it is possible in vAmiga to enable sprite DMA within the VBLANK area. If the sprite DMA bit in DMACON is disabled during the sprite fetch line (0x1A), sprite DMA remains enabled, causing sprite rendering to begin immediately after VBLANK.
+
+Dirk Hoffmann, 2019 - 2026
