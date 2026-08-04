@@ -2,6 +2,9 @@
 
 The tests in this test suite modify register BPLCON0 in various ways.
 
+NOTE: A1200 images have been added recently. Most of them contain flickering pixel garbage
+in some areas.
+
 ### block *x*
 
 Sets the upper nibble of BPLCON0 to values from 0 and 15 with varying values for the HAM bit and the dual-playfield bit. 
