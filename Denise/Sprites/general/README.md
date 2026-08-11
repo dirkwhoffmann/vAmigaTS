@@ -18,6 +18,8 @@ Varies BPLCON0::BPU around the coordinates where the sprites are drawn.
 
 This test uses unusual coordinates letting VSTOP match twice without letting VSTRT match in between.
 
+The test breaks the video signal on my A1200. The monitor shows "NO SIGNAL".
+
 #### invcoord
 
 Contais a couple of POS/CTL pairs with VSTRT unreachable and VSTRT > VSTOP.
