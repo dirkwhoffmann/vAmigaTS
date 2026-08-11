@@ -30,6 +30,52 @@ BPL8PTL             equ $FE           ; AGA only
 FMODEREG            equ $1FC          ; AGA only (the register; FMODE is the value)
 
 PLANE_SIZE          equ 2048          ; bytes reserved per bitplane, see below
+
+; Per-plane 64-bit alignment control, one flag per bitplane. Each defaults
+; to 0 (aligned -- the standard case, and the only one a real program would
+; ever use): the buffer is forced onto a 64-bit (mod 8) address with cnop.
+; Setting PLANEk_MISALIGN to 1 instead pushes bitplane k MISALIGN_OFFSET
+; bytes off that boundary, so its pointer is still word-aligned -- legal as
+; far as the 68000 and BPLxPT are concerned -- but not 64-bit aligned.
+;
+; MISALIGN_OFFSET defaults to 4 (mod 8 = 4, the maximum possible offset,
+; used by fmode11a-e) but can be set to 2 (mod 8 = 2, the smallest offset
+; a word-aligned pointer can have) to test whether the *distance* from the
+; 64-bit boundary matters, or only whether the pointer sits on one at all
+; (see fmode11f-j).
+;
+; PLANE_SIZE is a multiple of 8, and each plane is independently re-aligned
+; with its own cnop rather than inheriting the previous plane's offset, so
+; any combination of aligned/misaligned planes is expressible, including
+; alternating patterns that a single shared alignment value could not
+; produce (see fmode11d/fmode11e).
+	IFND MISALIGN_OFFSET
+MISALIGN_OFFSET     equ 4
+	ENDC
+	IFND PLANE1_MISALIGN
+PLANE1_MISALIGN     equ 0
+	ENDC
+	IFND PLANE2_MISALIGN
+PLANE2_MISALIGN     equ 0
+	ENDC
+	IFND PLANE3_MISALIGN
+PLANE3_MISALIGN     equ 0
+	ENDC
+	IFND PLANE4_MISALIGN
+PLANE4_MISALIGN     equ 0
+	ENDC
+	IFND PLANE5_MISALIGN
+PLANE5_MISALIGN     equ 0
+	ENDC
+	IFND PLANE6_MISALIGN
+PLANE6_MISALIGN     equ 0
+	ENDC
+	IFND PLANE7_MISALIGN
+PLANE7_MISALIGN     equ 0
+	ENDC
+	IFND PLANE8_MISALIGN
+PLANE8_MISALIGN     equ 0
+	ENDC
 NUM_PLANES          equ 8
 NUM_SECTIONS        equ 8            ; per region
 
@@ -304,7 +350,7 @@ MAIN:
 .mcGotP:
 
 	; d4 = brightness: full if the index is odd, half if it is even
-	moveq   #0,d4 ; moveq   #8,d4
+	moveq   #8,d4
 	btst    #0,d5
 	beq.s   .mcGotB
 	moveq   #15,d4
@@ -595,8 +641,7 @@ secl7:
 	;
 	dc.w    $9001,$FFFE            ; stop fetching before DDF_START
 	dc.w    BPLCON0,$0200
-	; dc.w    $9000+DDF_START+1,$FFFE ; ruler starts where the data does
-	dc.w    $9200+DDF_START+1,$FFFE ; ruler starts where the data does
+	dc.w    $9000+DDF_START+1,$FFFE ; ruler starts where the data does
 	dc.w    COLOR00,$F00
 	dc.w    COLOR00,$000
 	dc.w    COLOR00,$FFF
@@ -847,11 +892,43 @@ sech7:
 
 	dc.l    $fffffffe
 
+	cnop    0,8                     ; always land on a 64-bit boundary first
+	IFNE PLANE1_MISALIGN
+	ds.b    MISALIGN_OFFSET         ; then step off it, on purpose
+	ENDC
 bitplane1: ds.b PLANE_SIZE
+	cnop    0,8                     ; always land on a 64-bit boundary first
+	IFNE PLANE2_MISALIGN
+	ds.b    MISALIGN_OFFSET         ; then step off it, on purpose
+	ENDC
 bitplane2: ds.b PLANE_SIZE
+	cnop    0,8                     ; always land on a 64-bit boundary first
+	IFNE PLANE3_MISALIGN
+	ds.b    MISALIGN_OFFSET         ; then step off it, on purpose
+	ENDC
 bitplane3: ds.b PLANE_SIZE
+	cnop    0,8                     ; always land on a 64-bit boundary first
+	IFNE PLANE4_MISALIGN
+	ds.b    MISALIGN_OFFSET         ; then step off it, on purpose
+	ENDC
 bitplane4: ds.b PLANE_SIZE
+	cnop    0,8                     ; always land on a 64-bit boundary first
+	IFNE PLANE5_MISALIGN
+	ds.b    MISALIGN_OFFSET         ; then step off it, on purpose
+	ENDC
 bitplane5: ds.b PLANE_SIZE
+	cnop    0,8                     ; always land on a 64-bit boundary first
+	IFNE PLANE6_MISALIGN
+	ds.b    MISALIGN_OFFSET         ; then step off it, on purpose
+	ENDC
 bitplane6: ds.b PLANE_SIZE
+	cnop    0,8                     ; always land on a 64-bit boundary first
+	IFNE PLANE7_MISALIGN
+	ds.b    MISALIGN_OFFSET         ; then step off it, on purpose
+	ENDC
 bitplane7: ds.b PLANE_SIZE
+	cnop    0,8                     ; always land on a 64-bit boundary first
+	IFNE PLANE8_MISALIGN
+	ds.b    MISALIGN_OFFSET         ; then step off it, on purpose
+	ENDC
 bitplane8: ds.b PLANE_SIZE
