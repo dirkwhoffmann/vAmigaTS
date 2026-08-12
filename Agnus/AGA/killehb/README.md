@@ -8,26 +8,26 @@ The whole frame is drawn with 6 bitplanes and neither HAM nor DPF set, the stand
 
 What those two indices display depends entirely on KILLEHB:
 
-- With EHB active, Denise substitutes COLOR(n-32) at half brightness. Index 33 takes COLOR01 and index 63 takes COLOR31 (not COLOR63; 63-32 = 31). Those are set to blue and yellow, so the stripe pattern is visible.
-- With EHB killed, the indices address COLOR33 and COLOR63 directly. Both of those registers are set to red, so the two indices collapse onto one color and the stripes vanish into a flat red field.
+- With EHB killed, the indices address COLOR33 and COLOR63 directly. Those are set to blue and yellow, so the stripe pattern is visible.
+- With EHB active, Denise substitutes COLOR(n-32) at half brightness. Index 33 takes COLOR01 and index 63 takes COLOR31 (not COLOR63; 63-32 = 31). Both of those registers are set to red, so the two indices collapse onto one color and the stripes vanish into a flat red field.
 
 The test therefore reads as presence versus absence of a pattern rather than as a difference in shade:
 
 ```
-blue/yellow stripes   EHB is active   (KILLEHB = 0)
-flat red              EHB is killed   (KILLEHB = 1)
+blue/yellow stripes   EHB is killed   (KILLEHB = 1)
+flat red              EHB is active   (KILLEHB = 0)
 ```
 
-The stripes appear at half brightness, as dark blue and olive rather than full blue and yellow, because halving is exactly what EHB does. That is the mode working, not a palette error. The red field comes straight from COLOR33 and COLOR63 with no halving and is therefore full brightness.
+KILLEHB is the resting state here, so the screen is striped throughout with red punched into it a few lines at a time. The stripes are full brightness, straight out of COLOR33 and COLOR63 with no halving. It is the red that is halved: COLOR01 and COLOR31 hold full red, and EHB displays them with every channel divided by two. A dark red rather than a bright one is the mode working, not a palette error.
 
 The screen consists of a LORES stripe field, the Copper timing ruler from the Agnus/DDF/ddf1 test with all bitplanes disabled, and a HIRES stripe field. The stripe is 8 pixels wide in whatever the current resolution is, so the HIRES stripes come out half the physical width of the LORES ones.
 
 The Copper drives KILLEHB from a block placed on every fourth line of both regions, alternating two patterns:
 
-- Even blocks start the line with EHB active, raise KILLEHB at a horizontal position, and drop it again before the line ends. This gives a flat red pulse on an otherwise striped line.
-- Odd blocks are the inverse. The line starts with KILLEHB already set, it is dropped for a stretch, raised again, and finally dropped at the end of the line. This gives a striped pulse on an otherwise flat red line.
+- Even blocks start the line with KILLEHB already set, drop it at a horizontal position, and raise it again before the line ends. This gives a flat red notch in an otherwise striped line.
+- Odd blocks are the inverse. The line starts with KILLEHB clear, it is raised for a stretch, dropped again, and finally raised at the end of the line. This gives a striped notch in an otherwise flat red line.
 
-The switch positions advance steadily down the screen, so the pulses form a diagonal. Both patterns leave KILLEHB clear at the end of the line, so the three lines between blocks always show plain EHB and every block is read against the same background.
+The switch positions advance steadily down the screen, so the notches form a diagonal. Both patterns leave KILLEHB set at the end of the line, so the three lines between blocks are always striped and every block is read against the same background.
 
 Two properties of the test are worth knowing about when reading the source:
 
