@@ -9,5 +9,5 @@ regression run /tmp/lc4_ocs.adf
 wait 9 seconds
 
 # Exit with a screenshot
-screenshot set cutout 300 26 912 311
+screenshot set cutout x1=300 y1=26 x2=912 y2=311
 screenshot save lc4_ocs

@@ -41,7 +41,7 @@ The comb's dark pixels are index 0, which is COLOR00 — the same colour as the 
 
 The pattern repeats every single word, so BPLxMOD stays zero, pointer drift cannot shear anything, and no fetch-count arithmetic has to be right for the picture to be readable.
 
-KILLEHB is set for the whole frame. Six enabled bitplanes with neither HAM nor DPF set is precisely the condition for Extra Half-Brite, so without it the six plane subsection would draw index 63 as a halved COLOR31 rather than COLOR63 and come out the wrong colour. That is genuine AGA behaviour, but it belongs to Agnus/AGA/killehb, not here.
+KILLEHB is set for the whole frame. Six enabled bitplanes with neither HAM nor DPF set is precisely the condition for Extra Half-Brite, so without it the six plane subsection would draw index 63 as a halved COLOR31 rather than COLOR63 and come out the wrong colour. That is genuine AGA behaviour, but it belongs to Denise/Registers/BPLCON2/killehb, not here.
 
 #### The ten tests
 

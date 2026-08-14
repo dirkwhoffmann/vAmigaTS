@@ -1,0 +1,13 @@
+# Regression testing script for vAmiga
+# Dirk W. Hoffmann
+
+# Setup the test environment
+# A500_ECS_1MB: OCS Denise -- no KILLEHB, EHB always active
+regression setup A500_ECS_1MB /tmp/kick13.rom
+
+# Run the test
+regression run /tmp/killehb_ecs.adf
+wait 9 seconds
+
+# Exit with a screensht
+screenshot save killehb_ecs

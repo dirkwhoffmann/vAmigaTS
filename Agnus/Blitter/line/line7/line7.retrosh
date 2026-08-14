@@ -9,5 +9,5 @@ regression run /tmp/line7.adf
 wait 9 seconds
 
 # Exit with a screensht
-screenshot set cutout 196 36 908 314
+screenshot set cutout x1=196 y1=36 x2=908 y2=314
 screenshot save line7

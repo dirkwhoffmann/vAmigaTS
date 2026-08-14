@@ -37,3 +37,9 @@ Both bitplane buffers repeat every single word, so drift of the bitplane pointer
 
 
 Dirk Hoffmann, 2026
+
+## Regression testing
+
+Run under two configurations, `_plus` (A500_PLUS_1MB, ECS Denise, KILLEHB honoured) and `_ecs` (A500_ECS_1MB, OCS Denise, no KILLEHB, so EHB stays active throughout). The `_ecs` run is the negative control: the bit is a Denise feature, and A500_ECS_1MB pairs an ECS Agnus with an OCS Denise.
+
+There is no AGA configuration scheme in the emulator's regression tester, so the AGA behaviour this test was originally written for is covered only by the hardware screenshots in this directory.

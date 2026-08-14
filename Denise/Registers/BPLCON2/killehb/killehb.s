@@ -63,7 +63,7 @@
 ; three lines between blocks are always striped and every block is read
 ; against the same background.
 
-	include "../../../include/registers.i"
+	include "../../../../include/registers.i"
 	include "hardware/dmabits.i"
 	include "hardware/intbits.i"
 	include "ministartup.s"

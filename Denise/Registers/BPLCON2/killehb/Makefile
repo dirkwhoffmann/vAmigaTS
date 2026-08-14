@@ -1,4 +1,4 @@
-BASE = ../../../..
+BASE = ../../../../..
 FLOPPY=bin/killehb.adf
 MODULE=killehb.s
 

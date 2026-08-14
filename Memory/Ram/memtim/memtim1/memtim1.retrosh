@@ -9,5 +9,5 @@ regression run /tmp/memtim1.adf
 wait 9 seconds
 
 # Exit with a screensht
-screenshot set cutout 196 70 912 210
+screenshot set cutout x1=196 y1=70 x2=912 y2=210
 screenshot save memtim1

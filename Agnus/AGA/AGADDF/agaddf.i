@@ -80,7 +80,7 @@
 ; Half-Brite, so without it the six plane subsection would draw index 63 as
 ; a halved COLOR31 instead of COLOR63 and would come out a different colour
 ; from the one the palette says. That is a genuine AGA behaviour, but it
-; belongs to Agnus/AGA/killehb, not here.
+; belongs to Denise/Registers/BPLCON2/killehb, not here.
 ;
 ;
 ; WHAT TO EXPECT AT LOW FMODE
