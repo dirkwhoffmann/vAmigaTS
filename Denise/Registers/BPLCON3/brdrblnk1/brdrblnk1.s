@@ -1,4 +1,7 @@
-; brdrblnk.s -- BPLCON3::BRDRBLNK, the blanked border (ECS and AGA).
+; brdrblnk1.s -- BPLCON3::BRDRBLNK, the blanked border (ECS and AGA).
+;
+; A companion test, brdrblnk2, asks what BRDRBLNK does when no bitplanes
+; are enabled at all; this one always has at least one.
 ;
 ; BRDRBLNK is bit 5 of BPLCON3. With it clear, the border area outside the
 ; display window is painted in the background colour, COLOR00, exactly as
@@ -79,7 +82,7 @@
 ;   the stripe at which the border changes colour can be counted off
 ;   directly, block by block.
 
-	include "../../../include/registers.i"
+	include "../../../../include/registers.i"
 	include "hardware/dmabits.i"
 	include "hardware/intbits.i"
 	include "ministartup.s"
