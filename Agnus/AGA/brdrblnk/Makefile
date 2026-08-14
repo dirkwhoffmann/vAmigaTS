@@ -1,5 +1,5 @@
 BASE = ../../../..
-FLOPPY=bin/bplam.adf
-MODULE=bplam.s
+FLOPPY=bin/brdrblnk.adf
+MODULE=brdrblnk.s
 
 include $(BASE)/shared/base.mk

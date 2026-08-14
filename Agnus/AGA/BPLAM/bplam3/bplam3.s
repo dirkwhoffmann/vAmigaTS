@@ -1,62 +1,59 @@
-	include "../../../include/registers.i"
+	include "../../../../include/registers.i"
 	include "hardware/dmabits.i"
 	include "hardware/intbits.i"
 	include "ministartup.s"
 
-; bplam.s -- BPLCON4's bitplane colour XOR (BPLAM, bits 15-8).
+; bplam3.s -- BPLAM read against a blanked border.
 ;
-; AGA XORs an eight bit value into every bitplane colour index before it
-; reaches the palette:
+; Identical to bplam -- same four bitplanes, same pixel-position data, same
+; ten section sweep of BPLCON4's colour XOR -- with two changes:
 ;
-;     index = bitplane_bits ^ BPLAM
+;   COLOR00 is dark blue instead of black
+;   BRDRBLNK (BPLCON3 bit 5) is set, so the border is forced to black
 ;
-; It is applied to the finished index, not to the individual planes, so it
-; can do two quite different things. Within the range the planes can
-; already reach it permutes the palette; above that range it TRANSLATES the
-; whole picture into a different block of colour registers, which is how a
-; four bitplane playfield can be pointed at any of the sixteen 16-register
-; windows of the 256 colour palette without touching the bitplane data.
+; and ECSENA (BPLCON0 bit 0) is set throughout, because BRDRBLNK does
+; nothing without it.
 ;
 ;
-; THE PICTURE
-; -----------
+; WHY
+; ---
 ;
-; Four bitplanes, and the data is simply the pixel position: plane k holds
-; bit k-1 of x, so the colour index counts 0, 1, 2 ... 15 and repeats every
-; 16 lores pixels. Every line is a 16 step colour ramp, repeated across the
-; display.
+; In bplam the border and the part of the display window that lies before
+; the bitplane data arrives are both black, and they are therefore
+; indistinguishable. That matters, because BPLAM makes the second of those
+; two areas visible: inside the window the colour index is 0 until data
+; arrives, and 0 XOR BPLAM is a real palette entry. Every section of bplam
+; consequently opens with a solid stretch of colour[BPLAM] whose left edge
+; cannot be located -- it runs into the black border with no seam.
 ;
-;     plane 1   $5555   period  2 pixels
-;     plane 2   $3333   period  4
-;     plane 3   $0F0F   period  8
-;     plane 4   $00FF   period 16
+; Blanking the border separates them. The border is now pure black no
+; matter what COLOR00 holds, while the window interior takes COLOR00, which
+; is dark blue. The line therefore reads as three zones with two hard
+; edges:
 ;
-; All four patterns repeat every single word, which makes the picture
-; completely independent of how many words a line fetches: no shear, no
-; drift, BPLxMOD zero and the pointers simply left to run for the whole
-; frame. Nothing here can go wrong for a reason that is not BPLAM.
+;   black             the border, up to DIWSTRT
+;   solid colour      the window, before the bitplane data arrives
+;   the 16 step ramp  the window, once data arrives
 ;
-; The palette is the one from the FMODE tests: hue keyed on the position of
-; the highest set bit of the index, brightness on bit 0. So a section reads
-; as a repeating band of hues, and what BPLAM does to it is obvious:
+; The first edge is the display window opening, the second is the first
+; bitplane pixel, and the gap between them is the DDF-to-first-pixel
+; latency, measured directly rather than inferred. Neither edge is legible
+; in bplam.
 ;
-;   - XOR with a bit the index already uses (1, 2, 4, 8) reorders the
-;     sixteen steps within the same hue families;
-;   - XOR with a bit the index cannot reach (16, 32, 64, 128) moves the
-;     whole ramp into a higher block of registers, so the entire band
-;     changes hue family at once while keeping its shape.
+; The dark blue matters in the first section only, where BPLAM is $00 and
+; the pre-data zone falls on COLOR00 itself; in every other section that
+; zone falls on colour[BPLAM] and is some other hue. Either way it is not
+; black, which is the whole point -- black now means border and nothing
+; else.
 ;
-; Ten sections of 20 lines sweep BPLAM through $00, then each single bit in
-; turn, then $FF. $00 is the reference: it must look exactly like a plain
-; four bitplane ramp. $FF inverts every bit, which both permutes the ramp
-; and lifts it into the top block.
+; One consequence to expect: with COLOR00 no longer black, step 0 of the
+; ramp is dark blue rather than black, so the ramp starts one visible shade
+; above where it did in bplam.
 ;
-; A copper ruler sits on the first line of every section, with bitplane DMA
-; switched off so the copper keeps every slot.
-;
-; The low byte of BPLCON4 is left at $11 throughout -- those are the sprite
-; palette offsets ESPRM and OSPRM, and $11 is the AGA default. Only the
-; high byte moves.
+; The Copper ruler is unchanged except for its final write, which restores
+; the dark blue rather than leaving COLOR00 black. Without that the zone
+; the test exists to show would be black again on every line below the
+; first ruler.
 
 BPLCON3             equ $106          ; AGA only
 BPLCON4             equ $10C          ; AGA only
@@ -70,8 +67,10 @@ DDF_STOP            equ $00B0
 DIW_START           equ $2C00+(DDF_START*2)+9
 DIW_STOP            equ $2CC1
 
-BPLCON0_ON          equ $4200         ; 4 bitplanes, lores
-BPLCON0_OFF         equ $0200
+BPLCON0_ON          equ $4201         ; 4 bitplanes, lores, ECSENA
+BRDRBLNK            equ $0020         ; BPLCON3 bit 5
+DARKBLUE            equ $006
+BPLCON0_OFF         equ $0201         ; no bitplanes, ECSENA
 
 PLANE_SIZE          equ 8192
 
@@ -149,13 +148,15 @@ MAIN:
 
 	dbra    d7,.colorBankLoop
 
-	; COLOR00 (the background/border colour) is forced to true black; it is
-	; index 0, which .makeColor already returns black for, but writing it
-	; explicitly keeps the intent obvious and BPLCON3 in a known state.
+	; COLOR00 is dark blue rather than black. It is the colour of the
+	; display window wherever the bitplanes have not delivered data yet,
+	; and with BRDRBLNK set it is no longer shared with the border, so the
+	; window edge becomes visible. Written twice, LOCT=0 then LOCT=1, so
+	; both nibbles of every channel are filled.
 	move.w  #$0000,BPLCON3(a1)      ; bank 0, LOCT=0
-	move.w  #$0000,COLOR00(a1)
+	move.w  #DARKBLUE,COLOR00(a1)
 	move.w  #$0200,BPLCON3(a1)      ; bank 0, LOCT=1
-	move.w  #$0000,COLOR00(a1)
+	move.w  #DARKBLUE,COLOR00(a1)
 	move.w  #$0000,BPLCON3(a1)      ; leave BPLCON3 in a known state
 
 
@@ -289,7 +290,7 @@ copper:
 	dc.w    BPLCON0,BPLCON0_OFF
 	dc.w    BPLCON1,$0000
 	dc.w    BPLCON2,$0024
-	dc.w    BPLCON3,$0000
+	dc.w    BPLCON3,BRDRBLNK        ; border forced to black
 	dc.w    BPLCON4,$0011           ; BPLAM = $00 to begin with
 	dc.w    DIWSTRT,DIW_START
 	dc.w    DIWSTOP,DIW_STOP
@@ -317,7 +318,7 @@ bplPtrs:
 	dc.w    $3001,$FFFE
 	dc.w    BPLCON4,$0011           ; BPLAM = $00
 	dc.w    BPLCON0,BPLCON0_OFF     ; ruler line: give the copper every slot
-	dc.w    COLOR00,$000
+	dc.w    COLOR00,DARKBLUE        ; put the background back
 	dc.w    $3000+DDF_START+1,$FFFE
 	dc.w    COLOR00,$F00
 	dc.w    COLOR00,$000
@@ -358,7 +359,7 @@ bplPtrs:
 	dc.w    COLOR00,$FFF
 	dc.w    COLOR00,$000
 	dc.w    COLOR00,$0F0
-	dc.w    COLOR00,$000
+	dc.w    COLOR00,DARKBLUE        ; put the background back
 	dc.w    $3101,$FFFE
 	dc.w    BPLCON0,BPLCON0_ON
 
@@ -368,7 +369,7 @@ bplPtrs:
 	dc.w    $4401,$FFFE
 	dc.w    BPLCON4,$0111           ; BPLAM = $01
 	dc.w    BPLCON0,BPLCON0_OFF     ; ruler line: give the copper every slot
-	dc.w    COLOR00,$000
+	dc.w    COLOR00,DARKBLUE        ; put the background back
 	dc.w    $4400+DDF_START+1,$FFFE
 	dc.w    COLOR00,$F00
 	dc.w    COLOR00,$000
@@ -409,7 +410,7 @@ bplPtrs:
 	dc.w    COLOR00,$FFF
 	dc.w    COLOR00,$000
 	dc.w    COLOR00,$0F0
-	dc.w    COLOR00,$000
+	dc.w    COLOR00,DARKBLUE        ; put the background back
 	dc.w    $4501,$FFFE
 	dc.w    BPLCON0,BPLCON0_ON
 
@@ -419,7 +420,7 @@ bplPtrs:
 	dc.w    $5801,$FFFE
 	dc.w    BPLCON4,$0211           ; BPLAM = $02
 	dc.w    BPLCON0,BPLCON0_OFF     ; ruler line: give the copper every slot
-	dc.w    COLOR00,$000
+	dc.w    COLOR00,DARKBLUE        ; put the background back
 	dc.w    $5800+DDF_START+1,$FFFE
 	dc.w    COLOR00,$F00
 	dc.w    COLOR00,$000
@@ -460,7 +461,7 @@ bplPtrs:
 	dc.w    COLOR00,$FFF
 	dc.w    COLOR00,$000
 	dc.w    COLOR00,$0F0
-	dc.w    COLOR00,$000
+	dc.w    COLOR00,DARKBLUE        ; put the background back
 	dc.w    $5901,$FFFE
 	dc.w    BPLCON0,BPLCON0_ON
 
@@ -470,7 +471,7 @@ bplPtrs:
 	dc.w    $6C01,$FFFE
 	dc.w    BPLCON4,$0411           ; BPLAM = $04
 	dc.w    BPLCON0,BPLCON0_OFF     ; ruler line: give the copper every slot
-	dc.w    COLOR00,$000
+	dc.w    COLOR00,DARKBLUE        ; put the background back
 	dc.w    $6C00+DDF_START+1,$FFFE
 	dc.w    COLOR00,$F00
 	dc.w    COLOR00,$000
@@ -511,7 +512,7 @@ bplPtrs:
 	dc.w    COLOR00,$FFF
 	dc.w    COLOR00,$000
 	dc.w    COLOR00,$0F0
-	dc.w    COLOR00,$000
+	dc.w    COLOR00,DARKBLUE        ; put the background back
 	dc.w    $6D01,$FFFE
 	dc.w    BPLCON0,BPLCON0_ON
 
@@ -521,7 +522,7 @@ bplPtrs:
 	dc.w    $8001,$FFFE
 	dc.w    BPLCON4,$0811           ; BPLAM = $08
 	dc.w    BPLCON0,BPLCON0_OFF     ; ruler line: give the copper every slot
-	dc.w    COLOR00,$000
+	dc.w    COLOR00,DARKBLUE        ; put the background back
 	dc.w    $8000+DDF_START+1,$FFFE
 	dc.w    COLOR00,$F00
 	dc.w    COLOR00,$000
@@ -562,7 +563,7 @@ bplPtrs:
 	dc.w    COLOR00,$FFF
 	dc.w    COLOR00,$000
 	dc.w    COLOR00,$0F0
-	dc.w    COLOR00,$000
+	dc.w    COLOR00,DARKBLUE        ; put the background back
 	dc.w    $8101,$FFFE
 	dc.w    BPLCON0,BPLCON0_ON
 
@@ -572,7 +573,7 @@ bplPtrs:
 	dc.w    $9401,$FFFE
 	dc.w    BPLCON4,$1011           ; BPLAM = $10
 	dc.w    BPLCON0,BPLCON0_OFF     ; ruler line: give the copper every slot
-	dc.w    COLOR00,$000
+	dc.w    COLOR00,DARKBLUE        ; put the background back
 	dc.w    $9400+DDF_START+1,$FFFE
 	dc.w    COLOR00,$F00
 	dc.w    COLOR00,$000
@@ -613,7 +614,7 @@ bplPtrs:
 	dc.w    COLOR00,$FFF
 	dc.w    COLOR00,$000
 	dc.w    COLOR00,$0F0
-	dc.w    COLOR00,$000
+	dc.w    COLOR00,DARKBLUE        ; put the background back
 	dc.w    $9501,$FFFE
 	dc.w    BPLCON0,BPLCON0_ON
 
@@ -623,7 +624,7 @@ bplPtrs:
 	dc.w    $A801,$FFFE
 	dc.w    BPLCON4,$2011           ; BPLAM = $20
 	dc.w    BPLCON0,BPLCON0_OFF     ; ruler line: give the copper every slot
-	dc.w    COLOR00,$000
+	dc.w    COLOR00,DARKBLUE        ; put the background back
 	dc.w    $A800+DDF_START+1,$FFFE
 	dc.w    COLOR00,$F00
 	dc.w    COLOR00,$000
@@ -664,7 +665,7 @@ bplPtrs:
 	dc.w    COLOR00,$FFF
 	dc.w    COLOR00,$000
 	dc.w    COLOR00,$0F0
-	dc.w    COLOR00,$000
+	dc.w    COLOR00,DARKBLUE        ; put the background back
 	dc.w    $A901,$FFFE
 	dc.w    BPLCON0,BPLCON0_ON
 
@@ -674,7 +675,7 @@ bplPtrs:
 	dc.w    $BC01,$FFFE
 	dc.w    BPLCON4,$4011           ; BPLAM = $40
 	dc.w    BPLCON0,BPLCON0_OFF     ; ruler line: give the copper every slot
-	dc.w    COLOR00,$000
+	dc.w    COLOR00,DARKBLUE        ; put the background back
 	dc.w    $BC00+DDF_START+1,$FFFE
 	dc.w    COLOR00,$F00
 	dc.w    COLOR00,$000
@@ -715,7 +716,7 @@ bplPtrs:
 	dc.w    COLOR00,$FFF
 	dc.w    COLOR00,$000
 	dc.w    COLOR00,$0F0
-	dc.w    COLOR00,$000
+	dc.w    COLOR00,DARKBLUE        ; put the background back
 	dc.w    $BD01,$FFFE
 	dc.w    BPLCON0,BPLCON0_ON
 
@@ -725,7 +726,7 @@ bplPtrs:
 	dc.w    $D001,$FFFE
 	dc.w    BPLCON4,$8011           ; BPLAM = $80
 	dc.w    BPLCON0,BPLCON0_OFF     ; ruler line: give the copper every slot
-	dc.w    COLOR00,$000
+	dc.w    COLOR00,DARKBLUE        ; put the background back
 	dc.w    $D000+DDF_START+1,$FFFE
 	dc.w    COLOR00,$F00
 	dc.w    COLOR00,$000
@@ -766,7 +767,7 @@ bplPtrs:
 	dc.w    COLOR00,$FFF
 	dc.w    COLOR00,$000
 	dc.w    COLOR00,$0F0
-	dc.w    COLOR00,$000
+	dc.w    COLOR00,DARKBLUE        ; put the background back
 	dc.w    $D101,$FFFE
 	dc.w    BPLCON0,BPLCON0_ON
 
@@ -776,7 +777,7 @@ bplPtrs:
 	dc.w    $E401,$FFFE
 	dc.w    BPLCON4,$FF11           ; BPLAM = $FF
 	dc.w    BPLCON0,BPLCON0_OFF     ; ruler line: give the copper every slot
-	dc.w    COLOR00,$000
+	dc.w    COLOR00,DARKBLUE        ; put the background back
 	dc.w    $E400+DDF_START+1,$FFFE
 	dc.w    COLOR00,$F00
 	dc.w    COLOR00,$000
@@ -817,7 +818,7 @@ bplPtrs:
 	dc.w    COLOR00,$FFF
 	dc.w    COLOR00,$000
 	dc.w    COLOR00,$0F0
-	dc.w    COLOR00,$000
+	dc.w    COLOR00,DARKBLUE        ; put the background back
 	dc.w    $E501,$FFFE
 	dc.w    BPLCON0,BPLCON0_ON
 
