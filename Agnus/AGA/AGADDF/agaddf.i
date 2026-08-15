@@ -31,13 +31,17 @@
 ; a blanked border would swallow the ruler entirely; see the note there and
 ; the Denise/Registers/BPLCON3/brdrblnk2 test. ECSENA (BPLCON0 bit 0) is set
 ; throughout, because BRDRBLNK does nothing without it. Every rasterline
-; therefore reads as five zones:
+; therefore reads as four zones:
 ;
-;   black         border, left of DIWSTRT
-;   dark grey   window open, no bitplane data yet
+;   black         border, up to the first bitplane pixel
 ;   a flat hue    the bitplane data
-;   dark grey   data finished, window still open
+;   dark grey     data finished, window still open
 ;   black         border, right of DIWSTOP
+;
+; The picture is asymmetric on purpose. DIWSTRT does not open the display
+; window on its own: the window opens at the first BPL1DAT write and stays
+; open until DIWSTOP, so there is no grey zone on the left while the one on
+; the right is real. Denise/Sprites/clip/diwclip measures that directly.
 ;
 ; The two inner edges are what this suite measures. The left one is the
 ; first pixel DDFSTRT produces, the right one is the last pixel DDFSTOP

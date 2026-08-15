@@ -27,11 +27,15 @@ Both tests write BPLCON4 and FMODE and clear all 256 colour registers through th
 
 There is no AGA configuration scheme in the emulator's regression tester, so no AGA reference can be recorded at present.
 
-## A caveat on the brdrblnk2 references
+## What the two tests uncovered
 
-Both brdrblnk2 references currently capture behaviour that is **known to be wrong**. On real hardware a plane-less line is border across its full width and BRDRBLNK blackens all of it; the recorded pictures blacken only the thin strips outside DIWSTRT and DIWSTOP and leave the window interior in COLOR00. See that test's own README for the evidence.
+Between them these two tests found two independent defects in the border logic, both since fixed. The references here record the corrected pictures and match the A1200 photos.
 
-They are recorded anyway, because a regression reference records what the emulator does, not what the hardware does — its job is to catch unintended change. When the border logic is fixed, brdrblnk2 will fail by design and both of its references must be regenerated. brdrblnk1 is unaffected.
+The first is that a rasterline with **no bitplanes at all** is border across its full width. DIWSTRT does not open the display window on its own; the window opens at the first BPL1DAT write, so with BPU = 0 it never opens and BRDRBLNK blackens the whole line. brdrblnk2's whole-line controls are the smallest case that shows it, and it is why the Copper rulers in Agnus/AGA/AGADDF were invisible on a real A1200 while everything else in that picture was correct.
+
+The second is that BRDRBLNK is a **mid-line** quantity: it takes effect at the pixel the Copper writes it, not from the start of the next rasterline. Both photos say so plainly. brdrblnk1 draws two large staircases across its border areas, and brdrblnk2's rulers go black from the toggle position rightwards, one stripe pair further along in each successive block.
+
+Both `_plus` references changed when these were fixed. Neither `_ecs` reference moved at all, which is precisely what the negative control is supposed to do.
 
 
 Dirk Hoffmann, 2026

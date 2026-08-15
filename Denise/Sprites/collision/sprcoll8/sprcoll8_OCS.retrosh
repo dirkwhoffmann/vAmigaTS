@@ -4,6 +4,12 @@
 # Setup the test environment
 regression setup A500_OCS_1MB /tmp/kick13.rom
 
+# Collision detection is off by default in the regression tester, and
+# these tests measure nothing without it
+denise set CLX_SPR_SPR true
+denise set CLX_SPR_PLF true
+denise set CLX_PLF_PLF true
+
 # Run the test
 regression run /tmp/sprcoll8_OCS.adf
 wait 9 seconds

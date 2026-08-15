@@ -12,17 +12,18 @@ and lifts **DDFSTRT, DDFSTOP and FMODE** out of the body into the wrapper. `agad
 
 #### Reading the picture
 
-BRDRBLNK is set for the whole frame apart from the two ruler lines, so the border is forced to pure black, and COLOR00 — the colour of the display window wherever the bitplanes have not delivered data — is dark grey ($444). ECSENA is set throughout, because BRDRBLNK does nothing without it. Every rasterline therefore reads as five zones:
+BRDRBLNK is set for the whole frame apart from the two ruler lines, so the border is forced to pure black, and COLOR00 — the colour of the display window wherever the bitplanes have not delivered data — is dark grey ($444). ECSENA is set throughout, because BRDRBLNK does nothing without it. Every rasterline therefore reads as four zones:
 
 ```
-black         border, left of DIWSTRT
-dark grey   window open, no bitplane data yet
+black         border, up to the first bitplane pixel
 a fine comb   the bitplane data
-dark grey   data finished, window still open
+dark grey     data finished, window still open
 black         border, right of DIWSTOP
 ```
 
 The two inner edges are the measurement. The left one is the first pixel DDFSTRT produces, the right one is the last pixel DDFSTOP allows, and both are read against the Copper rulers.
+
+**The picture is asymmetric, and that is not an accident.** DIWSTRT does not open the display window on its own — the window opens at the first BPL1DAT write and then stays open until DIWSTOP. There is consequently no grey zone on the left, while the grey zone on the right is real, and the black runs right up to the first bitplane pixel. That makes the left edge easier to read rather than harder: it is a boundary between black and data instead of one between two shades of grey.
 
 This is the whole reason for the blanked border. Without it COLOR00 would paint the border as well, the dark grey zones would merge into it, and neither inner edge would be locatable — which is exactly the blind spot that made the same measurement impossible in the bplam test until bplam3 blanked the border to expose it.
 
@@ -69,9 +70,9 @@ FMODE 1, 2  lores 8   hires 8   super hires 4
 FMODE 3     lores 8   hires 8   super hires 8
 ```
 
-At FMODE 0 the hires section therefore draws subsections 1 to 4 and the super hires section only 1 and 2; the rest stay dark grey across the full width. This is the same limit the Agnus/AGA/shres suite measures, seen from a different angle.
+At FMODE 0 the hires section therefore draws subsections 1 to 4 and the super hires section only 1 and 2. The rest go **black** across the full width, not dark grey: nothing is fetched at all there, so BPL1DAT is never written, the display window never opens, and the whole line is blanked border. This is the same limit the Agnus/AGA/shres suite measures, seen from a different angle.
 
-**The left hand gap halves with each resolution step.** The DDF-to-first-pixel latency is a fixed amount of time, so it spans half as many pixels each time the pixel halves. At DDFSTRT $38 it measures 32, 16 and 8 texels in the three sections.
+**The left hand edge moves right by half as much with each resolution step.** The DDF-to-first-pixel latency is a fixed amount of time, so it spans half as many pixels each time the pixel halves. At DDFSTRT $38 the three sections start 32, 16 and 8 texels apart from one another, which is read off the rulers rather than off a grey zone.
 
 **DDFSTRT is quantised to the fetch unit.** The left edge does not move smoothly through the ten tests; it moves in steps of one fetch unit as DDFSTRT crosses each boundary. That quantisation is a large part of what the suite is for.
 

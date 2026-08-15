@@ -33,15 +33,15 @@ A machine that applies the write at the pixel where it happens draws that stairc
 
 **Region 3, line $90 — the Copper timing ruler** from Agnus/DDF/ddf1.
 
-**Region 4, lines $94-$D3 — small border, switching read against a ruler.** The window widens to DIWSTRT $2C81 / DIWSTOP $2CA1, leaving a thin but still clearly visible border on each side. The region is eight blocks of eight lines. Each block opens with two ruler lines that carry **no BRDRBLNK writes at all**, so the scale is undisturbed, followed by six display lines on which BRDRBLNK is set at a position that advances by one ruler stripe per block. The stripe at which the border changes colour can then be counted off directly against the ruler immediately above it.
+**Region 4, lines $94-$D3 — small border, switching read against a ruler.** The window widens to DIWSTRT $2C81 / DIWSTOP $2CA1, leaving a thin but still clearly visible border on each side. The region is eight blocks of eight lines. Each block opens with two ruler lines that carry **no BRDRBLNK writes at all**, so the scale is undisturbed, followed by six display lines on which BRDRBLNK is set at a position that advances by two colour clocks — half a ruler stripe — per block. The stripe at which the border changes colour can then be counted off directly against the ruler immediately above it.
 
-#### Known limitation
+#### Status
 
-vAmiga passes region 1 but not region 2. Its border mask is built once per rasterline in the hsync handler, from a single border colour, so BRDRBLNK is a per-line property there: region 2 comes out as uniform bars with no horizontal structure, and region 4's switch position cannot be read against the ruler at all. Only whole-line switching is reproduced.
+All four regions are reproduced. This was not always so: the border mask used to be built once per rasterline from a single border colour, which made BRDRBLNK a per-line property, and region 2 came out as uniform bars with no horizontal structure while region 4's switch position could not be read against the ruler at all. The mask now carries a change history of its own, the way the display window always has, so a write lands at the pixel it was made at.
 
-Making the border follow BRDRBLNK within a line means giving the border mask a change history of its own, the way the display window already has one, rather than a scalar colour per line. Until then region 2 and region 4 measure a real difference from hardware rather than agreement with it.
+Region 4 is the sharper of the two measurements, and it is worth checking rather than glancing at. The toggle advances by two colour clocks per block, which is four lores pixels, so the edge of the blanked stretch should move by exactly that much from one block to the next and by nothing at all within a block. Region 2 is the one that shows the effect at a glance.
 
-Region 1 is also one line late at its very first line, where the display window registers and BPLCON0 are written on the same line; every block after that lines up exactly with the Copper.
+Region 1 is one line late at its very first line, where the display window registers and BPLCON0 are written on the same line; every block after that lines up exactly with the Copper.
 
 #### Notes on the source
 

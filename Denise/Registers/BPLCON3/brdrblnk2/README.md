@@ -57,14 +57,18 @@ If instead a plane-less display window is not border, the ruler stripes survive 
 
 ## Status
 
-**vAmiga currently draws the second picture.** In the middle of a whole-line block the window area stays dark blue and only the 30 pixels on the left and 14 on the right go black, and the ruler stripes are unaffected by the toggle. On a real A1200 the AGADDF rulers were invisible under the same conditions, which is the first picture. The two do not agree, and this test is the smallest case that shows it.
+The A1200 photo shows the first picture, and it shows it in full: black bars across the whole width on lines +2 and +3, and a staircase of rulers whose black stretch grows by two stripes per block.
+
+**vAmiga now draws it too.** The test was written against two separate defects and both are fixed. Lines +2 and +3 are solid black edge to edge, because a plane-less line is treated as border across its full width. The rulers go black from the toggle onwards, because BRDRBLNK is now evaluated at the pixel it is written at rather than once per rasterline.
+
+The two halves measure two different things, and both landmarks come out where the source puts them. In block 0 the black starts at stripe 2, in block 1 at stripe 4, and so on down the screen; in every block it ends at stripe 36, where the train clears the bit again, leaving the last stripes and the green end marker. An edge landing between stripes rather than on a stripe boundary would mean the write is being applied at the wrong pixel.
 
 
 ## Regression testing
 
 Run under two configurations, `_plus` (A500_PLUS_1MB, ECS Denise, BRDRBLNK active) and `_ecs` (A500_ECS_1MB, OCS Denise, BRDRBLNK inert). The collection README explains the pair.
 
-**Both references capture the behaviour described under Status above, which is known to be wrong.** A regression reference records what the emulator does rather than what the hardware does, so it is recorded as it stands; when the border logic is fixed this test will fail by design and both references must be regenerated.
+Both references are current and both match the hardware photo. The `_ecs` reference never moved through either fix, since OCS Denise ignores the bit and a plane-less line is COLOR00 whether it counts as border or as window — which is exactly what a negative control is for.
 
 
 Dirk Hoffmann, 2026
