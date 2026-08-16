@@ -44,22 +44,40 @@ The right column is clipped identically in all eighteen subsections, as it must 
 
 The left column is drawn at half width in the super hires section: sprite pixels are one screenshot column there against two in the lores and hires sections. That is Denise clocking the sprites at the display resolution, and it is why the super hires Pacmen are legible while the lores ones are reduced to slivers by the same amount of clipping.
 
-## Open question: the last picture line
+## The two-column notch at the left edge
 
-Line `$12B`, the last line of the picture, draws a flat twelve-column block in COLOR17 in **both** columns instead of the clipped Pacman row that belongs there. It is not a sprite: shifting the whole column vertically so that a different Pacman row lands on that line produces the identical block, so what is drawn does not depend on the sprite data at all.
+Wherever the left Pacman column does not itself cover them, the two screenshot columns between the sprite gate and the bitplane gate are painted **border** by vAmiga. On the A1200 the edge is sharp: there is no such notch.
 
-What it is not:
+It is not a block-boundary effect, although it looks like one. Instrumenting `PixelEngine::colorize` shows the gap being opened on every line without exception:
 
 ```
-not a timing artifact      identical at 9 and at 14 seconds of run time
-not the closing writes     unchanged when the final BPLCON0 write is moved
-                           from HP $01 to $31, and when the final BPLCON3
-                           write is removed altogether
-not the vertical window    unchanged when DIWSTOP is moved from line 300
-                           to line 308
+CL line=038 sprBegin=364 diwOpen=332 bplDat=368 -> from=364 GAP-OPEN
+CL line=039 sprBegin=364 diwOpen=332 bplDat=368 -> from=364 GAP-OPEN
+CL line=03a sprBegin=364 diwOpen=364 bplDat=368 -> from=364 GAP-OPEN
 ```
 
-No other line in the picture is affected, including the last line of the other seventeen subsections. Those cannot show it, though: the anomaly is only visible where a subsection ends on a line that has both sprite data and a window that clips it, and `$12B` is the only line in the picture where both hold. Worth a look at a real A1200 before assuming it is an emulator artifact.
+`bBufferDiwOpen` is 332 or 364 depending on whether the border buffer was rebuilt for that line, but it never exceeds `spriteClipBegin`, so the clamp never closes the gap. What varies is whether a sprite pixel occupies those columns — `removeBorderOverSprites` only lifts the border where sprite data actually is. The lines that show the notch are exactly the ones whose Pacman row stops short of the gap:
+
+```
+$039  row 15   sprite spans columns 50-57   stops short
+$03A  row 16   gap row, no sprite
+$03B  row 17   gap row, no sprite
+$03C  row  0   sprite spans columns 50-57   stops short
+$056  row  8   sprite spans columns 38-53   stops short
+$071  row 17   gap row, no sprite
+```
+
+Only two of those are block-final. The apparent "last line of every block" pattern was an artifact of comparing each line against its block's most common left edge: the Pacman repeats every 18 lines and a block is 14, which puts the narrow rows on block-final lines in exactly the blocks where the notch was first noticed.
+
+**So the gap logic is working, and the gap should not be there at all.** On hardware the sprite column and the picture start in the same place. Two readings fit: the bitplane gate is one lores pixel late, or the sprite gate should have no lead over it. The first is the more likely, because bplam4 independently measures the lores picture as about 1.75 columns late against the A1200 — the same one lores pixel, in a test with no sprites in it.
+
+That would mean `BPLDAT_LATENCY` wants to be 4 rather than 8, with the sprite gate at the same value. The obstacle is hires: bplam4 puts hires within 0.13 columns at a latency of 8, and moving to 4 would push it to about -1.9. Either the latency is resolution dependent or one of the two measurements is wrong. Unresolved.
+
+## The final picture line draws a bar of sprite instead of a single pixel
+
+Line `$12B` draws twelve columns of COLOR17 where the Pacman row belonging there has one pixel. The A1200 photograph shows the single pixel, so this is an emulator artifact.
+
+It is unrelated to the notch above: identical in all three builds regardless of the sprite lead, present on no other line, and unchanged by shifting the sprite column vertically so a different Pacman row lands there. It also survives a different run length, moving the closing BPLCON0 write from HP `$01` to `$31`, removing the closing BPLCON3 write, and moving DIWSTOP from line 300 to line 308. Cause not found.
 
 ## Notes
 

@@ -58,6 +58,96 @@ agaddf5  DDFSTRT $40     agaddf10  DDFSTRT $4A
 all ten: DDFSTOP $00C8, FMODE $0000
 ```
 
+#### The FMODE axis
+
+agaddf1 to agaddf10 hold FMODE at 0. bplam4 showed that this is not enough: at FMODE 1 the first bitplane pixel lands somewhere else, and somewhere else again in super hires, and bplam4 cannot say whether that is Agnus writing BPL1DAT at a different time or Denise taking a different time to show it. Eight more wrappers repeat four points of the sweep at the two wider fetch modes:
+
+```
+agaddf11  DDFSTRT $38  FMODE $0001      agaddf15  DDFSTRT $38  FMODE $0003
+agaddf12  DDFSTRT $3C  FMODE $0001      agaddf16  DDFSTRT $3C  FMODE $0003
+agaddf13  DDFSTRT $40  FMODE $0001      agaddf17  DDFSTRT $40  FMODE $0003
+agaddf14  DDFSTRT $44  FMODE $0001      agaddf18  DDFSTRT $44  FMODE $0003
+```
+
+Two lores-aligned values ($38, $40) and two that are not ($3C, $44), spread far enough apart to measure a slope rather than just an offset.
+
+The measurement is the left inner edge, read against a ruler, in each of the three sections. Two quantities come out of it:
+
+```
+slope    how far the first pixel moves per CCK of DDFSTRT. It has to be
+         one lores pixel per two cycles -- four screenshot columns per
+         CCK -- in every resolution and every FMODE. Anything else means
+         DDFSTRT is not being decoded the way the fetch uses it.
+
+offset   where the first pixel sits for a given DDFSTRT. This is the
+         number bplam4 could not separate. An offset that depends only on
+         resolution belongs to Denise; one that moves with FMODE belongs
+         to the fetch.
+```
+
+#### What vAmiga currently draws
+
+First bitplane pixel of the four-plane subsection, in screenshot columns:
+
+```
+DDFSTRT   FMODE 0            FMODE 1            FMODE 3
+          lores hires shres  lores hires shres  lores hires shres
+$38        62    46    --     62    62    38     62    62    62
+$3C        78    62    --     78    78    54     78    78    78
+$40        94    78    --     94    94    70     94    94    94
+$44       110    94    --     110   110    86    110   110   110
+```
+
+The slope is four columns per CCK everywhere, which is right. The offsets are the interesting part, and they are not all obviously right:
+
+```
+FMODE 0    hires starts 16 columns before lores; super hires draws
+           nothing at all, because four planes do not fit in a super
+           hires fetch unit at FMODE 0
+FMODE 1    lores and hires coincide; super hires starts 24 columns early
+FMODE 3    all three coincide
+```
+
+The A1200 photograph of bplam4 (FMODE 1, four planes) puts super hires **13.6** columns before lores, not 24, and puts lores and hires within 1.3 columns of each other. So the FMODE 1 row is where vAmiga and the hardware part company, and these tests are what will say whether the fault is in the offset alone or in something that also moves with DDFSTRT.
+
+#### What the photographs say
+
+Photographs of agaddf11 to agaddf15 exist for the A1200 and the A500+. Measured against the ruler and compared with the emulator references, in screenshot columns (photo minus vAmiga, so a negative number means the real machine starts the picture further left):
+
+```
+A1200          DDFSTRT  FMODE    lores   hires   shres
+agaddf11        $38     $0001    -2.95   -3.38   +4.02
+agaddf12        $3C     $0001    -5.05   -1.60   +9.84
+agaddf13        $40     $0001    -4.49   -1.36   +8.79
+agaddf14        $44     $0001    -2.92   -1.67   +6.40
+mean at FMODE 1                  -3.85   -2.00   +7.26
+
+agaddf15        $38     $0003    -3.32   -1.33   +0.31
+```
+
+```
+A500+, where FMODE is inert, against the FMODE 0 references
+agaddf12        $3C              -2.93   -2.12
+agaddf13        $40              -2.72   -2.22
+agaddf14        $44              -3.39   -0.77
+```
+
+**The slope is right.** On the A1200 the first pixel moves 16.0 columns in lores, 16.6 in hires and 16.8 in super hires per four cycles of DDFSTRT, against the 16 the arithmetic demands and the exactly 16 vAmiga produces. DDFSTRT is decoded correctly; everything below is a pure offset.
+
+**The lores and hires offset does not depend on FMODE or on the chipset.** Three to four columns in lores and one to two in hires, the same at FMODE 1, at FMODE 3, and on an ECS machine where FMODE does nothing at all. That is the signature of a constant in the display window, not of the fetch. bplam4, a completely different program, gives -3.2 and -2.0 for the same quantity, so the number is reproducible across tests.
+
+**The super hires offset does depend on FMODE.** Seven columns at FMODE 1 and nothing at FMODE 3. The display window cannot tell the two apart, so this one belongs to the fetch. It must not be absorbed into the constant above: correcting the lores and hires offset by moving the window gate earlier would push super hires seven columns further out of place.
+
+#### agaddf16, agaddf17 and agaddf18
+
+On a real A1200 these three produce **scrambled output in the lores section**; agaddf15, the fourth member of the FMODE 3 group, is clean. The three differ from it only in DDFSTRT — `$3C`, `$40` and `$44` against `$38` — so a 64 bit fetch evidently constrains which DDFSTRT values are usable in lores, and not by simple alignment: `$40` is a multiple of both 8 and 32 and still scrambles, while `$38` is a multiple of neither and does not.
+
+vAmiga draws all three as clean, regular combs. Whatever the constraint is, it is not modelled. The recorded references therefore capture emulator behaviour that is known to be wrong, and are kept as a regression baseline rather than as a statement about hardware. Photographs of these three would not be comparable to them.
+
+#### Note for whoever measures the photographs
+
+The ruler is white and blue and the data comb is drawn in the `$66F` to `$F69` ramp, which is also blue. An automatic reader that finds the ruler by looking for white and blue rows finds the data as well. The bplam4 photographs do not have this problem, because there the data is cyan. Measuring an agaddf photograph mechanically will need a different landmark -- the red first stripe and the green last one are the obvious candidates, being unique in the frame.
+
 DDFSTOP is $00C8 rather than the $00D0 the old suite resets to, so that the data ends inside the display window in lores as well and the right hand edge stays measurable. FMODE is 0, which makes these ten the direct analogue of the OCS/ECS tests; the other three FMODE values are a matter of copying a wrapper and changing one line.
 
 #### What to expect
@@ -99,6 +189,9 @@ The first line of every subsection carries a marker: COLOR00 is switched to dark
 The frame runs from line $30 to line $128, which fills the display window vertically; DIWSTOP puts its vertical stop at line 300. A Copper WAIT carries only the low eight bits of VPOS, so the list waits out the vertical boundary once with `$FFDF` partway through the super hires section, after which a WAIT on the low byte alone matches lines 256 and up. The original suite uses the same device to wrap into the next frame.
 
 The bitplane pointers are reloaded at the start of every subsection, which bounds pointer drift to ten lines and keeps the buffer small. Eight planes share one buffer, so a single 16 KB block is ample.
+
+
+All eighteen tests carry a RetroShell script running under `A1200_2MB`, so the emulator side of the comparison is recorded and any change to the fetch or the border logic shows up as a regression.
 
 
 Dirk Hoffmann, 2026
