@@ -1,0 +1,13 @@
+# Regression testing script for vAmiga
+# Dirk W. Hoffmann, 2026
+
+# Setup the test environment
+# ECS Agnus, OCS Denise -- no BRDRBLNK, no super hires
+regression setup A500_ECS_1MB /tmp/kick13.rom
+
+# Run the test
+regression run /tmp/colorlag_ecs.adf
+wait 9 seconds
+
+# Exit with a screenshot
+screenshot save colorlag_ecs
