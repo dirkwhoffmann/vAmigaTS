@@ -37,9 +37,11 @@ not an artifact of the colours chosen.
 ## What each half of the picture does
 
 **Blanked subsections — the silhouette by subtraction.** Body and border are
-the same black, so there is no colour step anywhere near the window edge. The
-black simply runs on out of the border and into the picture for as far as the
-sprite survived. What is readable is therefore not an edge but the
+the same black *as far as the register values go* — on a real machine they are
+not quite the same black, see the last section — so there is no colour step
+worth speaking of near the window edge. The black simply runs on out of the
+border and into the picture for as far as the sprite survived. What is
+readable is therefore not an edge but the
 *difference* between two lines of the same subsection: a sprite-free line
 gives the unextended window edge, a sprite line gives edge plus surviving
 sprite. bplam8's band structure is what makes both available at one DIWSTRT.
@@ -103,5 +105,52 @@ last line of a band extends by 0 and the first by 5. A gate that opened
 early for sprites would add a constant to the whole column, including the
 zero — which is the same defect bplam8 caught, seen from the other side and
 in a different colour.
+
+## The thin bright line in the A1200 photograph, and what it is not
+
+The photograph shows a narrow bright line between the black border and the
+black sprite, on every sprite line of the blanked super hires band. It looks
+exactly like one column of playfield getting in between, and it was read that
+way for a while: it is the reason `SPRITE_LATENCY` was briefly set to put the
+sprite one column after the window edge, which then contradicted every reading
+taken from `../../../Denise/Sprites/clip/sprgate`.
+
+It is not playfield. **A blanked border and a colour register set to $000 are
+not the same black on real hardware.** Measured on interior areas, well away
+from any edge, so this is not ringing:
+
+```
+                              BRDRBLNK border   COLOR $000 sprite   difference
+bplam9  A1200 super hires        26.7 +/- 3.1      36.5 +/- 4.4       +9 .. +11
+sprgate A1200 lores              15.5 +/- 3.4      25.7 +/- 3.5       +9.6 .. +10.9
+sprgate A500+ lores              12.3 +/- 2.1      13.7 +/- 2.0       +0.8 .. +2.0
+```
+
+Four bands in each case, scatter small against the offset. BRDRBLNK drives the
+video output to the BLANKING level; colour $000 is the lowest ACTIVE level the
+colour DAC produces, and the two are not the same voltage. There is a pedestal
+between them, and it is much larger on the A1200 than on the A500+. Giving a
+genuinely black border is more or less what BRDRBLNK is for.
+
+So there is a real step at that boundary — border to body, about ten counts in
+this photograph — and the bright line is the display's overshoot on it. The
+profile across it on line $10C:
+
+```
+px      78-85     86-88      89-92       93-97     98+
+        22-24     36-40    38 47 58 62   46 45 40   ~33
+        border     rise     the "line"     fall     sprite body
+```
+
+A peak of 62 on a step from 23 to 33 is sharpening, not signal.
+
+**vAmiga cannot show this.** `borderPalette[BORDER_BLNK]` is pure black and
+colour $000 converts to pure black as well, so both sides of that boundary are
+`000000` in the recorded reference and the step does not exist. That is a real
+if minor modelling gap — no pedestal between blanking level and colour zero —
+and it is why this photograph appeared to disagree with the emulator for so
+long. Anyone comparing a BRDRBLNK border against a $000 colour on a photograph
+should expect the two to differ and should not read the difference as
+geometry.
 
 Dirk Hoffmann, 2026

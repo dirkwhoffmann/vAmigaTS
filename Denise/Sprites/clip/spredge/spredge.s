@@ -1,64 +1,53 @@
 
-; sprgate.s -- when the window opens, when does the sprite arrive?
+; spredge.s -- the straddling sprite pixel, at both edges of the window.
 ;
-; Agnus/AGA/BPLAM/bplam9 measured this on an A1200 and found that the sprite
-; arrives one screen column AFTER the display window opens: there is exactly
-; one column of playfield between the last border pixel and the first sprite
-; pixel. vAmiga models that with SPRITE_LATENCY = BPLDAT_LATENCY + 2, which
-; is chipset independent -- and nothing has ever checked it on OCS or ECS.
-; bplam9 cannot: BPLAM is an AGA register and the effect was only legible in
-; super hires, which ECS Denise does not have.
+; A sprite pixel is four buffer entries wide in lores and two in hires. The
+; left edge of the display window is the first BPL1DAT write plus
+; BPLDAT_LATENCY, which lands two entries into a lores pixel; the right edge
+; is DIWSTOP, which lands wherever DIWSTOP puts it. Either way a sprite that
+; crosses an edge has one pixel straddling it, and that pixel can be drawn in
+; part or discarded whole. The difference is up to one screen column.
 ;
-; This test asks the same thing with nothing but OCS/ECS features.
+; Both edges are put on the same rasterline, and each is arranged so that the
+; answer is a presence or an absence rather than a position:
 ;
-; The trick is bplam9's: make the sprite the SAME COLOUR as the border, so
-; that the two merge and the only thing that can separate them is playfield
-; getting in between. BRDRBLNK forces the border to pure black and COLOR17
-; is black, so:
+;   left column    Sprite 0, COLOR17 black, and BRDRBLNK makes the border
+;                  black too. Sprite and border merge, so the only thing that
+;                  can separate them is playfield getting in between -- which
+;                  happens exactly when the straddling pixel is discarded and
+;                  the sprite starts a grid step late.
 ;
-;   sprite clipped by the window   black border runs straight into black
-;                                  sprite; nothing to see
+;   right column   Sprite 2, COLOR21 white, against the same black border.
+;                  Beyond DIWSTOP there is only border, so a white pixel out
+;                  there can only be a straddling pixel that was drawn whole
+;                  instead of being cut at the edge.
 ;
-;   sprite clear of the window     black border, then a strip of blue
-;                                  playfield, then the black sprite
+; Ten bands per section with both sprites one lores pixel further right in
+; each, and three sprite-free lines after every band showing where the two
+; edges are on their own.
 ;
-; Ten bands per section, the sprite one lores pixel further right in each.
-; The measurement is not a width or a position but WHICH BAND IS THE FIRST
-; to show blue between the border and the sprite. A latency error of one
-; column moves that band by one, and counting bands survives any amount of
-; colour bleeding.
-;
-; Every band is followed by three lines with no sprite at all, which show
-; where the window edge is on its own. So each band carries its own
-; reference on the two rasterlines above and below it.
-;
-; The third section repeats the first with BRDRBLNK CLEARED, so the border
-; takes COLOR00 and is blue like the playfield. The black sprite is then
-; visible against blue on both sides, which shows where each sprite really
-; is and proves that all ten are being drawn. Without it, a picture in
-; which the sprites never appeared would look like a valid result.
-;
-; A Copper ruler line sits at the top of each section. It is not needed for
-; the reading above; it is there so that a photograph can still be measured
-; in columns if the counting comes out ambiguous.
+; The two edges are handled by different code. The left one is clipped
+; against spriteClipBegin in the pixel loop; the right one is bounded by
+; hstop, the loop's own limit. They can disagree, and this test says so.
 ;
 	include "../../../../include/registers.i"
 	include "../../../../include/ministartup.i"
 
 LVL3_INT_VECTOR     equ $6C
-BPLCON3             equ $106           ; ECS and AGA
+BPLCON3             equ $106
 
-BRDRBLNK            equ $0020          ; BPLCON3 bit 5
+BRDRBLNK            equ $0020
 
-BPLCON0_OFF         equ $0201          ; ECSENA, no bitplanes
-LORES_BITS          equ $1201          ; one bitplane, lores
-HIRES_BITS          equ $9201          ; one bitplane, hires
+BPLCON0_OFF         equ $0201
+LORES_BITS          equ $1201
+HIRES_BITS          equ $9201
 
-DIW_START           equ $2C61          ; far left, so the data gate decides
-DIW_STOP            equ $2CC1
+DIW_START           equ $2C61          ; far left: the data gate decides
+DIW_STOP            equ $2CC1          ; lores $1C1
 
-COL_BACK            equ $04C           ; the playfield, and index 0
-COL_SPR             equ $000           ; the sprite, and a blanked border
+COL_BACK            equ $04C           ; the playfield
+COL_LEFT            equ $000           ; sprite 0: the blanked border colour
+COL_RIGHT           equ $FFF           ; sprite 2: as loud as possible
 
 RULER_A             equ $FFF
 RULER_B             equ $00A
@@ -67,7 +56,7 @@ RULER_0             equ $F00
 RULER_9             equ $0F0
 
 SPR_H               equ 5
-SPR_BUF_SIZE        equ 728
+SPR_BUF_SIZE        equ 488
 BUF_SIZE            equ 128
 
 
@@ -82,21 +71,23 @@ MAIN:
 	lea     irq3(pc),a3
 	move.l  a3,LVL3_INT_VECTOR
 
-	; One bitplane of zeros: every pixel of the window is index 0, which
-	; is COLOR00. The window is a flat field of one colour and the only
-	; structure in it is the sprite.
 	lea     bitBuf(pc),a2
 	move.w  #(BUF_SIZE/2)-1,d0
 .clrLoop:
 	clr.w   (a2)+
 	dbra    d0,.clrLoop
 
-	; The sprite colours. Colour 1 is the sprite body and it is black,
-	; the same black BRDRBLNK makes of the border.
-	move.w  #COL_SPR,COLOR17(a1)
-	move.w  #COL_SPR,COLOR18(a1)
-	move.w  #COL_SPR,COLOR19(a1)
+	; Sprite 0 wears the border's colour, sprite 2 the loudest one there is.
+	; Colour 1 of a pair is COLOR17 for sprites 0/1 and COLOR21 for 2/3;
+	; setting only COLOR17 would leave sprite 2 in whatever it found.
+	move.w  #COL_LEFT,COLOR17(a1)
+	move.w  #COL_RIGHT,COLOR21(a1)
 
+	lea     sprBuf0(pc),a0
+	lea     sprPos0(pc),a4
+	bsr     .buildSprite
+	lea     sprBuf2(pc),a0
+	lea     sprPos2(pc),a4
 	bsr     .buildSprite
 
 	lea     bitBuf(pc),a3
@@ -107,8 +98,6 @@ MAIN:
 	move.w  d4,2(a2)
 	move.w  d3,6(a2)
 
-	; Sprite DMA runs for the whole channel set, so the seven unused
-	; sprites need a list of their own or they fetch garbage.
 	clr.l   sprNull
 	clr.l   sprNull+4
 	lea     sprPtrs(pc),a2
@@ -124,10 +113,10 @@ MAIN:
 	move.l  a0,COP1LC(a1)
 	move.w  COPJMP1(a1),d0
 
-	move.w  #$8080,DMACON(a1)   ; Copper DMA
-	move.w  #$8100,DMACON(a1)   ; Bitplane DMA
-	move.w  #$8020,DMACON(a1)   ; Sprite DMA
-	move.w  #$8200,DMACON(a1)   ; DMAEN
+	move.w  #$8080,DMACON(a1)
+	move.w  #$8100,DMACON(a1)
+	move.w  #$8020,DMACON(a1)
+	move.w  #$8200,DMACON(a1)
 	move.w  #$C020,INTENA(a1)
 .mainLoop:
 	bra.b   .mainLoop
@@ -139,20 +128,16 @@ MAIN:
 	addq.l  #8,a2
 	rts
 
-; Walks the (VSTART, HSTART) table and writes one sprite entry per group.
-; The control words are computed rather than assembled because the picture
-; runs past line 255 and the ninth vertical bit lives in SPRxCTL.
+; Builds the list at a0 from the (VSTART, HSTART) table at a4.
 .buildSprite:
-	lea     sprBuf(pc),a0
-	lea     sprPos(pc),a4
 .bsLoop:
-	move.w  (a4)+,d2               ; VSTART
+	move.w  (a4)+,d2
 	beq.s   .bsDone
-	move.w  (a4)+,d1               ; HSTART, in lores pixels
+	move.w  (a4)+,d1
 	move.w  d2,d4
-	add.w   #SPR_H,d4              ; VSTOP
+	add.w   #SPR_H,d4
 
-	move.w  d2,d5                  ; SPRxPOS
+	move.w  d2,d5
 	and.w   #$00FF,d5
 	lsl.w   #8,d5
 	move.w  d1,d6
@@ -161,7 +146,7 @@ MAIN:
 	or.w    d6,d5
 	move.w  d5,(a0)+
 
-	move.w  d4,d5                  ; SPRxCTL
+	move.w  d4,d5
 	and.w   #$00FF,d5
 	lsl.w   #8,d5
 	btst    #8,d2
@@ -178,8 +163,6 @@ MAIN:
 .bsNoH0:
 	move.w  d5,(a0)+
 
-	; SPR_H lines of solid colour 1: every bit set in the first word,
-	; none in the second.
 	moveq   #SPR_H-1,d6
 .bsImg:
 	move.w  #$FFFF,(a0)+
@@ -191,8 +174,9 @@ MAIN:
 	rts
 
 .sprTable:
-	dc.l    sprBuf
-	dc.l    sprNull,sprNull,sprNull,sprNull,sprNull,sprNull,sprNull
+	dc.l    sprBuf0,sprNull
+	dc.l    sprBuf2,sprNull
+	dc.l    sprNull,sprNull,sprNull,sprNull
 
 irq3:
 	movem.l d0-a6,-(sp)
@@ -232,7 +216,7 @@ sprPtrs:
 	dc.w    SPR7PTL,$0000
 
 	;
-	; LORES section, lines $2C-$7C, HSTART $7B to $84
+	; LORES section, lines $2C-$7C. Left HSTART $7B.., right $1B5..
 	;
 	dc.w    $2C01,$FFFE
 	dc.w    BPLCON0,BPLCON0_OFF
@@ -324,7 +308,7 @@ sprPtrs:
 	dc.w    BPLCON0,BPLCON0_OFF
 
 	;
-	; HIRES section, lines $7D-$CD, HSTART $73 to $7C
+	; HIRES section, lines $7D-$CD. Left HSTART $73.., right $1B5..
 	;
 	dc.w    $7D01,$FFFE
 	dc.w    BPLCON0,BPLCON0_OFF
@@ -414,107 +398,12 @@ sprPtrs:
 	dc.w    COLOR00,COL_BACK
 	dc.w    $CDE1,$FFFE
 	dc.w    BPLCON0,BPLCON0_OFF
-
-	;
-	; OPEN section, lines $CE-$11E, HSTART $7B to $84, border NOT blanked
-	;
 	dc.w    $CE01,$FFFE
-	dc.w    BPLCON0,BPLCON0_OFF
-	dc.w    BPLCON3,$0000
-	dc.w    $CE31,$FFFE
-	dc.w    COLOR00,RULER_0
-	dc.w    COLOR00,RULER_B
-	dc.w    COLOR00,RULER_A
-	dc.w    COLOR00,RULER_B
-	dc.w    COLOR00,RULER_A
-	dc.w    COLOR00,RULER_5
-	dc.w    COLOR00,RULER_A
-	dc.w    COLOR00,RULER_B
-	dc.w    COLOR00,RULER_A
-	dc.w    COLOR00,RULER_B
-	dc.w    COLOR00,RULER_5
-	dc.w    COLOR00,RULER_B
-	dc.w    COLOR00,RULER_A
-	dc.w    COLOR00,RULER_B
-	dc.w    COLOR00,RULER_A
-	dc.w    COLOR00,RULER_5
-	dc.w    COLOR00,RULER_A
-	dc.w    COLOR00,RULER_B
-	dc.w    COLOR00,RULER_A
-	dc.w    COLOR00,RULER_B
-	dc.w    COLOR00,RULER_5
-	dc.w    COLOR00,RULER_B
-	dc.w    COLOR00,RULER_A
-	dc.w    COLOR00,RULER_B
-	dc.w    COLOR00,RULER_A
-	dc.w    COLOR00,RULER_5
-	dc.w    COLOR00,RULER_A
-	dc.w    COLOR00,RULER_B
-	dc.w    COLOR00,RULER_A
-	dc.w    COLOR00,RULER_B
-	dc.w    COLOR00,RULER_5
-	dc.w    COLOR00,RULER_B
-	dc.w    COLOR00,RULER_A
-	dc.w    COLOR00,RULER_B
-	dc.w    COLOR00,RULER_A
-	dc.w    COLOR00,RULER_5
-	dc.w    COLOR00,RULER_A
-	dc.w    COLOR00,RULER_B
-	dc.w    COLOR00,RULER_A
-	dc.w    COLOR00,RULER_9
-	dc.w    COLOR00,COL_BACK
-	dc.w    BPL1MOD,$FFD8           ; cancels one line of fetches
-	dc.w    $CF01,$FFFE
-	dc.w    BPLCON3,$0000
-	dc.w    BPLCON0,LORES_BITS
-	dc.w    COLOR00,COL_BACK
-	dc.w    $D701,$FFFE
-	dc.w    BPLCON3,$0000
-	dc.w    BPLCON0,LORES_BITS
-	dc.w    COLOR00,COL_BACK
-	dc.w    $DF01,$FFFE
-	dc.w    BPLCON3,$0000
-	dc.w    BPLCON0,LORES_BITS
-	dc.w    COLOR00,COL_BACK
-	dc.w    $E701,$FFFE
-	dc.w    BPLCON3,$0000
-	dc.w    BPLCON0,LORES_BITS
-	dc.w    COLOR00,COL_BACK
-	dc.w    $EF01,$FFFE
-	dc.w    BPLCON3,$0000
-	dc.w    BPLCON0,LORES_BITS
-	dc.w    COLOR00,COL_BACK
-	dc.w    $F701,$FFFE
-	dc.w    BPLCON3,$0000
-	dc.w    BPLCON0,LORES_BITS
-	dc.w    COLOR00,COL_BACK
-	dc.w    $FF01,$FFFE
-	dc.w    BPLCON3,$0000
-	dc.w    BPLCON0,LORES_BITS
-	dc.w    COLOR00,COL_BACK
-	dc.w    $FFDF,$FFFE             ; cross the 8 bit vertical boundary
-	dc.w    $0001,$FFFE             ; re-sync at the start of line 256
-	dc.w    $0701,$FFFE
-	dc.w    BPLCON3,$0000
-	dc.w    BPLCON0,LORES_BITS
-	dc.w    COLOR00,COL_BACK
-	dc.w    $0F01,$FFFE
-	dc.w    BPLCON3,$0000
-	dc.w    BPLCON0,LORES_BITS
-	dc.w    COLOR00,COL_BACK
-	dc.w    $1701,$FFFE
-	dc.w    BPLCON3,$0000
-	dc.w    BPLCON0,LORES_BITS
-	dc.w    COLOR00,COL_BACK
-	dc.w    $1EE1,$FFFE
-	dc.w    BPLCON0,BPLCON0_OFF
-	dc.w    $1F01,$FFFE
 	dc.w    BPLCON0,BPLCON0_OFF
 	dc.w    BPLCON3,$0000
 	dc.l    $FFFFFFFE
 
-sprPos:
-	; VSTART, HSTART for each of the 30 groups
+sprPos0:
 	dc.w    $02D,$07B
 	dc.w    $035,$07C
 	dc.w    $03D,$07D
@@ -535,21 +424,35 @@ sprPos:
 	dc.w    $0B6,$07A
 	dc.w    $0BE,$07B
 	dc.w    $0C6,$07C
-	dc.w    $0CF,$07B
-	dc.w    $0D7,$07C
-	dc.w    $0DF,$07D
-	dc.w    $0E7,$07E
-	dc.w    $0EF,$07F
-	dc.w    $0F7,$080
-	dc.w    $0FF,$081
-	dc.w    $107,$082
-	dc.w    $10F,$083
-	dc.w    $117,$084
+	dc.w    0,0
+sprPos2:
+	dc.w    $02D,$1B5
+	dc.w    $035,$1B6
+	dc.w    $03D,$1B7
+	dc.w    $045,$1B8
+	dc.w    $04D,$1B9
+	dc.w    $055,$1BA
+	dc.w    $05D,$1BB
+	dc.w    $065,$1BC
+	dc.w    $06D,$1BD
+	dc.w    $075,$1BE
+	dc.w    $07E,$1B5
+	dc.w    $086,$1B6
+	dc.w    $08E,$1B7
+	dc.w    $096,$1B8
+	dc.w    $09E,$1B9
+	dc.w    $0A6,$1BA
+	dc.w    $0AE,$1BB
+	dc.w    $0B6,$1BC
+	dc.w    $0BE,$1BD
+	dc.w    $0C6,$1BE
 	dc.w    0,0
 
 	cnop    0,8
-bitBuf:  ds.b BUF_SIZE
+bitBuf:   ds.b BUF_SIZE
 	cnop    0,8
-sprBuf:  ds.b SPR_BUF_SIZE
+sprBuf0:  ds.b SPR_BUF_SIZE
 	cnop    0,8
-sprNull: ds.b 8
+sprBuf2:  ds.b SPR_BUF_SIZE
+	cnop    0,8
+sprNull:  ds.b 8

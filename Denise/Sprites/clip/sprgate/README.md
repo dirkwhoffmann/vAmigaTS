@@ -95,16 +95,60 @@ nothing. The border takes `COLOR00` there, so the whole picture behaves like
 the third section and the merge trick is unavailable. It is recorded as a
 third data point, but the question above cannot be answered from it.
 
-## One oddity, not yet explained
+## A bug this test had, and what it means for the photographs
 
-In the **hires** section of `sprgate_plus`, groups 0 and 2 draw a two-column
-sprite on some of their five lines instead of the full width, and one line
-comes out as a comb — the sprite data is being fetched out of step. The lores
-section is clean, all three sections of `sprgate_aga` are clean, and the gap
-reading is unaffected (it is 1 on every line of every band in groups 0 to 4).
+The first version set `BPL1MOD` to -40 for the whole picture. That is right for
+lores, where a single bitplane fetches 20 words, but the hires section fetches
+40:
 
-It is left in rather than tuned away because it may be a real ECS sprite-DMA
-bug worth chasing separately. **Read the lores section**; it answers the
-question on its own.
+```
+DDFSTRT $38, DDFSTOP $D0, one bitplane
+    lores   (D0-38)/8 + 1 = 20 words = 40 bytes
+    hires   (D0-38)/4 + 2 = 40 words = 80 bytes
+```
+
+So the hires section advanced its pointer by 40 bytes per line, left the 128
+byte buffer after three lines, and displayed the sprite list — and then
+unrelated memory — as bitplane data. By the end of that section the pointer was
+3200 bytes past the buffer, and the third section carried on from there.
+
+**vAmiga hid this and an A1200 did not.** The memory the pointer walked into
+reads as zeros in the emulator, so both the hires and the third section looked
+perfectly clean; on real hardware they showed fragments and a nearly empty
+field. The emulator output for those two sections was byte-identical before and
+after the fix, which is exactly why the divergence only appeared on a
+photograph.
+
+The modulo is now set per section. Every line of every group is identical in
+all three sections and hires reproduces the lores reading exactly.
+
+**The lores section was never affected** — its modulo was correct from the
+start, and its pixels are byte-identical between the two builds. So any
+measurement already taken from the lores section of an existing photograph
+still stands. Photographs of the hires and third sections taken before this fix
+show the bug rather than the test, and are worth retaking.
+
+## A footnote on the two blacks
+
+The border is blanked and the sprite is `COLOR17 = $000`, and on a photograph
+those are **not the same black**. Interior areas, away from any edge:
+
+```
+              BRDRBLNK border   COLOR $000 sprite   difference
+A1200            15.5 +/- 3.4      25.7 +/- 3.5      +9.6 .. +10.9
+A500+            12.3 +/- 2.1      13.7 +/- 2.0      +0.8 .. +2.0
+```
+
+BRDRBLNK drives the output to the blanking level; `$000` is the lowest active
+level the colour DAC reaches. The pedestal between them is large on an A1200
+and small on an A500+, and vAmiga models neither — both sides come out
+`000000`.
+
+It does not affect the reading above. This test counts whether *playfield*
+appears between border and sprite, and playfield is a different colour from
+either black. But it does mean the merge is not perfect on a photograph: the
+sprite is faintly visible against the border, more so on an A1200. Do not
+mistake that step, or the display's overshoot at it, for the strip being
+measured. `../../../../Agnus/AGA/BPLAM/bplam9` has the full measurement.
 
 Dirk Hoffmann, 2026
