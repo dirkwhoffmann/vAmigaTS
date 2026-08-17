@@ -6,8 +6,8 @@
 regression setup A500_PLUS_1MB /tmp/kick13.rom
 
 # Run the test
-regression run /tmp/brdrblnk2_plus.adf
+regression run /tmp/Registers_BPLCON3_brdrblnk2_plus.adf
 wait 9 seconds
 
 # Exit with a screensht
-screenshot save brdrblnk2_plus
+screenshot save Registers_BPLCON3_brdrblnk2_plus

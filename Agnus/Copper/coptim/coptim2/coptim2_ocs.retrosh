@@ -5,8 +5,8 @@
 regression setup A500_OCS_1MB /tmp/kick13.rom
 
 # Run the test
-regression run /tmp/coptim2_ocs.adf
+regression run /tmp/Copper_coptim_coptim2_ocs.adf
 wait 9 seconds
 
 # Exit with a screensht
-screenshot save coptim2_ocs
+screenshot save Copper_coptim_coptim2_ocs

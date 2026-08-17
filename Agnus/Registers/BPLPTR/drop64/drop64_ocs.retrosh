@@ -5,8 +5,8 @@
 regression setup A500_OCS_1MB /tmp/kick13.rom
 
 # Run the test
-regression run /tmp/drop64_ocs.adf
+regression run /tmp/Registers_BPLPTR_drop64_ocs.adf
 wait 9 seconds
 
 # Exit with a screenshot
-screenshot save drop64_ocs
+screenshot save Registers_BPLPTR_drop64_ocs

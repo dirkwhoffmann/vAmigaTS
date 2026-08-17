@@ -5,9 +5,9 @@
 regression setup A500_OCS_1MB /tmp/kick13.rom
 
 # Run the test
-regression run /tmp/bplcon_rmb_OCS.adf
+regression run /tmp/Misc_ThirdParty_bplcon_rmb_OCS.adf
 wait 16 seconds
 
 # Exit with a screensht
 screenshot set cutout x1=196 y1=36 x2=908 y2=312
-screenshot save bplcon_rmb_OCS
+screenshot save Misc_ThirdParty_bplcon_rmb_OCS

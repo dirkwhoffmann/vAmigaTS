@@ -11,8 +11,8 @@ denise set CLX_SPR_PLF true
 denise set CLX_PLF_PLF true
 
 # Run the test
-regression run /tmp/sprcoll5d_OCS.adf
+regression run /tmp/Sprites_collision_sprcoll5d_OCS.adf
 wait 9 seconds
 
 # Exit with a screenshot
-screenshot save sprcoll5d_OCS
+screenshot save Sprites_collision_sprcoll5d_OCS

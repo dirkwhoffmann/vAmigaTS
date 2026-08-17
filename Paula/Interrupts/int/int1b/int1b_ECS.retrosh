@@ -5,8 +5,8 @@
 regression setup A500_ECS_1MB /tmp/kick13.rom
 
 # Run the test
-regression run /tmp/int1b_ECS.adf
+regression run /tmp/Interrupts_int_int1b_ECS.adf
 wait 9 seconds
 
 # Exit with a screenshot
-screenshot save int1b_ECS
+screenshot save Interrupts_int_int1b_ECS

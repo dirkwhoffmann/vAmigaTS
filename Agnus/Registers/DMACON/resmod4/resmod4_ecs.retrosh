@@ -5,8 +5,8 @@
 regression setup A500_ECS_1MB /tmp/kick13.rom
 
 # Run the test
-regression run /tmp/resmod4_ecs.adf
+regression run /tmp/Registers_DMACON_resmod4_ecs.adf
 wait 9 seconds
 
 # Exit with a screensht
-screenshot save resmod4_ecs
+screenshot save Registers_DMACON_resmod4_ecs

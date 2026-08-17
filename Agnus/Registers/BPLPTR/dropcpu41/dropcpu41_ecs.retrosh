@@ -5,8 +5,8 @@
 regression setup A500_ECS_1MB /tmp/kick13.rom
 
 # Run the test
-regression run /tmp/dropcpu41_ecs.adf
+regression run /tmp/Registers_BPLPTR_dropcpu41_ecs.adf
 wait 9 seconds
 
 # Exit with a screenshot
-screenshot save dropcpu41_ecs
+screenshot save Registers_BPLPTR_dropcpu41_ecs

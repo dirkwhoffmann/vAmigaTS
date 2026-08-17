@@ -5,8 +5,8 @@
 regression setup A500_ECS_1MB /tmp/kick13.rom
 
 # Run the test
-regression run /tmp/CHK2_68000.adf
+regression run /tmp/Timing_CHK_CHK2_68000.adf
 wait 9 seconds
 
 # Exit with a screenshot
-screenshot save CHK2_68000
+screenshot save Timing_CHK_CHK2_68000

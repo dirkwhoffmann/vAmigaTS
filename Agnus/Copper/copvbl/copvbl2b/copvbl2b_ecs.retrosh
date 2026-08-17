@@ -5,8 +5,8 @@
 regression setup A500_ECS_1MB /tmp/kick13.rom
 
 # Run the test
-regression run /tmp/copvbl2b_ecs.adf
+regression run /tmp/Copper_copvbl_copvbl2b_ecs.adf
 wait 9 seconds
 
 # Exit with a screenshot
-screenshot save copvbl2b_ecs
+screenshot save Copper_copvbl_copvbl2b_ecs

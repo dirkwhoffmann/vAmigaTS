@@ -5,8 +5,8 @@
 regression setup A500_ECS_1MB /tmp/kick13.rom
 
 # Run the test
-regression run /tmp/bususage6l.adf
+regression run /tmp/Blitter_bususage_bususage6l.adf
 wait 9 seconds
 
 # Exit with a screensht
-screenshot save bususage6l
+screenshot save Blitter_bususage_bususage6l

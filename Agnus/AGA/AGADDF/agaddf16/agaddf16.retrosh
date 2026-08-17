@@ -6,8 +6,8 @@
 regression setup A1200_2MB /tmp/kick13.rom
 
 # Run the test
-regression run /tmp/agaddf16.adf
+regression run /tmp/AGA_AGADDF_agaddf16.adf
 wait 9 seconds
 
 # Exit with a screenshot
-screenshot save agaddf16
+screenshot save AGA_AGADDF_agaddf16

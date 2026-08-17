@@ -5,7 +5,7 @@
 regression setup A500_ECS_1MB /tmp/kick13.rom
 
 # Run the test
-regression run /tmp/noack1.adf
+regression run /tmp/Ports_Keyboard_noack1.adf
 wait 9 seconds
 
 # Press space 
@@ -13,4 +13,4 @@ keyboard press 40
 wait 8 seconds
 
 # Exit with a screensht
-screenshot save noack1
+screenshot save Ports_Keyboard_noack1

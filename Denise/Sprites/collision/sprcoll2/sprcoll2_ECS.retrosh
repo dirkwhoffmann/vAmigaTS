@@ -11,8 +11,8 @@ denise set CLX_SPR_PLF true
 denise set CLX_PLF_PLF true
 
 # Run the test
-regression run /tmp/sprcoll2_ECS.adf
+regression run /tmp/Sprites_collision_sprcoll2_ECS.adf
 wait 9 seconds
 
 # Exit with a screenshot
-screenshot save sprcoll2_ECS
+screenshot save Sprites_collision_sprcoll2_ECS

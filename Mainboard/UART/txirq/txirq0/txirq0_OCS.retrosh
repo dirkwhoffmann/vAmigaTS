@@ -5,8 +5,8 @@
 regression setup A500_OCS_1MB /tmp/kick13.rom
 
 # Run the test
-regression run /tmp/txirq0_OCS.adf
+regression run /tmp/UART_txirq_txirq0_OCS.adf
 wait 9 seconds
 
 # Exit with a screenshot
-screenshot save txirq0_OCS
+screenshot save UART_txirq_txirq0_OCS

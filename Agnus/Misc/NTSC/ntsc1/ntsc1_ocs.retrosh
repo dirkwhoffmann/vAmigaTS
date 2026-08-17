@@ -6,8 +6,8 @@ regression setup A500_OCS_1MB /tmp/kick13.rom
 amiga set VIDEO_FORMAT NTSC
 
 # Run the test
-regression run /tmp/ntsc1_ocs.adf
+regression run /tmp/Misc_NTSC_ntsc1_ocs.adf
 wait 11 seconds
 
 # Exit with a screenshot
-screenshot save ntsc1_ocs
+screenshot save Misc_NTSC_ntsc1_ocs

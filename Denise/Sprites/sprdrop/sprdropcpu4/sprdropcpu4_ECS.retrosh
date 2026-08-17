@@ -5,8 +5,8 @@
 regression setup A500_ECS_1MB /tmp/kick13.rom
 
 # Run the test
-regression run /tmp/sprdropcpu4_ECS.adf
+regression run /tmp/Sprites_sprdrop_sprdropcpu4_ECS.adf
 wait 9 seconds
 
 # Exit with a screenshot
-screenshot save sprdropcpu4_ECS
+screenshot save Sprites_sprdrop_sprdropcpu4_ECS

@@ -5,7 +5,7 @@
 regression setup A500_ECS_1MB /tmp/kick13.rom
 
 # Run the test
-regression run /tmp/bplcon_rmb2_ECS.adf
+regression run /tmp/Misc_ThirdParty_bplcon_rmb2_ECS.adf
 wait 16 seconds
 
 # Press the right mouse button
@@ -14,4 +14,4 @@ wait 2 seconds
 
 # Exit with a screensht
 screenshot set cutout x1=196 y1=36 x2=908 y2=312
-screenshot save bplcon_rmb2_ECS
+screenshot save Misc_ThirdParty_bplcon_rmb2_ECS

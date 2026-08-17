@@ -5,8 +5,8 @@
 regression setup A500_OCS_1MB /tmp/kick13.rom
 
 # Run the test
-regression run /tmp/irqbpl1_OCS.adf
+regression run /tmp/Interrupts_irqbpl_irqbpl1_OCS.adf
 wait 9 seconds
 
 # Exit with a screenshot
-screenshot save irqbpl1_OCS
+screenshot save Interrupts_irqbpl_irqbpl1_OCS

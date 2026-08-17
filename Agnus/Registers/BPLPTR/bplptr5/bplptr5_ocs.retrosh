@@ -5,8 +5,8 @@
 regression setup A500_OCS_1MB /tmp/kick13.rom
 
 # Run the test
-regression run /tmp/bplptr5_ocs.adf
+regression run /tmp/Registers_BPLPTR_bplptr5_ocs.adf
 wait 9 seconds
 
 # Exit with a screensht
-screenshot save bplptr5_ocs
+screenshot save Registers_BPLPTR_bplptr5_ocs

@@ -5,8 +5,8 @@
 regression setup A500_OCS_1MB /tmp/kick13.rom
 
 # Run the test
-regression run /tmp/minmax_OCS.adf
+regression run /tmp/DIW_DIWH_minmax_OCS.adf
 wait 9 seconds
 
 # Exit with a screenshot
-screenshot save minmax_OCS
+screenshot save DIW_DIWH_minmax_OCS

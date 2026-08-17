@@ -5,8 +5,8 @@
 regression setup A500_OCS_1MB /tmp/kick13.rom
 
 # Run the test
-regression run /tmp/manual5_OCS.adf
+regression run /tmp/Sprites_manual_manual5_OCS.adf
 wait 9 seconds
 
 # Exit with a screenshot
-screenshot save manual5_OCS
+screenshot save Sprites_manual_manual5_OCS

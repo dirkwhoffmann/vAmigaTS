@@ -5,8 +5,8 @@
 regression setup A500_OCS_1MB /tmp/kick13.rom
 
 # Run the test
-regression run /tmp/halt5_ocs.adf
+regression run /tmp/Copper_halt_halt5_ocs.adf
 wait 9 seconds
 
 # Exit with a screensht
-screenshot save halt5_ocs
+screenshot save Copper_halt_halt5_ocs

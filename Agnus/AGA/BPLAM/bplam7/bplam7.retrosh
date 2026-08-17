@@ -6,8 +6,8 @@
 regression setup A1200_2MB /tmp/kick13.rom
 
 # Run the test
-regression run /tmp/bplam7.adf
+regression run /tmp/AGA_BPLAM_bplam7.adf
 wait 9 seconds
 
 # Exit with a screenshot
-screenshot save bplam7
+screenshot save AGA_BPLAM_bplam7

@@ -5,10 +5,10 @@
 regression setup A500_ECS_1MB /tmp/kick13.rom
 
 # Run the test
-regression run /tmp/joy0dat_5.adf
+regression run /tmp/Ports_JOYxDAT_joy0dat_5.adf
 joystick1 pull left
 joystick1 pull down
 wait 9 seconds
 
 # Exit with a screensht
-screenshot save joy0dat_5
+screenshot save Ports_JOYxDAT_joy0dat_5

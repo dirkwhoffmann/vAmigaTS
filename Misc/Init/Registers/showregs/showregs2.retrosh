@@ -9,9 +9,9 @@ cpu set RESET_VAL 0xFFFFFFFF
 amiga reset
 
 # Run the test
-regression run /tmp/showregs2.adf
+regression run /tmp/Init_Registers_showregs2.adf
 wait 9 seconds
 
 # Exit with a screensht
 screenshot set cutout x1=196 y1=36 x2=908 y2=314
-screenshot save showregs2
+screenshot save Init_Registers_showregs2

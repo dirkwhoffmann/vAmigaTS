@@ -5,8 +5,8 @@
 regression setup A500_ECS_1MB /tmp/kick13.rom
 
 # Run the test
-regression run /tmp/ASL4w_68000.adf
+regression run /tmp/IPL_ASL_ASL4w_68000.adf
 wait 9 seconds
 
 # Exit with a screenshot
-screenshot save ASL4w_68000
+screenshot save IPL_ASL_ASL4w_68000

@@ -5,8 +5,8 @@
 regression setup A500_ECS_1MB /tmp/kick13.rom
 
 # Run the test
-regression run /tmp/MOVE2_7b_68000.adf
+regression run /tmp/IPL_MOVE2_MOVE2_7b_68000.adf
 wait 9 seconds
 
 # Exit with a screenshot
-screenshot save MOVE2_7b_68000
+screenshot save IPL_MOVE2_MOVE2_7b_68000

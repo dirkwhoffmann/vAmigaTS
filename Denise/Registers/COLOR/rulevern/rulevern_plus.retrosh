@@ -6,8 +6,8 @@
 regression setup A500_PLUS_1MB /tmp/kick13.rom
 
 # Run the test
-regression run /tmp/rulevern_plus.adf
+regression run /tmp/Registers_COLOR_rulevern_plus.adf
 wait 9 seconds
 
 # Exit with a screenshot
-screenshot save rulevern_plus
+screenshot save Registers_COLOR_rulevern_plus

@@ -5,8 +5,8 @@
 regression setup A500_ECS_1MB /tmp/kick13.rom
 
 # Run the test
-regression run /tmp/probe8_ecs.adf
+regression run /tmp/Registers_VPOS_probe8_ecs.adf
 wait 9 seconds
 
 # Exit with a screenshot
-screenshot save probe8_ecs
+screenshot save Registers_VPOS_probe8_ecs

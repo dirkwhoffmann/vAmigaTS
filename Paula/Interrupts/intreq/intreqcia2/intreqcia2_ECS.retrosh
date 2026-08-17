@@ -5,9 +5,9 @@
 regression setup A500_ECS_1MB /tmp/kick13.rom
 
 # Run the test
-regression run /tmp/intreqcia2_ECS.adf
+regression run /tmp/Interrupts_intreq_intreqcia2_ECS.adf
 wait 9 seconds
 
 # Exit with a screenshot
 screenshot set cutout x1=196 y1=132 x2=908 y2=314
-screenshot save intreqcia2_ECS
+screenshot save Interrupts_intreq_intreqcia2_ECS

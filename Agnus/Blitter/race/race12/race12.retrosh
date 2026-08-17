@@ -5,8 +5,8 @@
 regression setup A500_ECS_1MB /tmp/kick13.rom
 
 # Run the test
-regression run /tmp/race12.adf
+regression run /tmp/Blitter_race_race12.adf
 wait 12 seconds
 
 # Exit with a screensht
-screenshot save race12
+screenshot save Blitter_race_race12

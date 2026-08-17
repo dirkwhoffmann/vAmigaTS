@@ -5,8 +5,8 @@
 regression setup A500_OCS_1MB /tmp/kick13.rom
 
 # Run the test
-regression run /tmp/waitblt5_ocs.adf
+regression run /tmp/Copper_Wait_waitblt5_ocs.adf
 wait 9 seconds
 
 # Exit with a screensht
-screenshot save waitblt5_ocs
+screenshot save Copper_Wait_waitblt5_ocs

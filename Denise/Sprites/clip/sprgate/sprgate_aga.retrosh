@@ -6,8 +6,8 @@
 regression setup A1200_2MB /tmp/kick13.rom
 
 # Run the test
-regression run /tmp/sprgate_aga.adf
+regression run /tmp/Sprites_clip_sprgate_aga.adf
 wait 9 seconds
 
 # Exit with a screenshot
-screenshot save sprgate_aga
+screenshot save Sprites_clip_sprgate_aga

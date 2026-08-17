@@ -31,18 +31,21 @@ all: subdirs
 	@echo > /dev/null
 			
 subdirs:
-	@for dir in $(SUBDIRS); do \
+	@fail=0; for dir in $(SUBDIRS); do \
+		if grep -qs '^include .*shared/base.mk' $$dir/Makefile; then continue; fi; \
 		echo "Entering ${CURDIR}/$$dir"; \
-		$(MAKE) -C $$dir || exit 1; \
-	done
+		$(MAKE) -C $$dir || fail=1; \
+	done; exit $$fail
 
 tiff:
-	@for dir in $(SUBDIRS); do \
+	@fail=0; for dir in $(SUBDIRS); do \
+		if grep -qs '^include .*shared/base.mk' $$dir/Makefile; then continue; fi; \
 		echo "Entering ${CURDIR}/$$dir"; \
-		$(MAKE) tiff -C $$dir || exit 1; \
-	done
+		$(MAKE) tiff -C $$dir || fail=1; \
+	done; exit $$fail
 
 clean:
 	@for dir in $(SUBDIRS); do \
+		if grep -qs '^include .*shared/base.mk' $$dir/Makefile; then continue; fi; \
 		$(MAKE) -C $$dir clean; \
 	done

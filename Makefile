@@ -25,7 +25,8 @@ VAMIGA = /tmp/vAmiga/vAmiga.app/Contents/MacOS/vAmiga
 export VAMIGA
 endif
 
-# Collect all directories containing a Makefile
+# Collect all directories containing a Makefile. Directories holding a
+# build Makefile rather than a test runner are skipped in the loops below.
 MKFILES = $(wildcard */Makefile)
 SUBDIRS = $(dir $(MKFILES))
 MYMAKE = $(MAKE) --no-print-directory
@@ -40,16 +41,18 @@ prebuild:
 	@echo "${VAMIGA}"
 		
 subdirs:
-	@for dir in $(SUBDIRS); do \
+	@fail=0; for dir in $(SUBDIRS); do \
+		if grep -qs '^include .*shared/base.mk' $$dir/Makefile; then continue; fi; \
 		echo "Entering ${CURDIR}/$$dir"; \
-		$(MAKE) -C $$dir || exit 1; \
-	done
+		$(MAKE) -C $$dir || fail=1; \
+	done; exit $$fail
 
 tiff:
-	@for dir in $(SUBDIRS); do \
+	@fail=0; for dir in $(SUBDIRS); do \
+		if grep -qs '^include .*shared/base.mk' $$dir/Makefile; then continue; fi; \
 		echo "Entering ${CURDIR}/$$dir"; \
-		$(MAKE) tiff -C $$dir || exit 1; \
-	done
+		$(MAKE) tiff -C $$dir || fail=1; \
+	done; exit $$fail
 
 missingini:
 	@echo "The following tests have no test scripts. They must me run manually..."
@@ -57,6 +60,7 @@ missingini:
 	
 clean:
 	@for dir in $(SUBDIRS); do \
+		if grep -qs '^include .*shared/base.mk' $$dir/Makefile; then continue; fi; \
 		echo "Cleaning up ${CURDIR}/$$dir"; \
 		$(MAKE) -C $$dir clean; \
 	done

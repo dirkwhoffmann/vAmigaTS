@@ -5,8 +5,8 @@
 regression setup A500_OCS_1MB /tmp/kick13.rom
 
 # Run the test
-regression run /tmp/basicint7_OCS.adf
+regression run /tmp/Interrupts_basicint_basicint7_OCS.adf
 wait 9 seconds
 
 # Exit with a screenshot
-screenshot save basicint7_OCS
+screenshot save Interrupts_basicint_basicint7_OCS

@@ -6,8 +6,8 @@ regression setup A500_ECS_1MB /tmp/kick13.rom
 cpu set revision 68010
 
 # Run the test
-regression run /tmp/TAS1_68010.adf
+regression run /tmp/Timing_TAS_TAS1_68010.adf
 wait 9 seconds
 
 # Exit with a screenshot
-screenshot save TAS1_68010
+screenshot save Timing_TAS_TAS1_68010

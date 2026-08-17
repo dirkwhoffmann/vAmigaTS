@@ -5,8 +5,8 @@
 regression setup A500_OCS_1MB /tmp/kick13.rom
 
 # Run the test
-regression run /tmp/farright3_ocs.adf
+regression run /tmp/DDF_DDF_farright3_ocs.adf
 wait 9 seconds
 
 # Exit with a screenshot
-screenshot save farright3_ocs
+screenshot save DDF_DDF_farright3_ocs

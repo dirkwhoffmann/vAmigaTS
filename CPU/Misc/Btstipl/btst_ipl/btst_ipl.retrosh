@@ -5,8 +5,8 @@
 regression setup A500_ECS_1MB /tmp/kick13.rom
 
 # Run the test
-regression run /tmp/btst_ipl.adf
+regression run /tmp/Misc_Btstipl_btst_ipl.adf
 wait 20 seconds
 
 # Exit with a screenshot
-screenshot save btst_ipl
+screenshot save Misc_Btstipl_btst_ipl

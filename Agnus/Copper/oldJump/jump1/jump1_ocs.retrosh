@@ -5,8 +5,8 @@
 regression setup A500_OCS_1MB /tmp/kick13.rom
 
 # Run the test
-regression run /tmp/jump1_ocs.adf
+regression run /tmp/Copper_oldJump_jump1_ocs.adf
 wait 9 seconds
 
 # Exit with a screensht
-screenshot save jump1_ocs
+screenshot save Copper_oldJump_jump1_ocs

@@ -6,8 +6,8 @@
 regression setup A1200_2MB /tmp/kick13.rom
 
 # Run the test
-regression run /tmp/brdcop_aga.adf
+regression run /tmp/Registers_BPLCON3_brdcop_aga.adf
 wait 9 seconds
 
 # Exit with a screenshot
-screenshot save brdcop_aga
+screenshot save Registers_BPLCON3_brdcop_aga

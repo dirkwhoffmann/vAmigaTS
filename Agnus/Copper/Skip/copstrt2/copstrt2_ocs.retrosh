@@ -5,8 +5,8 @@
 regression setup A500_OCS_1MB /tmp/kick13.rom
 
 # Run the test
-regression run /tmp/copstrt2_ocs.adf
+regression run /tmp/Copper_Skip_copstrt2_ocs.adf
 wait 9 seconds
 
 # Exit with a screensht
-screenshot save copstrt2_ocs
+screenshot save Copper_Skip_copstrt2_ocs

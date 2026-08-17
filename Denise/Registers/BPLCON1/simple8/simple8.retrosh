@@ -5,8 +5,8 @@
 regression setup A500_ECS_1MB /tmp/kick13.rom
 
 # Run the test
-regression run /tmp/simple8.adf
+regression run /tmp/Registers_BPLCON1_simple8.adf
 wait 9 seconds
 
 # Exit with a screensht
-screenshot save simple8
+screenshot save Registers_BPLCON1_simple8

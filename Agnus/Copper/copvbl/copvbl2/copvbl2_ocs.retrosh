@@ -5,8 +5,8 @@
 regression setup A500_OCS_1MB /tmp/kick13.rom
 
 # Run the test
-regression run /tmp/copvbl2_ocs.adf
+regression run /tmp/Copper_copvbl_copvbl2_ocs.adf
 wait 9 seconds
 
 # Exit with a screenshot
-screenshot save copvbl2_ocs
+screenshot save Copper_copvbl_copvbl2_ocs

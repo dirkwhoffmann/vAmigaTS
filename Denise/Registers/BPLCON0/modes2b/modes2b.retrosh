@@ -5,8 +5,8 @@
 regression setup A500_ECS_1MB /tmp/kick13.rom
 
 # Run the test
-regression run /tmp/modes2b.adf
+regression run /tmp/Registers_BPLCON0_modes2b.adf
 wait 9 seconds
 
 # Exit with a screensht
-screenshot save modes2b
+screenshot save Registers_BPLCON0_modes2b

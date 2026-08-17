@@ -5,8 +5,8 @@
 regression setup A500_OCS_1MB /tmp/kick13.rom
 
 # Run the test
-regression run /tmp/diwv10_ocs.adf
+regression run /tmp/DIW_DIWV_diwv10_ocs.adf
 wait 9 seconds
 
 # Exit with a screenshot
-screenshot save diwv10_ocs
+screenshot save DIW_DIWV_diwv10_ocs

@@ -5,9 +5,9 @@
 regression setup A500_OCS_1MB /tmp/kick13.rom
 
 # Run the test
-regression run /tmp/lc3_ocs.adf
+regression run /tmp/Copper_lc_lc3_ocs.adf
 wait 9 seconds
 
 # Exit with a screenshot
 screenshot set cutout x1=300 y1=26 x2=912 y2=311
-screenshot save lc3_ocs
+screenshot save Copper_lc_lc3_ocs

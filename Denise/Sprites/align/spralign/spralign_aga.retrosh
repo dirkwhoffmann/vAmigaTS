@@ -6,8 +6,8 @@
 regression setup A1200_2MB /tmp/kick13.rom
 
 # Run the test
-regression run /tmp/spralign_aga.adf
+regression run /tmp/Sprites_align_spralign_aga.adf
 wait 9 seconds
 
 # Exit with a screenshot
-screenshot save spralign_aga
+screenshot save Sprites_align_spralign_aga

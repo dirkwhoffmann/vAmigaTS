@@ -5,8 +5,8 @@
 regression setup A500_PLUS_1MB /tmp/kick13.rom
 
 # Run the test
-regression run /tmp/minmax3_PLUS.adf
+regression run /tmp/DIW_DIWH_minmax3_PLUS.adf
 wait 9 seconds
 
 # Exit with a screenshot
-screenshot save minmax3_PLUS
+screenshot save DIW_DIWH_minmax3_PLUS

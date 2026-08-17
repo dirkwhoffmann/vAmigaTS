@@ -5,8 +5,8 @@
 regression setup A500_OCS_1MB /tmp/kick13.rom
 
 # Run the test
-regression run /tmp/sprbpu2_OCS.adf
+regression run /tmp/Sprites_general_sprbpu2_OCS.adf
 wait 9 seconds
 
 # Exit with a screenshot
-screenshot save sprbpu2_OCS
+screenshot save Sprites_general_sprbpu2_OCS

@@ -5,8 +5,8 @@
 regression setup A500_ECS_1MB /tmp/kick13.rom
 
 # Run the test
-regression run /tmp/minmax_ECS.adf
+regression run /tmp/DIW_DIWH_minmax_ECS.adf
 wait 9 seconds
 
 # Exit with a screenshot
-screenshot save minmax_ECS
+screenshot save DIW_DIWH_minmax_ECS

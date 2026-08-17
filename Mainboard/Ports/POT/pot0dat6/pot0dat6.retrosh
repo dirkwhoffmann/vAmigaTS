@@ -5,8 +5,8 @@
 regression setup A500_ECS_1MB /tmp/kick13.rom
 
 # Run the test
-regression run /tmp/pot0dat6.adf
+regression run /tmp/Ports_POT_pot0dat6.adf
 wait 9 seconds
 
 # Exit with a screensht
-screenshot save pot0dat6
+screenshot save Ports_POT_pot0dat6

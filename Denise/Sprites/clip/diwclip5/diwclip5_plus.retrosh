@@ -6,8 +6,8 @@
 regression setup A500_PLUS_1MB /tmp/kick13.rom
 
 # Run the test
-regression run /tmp/diwclip5_plus.adf
+regression run /tmp/Sprites_clip_diwclip5_plus.adf
 wait 9 seconds
 
 # Exit with a screenshot
-screenshot save diwclip5_plus
+screenshot save Sprites_clip_diwclip5_plus

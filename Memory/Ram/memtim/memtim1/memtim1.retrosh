@@ -5,9 +5,9 @@
 regression setup A500_ECS_1MB /tmp/kick13.rom
 
 # Run the test
-regression run /tmp/memtim1.adf
+regression run /tmp/Ram_memtim_memtim1.adf
 wait 9 seconds
 
 # Exit with a screensht
 screenshot set cutout x1=196 y1=70 x2=912 y2=210
-screenshot save memtim1
+screenshot save Ram_memtim_memtim1
