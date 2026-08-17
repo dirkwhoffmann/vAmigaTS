@@ -1,7 +1,7 @@
 
 ; sprgate.s -- when the window opens, when does the sprite arrive?
 ;
-; Agnus/AGA/BPLAM/bplam9 measured this on an A1200 and found that the sprite
+; Denise/Registers/BPLCON4/bplam9 measured this on an A1200 and found that the sprite
 ; arrives one screen column AFTER the display window opens: there is exactly
 ; one column of playfield between the last border pixel and the first sprite
 ; pixel. vAmiga models that with SPRITE_LATENCY = BPLDAT_LATENCY + 2, which

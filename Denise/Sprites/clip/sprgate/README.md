@@ -2,7 +2,7 @@
 
 When the display window opens, does the leftmost sprite pixel arrive at the
 same moment, before it, or after it? — asked with nothing but OCS/ECS
-features, so the answer can be compared against `Agnus/AGA/BPLAM/bplam9`.
+features, so the answer can be compared against `Denise/Registers/BPLCON4/bplam9`.
 
 bplam9 measured this on an A1200 and found the sprite arrives **one screen
 column after** the window opens: there is exactly one column of playfield
@@ -149,6 +149,6 @@ appears between border and sprite, and playfield is a different colour from
 either black. But it does mean the merge is not perfect on a photograph: the
 sprite is faintly visible against the border, more so on an A1200. Do not
 mistake that step, or the display's overshoot at it, for the strip being
-measured. `../../../../Agnus/AGA/BPLAM/bplam9` has the full measurement.
+measured. `../../../../Denise/Registers/BPLCON4/bplam9` has the full measurement.
 
 Dirk Hoffmann, 2026

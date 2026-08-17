@@ -16,7 +16,7 @@
 ; a plane-less line, precisely so that the Copper keeps every DMA slot and
 ; the stripe train runs undisturbed. If BPU = 0 means "all border", then a
 ; ruler drawn with BRDRBLNK set is invisible -- which is exactly what the
-; Agnus/AGA/AGADDF suite ran into on real hardware.
+; Agnus/DDF/AGADDF suite ran into on real hardware.
 ;
 ;
 ; HOW THE SCREEN IS BUILT

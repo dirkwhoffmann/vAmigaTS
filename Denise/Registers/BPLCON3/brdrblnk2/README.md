@@ -6,7 +6,7 @@ A companion to brdrblnk1, in this same directory. That test always has at least 
 
 The suspicion is that it is. Nothing is fetched and nothing is displayed, the display window never opens, and the area DIWSTRT and DIWSTOP delimit is border like everything else — in which case BRDRBLNK blanks that too, and a plane-less line comes out uniformly black no matter what COLOR00 holds.
 
-That is not an academic point. A Copper colour ruler is conventionally drawn on a plane-less line, precisely so the Copper keeps every DMA slot and the stripe train runs undisturbed. If BPU = 0 means "all border", a ruler drawn with BRDRBLNK set is invisible — which is exactly what the Agnus/AGA/AGADDF suite ran into on real hardware, with every other part of its picture correct.
+That is not an academic point. A Copper colour ruler is conventionally drawn on a plane-less line, precisely so the Copper keeps every DMA slot and the stripe train runs undisturbed. If BPU = 0 means "all border", a ruler drawn with BRDRBLNK set is invisible — which is exactly what the Agnus/DDF/AGADDF suite ran into on real hardware, with every other part of its picture correct.
 
 ## How the screen is built
 

@@ -2,7 +2,7 @@
 
 The tests in this test suite exercise register BPLCON3. At present both of them are about **BRDRBLNK**, bit 5, which forces the border area to pure black instead of letting it take the background colour COLOR00. The bit only does anything when ECSENA (BPLCON0 bit 0) is set, so ECSENA is on throughout both tests.
 
-BRDRBLNK arrived with ECS and is inherited unchanged by AGA. It is not an AGA feature, which is why these tests live here rather than under Agnus/AGA, where they were originally written.
+BRDRBLNK arrived with ECS and is inherited unchanged by AGA. It is not an AGA feature, which is why these tests live here rather than under Denise/Modes, where they were originally written.
 
 #### brdrblnk1
 
@@ -31,7 +31,7 @@ There is no AGA configuration scheme in the emulator's regression tester, so no 
 
 Between them these two tests found two independent defects in the border logic, both since fixed. The references here record the corrected pictures and match the A1200 photos.
 
-The first is that a rasterline with **no bitplanes at all** is border across its full width. DIWSTRT does not open the display window on its own; the window opens at the first BPL1DAT write, so with BPU = 0 it never opens and BRDRBLNK blackens the whole line. brdrblnk2's whole-line controls are the smallest case that shows it, and it is why the Copper rulers in Agnus/AGA/AGADDF were invisible on a real A1200 while everything else in that picture was correct.
+The first is that a rasterline with **no bitplanes at all** is border across its full width. DIWSTRT does not open the display window on its own; the window opens at the first BPL1DAT write, so with BPU = 0 it never opens and BRDRBLNK blackens the whole line. brdrblnk2's whole-line controls are the smallest case that shows it, and it is why the Copper rulers in Agnus/DDF/AGADDF were invisible on a real A1200 while everything else in that picture was correct.
 
 The second is that BRDRBLNK is a **mid-line** quantity: it takes effect at the pixel the Copper writes it, not from the start of the next rasterline. Both photos say so plainly. brdrblnk1 draws two large staircases across its border areas, and brdrblnk2's rulers go black from the toggle position rightwards, one stripe pair further along in each successive block.
 
