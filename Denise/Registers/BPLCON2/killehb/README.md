@@ -40,6 +40,10 @@ Dirk Hoffmann, 2026
 
 ## Regression testing
 
-Run under two configurations, `_plus` (A500_PLUS_1MB, ECS Denise, KILLEHB honoured) and `_ecs` (A500_ECS_1MB, OCS Denise, no KILLEHB, so EHB stays active throughout). The `_ecs` run is the negative control: the bit is a Denise feature, and A500_ECS_1MB pairs an ECS Agnus with an OCS Denise.
+Run under three configurations:
 
-There is no AGA configuration scheme in the emulator's regression tester, so the AGA behaviour this test was originally written for is covered only by the hardware screenshots in this directory.
+- `_aga` (A1200_2MB, AGA Denise). The one the test was written for: only AGA reaches COLOR33 and COLOR63, so only here do the stripes show two hues.
+- `_plus` (A500_PLUS_1MB, ECS Denise). KILLEHB is honoured, but with 32 color registers both indices land on red either way, and ECS cannot fetch six planes in HIRES, so only the LORES region carries information.
+- `_ecs` (A500_ECS_1MB, OCS Denise). The negative control: KILLEHB is a Denise feature and this machine pairs an ECS Agnus with an OCS Denise, so EHB stays active throughout.
+
+The `_aga` reference also pins the horizontal timing of the switch. Measured against the stripe grid of the A1200 photograph, the hardware edges sit at column 79.21 in LORES and 95.80 in HIRES (both +/- 0.10, 59 and 46 edges); see the comment on the KILLEHB branch of `Denise::setBPLCON2`.

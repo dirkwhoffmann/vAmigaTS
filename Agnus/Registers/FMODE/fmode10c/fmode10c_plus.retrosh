@@ -1,13 +1,13 @@
 # Regression testing script for vAmiga
-# Dirk W. Hoffmann
+# Dirk W. Hoffmann, 2026
 
 # Setup the test environment
-# A500_PLUS_1MB: ECS Denise -- KILLEHB honoured
+# ECS Agnus, ECS Denise
 regression setup A500_PLUS_1MB /tmp/kick13.rom
 
 # Run the test
-regression run /tmp/Registers_BPLCON2_killehb_plus.adf
+regression run /tmp/Registers_FMODE_fmode10c_plus.adf
 wait 9 seconds
 
 # Exit with a screenshot
-screenshot save Registers_BPLCON2_killehb_plus
+screenshot save Registers_FMODE_fmode10c_plus

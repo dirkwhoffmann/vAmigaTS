@@ -1,0 +1,13 @@
+# Regression testing script for vAmiga
+# Dirk W. Hoffmann
+
+# Setup the test environment
+# A1200_2MB: AGA Denise -- KILLEHB honoured, COLOR33/COLOR63 reachable
+regression setup A1200_2MB /tmp/kick13.rom
+
+# Run the test
+regression run /tmp/Registers_BPLCON2_killehb_aga.adf
+wait 9 seconds
+
+# Exit with a screenshot
+screenshot save Registers_BPLCON2_killehb_aga

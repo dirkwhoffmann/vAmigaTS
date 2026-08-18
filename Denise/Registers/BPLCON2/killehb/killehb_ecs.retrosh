@@ -9,5 +9,5 @@ regression setup A500_ECS_1MB /tmp/kick13.rom
 regression run /tmp/Registers_BPLCON2_killehb_ecs.adf
 wait 9 seconds
 
-# Exit with a screensht
+# Exit with a screenshot
 screenshot save Registers_BPLCON2_killehb_ecs
