@@ -14,17 +14,28 @@
 ; The index rule is settled (see shindex1 to shindex5, and sh1bpl1 to sh1bpl5
 ; for the one plane case): a super hires pixel reaches COLOR00, COLOR05,
 ; COLOR10 or COLOR15, the register number being the two bit pixel value
-; replicated, index = 5 * v. shsplit1 then ruled out the idea that the chosen
-; register is split across two sub-pixels -- but it turned up something else.
-; With the red nibble set to $C, the section came out at 0.80 of full red,
-; exactly its nominal weight. With the nibble set to $3 it came out at 0.625,
-; where its nominal weight is 0.20. The high bit pair of a nibble behaves as
-; written; the low pair does not.
+; replicated, index = 5 * v. shsplit1 tried to settle whether the chosen
+; register is then split across the two sub-pixels and was read as saying no,
+; on two data points in one frame. This family swept all fourteen nibbles and
+; says yes.
 ;
-; That is not gamma. Gamma would bend $C as well, and $C lands on its nominal
-; value to two decimals.
+; RESULT. Denise sends the high bit pair of each RGB nibble to the first
+; sub-pixel and the low pair to the second, each pair replicated over the
+; whole component (0,1,2,3 -> $0,$5,$A,$F). A monitor cannot resolve the two
+; and shows their average, so a nibble n displays at ((n>>2) + (n&3)) / 6 of
+; full scale, not at n/15. The mapping is neither monotonic nor injective:
+; $3 photographs BRIGHTER than $4, $7 brighter than $8, $B brighter than $C,
+; and $2, $5 and $8 are indistinguishable from one another.
 ;
-; So this family sweeps the nibble and measures the curve directly.
+; Sorting the fourteen measured brightnesses puts the pair sums in perfect
+; order with no group interleaved, which is what pins the rule down. The three
+; inversions above are within-frame comparisons, so no camera behaviour and no
+; exposure difference can account for them.
+;
+; The averaging happens in signal space rather than in light: $5 (sub-pixels
+; $5,$5) reads the same as $2 (sub-pixels $0,$A), where averaging the emitted
+; light would make $5 some 2.4 times darker. The blur comes from the monitor's
+; video amplifier, ahead of the phosphor's non-linearity.
 ;
 ;
 ; THE LAYOUT

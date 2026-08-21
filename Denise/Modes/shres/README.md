@@ -66,14 +66,16 @@ The plane count is raised by a bare BPLCON0 write, with no blank line and no re-
 Super hires does **not** do a per-pixel palette lookup. ECS Denise cannot look a colour up per pixel at the super hires dot rate, so it takes pixels in **pairs** and concatenates them into one index:
 
 ```
-index = (pixel1 & 3) * 4 + (pixel0 & 3) + ((pixel0 | pixel1) & 16)
+index = (pixel1 & 3) * 4 + (pixel0 & 3)
 ```
+
+where `pixel0` and `pixel1` are not neighbours: within each aligned group of four super hires pixels, pixel 0 pairs with pixel 2 and pixel 1 with pixel 3. See "The rule, as measured" below for how that was pinned down.
 
 Two bitplanes therefore address **COLOR00 to COLOR15**, not COLOR00 to COLOR03, and bitplane 5 would add bit 4 on top for a range of COLOR00 to COLOR31. Denise then splits the register it picked across the pair: the first pixel shows the high bit pair of each RGB nibble (`& $CCC`), the second the low bit pair (`& $333`).
 
 An earlier revision of this test initialised only COLOR00-03. On a real A500+ that painted the whole super hires region as a flat white block of uninitialised registers -- even in the single-bitplane section, where the pairing still reaches COLOR05. Hence the full 32-entry palette. Every nibble in it is drawn from `$0/$5/$A/$F`, values whose high and low bit pairs are equal, so the nibble split hands both pixels of a pair the same colour and a pair reads as one flat patch. (A nibble like `$C` or `$3` would paint the two pixels differently -- worth a test of its own, but not this one.) COLOR00-03 keep their original values, so the HIRES control region still reads black / red / green / blue.
 
-**vAmiga does not implement any of this.** It renders super hires as an ordinary per-pixel lookup, so it never reaches an index above 3 and its reference images are byte-for-byte unaffected by the 32-entry palette. The hardware photographs are the specification here; the emulator output is the thing under test.
+When these tests were written, **vAmiga did not implement any of this** -- it rendered super hires as an ordinary per-pixel lookup, never reached an index above 3, and its reference images were byte-for-byte unaffected by the 32-entry palette. It now implements the pairing and the nibble split, both derived from the photographs in this directory. The hardware photographs remain the specification; the emulator output is the thing under test.
 
 The eight tests are the cross product of four rulerBuf bytes and two solidBuf bytes.
 
@@ -216,31 +218,39 @@ vAmiga renders all sixteen sections flat and decodes to `index = 4a + b`. Whethe
 
 #### The rule, as measured
 
-**Two pixels are combined into one colour index, and the partner is the pixel TWO positions further on:**
+**Two pixels are combined into one colour index. The pairing works on aligned groups of four super hires pixels -- one lores pixel -- and within a group it pairs across rather than side by side: pixel 0 with pixel 2, pixel 1 with pixel 3.**
 
 ```
-index = (pixel[p+2] & 3) * 4 + (pixel[p] & 3)
+base  = (p & ~3) | (p & 1)
+index = (pixel[base+2] & 3) * 4 + (pixel[base] & 3)
 ```
 
 so a super hires pixel can reach any of COLOR00 to COLOR15. Bitplane 5 would supply a bit 4, but with two bitplanes it never fires, and shindex5 confirms bit 4 is never set.
 
-The stride is what took longest to find, because most patterns hide it. **Any pattern of period 2, or a constant one, has `pixel[p+2] == pixel[p]`**, so the index collapses to
+The pairing is what took longest to find, because most patterns hide it. **Any pattern of period 2, or a constant one, has `pixel[base+2] == pixel[base]`**, so the index collapses to
 
 ```
 index = 5 * v          reaching only COLOR00, COLOR05, COLOR10, COLOR15
 ```
 
-That collapsed form is what shindex, sh1bpl, shsplit and shramp all measure -- every pattern they draw is period 2 or constant by construction, so they are structurally blind to the stride and agree with a "no pairing at all" reading. It took shspot, whose patterns have period 16, to separate the two: its sections reach COLOR01, COLOR03, COLOR06, COLOR09, COLOR11 and COLOR12, which `5 * v` cannot produce at all. Fitting the stride against all four shspot sections gives `+2` uniquely and exactly -- every register seen on the A500+ is predicted, with none left over.
+That collapsed form is what shindex, sh1bpl, shsplit and shramp all measure -- every pattern they draw is period 2 or constant by construction, so they are structurally blind to the pairing and agree with a "no pairing at all" reading. It took shspot, whose patterns have period 16, to separate the two: its sections reach COLOR01, COLOR03, COLOR06, COLOR09, COLOR11 and COLOR12, which `5 * v` cannot produce at all.
+
+Reading the yellow spot out of all sixteen shspot photographs gives a 16 x 4 table of "does register n appear in section s". Two candidate rules survive it: this one, and a simpler sliding partner two pixels ahead (`index = (pixel[p+2] & 3) * 4 + (pixel[p] & 3)`). Neither predicts a register the hardware fails to show. What separates them:
+
+- **Consistency.** Under the group rule, every cell the hardware does *not* show has a lower duty cycle than every cell it does show for that same register -- exactly what a detection threshold looks like. The sliding rule inverts that twice: register 1 is invisible at 2/16 in section 4 yet visible at 1/16 in section 1, and register 11 likewise. It also predicts register 14 in all four sections where the group rule predicts sections 1, 2 and 4 -- and section 3 is precisely the one the photograph leaves blank.
+- **The edges.** A sliding partner straddles the end of the fetched bitplane data, where the buffer holds zeros, and paints one stray column of an otherwise unreachable colour. vAmiga did exactly that, a green line at the right edge of the shramp bars. A full-resolution scan of the A500+ photograph at that spot shows only ordinary edge ringing, with the green channel never exceeding red. A group cannot straddle, because the fetched region begins and ends on a word boundary and therefore on a group boundary.
 
 The rule is the same for one bitplane as for two (sh1bpl), with `v` simply carrying bitplane 1 alone.
 
-A consequence worth knowing when reading reference images: the regression screenshot records only **even** pixels, so it shows a subset of what a CRT does. For shspot section 1 the emulator's dump reaches COLOR01, COLOR04 and COLOR05 while the full picture also reaches COLOR03, COLOR09 and COLOR14. Both are correct; they are different samples of the same line. A second consequence is a one-column artifact at the trailing edge of the display, where the pairing reaches two pixels past the end of the bitplane data.
+A consequence worth knowing when reading reference images: the regression screenshot records only **even** pixels, so it shows a subset of what a CRT does. For shspot section 1 the emulator's dump reaches COLOR00, COLOR01, COLOR04 and COLOR05, while the odd pixels it discards carry COLOR04 and COLOR14. Both are correct; they are different samples of the same line.
 
 vAmiga's `PixelEngine::colorizeShres` implements the rule above.
 
 #### shsplit1
 
-Whether the chosen register is shown whole, or split so one sub-pixel takes the high bit pair of each RGB nibble and the other the low pair. Every shindex palette was built from nibbles `$0/$5/$A/$F`, whose bit pairs are equal, so a split would have been invisible there by construction. shsplit1 uses nibbles where the halves differ -- `COLOR05 = $C00`, `COLOR10 = $300`, `COLOR15 = $F00` -- across four sections of constant pixel value. Read the answer off sections 1 and 2: clearly different brightness means no split, equal mid red means split. vAmiga, implementing no split, renders them 0.70 and 0.11.
+Whether the chosen register is shown whole, or split so one sub-pixel takes the high bit pair of each RGB nibble and the other the low pair. Every shindex palette was built from nibbles `$0/$5/$A/$F`, whose bit pairs are equal, so a split would have been invisible there by construction. shsplit1 uses nibbles where the halves differ -- `COLOR05 = $C00`, `COLOR10 = $300`, `COLOR15 = $F00` -- across four sections of constant pixel value. Read the answer off sections 1 and 2: clearly different brightness means no split, equal mid red means split.
+
+**This test is not conclusive, and its first reading was wrong.** `$C00` measured 0.80 and `$300` 0.625, which was taken as "clearly different", i.e. no split. The split is real -- shramp settled it -- and the two sections should read as the same mid red. Two data points in one frame cannot separate a genuine difference from photographic scatter: the same two nibbles measured across the shramp frames came out the other way round, with `$3` above `$C`. Use shramp for this question. Keep shsplit1 as a reminder that a two-point comparison decides nothing.
 
 #### sh1bpl1 to sh1bpl5
 
@@ -258,7 +268,25 @@ Two traps cost real time in this directory, both worth avoiding again:
 
 A sweep of the colour register transfer curve: what brightness a given nibble value actually produces in super hires.
 
-shsplit1 ruled out the idea that a register is split across two sub-pixels -- sections carrying `$C00` and `$300` came out clearly unequal, where a split would force them equal. But it turned up something else. `$C00` measured 0.80 of full red, exactly its nominal weight of 12/15. `$300` measured 0.625, where its nominal weight is 3/15 = 0.20. **The high bit pair of a nibble behaves as written; the low pair does not.** That is not gamma -- gamma would bend `$C` too, and `$C` lands on nominal to two decimals.
+**Result: the nibble split is real, and the brightness follows the sum of the two bit pairs, not the register value.**
+
+Denise sends the high bit pair of each RGB nibble to the first sub-pixel and the low pair to the second, each pair replicated over the whole component (`0,1,2,3` -> `$0,$5,$A,$F`). A monitor cannot resolve the two and shows their average, so a nibble `n` displays at `((n >> 2) + (n & 3)) / 6` of full scale rather than at `n / 15`. The mapping is not monotonic and not injective: `$3` and `$C` are the same two sub-pixels in opposite order and are indistinguishable, as are `$1`/`$4`, `$2`/`$5`/`$8`, and so on.
+
+Sorting the fourteen measurements by brightness puts the pair sums in perfect order, with no group interleaved:
+
+| pair sum | nibbles | predicted | measured on A500+ |
+|---|---|---|---|
+| 1 | `$1`, `$4` | 0.167 | 0.22, 0.24 |
+| 2 | `$2`, `$5`, `$8` | 0.333 | 0.64, 0.61, 0.54 |
+| 3 | `$3`, `$6`, `$9`, `$C` | 0.500 | 0.89, 0.69, 0.76, 0.68 |
+| 4 | `$7`, `$A`, `$D` | 0.667 | 0.99, 0.92, 0.95 |
+| 5 | `$B`, `$E` | 0.833 | 1.17, 1.03 |
+
+The measured numbers sit above the prediction throughout because a phone camera lifts shadows; the *ordering* is what carries the result, and it is exposure-proof. The sharpest evidence is within a single frame, where no camera behaviour can intervene: **`$3` photographs brighter than `$4`, `$7` brighter than `$8`, and `$B` brighter than `$C`** -- three inversions the register value cannot produce and the pair sum predicts.
+
+The averaging happens in *signal* space, not in light. `$5` (sub-pixels `$5`,`$5`) reads the same as `$2` (`$0`,`$A`), where averaging the emitted light would make `$5` roughly 2.4 times darker. What smears the sub-pixels together is the monitor's video amplifier, ahead of the phosphor's non-linearity, so an emulator must blend before applying gamma.
+
+Note that **this is invisible in an unblended screenshot**: the regression dump samples even pixels only, so it captures the high bit pair alone and shows a clean monotonic ramp. `DENISE_SHRES_BLEND` has to be on to see the effect at all.
 
 Four sections, each a constant pixel value so every pixel in it reaches one register:
 
@@ -280,7 +308,9 @@ Seven tests carry the fourteen nibbles `$1` to `$E`, two per test; `$0` and `$F`
 | shramp3 | `$5`, `$6` | shramp7 | `$D`, `$E` |
 | shramp4 | `$7`, `$8` | | |
 
-vAmiga, which simply uses the register value, renders a monotonic ramp close to `n/15`. **shramp2 is the decisive one**: if `$3` reads near 0.6 rather than 0.2, the shsplit1 anomaly is confirmed and the rest of the sweep gives its shape.
+vAmiga now implements the split (`AmigaColor::shresHi` and `shresLo`, applied in `PixelEngine::colorizeShres`). Run with `denise set SHRES_BLEND true` it reproduces the grouping exactly: one brightness per pair sum, `$1` = `$4`, `$2` = `$5` = `$8`, `$3` = `$6` = `$9` = `$C`, and so on.
+
+One question these tests cannot answer: **which sub-pixel gets which half.** Every shramp section is a constant pixel value, so both sub-pixels take their halves from the same register and the order is unobservable. vAmiga follows Amiberry in giving the high pair to the first sub-pixel. Separating the two would need a pattern whose sub-pixel phase is known and legible through a camera, which the note above suggests is not achievable on this hardware.
 
 
 Dirk Hoffmann, 2026
