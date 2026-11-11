@@ -38,7 +38,31 @@ RECORD_GENERIC MACRO
 	move.w  (a2)+,(a3)+
 	ENDM
 
+; Used by the tests that define SHOW_REGS: Zeroes the words behind a 68000
+; frame (14 bytes), because they are leftovers on the stack and not part of the
+; frame. Does the same for the word behind the 3-word frame of a 68000 trap
+; (the 68000 has no format word). Then records A4 and A5 in the last four result words.
+RECORD_REGS MACRO
+	lea 	values,a3
+	cmp.w 	#$E,4(a3)
+	bne.s 	.keep\@
+	clr.l 	24(a3)
+	clr.l 	28(a3)
+	clr.l 	32(a3)
+.keep\@:
+	cmp.w 	#$6,4(a3)
+	bne.s 	.keep2\@
+	clr.w 	16(a3)
+.keep2\@:
+	lea 	values+36,a3
+	move.l 	a4,(a3)+
+	move.l 	a5,(a3)+
+	ENDM
+
 PREPARE_STACK MACRO
+	ifd FIXED_STACK
+	lea 	FIXED_STACK,a7		; Do not depend on the stack of the host system
+	endc
 	jsr 	clrstack
 	move.l  a7,a0		; Save current stack pointer in A0
 	lea     $0(pc),a6	; Save current PC in A6
@@ -134,6 +158,9 @@ continue:
 	move.w  #17,d2
 .skipit:
 	addq	#4,d2				; Total number of output rows
+	ifd SHOW_REGS
+	moveq	#21,d2				; Always show all 22 rows
+	endc
 
    	move.w  #$060,$DFF180 
 .l:
@@ -232,19 +259,23 @@ regnames:
     dc.b ' Stack size       = $', 0
     dc.b ' PC rel HI        = $', 0
     dc.b ' PC rel LO        = $', 0
-    dc.b ' SP+00:           = $', 0
-    dc.b ' SP+02:           = $', 0
-    dc.b ' SP+04:           = $', 0
-    dc.b ' SP+06:           = $', 0
-    dc.b ' SP+08:           = $', 0
-    dc.b ' SP+10:           = $', 0
-    dc.b ' SP+12:           = $', 0
-    dc.b ' SP+14:           = $', 0
-    dc.b ' SP+16:           = $', 0
-    dc.b ' SP+18:           = $', 0
-    dc.b ' SP+20:           = $', 0
-    dc.b ' SP+22:           = $', 0
-    dc.b ' SP+24:           = $', 0
+    dc.b ' SP+00            = $', 0
+    dc.b ' SP+02            = $', 0
+    dc.b ' SP+04            = $', 0
+    dc.b ' SP+06            = $', 0
+    dc.b ' SP+08            = $', 0
+    dc.b ' SP+10            = $', 0
+    dc.b ' SP+12            = $', 0
+    dc.b ' SP+14            = $', 0
+    dc.b ' SP+16            = $', 0
+    dc.b ' SP+18            = $', 0
+    dc.b ' SP+20            = $', 0
+    dc.b ' SP+22            = $', 0
+    dc.b ' SP+24            = $', 0
+    dc.b ' A4 HI            = $', 0
+    dc.b ' A4 LO            = $', 0
+    dc.b ' A5 HI            = $', 0
+    dc.b ' A5 LO            = $', 0
     dc.b ' SP+26:           = $', 0
     dc.b ' SP+28:           = $', 0
     dc.b ' SP+30:           = $', 0

@@ -1,0 +1,43 @@
+SHOW_REGS equ 1
+FIXED_STACK equ $7FF00
+	include "../stackframe.i"
+
+; cmpm.w (a4)+,(a5)+ (fault on destination)
+;
+; Records the address registers A4 and A5 in the last four rows (A4 HI/LO, A5 HI/LO).
+; The stack is moved to a fixed location. The expected values below are Moira's
+; prediction, not hardware results.
+
+trap0:
+	PREPARE_STACK
+
+	; Trigger the exception
+	move.l  #$12345678,d0
+	move.l  #$00000300,a4
+	move.l  #$00414243,a5
+	cmpm.w  (a4)+,(a5)+
+
+	NO_EXCEPTION_GENERATED
+
+exit:
+	RECORD_REGS
+	jmp 	continue
+
+info: 
+    dc.b    'ADDRERR26', 0
+	even
+
+expected000:
+	dc.w   	$0007, $FEF2, $000E, $0039, $EA81, $BB55, $0041, $4243
+	dc.w   	$BB4C, $2010, $0007, $57D8, $0000, $0000, $0000, $0000
+	dc.w   	$0000, $0000, $0000, $0302, $0041, $4243
+
+expected010:
+	dc.w   	$0007, $FEC6, $003A, $0000, $0014, $2010, $0007, $57D6
+	dc.w   	$800C, $1105, $0041, $4243, $1111, $1111, $1111, $0000
+	dc.w   	$1111, $337C, $0000, $0302, $0041, $4245
+
+expected020:
+	dc.w   	$0000, $0000, $0000, $0000, $0000, $0000, $0000, $0000
+	dc.w   	$0000, $0000, $0000, $0000, $0000, $0000, $0000, $0000
+	dc.w   	$0000, $0000, $0000, $0000, $0000, $0000
