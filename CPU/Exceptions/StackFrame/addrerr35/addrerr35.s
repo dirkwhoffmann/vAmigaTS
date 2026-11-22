@@ -6,15 +6,14 @@ FIXED_STACK equ $7FF00
 ;
 ; Question this test answers: Is bit 3 of the code word (the first word of the
 ; stack frame) set if the write of a MOVE to a predecrement destination fails
-; in user mode? MAME and the supervisor mode recording (addrerr4) show a code word
-; of $3361 / $3365 (bit 3 clear). Moira's own mode (it distinguishes the carry flag, which is clear here: it sets bit 3 and expects $3369).
-; Run this test together with addrerr36, which differs only in the carry flag.
-; If the hardware shows $3361 in both, bit 3 is never set.
+; in user mode? No, regardless of the carry flag: the hardware
+; shows a code word of $3361 (bit 3 clear) here and in addrerr36, which differs
+; only in the carry flag. The supervisor mode recording (addrerr4) agrees.
 ;
 ; The instruction runs in user mode (the exception frame is written to the
 ; supervisor stack at a fixed location). A4 and A5 are set to known values and
 ; recorded in the last four rows. Rows 3 and 4 depend on the load address.
-; The expected values below are the prediction of MAME and UAE, not hardware results.
+; The expected values below were recorded on an A500 (68000) and an A500 with a 68010.
 
 trap0:
 	PREPARE_STACK

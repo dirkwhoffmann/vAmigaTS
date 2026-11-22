@@ -148,7 +148,11 @@ continue:
 
     lea     values,a2           ; Measured values
     jsr     checkcpu            ; A5 will point to the expected values
+	ifd CUSTOM_ROWS
+    lea     rownames(pc),a1     ; Output strings (defined by the test)
+	else
     lea     regnames(pc),a1     ; Output strings
+	endc
     moveq   #3,d1               ; First output row
 	moveq   #0,d2
 	move.w  $4(a2),d2			; Stack size in bytes
